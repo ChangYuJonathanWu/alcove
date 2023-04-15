@@ -1,0 +1,47 @@
+{
+    "title": "jonathan wu",
+    "title_style": {},
+    "handle": "jonathanwu",
+    "description": "these are my favorite:",
+    "description_style": {},
+    "profile": {
+        "list_order": ["l1", "l2", "l3", "l4", "l5"],
+        "lists": {
+            "l4": {"id": "l4", "name": "books this year"},
+            "l3": {"id": "l3", "name": "omakase places"},
+            "l2": {"id": "l2", "name": "nyc coffee shops"},
+            "l1": {
+                "id": "l1",
+                "name": "songs of all time",
+                "type": "songs_spotify",
+                "item_order": ["i3", "i1", "i2"],
+                "items": {
+                    "i1": {
+                        "id": "i1",
+                        "album_cover": "https://album.com/photo.jpg",
+                        "name": "Is There Somewhere",
+                        "artist": "Halsey",
+                        "album": "Room 93",
+                        "uri": "spotify.com/uri?92jd2k"
+                    },
+                    "i2": {
+                        "id": "i2",
+                        "album_cover": "https://album.com/photo1.jpg",
+                        "name": "Is There Somewhere",
+                        "artist": "Halsey",
+                        "album": "Room 93",
+                        "uri": "spotify.com/uri?92jd2k"
+                    },
+                    "i3": {
+                        "id": "i3",
+                        "album_cover": "https://album.com/photo2.jpg",
+                        "name": "Is There Somewhere",
+                        "artist": "Halsey",
+                        "album": "Room 93",
+                        "uri": "spotify.com/uri?92jd2k"
+                    }
+                }
+            }
+        }
+    }
+}
