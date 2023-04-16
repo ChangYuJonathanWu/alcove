@@ -16,6 +16,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ChevronRight from '@mui/icons-material/ChevronRight'
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import Divider from '@mui/material/Divider';
 
 import Avatar from '@mui/material/Avatar';
 
@@ -59,23 +60,25 @@ export default function Profile() {
             const listButtonId = `list-button-${listId}`
             listComponents.push(
                 <>
-                    <ListItemButton id={listButtonId} key={listId} onClick={() => { toggleSingleList(listId) }}>
-                        <Stack id={listButtonId} direction="row" alignItems="center" spacing={2}>
-                            {isOpen ? <ExpandMore /> : <ChevronRight />}
-                            <Stack>
-                                <Typography variant="h3">{name}</Typography>
-                                {isOpen && <Typography variant="caption">{commentary}</Typography>}
-                            </Stack>
+                    <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+                        <ListItemButton id={listButtonId} key={listId} onClick={() => { toggleSingleList(listId) }}>
+                            <Stack id={listButtonId} direction="row" alignItems="center" spacing={2}>
+                                {isOpen ? <ExpandMore /> : <ChevronRight />}
+                                <Stack>
+                                    <Typography variant="h3">{name}</Typography>
+                                    {isOpen && <Typography variant="caption">{commentary}</Typography>}
+                                </Stack>
 
-                        </Stack>
-                    </ListItemButton>
+                            </Stack>
+                        </ListItemButton>
+     
                     {/* <Collapse in={listsOpen[listId]}> */}
                     <Collapse in={isOpen}>
-                        <List >
+                        <List>
                             {buildItems(items, itemOrder, type)}
                         </List>
                     </Collapse>
-
+                    </Paper>
                 </>
             )
         })
@@ -90,7 +93,7 @@ export default function Profile() {
 
     const buildRestaurantItems = (items, itemOrder) => {
         return itemOrder.map(
-            itemId => <RestaurantItem key={itemId} item={items[itemId]} />
+            itemId => <><Divider flexItem /><RestaurantItem key={itemId} item={items[itemId]} /></>
         )
     }
 
@@ -106,7 +109,7 @@ export default function Profile() {
     }
 
     return (
-        <>
+        <div style={{ height: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: 'url(http://localhost:3000/mountains.jpg)', backgroundSize: 'cover' }}>
             <Head>
                 <title>{`${title} (@${handle}) - sleepless.so`}</title>
                 <meta name="description" content={description} />
@@ -115,16 +118,26 @@ export default function Profile() {
             </Head>
             <main>
                 <Stack>
-                    <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
-                        <Avatar alt={handle} sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
-                        <Typography variant="h1">{title}</Typography>
-                        <Typography variant="subtitle1">{`@${handle}`}</Typography>
-                        <Typography variant="body">{description}</Typography>
+
+                    <Stack direction="row" justifyContent={"center"}>
+                        <Paper variant="" sx={{paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: 'rgba(255, 255, 255, 0.8)'}}>
+                            <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
+
+                                <Avatar alt={handle} sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
+
+                                <Typography variant="h1">{title}</Typography>
+                                <Typography variant="subtitle1">{`@${handle}`}</Typography>
+                                <Typography variant="body">{description}</Typography>
+                            </Stack>
+                        </Paper>
                     </Stack>
+
+
+
 
                     {buildLists()}
                 </Stack>
             </main>
-        </>
+        </div>
     )
 }
