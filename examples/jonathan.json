@@ -2,19 +2,24 @@
     "title": "jonathan wu",
     "title_style": {},
     "handle": "jonathanwu",
+    "photo": "tH7kAkdmO20akaAjkd.jpeg",
     "description": "these are my favorite:",
     "description_style": {},
     "profile": {
-        "list_order": ["l1", "l2", "l3", "l4", "l5"],
+        "list_order": ["l7", "l2", "l1", "l3", "l4", "l5"],
         "lists": {
+            "l7": {"id": "l7", "name": "sushi restaurants", "commentary": "most of these are sentimental"},
+            "l6": {"id": "l6", "name": "hiking trails in oregon"},
+            "l5": {"id": "l5", "name": "old movies"},
             "l4": {"id": "l4", "name": "books this year"},
             "l3": {"id": "l3", "name": "omakase places"},
-            "l2": {"id": "l2", "name": "nyc coffee shops"},
+            "l2": {"id": "l2", "name": "seattle coffee shops"},
             "l1": {
                 "id": "l1",
                 "name": "songs of all time",
-                "type": "songs_spotify",
-                "item_order": ["i3", "i1", "i2"],
+                "commentary": "always on loop",
+                "type": "spotify",
+                "item_order": ["i1", "i2", "i3", "i4", "i5"],
                 "items": {
                     "i1": {
                         "id": "i1",
@@ -22,23 +27,39 @@
                         "name": "Is There Somewhere",
                         "artist": "Halsey",
                         "album": "Room 93",
-                        "uri": "spotify.com/uri?92jd2k"
+                        "uri": "https://open.spotify.com/embed/track/5XijWLBY0vwl5MPUpQA2Ha?utm_source=generator&theme=0"
                     },
                     "i2": {
                         "id": "i2",
                         "album_cover": "https://album.com/photo1.jpg",
-                        "name": "Is There Somewhere",
-                        "artist": "Halsey",
-                        "album": "Room 93",
-                        "uri": "spotify.com/uri?92jd2k"
+                        "name": "Run",
+                        "artist": "George Strait",
+                        "album": "The Road Less Travelled",
+                        "uri": "https://open.spotify.com/embed/track/1EXMjx4nCIvYTaY5CZMUSl?utm_source=generator&theme=0"
                     },
                     "i3": {
                         "id": "i3",
                         "album_cover": "https://album.com/photo2.jpg",
-                        "name": "Is There Somewhere",
-                        "artist": "Halsey",
-                        "album": "Room 93",
-                        "uri": "spotify.com/uri?92jd2k"
+                        "name": "Born to Die",
+                        "artist": "Lana Del Rey",
+                        "album": "Born to Die",
+                        "uri": "https://open.spotify.com/embed/track/487OPlneJNni3NWC8SYqhW?utm_source=generator&theme=0"
+                    },
+                    "i4": {
+                        "id": "i4",
+                        "album_cover": "https://album.com/photo2.jpg",
+                        "name": "Fast Car",
+                        "artist": "Tracy Chapman",
+                        "album": "",
+                        "uri": "https://open.spotify.com/embed/track/2M9ro2krNb7nr7HSprkEgo?utm_source=generator"
+                    },
+                    "i5": {
+                        "id": "i5",
+                        "album_cover": "https://album.com/photo2.jpg",
+                        "name": "Style",
+                        "artist": "Taylor Swift",
+                        "album": "1989",
+                        "uri": "https://open.spotify.com/embed/track/4lIxdJw6W3Fg4vUIYCB0S5?utm_source=generator"
                     }
                 }
             }

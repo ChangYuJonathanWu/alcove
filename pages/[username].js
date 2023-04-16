@@ -9,11 +9,17 @@ import { Inter } from 'next/font/google';
 
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
+import ChevronRight from '@mui/icons-material/ChevronRight'
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
+import Avatar from '@mui/material/Avatar';
+
+import SpotifyItem from '@/components/items/SpotifyItem';
 import user from '../examples/jonathan.json'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,8 +27,8 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Profile() {
     const router = useRouter()
     const { username } = router.query;
-    const { title, description, handle, profile = {} } = user;
-    const { lists = {}, list_order = [] } = profile
+    const { title, description, handle, photo, profile = {} } = user;
+    const { lists = {}, list_order: listOrder = [] } = profile
 
     const buildInitialListOpenStates = () => {
         const listStates = {}
@@ -37,27 +43,54 @@ export default function Profile() {
         setListsOpen({ ...listsOpen, [listId]: !listsOpen[listId] })
     }
 
-    const buildListItems = () => {
+    const buildLists = () => {
         const listComponents = []
-        Object.keys(lists).forEach(listId => {
+        listOrder.forEach(listId => {
             const list = lists[listId]
-            const { name } = list
+            const { name, type, commentary, items, item_order: itemOrder = [], } = list
+            const isOpen = listsOpen[listId]
             listComponents.push(
                 <>
                     <ListItemButton onClick={() => toggleList(listId)}>
-                        <Typography>{name}</Typography>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                            {isOpen ? <ExpandMore /> : <ChevronRight />}
+                            <Stack>
+                                <Typography variant="h3">{name}</Typography>
+                                {isOpen && <Typography variant="caption">{commentary}</Typography>}
+                            </Stack>
+                            
+                        </Stack>
                     </ListItemButton>
                     <Collapse in={listsOpen[listId]}>
                         <List>
-                            <div>Test 1</div>
-                            <div>Test 2</div>
+                            {buildItems(items, itemOrder, type) }
                         </List>
                     </Collapse>
                 </>
-
             )
         })
         return listComponents
+    }
+
+    const buildSpotifyItems = (items, itemOrder) => {
+        return itemOrder.map(
+            itemId => <SpotifyItem key={itemId} item={items[itemId]}/>     
+        )
+    }
+
+    const buildRestaurantItems = (items, itemOrder) => {
+
+    }
+
+    const buildItems = (items, itemOrder, type) => {
+        switch(type) {
+            case "spotify":
+                return buildSpotifyItems(items, itemOrder)
+            case "restaurant":
+                return buildRestaurantItems(items, itemOrder)
+            default :
+                return <div></div>
+        }
     }
 
     return (
@@ -70,10 +103,14 @@ export default function Profile() {
             </Head>
             <main>
                 <Stack>
-                    <Typography variant="h1">{title}</Typography>
-                    <Typography variant="subtitle1">{`@${handle}`}</Typography>
-                    <Typography variant="body">{description}</Typography>
-                    {buildListItems()}
+                    <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
+                        <Avatar alt="jonathanwu" sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
+                        <Typography variant="h1">{title}</Typography>
+                        <Typography variant="subtitle1">{`@${handle}`}</Typography>
+                        <Typography variant="body">{description}</Typography>
+                    </Stack>
+
+                    {buildLists()}
                 </Stack>
             </main>
         </>
