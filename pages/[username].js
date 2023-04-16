@@ -38,10 +38,16 @@ export default function Profile() {
         })
         return listStates
     }
+
+    const [listOpen, setListOpen] = React.useState(null);
     const [listsOpen, setListsOpen] = React.useState(buildInitialListOpenStates())
 
     const toggleList = (listId) => {
         setListsOpen({ ...listsOpen, [listId]: !listsOpen[listId] })
+    }
+
+    const toggleSingleList = (listId) => {
+        setListOpen(listOpen === listId ? null : listId)
     }
 
     const buildLists = () => {
@@ -49,11 +55,11 @@ export default function Profile() {
         listOrder.forEach(listId => {
             const list = lists[listId]
             const { name, type, commentary, items, item_order: itemOrder = [], } = list
-            const isOpen = listsOpen[listId]
+            const isOpen = listOpen === listId
             const listButtonId = `list-button-${listId}`
             listComponents.push(
                 <>
-                    <ListItemButton id={listButtonId} key={listId} onClick={() => { toggleList(listId) }}>
+                    <ListItemButton id={listButtonId} key={listId} onClick={() => { toggleSingleList(listId) }}>
                         <Stack id={listButtonId} direction="row" alignItems="center" spacing={2}>
                             {isOpen ? <ExpandMore /> : <ChevronRight />}
                             <Stack>
@@ -63,7 +69,8 @@ export default function Profile() {
 
                         </Stack>
                     </ListItemButton>
-                    <Collapse in={listsOpen[listId]}>
+                    {/* <Collapse in={listsOpen[listId]}> */}
+                    <Collapse in={isOpen}>
                         <List >
                             {buildItems(items, itemOrder, type)}
                         </List>
