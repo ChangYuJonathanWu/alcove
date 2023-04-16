@@ -12,7 +12,7 @@ export default function RestaurantItem({ item }) {
                 <Avatar sx={{ width: 40, height: 40 }} src={image} style={{ marginLeft: "1rem" , marginRight: "1rem"}}/>
                 <Stack>
                     <Typography variant="h4">{name}</Typography>
-                    <Typography variant="body2">{`${cuisine} - ${location}`}</Typography>
+                    <Typography variant="body2" fontSize="0.8rem">{`${cuisine} - ${location}`}</Typography>
                     {commentary && <Typography variant="caption">{`"${commentary}"`}</Typography>}
                 </Stack>
             </Stack>

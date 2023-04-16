@@ -50,23 +50,25 @@ export default function Profile() {
             const list = lists[listId]
             const { name, type, commentary, items, item_order: itemOrder = [], } = list
             const isOpen = listsOpen[listId]
+            const listButtonId = `list-button-${listId}`
             listComponents.push(
                 <>
-                    <ListItemButton onClick={() => toggleList(listId)}>
-                        <Stack direction="row" alignItems="center" spacing={2}>
+                    <ListItemButton id={listButtonId} key={listId} onClick={() => { toggleList(listId) }}>
+                        <Stack id={listButtonId} direction="row" alignItems="center" spacing={2}>
                             {isOpen ? <ExpandMore /> : <ChevronRight />}
                             <Stack>
                                 <Typography variant="h3">{name}</Typography>
                                 {isOpen && <Typography variant="caption">{commentary}</Typography>}
                             </Stack>
-                            
+
                         </Stack>
                     </ListItemButton>
                     <Collapse in={listsOpen[listId]}>
-                        <List>
-                            {buildItems(items, itemOrder, type) }
+                        <List >
+                            {buildItems(items, itemOrder, type)}
                         </List>
                     </Collapse>
+
                 </>
             )
         })
@@ -75,23 +77,23 @@ export default function Profile() {
 
     const buildSpotifyItems = (items, itemOrder) => {
         return itemOrder.map(
-            itemId => <SpotifyItem key={itemId} item={items[itemId]}/>     
+            itemId => <SpotifyItem key={itemId} item={items[itemId]} />
         )
     }
 
     const buildRestaurantItems = (items, itemOrder) => {
         return itemOrder.map(
-            itemId => <RestaurantItem key={itemId} item={items[itemId]}/>
+            itemId => <RestaurantItem key={itemId} item={items[itemId]} />
         )
     }
 
     const buildItems = (items, itemOrder, type) => {
-        switch(type) {
+        switch (type) {
             case "spotify":
                 return buildSpotifyItems(items, itemOrder)
             case "restaurant":
                 return buildRestaurantItems(items, itemOrder)
-            default :
+            default:
                 return <div></div>
         }
     }
