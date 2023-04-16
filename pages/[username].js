@@ -20,6 +20,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Avatar from '@mui/material/Avatar';
 
 import SpotifyItem from '@/components/items/SpotifyItem';
+import RestaurantItem from '@/components/items/RestaurantItem';
 import user from '../examples/jonathan.json'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -79,7 +80,9 @@ export default function Profile() {
     }
 
     const buildRestaurantItems = (items, itemOrder) => {
-
+        return itemOrder.map(
+            itemId => <RestaurantItem key={itemId} item={items[itemId]}/>
+        )
     }
 
     const buildItems = (items, itemOrder, type) => {
@@ -104,7 +107,7 @@ export default function Profile() {
             <main>
                 <Stack>
                     <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
-                        <Avatar alt="jonathanwu" sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
+                        <Avatar alt={handle} sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
                         <Typography variant="h1">{title}</Typography>
                         <Typography variant="subtitle1">{`@${handle}`}</Typography>
                         <Typography variant="body">{description}</Typography>
