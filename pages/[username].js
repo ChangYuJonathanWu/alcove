@@ -35,20 +35,7 @@ export default function Profile() {
     const { title, description, handle, photo, profile = {} } = user;
     const { lists = {}, list_order: listOrder = [] } = profile
 
-    const buildInitialListOpenStates = () => {
-        const listStates = {}
-        Object.keys(lists).forEach(listId => {
-            listStates[listId] = false;
-        })
-        return listStates
-    }
-
     const [listOpen, setListOpen] = React.useState(null);
-    const [listsOpen, setListsOpen] = React.useState(buildInitialListOpenStates())
-
-    const toggleList = (listId) => {
-        setListsOpen({ ...listsOpen, [listId]: !listsOpen[listId] })
-    }
 
     const toggleSingleList = (listId) => {
         setListOpen(listOpen === listId ? null : listId)
@@ -73,7 +60,6 @@ export default function Profile() {
                                 </Stack>
                             </Stack>
                         </ListItemButton>
-                    {/* <Collapse in={listsOpen[listId]}> */}
                     <Collapse in={isOpen}>
                         <List>
                             {buildItems(items, itemOrder, type)}
