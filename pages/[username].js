@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -18,8 +17,7 @@ import ChevronRight from '@mui/icons-material/ChevronRight'
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 
-import Avatar from '@mui/material/Avatar';
-
+import ProfileHeader from '@/components/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
 import user from '../examples/jonathan.json'
@@ -105,16 +103,7 @@ export default function Profile() {
             </Head>
             <main>
                 <Stack>
-                    <Stack direction="row" justifyContent={"center"}>
-                        <Paper variant="" sx={{paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR}}>
-                            <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
-                                <Avatar alt={handle} sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
-                                <Typography variant="h1">{title}</Typography>
-                                <Typography variant="subtitle1">{`@${handle}`}</Typography>
-                                <Typography variant="body">{description}</Typography>
-                            </Stack>
-                        </Paper>
-                    </Stack>
+                    <ProfileHeader user={user}/>
                     {buildLists()}
                 </Stack>
             </main>
