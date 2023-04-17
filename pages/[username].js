@@ -71,10 +71,8 @@ export default function Profile() {
                                     <Typography variant="h3">{name}</Typography>
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
-
                             </Stack>
                         </ListItemButton>
-     
                     {/* <Collapse in={listsOpen[listId]}> */}
                     <Collapse in={isOpen}>
                         <List>
@@ -112,7 +110,7 @@ export default function Profile() {
     }
 
     return (
-        <div style={{ height: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${BACKGROUND_URL})`, backgroundSize: 'cover' }}>
+        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${BACKGROUND_URL})`, backgroundSize: 'cover',  backgroundAttachment: 'fixed' }}>
             <Head>
                 <title>{`${title} (@${handle}) - sleepless.so`}</title>
                 <meta name="description" content={description} />
@@ -121,7 +119,6 @@ export default function Profile() {
             </Head>
             <main>
                 <Stack>
-
                     <Stack direction="row" justifyContent={"center"}>
                         <Paper variant="" sx={{paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR}}>
                             <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
@@ -132,10 +129,6 @@ export default function Profile() {
                             </Stack>
                         </Paper>
                     </Stack>
-
-
-
-
                     {buildLists()}
                 </Stack>
             </main>
