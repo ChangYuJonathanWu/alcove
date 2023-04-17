@@ -1,5 +1,5 @@
 import React from 'react'
-import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -13,7 +13,7 @@ export default function RestaurantItem({ item }) {
     const { itemId, uri, name, image, cuisine, location, commentary } = item
     const commentaryToUse = commentary ? `"${commentary}"` : ""
     return (
-            <ListItem key={itemId} sx={{paddingTop: "0.5rem"}}>
+            <ListItemButton target="_blank" href={uri} key={itemId} sx={{paddingTop: "0.5rem"}}>
                 <Stack direction="row" alignItems="start" >
                     <Avatar sx={{ width: 40, height: 40 }} src={image} style={{ marginRight: "1rem" }} />
                     <Stack>
@@ -22,6 +22,6 @@ export default function RestaurantItem({ item }) {
                         <Typography variant="caption">{commentaryToUse}</Typography>
                     </Stack>
                 </Stack>
-            </ListItem>
+            </ListItemButton>
     )
 }
