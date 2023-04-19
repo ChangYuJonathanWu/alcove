@@ -18,10 +18,9 @@ export default function AlcoveProfileLogo() {
     return (
         <Stack direction="row" justifyContent={"center"}>
             <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
-                <Stack direction="row" spacing={1} alignItems="end" style={{ padding: "1rem" }}>
+                <Stack direction="row" spacing={0.5} alignItems="end" style={{ padding: "1rem" }}>
                     <FoundationIcon/>
                     <Typography variant="65">alcove</Typography>
-
                 </Stack>
             </Paper>
         </Stack>
