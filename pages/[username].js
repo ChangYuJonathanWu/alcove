@@ -22,6 +22,8 @@ import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
 import TrailItem from '@/components/items/TrailItem';
 import user from '../examples/jonathan.json'
+import ShowItem from '@/components/items/ShowItem';
+import CarItem from '@/components/items/CarItem';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -89,14 +91,30 @@ export default function Profile() {
         )
     }
 
+    const buildShowItems = (items, itemOrder) => {
+        return itemOrder.map(
+            itemId => <ShowItem key={itemId} item={items[itemId]}/>
+        )
+    }
+
+    const buildCarItems = (items, itemOrder) => {
+        return itemOrder.map(
+            itemId => <CarItem key={itemId} item={items[itemId]}/>
+        )
+    }
+
     const buildItems = (items, itemOrder, type) => {
         switch (type) {
             case "spotify":
                 return buildSpotifyItems(items, itemOrder)
             case "restaurant":
                 return buildRestaurantItems(items, itemOrder)
-            case "trails":
+            case "trail":
                 return buildTrailItems(items, itemOrder)
+            case "show":
+                return buildShowItems(items, itemOrder)
+            case "car":
+                return buildCarItems(items, itemOrder)
             default:
                 return <div></div>
         }
