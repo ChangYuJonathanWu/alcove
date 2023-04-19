@@ -24,6 +24,7 @@ import TrailItem from '@/components/items/TrailItem';
 import user from '../examples/jonathan.json'
 import ShowItem from '@/components/items/ShowItem';
 import CarItem from '@/components/items/CarItem';
+import AlcoveProfileLogo from '@/components/AlcoveProfileLogo';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -132,6 +133,7 @@ export default function Profile() {
                 <Stack>
                     <ProfileHeader user={user}/>
                     {buildLists()}
+                    <AlcoveProfileLogo/>
                 </Stack>
             </main>
         </div>
