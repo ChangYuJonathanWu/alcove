@@ -20,6 +20,7 @@ import Divider from '@mui/material/Divider';
 import ProfileHeader from '@/components/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
+import TrailItem from '@/components/items/TrailItem';
 import user from '../examples/jonathan.json'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -82,12 +83,20 @@ export default function Profile() {
         )
     }
 
+    const buildTrailItems = (items, itemOrder) => {
+        return itemOrder.map(
+            itemId => <TrailItem key={itemId} item={items[itemId]}/>
+        )
+    }
+
     const buildItems = (items, itemOrder, type) => {
         switch (type) {
             case "spotify":
                 return buildSpotifyItems(items, itemOrder)
             case "restaurant":
                 return buildRestaurantItems(items, itemOrder)
+            case "trails":
+                return buildTrailItems(items, itemOrder)
             default:
                 return <div></div>
         }

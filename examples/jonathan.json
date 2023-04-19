@@ -8,10 +8,10 @@
     "profile": {
         "list_order": [
             "l7",
-            "l2",
-            "l1",
-            "l3",
             "l4",
+            "l2",
+            "l3",
+            "l1",
             "l5"
         ],
         "lists": {
@@ -84,11 +84,83 @@
             },
             "l4": {
                 "id": "l4",
-                "name": "hiking trails"
+                "name": "hiking trails",
+                "type": "trails",
+                "item_order": [
+                    "i1",
+                    "i2",
+                    "i4",
+                    "i3",
+                    "i5"
+
+                ],
+                "items": {
+                    "i1": {
+                        "name": "Lower Mcleay to Pittock Mansion",
+                        "location": "Portland, OR",
+                        "meta": {
+                            "length": "5.0 miles",
+                            "trail_type": "Out & Back",
+                            "elevation_gain": "921 ft"
+                        },
+                        "image": "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMTk0NDk0ODMvNThlNjM2ZGQ2NGIyNjdlYjQwOGIwZjMzZjE1NzAzNDQuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJqcGVnIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+                        "uri": "https://www.alltrails.com/trail/us/oregon/lower-macleay-park-to-pittock-mansion",
+                        "commentary": "It was the proximity. Or maybe the view. This trail often earmarked life changes."
+                    },
+                    "i2": {
+                        "name": "Mailbox Peak Trail Loop",
+                        "location": "Cascade Range, King County, WA",
+                        "meta": {
+                            "length": "7.7 miles",
+                            "trail_type": "Loop",
+                            "elevation_gain": "4,009 ft"
+                        },
+                        "image": "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMjM4OTczOTAvYzZmNzU1YmFiMGU4MzA5NDM5Njc3ZDU3YzVlMDA5NWUuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJqcGVnIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+                        "uri": "https://www.alltrails.com/trail/us/washington/mailbox-peak-trail-loop",
+                        "commentary": "My redemption for skipping leg day."
+                    },
+                    "i3": {
+                        "name": "Bridal Veil Falls & Lunch Rock via Lake Serene",
+                        "location": "Snoqualmie National Forest, WA",
+                        "meta": {
+                            "length": "7.6 miles",
+                            "trail_type": "Out & Back",
+                            "elevation_gain": "2,690 ft"
+                        },
+                        "image": "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNTg0NjY1MjQvOTQxNmQwZTA5ZDE5NmVkNTA3YmI4Y2E3YTlhYTE3OGQuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJqcGVnIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+                        "uri": "https://www.alltrails.com/trail/us/washington/bridal-veil-falls-and-lake-serene",
+                        "commentary": "I bought micro-spikes just for this."
+                    },
+                    "i4": {
+                        "name": "Angel's Landing",
+                        "location": "Zion National Park, Utah",
+                        "meta": {
+                            "length": "4.4 miles",
+                            "trail_type": "Out & Back",
+                            "elevation_gain": "1,604 ft"
+                        },
+                        "image": "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNDI3ODc2MjYvYjU0Y2Q2M2RjMGU5MjFmMGQ0NWQ3ZWIzZTNkZWZhN2IuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJqcGVnIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+                        "uri": "https://www.alltrails.com/trail/us/utah/angels-landing-trail",
+                        "commentary": "Where I learned I was okay with heights."
+                    },
+                    "i5": {
+                        "name": "Rim, Navajo Loop & Peakaboo",
+                        "location": "Bryce Canyon National Park, UT",
+                        "meta": {
+                            "length": "7.4 miles",
+                            "trail_type": "Loop",
+                            "elevation_gain": "1,755 ft"
+                        },
+                        "image": "https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvNDY2NTg2NzQvMTI4YzRjNjRlZmYyOWRkNDc0MDRlMTM2NWQzZGUzNTguanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJqcGVnIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==",
+                        "uri": "https://www.alltrails.com/trail/us/utah/rim-navajo-loop-and-peekaboo-loop-trail",
+                        "commentary": "Bring water and a sense of wonder."
+                    }
+                }
+
             },
             "l3": {
                 "id": "l3",
-                "name": "roads and highways"
+                "name": "old cars"
             },
             "l2": {
                 "id": "l2",
