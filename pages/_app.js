@@ -4,6 +4,7 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../config/theme';
 import createEmotionCache from '../config/createEmotionCache';
 
+
 export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
