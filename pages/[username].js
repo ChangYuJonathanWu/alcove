@@ -8,7 +8,7 @@ import Profile from '@/components/Profile'
 export default function ProfileRoute() {
     const router = useRouter()
     const { username } = router.query;
-    const validHandles = ["jonathanwu"]
+    const validHandles = ["jonathanwu", "gracehopper"]
     if(username === undefined) {
         return <div></div>
     }

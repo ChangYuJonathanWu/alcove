@@ -18,9 +18,9 @@ export default function ProfileHeader({ user }) {
         <Stack direction="row" justifyContent={"center"}>
             <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '1rem', backgroundColor: PAPER_COLOR }}>
                 <Stack alignItems="center" style={{ paddingBottom: "1rem" }}>
-                    <Avatar alt={handle} sx={{ width: 80, height: 80 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
+                    <Avatar alt={handle} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />
                     <Typography variant="h1">{title}</Typography>
-                    <Typography variant="subtitle1">{`@${handle}`}</Typography>
+                    {handle && <Typography variant="subtitle1">{`@${handle}`}</Typography>}
                     <Typography variant="body">{description}</Typography>
                 </Stack>
             </Paper>

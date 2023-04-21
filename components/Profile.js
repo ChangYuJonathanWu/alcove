@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
-import { Inter } from 'next/font/google';
 
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
@@ -21,21 +20,32 @@ import ProfileHeader from '@/components/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
 import TrailItem from '@/components/items/TrailItem';
-import user from '../examples/jonathan.json'
+
 import ShowItem from '@/components/items/ShowItem';
 import CarItem from '@/components/items/CarItem';
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo';
 
-import ErrorPage from 'next/error'
-
-const inter = Inter({ subsets: ['latin'] })
+import jonathan_user from '../examples/jonathan.json'
+import example_user from '../examples/example.json'
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)' 
-const BACKGROUND_URL = 'http://localhost:3000/mountains.jpg'
+
+const determineUser = (username) => {
+    switch(username){
+        case "jonathanwu":
+            return jonathan_user
+        case "gracehopper":
+            return example_user
+        default:
+            return example_user
+    }
+
+}
 
 export default function Profile({username}) {
     const [listOpen, setListOpen] = React.useState(null);
-    const { title, description, handle, photo, profile = {} } = user;
+    const user = determineUser(username)
+    const { title, description, handle, photo, background, config, profile = {} } = user
     const { lists = {}, list_order: listOrder = [] } = profile
 
     const toggleSingleList = (listId) => {
@@ -121,18 +131,19 @@ export default function Profile({username}) {
     }
 
     return (
-        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${BACKGROUND_URL})`, backgroundSize: 'cover',  backgroundAttachment: 'fixed' }}>
+        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${background})`, backgroundSize: 'cover',  backgroundAttachment: 'fixed' }}>
             <Head>
-                <title>{`${title} (@${handle}) - sleepless.so`}</title>
+                <title>{`${title} (@${handle}) - alcove`}</title>
                 <meta name="description" content={description} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
                 <Stack>
+                    {config.demo_mode && <div style={{height: "2rem"}}></div>}
                     <ProfileHeader user={user}/>
                     {buildLists()}
-                    <AlcoveProfileLogo/>
+                    { !config.hide_logo && <AlcoveProfileLogo/> }
                 </Stack>
             </main>
         </div>
