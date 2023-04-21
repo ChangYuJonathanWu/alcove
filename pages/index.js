@@ -45,6 +45,7 @@ export default function Home() {
           id="filled-basic" 
           style={{ backgroundColor: 'white', borderRadius: '15px',}}
           label="" variant="outlined"
+          placeholder="yourname"
           sx={{
             "& .MuiOutlinedInput-notchedOutline": {
               border: 'none',
