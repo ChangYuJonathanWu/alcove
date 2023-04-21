@@ -5,6 +5,8 @@ import styles from '@/styles/Home.module.css'
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo'
 import FoundationIcon from '@mui/icons-material/Foundation';
 import { Button, Stack, TextField, Typography } from '@mui/material'
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
 import { Amita } from 'next/font/google';
 
 import ImageShadow from 'react-image-shadow';
@@ -36,8 +38,19 @@ export default function Home() {
         
           <ImageShadow  width={220} style={{marginBottom: "2rem"}} shadowHover={true} src={"/emily.png"} />
 
-          <TextField id="filled-basic" label="" variant="filled" />
-          <Button sx={claimButtonStyle} variant="contained">Claim Your Alcove</Button>
+          <TextField 
+                    InputProps={{
+                      startAdornment: <InputAdornment sx={{ fontSize: '1rem', marginRight:'0.12rem'}} position="start">alcove.place/</InputAdornment>,
+                    }}
+          id="filled-basic" 
+          style={{ backgroundColor: 'white', borderRadius: '15px',}}
+          label="" variant="outlined"
+          sx={{
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: 'none',
+            }
+          }} />
+          <Button sx={claimButtonStyle} style={{marginTop: '1rem'}}variant="contained">Claim Your Alcove</Button>
         </Stack>
       </main>
     </>
