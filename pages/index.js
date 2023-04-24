@@ -73,7 +73,8 @@ export default function Home() {
     email: "",
     showValidationError: false,
     showEmailInput: false,
-    validationErrorText: ""
+    validationErrorText: "",
+    completed: false
   })
   const mobileLayout = (
     <Stack alignItems="center">
@@ -103,7 +104,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main style={{ backgroundColor, height: '100vh' }}>
+      <main style={{ backgroundColor, minHeight: '100vh', margin: 0 }}>
         <Stack alignItems="center">
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
