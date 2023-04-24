@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Stack, TextField, Typography } from '@mui/material'
+import { Button, Collapse, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 
@@ -83,10 +83,10 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     }
 
     const calculateStackAlignment = () => {
-        if(!desktop) {
+        if (!desktop) {
             return "center"
         }
-        if(showEmailInput) {
+        if (showEmailInput) {
             return "end"
         }
         return "start"
@@ -95,50 +95,50 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     const stackAlignment = showEmailInput && desktop ? "end" : "start"
 
     const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', color: 'white' }} variant="subtitle2">{validationErrorText}</Typography>
-
+    const collapseStyle = desktop ? {} : { width: "100%" }
     const ctaButtonText = showEmailInput ? "Complete" : "Claim Your Alcove"
     return (
         <Stack>
 
-        <Stack direction={desktop ? "row" : "column"} spacing={desktop ? 1 : 0} alignItems={calculateStackAlignment()}>
-            
-            <Stack>
-                <TextField
-                    InputProps={{
-                        startAdornment: <InputAdornment sx={{ fontSize: '1rem', marginRight: '0.12rem' }} position="start">alcove.place/</InputAdornment>,
-                    }}
-                    value={handle}
-                    disabled={showEmailInput}
-                    onChange={processHandle}
-                    id="handle-input"
-                    style={{ backgroundColor: 'white', borderRadius: '15px', }}
-                    label="" variant="outlined"
-                    placeholder="yourname"
-                    sx={{
-                        "& .MuiOutlinedInput-notchedOutline": {
-                            border: 'none',
-                        }
-                    }} />
-            
-                {showEmailInput &&
+            <Stack direction={desktop ? "row" : "column"} spacing={desktop ? 1 : 0} alignItems={calculateStackAlignment()}>
+
+                <Stack>
                     <TextField
-                        value={email}
-                        onChange={processEmail}
-                        id="email-input"
-                        style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
+                        InputProps={{
+                            startAdornment: <InputAdornment sx={{ fontSize: '1rem', marginRight: '0.12rem' }} position="start">alcove.place/</InputAdornment>,
+                        }}
+                        value={handle}
+                        disabled={showEmailInput}
+                        onChange={processHandle}
+                        id="handle-input"
+                        style={{ backgroundColor: 'white', borderRadius: '15px', }}
                         label="" variant="outlined"
-                        placeholder="Enter your email"
+                        placeholder="yourname"
                         sx={{
                             "& .MuiOutlinedInput-notchedOutline": {
                                 border: 'none',
                             }
-                        }} />}
-                
+                        }} />
+                    <Collapse in={showEmailInput} orientation={"vertical"} style={collapseStyle}>
+                        <TextField
+                            value={email}
+                            onChange={processEmail}
+                            id="email-input"
+                            style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
+                            label="" variant="outlined"
+                            placeholder="Enter your email"
+                            sx={{
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    border: 'none',
+                                }
+                            }} />
+                    </Collapse>
+
+                </Stack>
+                {!desktop && showValidationError && handleValidationErrorText}
+                <Button onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
             </Stack>
-            {!desktop && showValidationError && handleValidationErrorText}
-            <Button onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
-        </Stack>
-        {desktop && showValidationError && handleValidationErrorText}
+            {desktop && showValidationError && handleValidationErrorText}
         </Stack>
     )
 }
