@@ -14,8 +14,7 @@ import CallToAction from '@/components/home/CallToAction'
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Hero from '@/components/home/Hero'
 
-
-
+import React, { useState } from 'react'
 
 const amita = Amita({ weight: ['400', '700'], subsets: ['latin'] })
 
@@ -69,20 +68,27 @@ export default function Home() {
   const logoColor = theme.logoColor
   const textColor = theme.textColor
 
+  const [signupState, setSignupState ] = useState({
+    handle: "",
+    email: "",
+    showValidationError: false,
+    showEmailInput: false,
+    validationErrorText: ""
+  })
   const mobileLayout = (
     <Stack alignItems="center">
       <CallToAction textColor={textColor} highlightColor={theme.textColor}/>
-      <Hero/>
-      <SignUp claimButtonStyle={claimButtonStyle} />
+      <Hero desktop={true}/>
+      <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
     </Stack>
   )
 
   const desktopLayout = (
     <Stack style={{marginTop: "5rem"}} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
-      <Hero width={isLarge ? 300:250}/>
+      <Hero desktop={true} width={isLarge ? 300:250}/>
       <Stack style={{marginTop: "5rem"}} spacing={3}>
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"}/>
-        <SignUp desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
+        <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
       </Stack>
     </Stack>
   )
