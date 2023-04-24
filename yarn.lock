@@ -190,6 +190,13 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.37.0.tgz"
   integrity sha512-x5vzdtOOGgFVDCUs81QRB2+liax8rFg3+7hqM+QhBG0/G3F1ZsoYl97UrqgHgQ9KKT7G6c4V+aTUCgu/n22v1A==
 
+"@fireworks-js/react@^2.10.3":
+  version "2.10.3"
+  resolved "https://registry.yarnpkg.com/@fireworks-js/react/-/react-2.10.3.tgz#3f7a20eaef32c772c672b0bdbea4eba1be35837b"
+  integrity sha512-Q8vtRXHqkyQdFjV5I6CfFEIR40xl6DW6sjMBQuxLzctGOPWhZxkMztsreS9tgLzbGvCzCKmRXecGIOvCMW6OVw==
+  dependencies:
+    fireworks-js "2.10.3"
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
@@ -1250,6 +1257,11 @@ find-up@^5.0.0:
   dependencies:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
+
+fireworks-js@2.10.3, fireworks-js@^2.10.3:
+  version "2.10.3"
+  resolved "https://registry.yarnpkg.com/fireworks-js/-/fireworks-js-2.10.3.tgz#7a11b5a9dc918c983754b943262690a9baa8b73a"
+  integrity sha512-hOP+NS2Ub5K/fji6TZmcCp5NXB3bIFwEFki3Fc3K3u9h2lxPHUkMO0fUtVNAWVtUd5mjHwZ7oBtCkiuq0zKvgA==
 
 flat-cache@^3.0.4:
   version "3.0.4"

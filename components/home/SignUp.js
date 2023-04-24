@@ -3,6 +3,9 @@ import { Button, Collapse, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 
+import { Fireworks } from '@fireworks-js/react'
+
+
 export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
     const { completed, handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
 
@@ -99,13 +102,32 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     const collapseStyle = desktop ? {} : { width: "100%" }
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
+    const enableFireworks = false
     if (completed) {
         return (
-            <span style={{textAlign: desktop? "start" : "center", margin: "2rem"}}>
-                <Typography color="white" variant="body1">{`You've succesfully claimed your Alcove handle!`}</Typography> 
-                <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+            <>
+               {enableFireworks &&  <Fireworks
+                    options={{
+                        rocketsPoint: {
+                            min: 0,
+                            max: 100
+                        },
+                    }}
+                    style={{
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        position: 'fixed',
+                    }}
+                />}
+                <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem" }}>
+                    <Typography color="white" variant="body1">{`You've succesfully claimed your Alcove handle!`}</Typography>
+                    <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
 
-            </span>
+                </span>
+            </>
+
         )
     }
     return (
