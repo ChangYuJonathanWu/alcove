@@ -71,7 +71,7 @@ export default function Home() {
 
   const mobileLayout = (
     <Stack alignItems="center">
-      <CallToAction textColor={textColor} />
+      <CallToAction textColor={textColor} highlightColor={theme.textColor}/>
       <Hero/>
       <SignUp claimButtonStyle={claimButtonStyle} />
     </Stack>
@@ -81,7 +81,7 @@ export default function Home() {
     <Stack style={{marginTop: "5rem"}} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
       <Hero width={isLarge ? 300:250}/>
       <Stack style={{marginTop: "5rem"}} spacing={3}>
-        <CallToAction textColor={textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"}/>
+        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"}/>
         <SignUp desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
       </Stack>
     </Stack>
@@ -100,7 +100,7 @@ export default function Home() {
       <main style={{ backgroundColor, height: '100vh' }}>
         <Stack alignItems="center">
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem" }}>
-            <FoundationIcon style={{ color: logoColor }} />
+            <FoundationIcon style={{ color: theme.buttonColor }} />
             <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
           </Stack>
           {isTabletOrMobile ? mobileLayout : desktopLayout}
