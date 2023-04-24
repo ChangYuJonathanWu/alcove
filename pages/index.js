@@ -11,9 +11,11 @@ import { Amita } from 'next/font/google';
 import SignUp from '@/components/home/SignUp'
 import CallToAction from '@/components/home/CallToAction'
 
-import { useMediaQuery } from 'react-responsive'
-import { MobileView } from 'react-device-detect';
+import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Hero from '@/components/home/Hero'
+
+
+
 
 const amita = Amita({ weight: ['400', '700'], subsets: ['latin'] })
 
@@ -58,8 +60,8 @@ const theme5 = {
 }
 
 export default function Home() {
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 800px)' })
-  const isLarge = useMediaQuery({query: '(min-width: 1000px)'})
+  const isTabletOrMobile = useBetterMediaQuery('(max-width: 800px)')
+  const isLarge = useBetterMediaQuery('(min-width: 1000px)')
 
   const theme = theme4;
   const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
