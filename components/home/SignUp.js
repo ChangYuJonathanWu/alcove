@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 
 export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
-    const { handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
+    const { completed, handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
 
     const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem' }
 
@@ -78,7 +78,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
         }
         setSignupState({
             ...signupState,
-            showValidationError: false
+            showValidationError: false,
+            completed: true
         })
     }
 
@@ -96,7 +97,17 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
 
     const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', color: 'white' }} variant="subtitle2">{validationErrorText}</Typography>
     const collapseStyle = desktop ? {} : { width: "100%" }
-    const ctaButtonText = showEmailInput ? "Complete" : "Claim Your Alcove"
+    const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
+
+    if (completed) {
+        return (
+            <span style={{textAlign: desktop? "start" : "center", margin: "2rem"}}>
+                <Typography color="white" variant="body1">{`You've succesfully claimed your Alcove handle!`}</Typography> 
+                <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+
+            </span>
+        )
+    }
     return (
         <Stack>
 
