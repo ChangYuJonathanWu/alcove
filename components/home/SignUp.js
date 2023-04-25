@@ -9,7 +9,7 @@ import { Fireworks } from '@fireworks-js/react'
 export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
     const { completed, handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
 
-    const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem' }
+    const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem', marginBottom: '3rem' }
 
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
