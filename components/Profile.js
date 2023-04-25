@@ -131,7 +131,7 @@ export default function Profile({username}) {
     }
 
     return (
-        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${background})`, backgroundSize: 'cover',  backgroundAttachment: 'fixed' }}>
+        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${background})`, backgroundSize: 'cover',  backgroundAttachment: 'scroll' }}>
             <Head>
                 <title>{`${title} (@${handle}) - alcove`}</title>
                 <meta name="description" content={description} />
