@@ -14,7 +14,7 @@ export default function CallToAction({ textColor, highlightColor, fontSize = "2r
                 <Typography display="inline" variant={textVariant} style={regularStyle} >you love,</Typography>
                 <Typography variant={textVariant} style={regularStyle}>all from one place.</Typography>
             </span>
-            <Typography variant="body2" style={subStyle} >{"Claim your Alcove handle now and join the early-access list."}</Typography>
+            <Typography variant="body2" style={subStyle} >{"Join the early-access list and claim your Alcove."}</Typography>
         </Stack>
 
 

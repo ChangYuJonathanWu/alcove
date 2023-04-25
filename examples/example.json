@@ -3,7 +3,7 @@
     "title_style": {},
     "handle": "",
     "photo": "kj39MAkskalam229461.jpg",
-    "background": "http://localhost:3000/nyc3.jpg",
+    "background": "/nyc3.jpg",
     "description": "All the things that I love",
     "description_style": {},
     "config": {

@@ -3,7 +3,7 @@
     "title_style": {},
     "handle": "jonathanwu",
     "photo": "tH7kAkdmO20akaAjkd.jpeg",
-    "background": "http://localhost:3000/mountains.jpg",
+    "background": "/mountains.jpg",
     "description": "these are my favorite:",
     "description_style": {},
     "config": {},
