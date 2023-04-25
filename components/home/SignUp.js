@@ -142,6 +142,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         }}
                         value={handle}
                         disabled={showEmailInput}
+                        autoCapitalize={false}
+                        autoCorrect={false}
                         onChange={processHandle}
                         id="handle-input"
                         style={{ backgroundColor: 'white', borderRadius: '15px', }}
@@ -156,6 +158,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         <TextField
                             value={email}
                             onChange={processEmail}
+                            autoCapitalize={false}
+                            autoCorrect={false}
                             id="email-input"
                             style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
                             label="" variant="outlined"
