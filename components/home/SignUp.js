@@ -122,7 +122,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                     }}
                 />}
                 <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem" }}>
-                    <Typography color="white" variant="body1">{`You've succesfully claimed your Alcove handle!`}</Typography>
+                    <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
                     <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
 
                 </span>
