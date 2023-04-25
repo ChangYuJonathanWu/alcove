@@ -106,7 +106,7 @@ export default function Home() {
 
       <main style={{ backgroundColor, minHeight: '100vh', margin: 0 }}>
         <Stack alignItems="center">
-          <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "1rem" }}>
+          <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
             <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
           </Stack>
