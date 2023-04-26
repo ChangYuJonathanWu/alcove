@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -131,7 +132,7 @@ export default function Profile({username}) {
     }
 
     return (
-        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0, backgroundImage: `url(${background})`, backgroundSize: 'cover',  backgroundAttachment: 'scroll' }}>
+        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0}}>
             <Head>
                 <title>{`${title} (@${handle}) - alcove`}</title>
                 <meta name="description" content={description} />
@@ -139,6 +140,9 @@ export default function Profile({username}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
+                <div style={{zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed"}}>
+                    <Image fill={true} src={background} alt="background wallpaper"/>
+                </div>
                 <Stack>
                     {config.demo_mode && <div style={{height: "2rem"}}></div>}
                     <ProfileHeader user={user}/>
