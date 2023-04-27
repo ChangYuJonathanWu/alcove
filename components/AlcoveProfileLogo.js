@@ -20,7 +20,7 @@ export default function AlcoveProfileLogo() {
             <Link href="/" style={{ textDecoration: 'none' }}>
                 <Stack direction="row" justifyContent="center">
                     <Paper sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
-                        <Stack direction="row" spacing={0.5} alignItems="flex-end" style={{ padding: "1rem", marginBottom: "2rem" }}>
+                        <Stack direction="row" spacing={0.5} alignItems="flex-end" style={{ padding: "1rem"}}>
                             <FoundationIcon />
                             <Typography className={amita.className} variant="body1">alcove</Typography>
                         </Stack>
