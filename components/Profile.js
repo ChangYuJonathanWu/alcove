@@ -143,7 +143,7 @@ export default function Profile({username}) {
                 <div style={{zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed"}}>
                     <Image fill={true} src={background} alt="background wallpaper"/>
                 </div>
-                <Stack style={{marginBottom: "150px"}}>
+                <Stack style={{marginBottom: "100px"}}>
                     {config.demo_mode && <div style={{height: "2rem"}}></div>}
                     <ProfileHeader user={user}/>
                     {buildLists()}
