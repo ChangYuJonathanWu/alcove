@@ -72,7 +72,7 @@ export default function Profile({username}) {
                                 </Stack>
                             </Stack>
                         </ListItemButton>
-                    <Collapse in={isOpen}>
+                    <Collapse in={isOpen} timeout={0}>
                         <List>
                             {buildItems(items, itemOrder, type)}
                         </List>
