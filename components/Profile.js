@@ -147,7 +147,7 @@ export default function Profile({username}) {
                     {config.demo_mode && <div style={{height: "2rem"}}></div>}
                     <ProfileHeader user={user}/>
                     {buildLists()}
-                    { !config.hide_logo && <AlcoveProfileLogo style={{marginBottom: "2rem"}}/> }
+                    { !config.hide_logo && <AlcoveProfileLogo/> }
                 </Stack>
             </main>
         </div>
