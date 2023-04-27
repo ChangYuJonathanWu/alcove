@@ -63,7 +63,7 @@ export default function Profile({username}) {
             listComponents.push(
                 <>
                     <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
-                        <ListItemButton id={listButtonId} key={listId} onClick={() => { toggleSingleList(listId) }}>
+                        <ListItemButton id={listButtonId} key={listId} disableRipple={true} onClick={() => { toggleSingleList(listId) }}>
                             <Stack id={listButtonId} direction="row" alignItems="center" spacing={2}>
                                 {isOpen ? <ExpandMore /> : <ChevronRight />}
                                 <Stack>
