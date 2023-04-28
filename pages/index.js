@@ -104,8 +104,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <div style={{ zIndex: -1, backgroundColor, minHeight: '100vh', width: "100%", position: "fixed" }}></div>
+      <main style={{ zIndex: -1, backgroundColor, minHeight: '100vh', width: "100%", position: "fixed" }}>
         <Stack alignItems="center">
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
