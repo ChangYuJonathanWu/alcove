@@ -81,6 +81,7 @@ export default function Home() {
     <Stack alignItems="center">
       <CallToAction textColor={textColor} highlightColor={theme.textColor}/>
       <Hero desktop={true}/>
+      <div style={{padding: "0.5rem"}}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
     </Stack>
   )
