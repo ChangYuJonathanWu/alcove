@@ -10,7 +10,7 @@ import CabinIcon from '@mui/icons-material/Cabin';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
 
-const amita = Amita({ weight: ['700'], subsets: ['latin'] })
+const amita = Amita({ weight: ['400', '700'], subsets: ['latin'] })
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 
@@ -22,7 +22,7 @@ export default function AlcoveProfileLogo() {
                     <Paper sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
                         <Stack direction="row" spacing={0.5} alignItems="flex-end" style={{ padding: "1rem"}}>
                             <FoundationIcon />
-                            <Typography className={amita.className} variant="body1">alcove</Typography>
+                            <Typography style={{ fontWeight: 400 }} className={amita.className} variant="body1">alcove</Typography>
                         </Stack>
                     </Paper>
                 </Stack>
