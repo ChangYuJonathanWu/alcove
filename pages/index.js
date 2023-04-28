@@ -104,10 +104,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main style={{minHeight: '100vh', width: '100%'}}>
-
+      <main style={{  backgroundColor, minHeight: '100vh', width: "100%" }}>
         <Stack alignItems="center">
-        <div style={{ position: "fixed", zIndex: -10, backgroundColor, minHeight: '100vh', width: "100%" }}></div>
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
             <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
