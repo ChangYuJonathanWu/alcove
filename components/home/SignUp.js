@@ -8,9 +8,8 @@ import { Fireworks } from '@fireworks-js/react'
 
 export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
     const { completed, handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
-
+    const [hideFireworks, setHideFireworks] = useState(false)
     const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem', marginBottom: '5rem' }
-
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
     const TAKEN_HANDLE = "Sorry, this handle is already taken."
@@ -84,6 +83,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             showValidationError: false,
             completed: true
         })
+        setTimeout(() => setHideFireworks(true), 6000)
     }
 
     const calculateStackAlignment = () => {
@@ -102,11 +102,10 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     const collapseStyle = desktop ? {} : { width: "100%" }
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
-    const enableFireworks = false
     if (completed) {
         return (
             <>
-               {enableFireworks &&  <Fireworks
+                <Fireworks
                     options={{
                         rocketsPoint: {
                             min: 0,
@@ -120,11 +119,11 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         height: '100%',
                         position: 'fixed',
                     }}
-                />}
+                    className={`${hideFireworks? 'firework-hidden' : 'firework-shown'}`}
+                />
                 <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem" }}>
                     <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
                     <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
-
                 </span>
             </>
 
@@ -142,8 +141,6 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         }}
                         value={handle}
                         disabled={showEmailInput}
-                        autoCapitalize={false}
-                        autoCorrect={false}
                         onChange={processHandle}
                         id="handle-input"
                         style={{ backgroundColor: 'white', borderRadius: '15px', }}
@@ -158,8 +155,6 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         <TextField
                             value={email}
                             onChange={processEmail}
-                            autoCapitalize={false}
-                            autoCorrect={false}
                             id="email-input"
                             style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
                             label="" variant="outlined"

@@ -69,7 +69,7 @@ export default function Home() {
   const logoColor = theme.logoColor
   const textColor = theme.textColor
 
-  const [signupState, setSignupState ] = useState({
+  const [signupState, setSignupState] = useState({
     handle: "",
     email: "",
     showValidationError: false,
@@ -79,18 +79,18 @@ export default function Home() {
   })
   const mobileLayout = (
     <Stack alignItems="center">
-      <CallToAction textColor={textColor} highlightColor={theme.textColor}/>
-      <Hero desktop={true}/>
-      <div style={{padding: "0.5rem"}}></div>
+      <CallToAction textColor={textColor} highlightColor={theme.textColor} />
+      <Hero desktop={true} />
+      <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
     </Stack>
   )
 
   const desktopLayout = (
-    <Stack style={{marginTop: "4rem"}} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
-      <Hero desktop={true} width={isReallyLarge ? 300 : isLarge ? 270 : 250} style={{paddingBottom: "3rem"}}/>
-      <Stack style={{marginTop: "5rem"}} spacing={3}>
-        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"}/>
+    <Stack style={{ marginTop: "4rem" }} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
+      <Hero desktop={true} width={isReallyLarge ? 300 : isLarge ? 270 : 250} style={{ paddingBottom: "3rem" }} />
+      <Stack style={{ marginTop: "5rem" }} spacing={3}>
+        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
       </Stack>
     </Stack>
@@ -106,8 +106,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main style={{  backgroundColor, minHeight: '100vh', width: "100%" }}>
-        <Stack alignItems="center" style={{paddingBottom: '3rem'}}>
+      <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+        <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
             <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
