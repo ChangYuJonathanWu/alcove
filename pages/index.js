@@ -61,6 +61,7 @@ const theme5 = {
 export default function Home() {
   const isTabletOrMobile = useBetterMediaQuery('(max-width: 800px)')
   const isLarge = useBetterMediaQuery('(min-width: 1000px)')
+  const isReallyLarge = useBetterMediaQuery('(min-width: 1200px)')
 
   const theme = theme4;
   const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
@@ -86,7 +87,7 @@ export default function Home() {
 
   const desktopLayout = (
     <Stack style={{marginTop: "4rem"}} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
-      <Hero desktop={true} width={isLarge ? 300 : 250} style={{paddingBottom: "3rem"}}/>
+      <Hero desktop={true} width={isReallyLarge ? 300 : isLarge ? 270 : 250} style={{paddingBottom: "3rem"}}/>
       <Stack style={{marginTop: "5rem"}} spacing={3}>
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"}/>
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
@@ -105,7 +106,7 @@ export default function Home() {
       </Head>
 
       <main style={{  backgroundColor, minHeight: '100vh', width: "100%" }}>
-        <Stack alignItems="center">
+        <Stack alignItems="center" style={{paddingBottom: '3rem'}}>
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
             <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
