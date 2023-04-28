@@ -118,6 +118,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         width: '100%',
                         height: '100%',
                         position: 'fixed',
+                        zIndex: 100
                     }}
                     className={`${hideFireworks? 'firework-hidden' : 'firework-shown'}`}
                 />
