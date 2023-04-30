@@ -75,7 +75,8 @@ export default function Home() {
     showValidationError: false,
     showEmailInput: false,
     validationErrorText: "",
-    completed: false
+    completed: false,
+    hideFireworks: false, // This is for triggering hiding fireworks
   })
   const mobileLayout = (
     <Stack alignItems="center">

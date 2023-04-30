@@ -7,8 +7,7 @@ import { Fireworks } from '@fireworks-js/react'
 
 
 export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
-    const { completed, handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
-    const [hideFireworks, setHideFireworks] = useState(false)
+    const { completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
     const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem', marginBottom: '5rem' }
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
@@ -83,7 +82,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             showValidationError: false,
             completed: true
         })
-        setTimeout(() => setHideFireworks(true), 6000)
+        setTimeout(() => setSignupState({...signupState, hideFireworks: true, completed: true, showValidationError: false,}), 6000)
     }
 
     const calculateStackAlignment = () => {
