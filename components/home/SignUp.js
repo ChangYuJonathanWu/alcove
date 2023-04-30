@@ -13,10 +13,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     const MISSING_HANDLE = "Please enter a handle."
     const TAKEN_HANDLE = "Sorry, this handle is already taken."
     const INVALID_EMAIL = "Please enter a valid email."
+    const TAKEN_EMAIL = "This email is already registered."
     const validHandle = () => {
-        if (handle.length < 5) {
-            return false
-        }
         return true
     }
 
@@ -41,7 +39,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
         })
     }
 
-    const onClaimHandle = () => {
+    const onClaimHandle = async () => {
         if (handle.length === 0) {
             setSignupState({
                 ...signupState,
@@ -60,15 +58,28 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             })
             return
         }
-        setSignupState({
-            ...signupState,
-            showValidationError: false,
-            showEmailInput: true
-        })
+        const body = { handle }
+        const result = await fetch('/api/checkHandle', { method: "POST", body: JSON.stringify(body) })
+        const resultBody = await result.json()
+        const { available } = resultBody
+        if (available) {
+            setSignupState({
+                ...signupState,
+                showValidationError: false,
+                showEmailInput: true
+            })
+        } else {
+            setSignupState({
+                ...signupState,
+                validationErrorText: TAKEN_HANDLE,
+                showValidationError: true,
+                showEmailInput: false,
+            })
+        }
         return
     }
 
-    const onEmailSubmit = () => {
+    const onEmailSubmit = async () => {
         if (!validEmail()) {
             setSignupState({
                 ...signupState,
@@ -77,12 +88,44 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             })
             return
         }
-        setSignupState({
-            ...signupState,
-            showValidationError: false,
-            completed: true
-        })
-        setTimeout(() => setSignupState({...signupState, hideFireworks: true, completed: true, showValidationError: false,}), 6000)
+        const result = await fetch('/api/signup',
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    handle,
+                    email
+                })
+            })
+
+        const resultBody = await result.json()
+        const { success, errors} = resultBody;
+        if(success) {
+            setSignupState({
+                ...signupState,
+                showValidationError: false,
+                completed: true
+            })
+            setTimeout(() => setSignupState({ ...signupState, hideFireworks: true, completed: true, showValidationError: false, }), 6000)
+        } else {
+            if(errors.includes("HANDLE_TAKEN")) {
+                setSignupState({
+                    ...signupState,
+                    validationErrorText: TAKEN_HANDLE,
+                    showValidationError: true,
+                    showEmailInput: false,
+                })
+                return
+            } if(errors.includes("EMAIL_TAKEN")) {
+                setSignupState({
+                    ...signupState,
+                    showValidationError: true,
+                    validationErrorText: TAKEN_EMAIL
+                })
+                return
+            }
+        }
+
+       
     }
 
     const calculateStackAlignment = () => {
@@ -119,7 +162,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         position: 'fixed',
                         zIndex: 100
                     }}
-                    className={`${hideFireworks? 'firework-hidden' : 'firework-shown'}`}
+                    className={`${hideFireworks ? 'firework-hidden' : 'firework-shown'}`}
                 />
                 <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem" }}>
                     <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
