@@ -19,9 +19,12 @@ export default async function handler(req, res) {
         if (!validEmail) {
           errors.push("EMAIL_TAKEN")
         }
-
+        let signupSuccess = false
+        if(handleAvailable && validEmail) {
         // This is NOT transactional. It's possible for duplicates to exist. This is only acceptable for MVP.
-        const signupSuccess = await createSignup(email, handle)
+          signupSuccess = await createSignup(email, handle)
+        } 
+
 
         const data = {
             success: signupSuccess,
