@@ -198,6 +198,9 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         <TextField
                             value={email}
                             onChange={processEmail}
+                            inputProps={{
+                                autoCapitalize: 'none',
+                              }}
                             id="email-input"
                             style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
                             label="" variant="outlined"
