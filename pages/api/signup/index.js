@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { availableHandle, availableEmail } from '../../../lib/queries'
+import { availableHandle, availableEmail, createSignup } from '../../../lib/queries'
 
 
 export default async function handler(req, res) {
@@ -10,7 +10,6 @@ export default async function handler(req, res) {
         const { handle, email } = JSON.parse(body)
 
         const handleAvailable = await availableHandle(handle)
-        console.log(availableHandle)
         const validEmail = await availableEmail(email)
         
         const errors = []
@@ -20,8 +19,12 @@ export default async function handler(req, res) {
         if (!validEmail) {
           errors.push("EMAIL_TAKEN")
         }
+
+        // This is NOT transactional. It's possible for duplicates to exist. This is only acceptable for MVP.
+        const signupSuccess = await createSignup(email, handle)
+
         const data = {
-            success: handleAvailable && validEmail,
+            success: signupSuccess,
             errors
         }
         return res.status(200).json(data);
