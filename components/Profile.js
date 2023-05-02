@@ -64,7 +64,7 @@ export default function Profile({username}) {
                 <>
                     <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
                         <ListItemButton id={listButtonId} key={listId} disableRipple={true} onClick={() => { toggleSingleList(listId) }}>
-                            <Stack id={listButtonId} direction="row" alignItems="center" spacing={2}>
+                            <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                                 {isOpen ? <ExpandMore /> : <ChevronRight />}
                                 <Stack>
                                     <Typography variant="h3">{name}</Typography>
