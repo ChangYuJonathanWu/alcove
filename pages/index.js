@@ -75,6 +75,7 @@ export default function Home() {
     showValidationError: false,
     showEmailInput: false,
     validationErrorText: "",
+    validationInProgress: false,
     completed: false,
     hideFireworks: false, // This is for triggering hiding fireworks
   })

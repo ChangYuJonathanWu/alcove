@@ -7,13 +7,28 @@ import { Fireworks } from '@fireworks-js/react'
 
 
 export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
-    const { completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
+    const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
     const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem', marginBottom: '5rem' }
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
     const TAKEN_HANDLE = "Sorry, this handle is already taken."
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
+
+    const startValidationInProgress = () => {
+        setSignupState({
+            ...signupState,
+            validationInProgress: true
+        })
+    }
+
+    const finishValidationInProgress = () => {
+        setSignupState( {
+            ...signupState,
+            validationInProgress: false
+        })
+    }
+
     const validHandle = () => {
         return true
     }
@@ -58,6 +73,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             })
             return
         }
+        startValidationInProgress()
         const body = { handle }
         const result = await fetch('/api/checkHandle', { method: "POST", body: JSON.stringify(body) })
         const resultBody = await result.json()
@@ -66,7 +82,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             setSignupState({
                 ...signupState,
                 showValidationError: false,
-                showEmailInput: true
+                showEmailInput: true,
+                validationInProgress: false
             })
         } else {
             setSignupState({
@@ -74,6 +91,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                 validationErrorText: TAKEN_HANDLE,
                 showValidationError: true,
                 showEmailInput: false,
+                validationInProgress: false
             })
         }
         return
@@ -88,6 +106,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             })
             return
         }
+        startValidationInProgress()
         const result = await fetch('/api/signup',
             {
                 method: "POST",
@@ -103,7 +122,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             setSignupState({
                 ...signupState,
                 showValidationError: false,
-                completed: true
+                completed: true,
+                validationInProgress: false
             })
             setTimeout(() => setSignupState({ ...signupState, hideFireworks: true, completed: true, showValidationError: false, }), 6000)
         } else {
@@ -113,13 +133,15 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                     validationErrorText: TAKEN_HANDLE,
                     showValidationError: true,
                     showEmailInput: false,
+                    validationInProgress: false
                 })
                 return
             } if(errors.includes("EMAIL_TAKEN")) {
                 setSignupState({
                     ...signupState,
                     showValidationError: true,
-                    validationErrorText: TAKEN_EMAIL
+                    validationErrorText: TAKEN_EMAIL,
+                    validationInProgress: false
                 })
                 return
             }
@@ -214,7 +236,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
 
                 </Stack>
                 {!desktop && showValidationError && handleValidationErrorText}
-                <Button onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
+                <Button disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
             </Stack>
             {desktop && showValidationError && handleValidationErrorText}
         </Stack>
