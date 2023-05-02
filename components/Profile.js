@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ChevronRight from '@mui/icons-material/ChevronRight'
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import LinkIcon from '@mui/icons-material/Link';
 import Divider from '@mui/material/Divider';
 
 import ProfileHeader from '@/components/ProfileHeader';
@@ -29,10 +30,10 @@ import AlcoveProfileLogo from '@/components/AlcoveProfileLogo';
 import jonathan_user from '../examples/jonathan.json'
 import example_user from '../examples/example.json'
 
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)' 
+const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 
 const determineUser = (username) => {
-    switch(username){
+    switch (username) {
         case "jonathanwu":
             return jonathan_user
         case "gracehopper":
@@ -43,45 +44,73 @@ const determineUser = (username) => {
 
 }
 
-export default function Profile({username}) {
+export default function Profile({ username }) {
     const [listOpen, setListOpen] = React.useState(null);
     const user = determineUser(username)
     const { title, description, handle, photo, background, config, profile = {} } = user
-    const { lists = {}, list_order: listOrder = [] } = profile
+    const { items = {}, item_order: itemOrder = [] } = profile
 
     const toggleSingleList = (listId) => {
         setListOpen(listOpen === listId ? null : listId)
     }
 
-    const buildLists = () => {
-        const listComponents = []
-        listOrder.forEach(listId => {
-            const list = lists[listId]
-            const { name, type, commentary, items, item_order: itemOrder = [], } = list
-            const isOpen = listOpen === listId
-            const listButtonId = `list-button-${listId}`
-            listComponents.push(
-                <>
-                    <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
-                        <ListItemButton id={listButtonId} key={listId} disableRipple={true} onClick={() => { toggleSingleList(listId) }}>
-                            <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
-                                {isOpen ? <ExpandMore /> : <ChevronRight />}
-                                <Stack>
-                                    <Typography variant="h3">{name}</Typography>
-                                    {isOpen && <Typography variant="caption">{commentary}</Typography>}
-                                </Stack>
+    const buildProfileItems = () => {
+        const itemComponents = []
+        itemOrder.forEach(itemId => {
+            const item = items[itemId]
+            const { type: itemType, content } = item
+            if (itemType === "list") {
+                itemComponents.push(
+                    buildListItem(itemId, content)
+                )
+            }
+            if (itemType === "uri") {
+                itemComponents.push(
+                    buildUriItem(itemId, content)
+                )
+            }
+
+        })
+        return itemComponents
+    }
+    const buildUriItem = (itemId, content) => {
+        const { name, uri } = content
+        const listButtonId = `list-button-${itemId}`
+        return (
+            <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
+                <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
+                    <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
+                        <LinkIcon />
+                        <Typography variant="h3">{name}</Typography>
+                    </Stack>
+                </ListItemButton>
+            </Paper>
+        )
+    }
+    const buildListItem = (itemId, content) => {
+        const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
+        const isOpen = listOpen === itemId
+        const listButtonId = `list-button-${itemId}`
+        return (
+            <>
+                <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
+                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
+                        <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
+                            {isOpen ? <ExpandMore /> : <ChevronRight />}
+                            <Stack>
+                                <Typography variant="h3">{name}</Typography>
+                                {isOpen && <Typography variant="caption">{commentary}</Typography>}
                             </Stack>
-                        </ListItemButton>
+                        </Stack>
+                    </ListItemButton>
                     <Collapse in={isOpen} timeout={0}>
                         <List>
-                            {buildItems(items, itemOrder, type)}
+                            {buildItems(items, itemOrder, listType)}
                         </List>
                     </Collapse>
-                    </Paper>
-                </>
-            )
-        })
-        return listComponents
+                </Paper>
+            </>
+        )
     }
 
     const buildSpotifyItems = (items, itemOrder) => {
@@ -98,19 +127,19 @@ export default function Profile({username}) {
 
     const buildTrailItems = (items, itemOrder) => {
         return itemOrder.map(
-            itemId => <TrailItem key={itemId} item={items[itemId]}/>
+            itemId => <TrailItem key={itemId} item={items[itemId]} />
         )
     }
 
     const buildShowItems = (items, itemOrder) => {
         return itemOrder.map(
-            itemId => <ShowItem key={itemId} item={items[itemId]}/>
+            itemId => <ShowItem key={itemId} item={items[itemId]} />
         )
     }
 
     const buildCarItems = (items, itemOrder) => {
         return itemOrder.map(
-            itemId => <CarItem key={itemId} item={items[itemId]}/>
+            itemId => <CarItem key={itemId} item={items[itemId]} />
         )
     }
 
@@ -132,7 +161,7 @@ export default function Profile({username}) {
     }
 
     return (
-        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0}}>
+        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
             <Head>
                 <title>{`${title} (@${handle}) - alcove`}</title>
                 <meta name="description" content={description} />
@@ -140,14 +169,14 @@ export default function Profile({username}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <div style={{zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed"}}>
-                    <Image fill={true} src={background} alt="background wallpaper"/>
+                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed" }}>
+                    <Image fill={true} src={background} alt="background wallpaper" />
                 </div>
-                <Stack style={{marginBottom: "100px"}}>
-                    {config.demo_mode && <div style={{height: "2rem"}}></div>}
-                    <ProfileHeader user={user}/>
-                    {buildLists()}
-                    { !config.hide_logo && <AlcoveProfileLogo/> }
+                <Stack style={{ marginBottom: "100px" }}>
+                    {config.demo_mode && <div style={{ height: "2rem" }}></div>}
+                    <ProfileHeader user={user} />
+                    {buildProfileItems()}
+                    {!config.hide_logo && <AlcoveProfileLogo />}
                 </Stack>
             </main>
         </div>

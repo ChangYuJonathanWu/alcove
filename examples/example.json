@@ -6,6 +6,8 @@
     "background": "/nyc3.jpg",
     "description": "All the things that I love",
     "description_style": {},
+    "social_links": {
+    },
     "config": {
         "hide_logo": true,
         "demo_mode": true
