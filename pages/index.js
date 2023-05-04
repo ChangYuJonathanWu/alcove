@@ -105,11 +105,11 @@ export default function Home() {
     <>
       <Head>
         <title>Alcove: Sign Up</title>
-        <meta name="description" content="Your link-in-bio to share all everything you love." />
+        <meta name="description" content="Your link-in-bio to share everything you love." />
         <meta property="og:title" content="Alcove: Share what you love" />
         <meta
           property="og:description"
-          content="Your link-in-bio to share all everything you love."
+          content="Your link-in-bio to share everything you love."
         />
         <meta
           property="og:image"
