@@ -105,7 +105,16 @@ export default function Home() {
     <>
       <Head>
         <title>Alcove: Sign Up</title>
-        <meta name="description" content="Share what you love with Alcove" />
+        <meta name="description" content="Your link-in-bio to share all everything you love." />
+        <meta property="og:title" content="Alcove: Share what you love" />
+        <meta
+          property="og:description"
+          content="Your link-in-bio to share all everything you love."
+        />
+        <meta
+          property="og:image"
+          content="/social-share.png"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
