@@ -20,7 +20,7 @@ export default function AlcoveProfileLogo() {
                     <Paper sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
                         <Stack direction="row" spacing={0.5} alignItems="flex-end" style={{ padding: "1rem"}}>
                             <FoundationIcon />
-                            <Typography style={{ fontWeight: 400 }} className={amita.className} variant="body1">alcove</Typography>
+                            <Typography className={amita.className} variant="body1">alcove</Typography>
                         </Stack>
                     </Paper>
                 </Stack>
