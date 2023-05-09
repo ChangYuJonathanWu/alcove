@@ -21,7 +21,7 @@ export default function ProfileHeader({ user }) {
     const hasSocialLinks = instagram || facebook
 
     return (
-        <Stack direction="row" justifyContent={"center"}>
+        <Stack direction="row" justifyContent={"center"} >
             <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '1rem', backgroundColor: PAPER_COLOR }}>
                 <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem"}}>
                     <Avatar alt={handle} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={`/profiles/photos/${photo}`} />

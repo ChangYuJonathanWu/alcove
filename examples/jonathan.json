@@ -104,30 +104,30 @@
                         "i1": {
                             "id": "i1",
                             "name": "Beef",
-                            "uri": "https://a24films.com/television/beef",
+                            "uri": "https://www.youtube.com/watch?v=AFPIMHBzGDs",
                             "image": "/content/beef.jpg",
                             "commentary": "I wish this show came out  when I was younger. Younger me needed to see fully-realized Asian-American characters onscreen. I resonated with them, in all their glory and brokenness, and their mannerisms and behaviors, uniquely and distinctively Asian and American. "
                         },
                         "i2": {
                             "id": "i2",
                             "name": "Better Call Saul",
-                            "uri": "https://www.netflix.com/title/80021955",
+                            "uri": "https://www.rottentomatoes.com/tv/better_call_saul/s01",
                             "image": "/content/bettercallsaul.jpg",
                             "commentary": "Breaking Bad would’ve made the list too if I hadn’t seen it so long ago. I’m fascinated by Saul’s journey, from his flirting with the morally dubious, to his Cinnabon-laden reckoning."
                         },
                         "i3": {
                             "id": "i3",
                             "name": "Mad Men",
-                            "uri": "https://www.netflix.com/title/81008221",
+                            "uri": "https://www.rottentomatoes.com/tv/mad-men/s01",
                             "image": "/content/madmen.jpg",
                             "commentary": "I used to joke that growing up was watching Mad Men and thinking you’re Don Draper but eventually realizing you’re Pete Campbell."
                         },
                         "i4": {
                             "id": "i4",
                             "name": "Master of None",
-                            "uri": "https://www.netflix.com/title/80241545",
+                            "uri": "https://www.youtube.com/watch?v=v10fhaMUhnI",
                             "image": "/content/masterofnone.jpg",
-                            "commentary": " I’ve watched Master of None a couple of times now. I’d go as far as saying that it kindled my romance with NYC. It made me want to leave Portland and the suburbs I grew up in."
+                            "commentary": "I’ve watched Master of None a couple of times now. I’d go as far as saying that it kindled my romance with NYC. It made me want to leave Portland and the suburbs I grew up in."
                         }
                     }
                 }

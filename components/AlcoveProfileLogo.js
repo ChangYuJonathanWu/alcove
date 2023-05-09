@@ -10,7 +10,7 @@ import CabinIcon from '@mui/icons-material/Cabin';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
 
-const amita = Amita({ weight: ['400', '700'], subsets: ['latin'] })
+const amita = Amita({ weight: ['400'], subsets: ['latin'], display: 'swap' })
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 

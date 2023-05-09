@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo'
 import FoundationIcon from '@mui/icons-material/Foundation';
 import { Button, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Amita, Italiana } from 'next/font/google';
+import { Amita } from 'next/font/google';
 
 import SignUp from '@/components/home/SignUp'
 import CallToAction from '@/components/home/CallToAction'
@@ -17,8 +16,7 @@ import Hero from '@/components/home/Hero'
 
 import React, { useState } from 'react'
 
-const amita = Amita({ weight: ['400', '700'], subsets: ['latin'] })
-const italiana = Italiana({ weight: ['400'], subsets: ['latin'] })
+const amita = Amita({ weight: ['400', '700'], subsets: ['latin'], display: 'swap' })
 
 const theme1 = {
   bgColor: '#FFF9DE',
@@ -123,7 +121,6 @@ export default function Home() {
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             <FoundationIcon style={{ color: theme.buttonColor }} />
-            {/* <Typography className={italiana.className} style={{ color: theme.buttonColor }} variant="h1">A</Typography> */}
             <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
           </Stack>
           {isTabletOrMobile ? mobileLayout : desktopLayout}
