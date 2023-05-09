@@ -16,7 +16,7 @@ export default function CarItem({ item }) {
     return (
         <ListItemButton target="_blank" href={uri} key={itemId} sx={{ paddingTop: "0.5rem" }}>
             <Stack direction="row" alignItems="start" >
-                <Avatar variant="square" sx={{ width: 80, height: 60 }} src={image} style={{ marginRight: "1rem" }} />
+                <Avatar variant="square" sx={{ width: 100, height: 80 }} src={image} style={{ marginRight: "1rem" }} />
                 <Stack>
                     <Typography variant="h3">{name}</Typography>
                     <Typography variant="caption">{commentaryToUse}</Typography>

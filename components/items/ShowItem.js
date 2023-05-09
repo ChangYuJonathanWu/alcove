@@ -15,7 +15,7 @@ export default function ShowItem({ item }) {
     return (
         <ListItemButton target="_blank" href={uri} key={itemId} sx={{ paddingTop: "0.5rem" }}>
             <Stack direction="row" alignItems="start" >
-                <Avatar sx={{ width: 60, height: 60 }} src={image} style={{ marginRight: "1rem" }} />
+                <Avatar variant="square" sx={{ width: 140, height: 100 }} src={image} style={{ marginRight: "1rem" }} />
                 <Stack>
                     <Typography variant="h3">{name}</Typography>
                     <Typography variant="caption">{commentaryToUse}</Typography>

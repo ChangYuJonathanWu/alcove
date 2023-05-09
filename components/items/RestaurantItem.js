@@ -15,7 +15,7 @@ export default function RestaurantItem({ item }) {
     return (
         <ListItemButton target="_blank" href={uri} key={itemId} sx={{ paddingTop: "0.5rem" }}>
             <Stack direction="row" alignItems="start" >
-                <Avatar sx={{ width: 40, height: 40 }} src={image} style={{ marginRight: "1rem" }} />
+                <Avatar variant="square" sx={{ width: 100, height: 80 }} src={image} style={{ marginRight: "1rem" }} />
                 <Stack>
                     <Typography variant="h4">{name}</Typography>
                     <Typography variant="body2" fontSize="0.8rem">{`${cuisine} - ${location}`}</Typography>
