@@ -118,8 +118,9 @@ export default function Home() {
       <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
           <Stack direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
-            <FoundationIcon style={{ color: theme.buttonColor }} />
-            <Typography className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</Typography>
+            {/* <FoundationIcon style={{ color: theme.buttonColor }}/> */}
+            <Image src="/favicon.svg" width="50" height="50"/>
+            <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1>
           </Stack>
           {isTabletOrMobile ? mobileLayout : desktopLayout}
         </Stack>
