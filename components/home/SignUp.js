@@ -15,6 +15,18 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
 
+    const handleEnterHandle = (event) => {
+        if(event.key === 'Enter'){
+          onClaimHandle()
+        }
+      }
+
+    const handleEnterEmail = (event) => {
+        if(event.key === 'Enter'){
+            onEmailSubmit()
+          }
+    }
+
     const startValidationInProgress = () => {
         setSignupState({
             ...signupState,
@@ -211,6 +223,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         style={{ backgroundColor: 'white', borderRadius: '15px', }}
                         label="" variant="outlined"
                         placeholder="yourname"
+                        onKeyPress={handleEnterHandle}
                         sx={{
                             "& .MuiOutlinedInput-notchedOutline": {
                                 border: 'none',
@@ -227,6 +240,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                             style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
                             label="" variant="outlined"
                             placeholder="Enter your email"
+                            onKeyDown={handleEnterEmail}
                             sx={{
                                 "& .MuiOutlinedInput-notchedOutline": {
                                     border: 'none',
