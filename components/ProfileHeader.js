@@ -3,15 +3,12 @@ import Head from 'next/head'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
-import { Inter } from 'next/font/google';
 
 import Avatar from '@mui/material/Avatar';
 
 import IconButton from '@mui/material/IconButton';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
-
-const inter = Inter({ subsets: ['latin'] })
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 

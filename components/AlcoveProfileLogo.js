@@ -3,14 +3,12 @@ import Head from 'next/head'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
-import { Amita } from 'next/font/google';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import CabinIcon from '@mui/icons-material/Cabin';
+import { amita } from './fonts'
 
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
-
-const amita = Amita({ weight: ['400'], subsets: ['latin'], display: 'swap' })
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 

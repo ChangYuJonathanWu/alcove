@@ -6,7 +6,7 @@ import FoundationIcon from '@mui/icons-material/Foundation';
 import { Button, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Amita } from 'next/font/google';
+import { amita } from '../components/fonts'
 
 import SignUp from '@/components/home/SignUp'
 import CallToAction from '@/components/home/CallToAction'
@@ -15,8 +15,6 @@ import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Hero from '@/components/home/Hero'
 
 import React, { useState } from 'react'
-
-const amita = Amita({ weight: ['400', '700'], subsets: ['latin'], display: 'swap' })
 
 const theme1 = {
   bgColor: '#FFF9DE',
