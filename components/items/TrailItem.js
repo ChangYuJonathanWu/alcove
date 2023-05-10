@@ -16,7 +16,7 @@ export default function TrailItem({ item }) {
     return (
         <ListItemButton target="_blank" href={uri} key={itemId} sx={{ paddingTop: "0.5rem" }}>
             <Stack direction="row" alignItems="start" >
-                <Avatar variant="square" sx={{ width: 100, height: 80 }} src={image} style={{ marginRight: "1rem" }} />
+                <Avatar variant="square" sx={{ width: 100, height: 80 }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />
                 <Stack>
                     <Typography variant="h4">{name}</Typography>
                     <Typography variant="body2" fontSize="0.8rem">{`${location} - ${trail_type} - ${length} +${elevation_gain}`}</Typography>
