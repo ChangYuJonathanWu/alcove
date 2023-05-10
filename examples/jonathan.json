@@ -14,9 +14,9 @@
     "profile": {
         "item_order": [
             "l7",
+            "l1",
             "l4",
             "l3",
-            "l1",
             "l5",
             "uri1"
         ],
