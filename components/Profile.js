@@ -28,6 +28,7 @@ import CarItem from '@/components/items/CarItem';
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo';
 
 import jonathan_user from '../examples/jonathan.json'
+import jiwonkang_user from '../examples/jiwon.json'
 import example_user from '../examples/example.json'
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
@@ -37,6 +38,8 @@ const determineUser = (username) => {
     switch (username) {
         case "jonathanwu":
             return jonathan_user
+        case "jiwonkang":
+            return jiwonkang_user
         case "gracehopper":
             return example_user
         default:
@@ -178,8 +181,8 @@ export default function Profile({ username }) {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <main>
-                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed" }}>
-                    <Image fill={true} src={background} alt="background wallpaper" />
+                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'black' }}>
+                    {background && <Image fill={true} src={background} alt="background wallpaper" />}
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
