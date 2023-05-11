@@ -79,7 +79,7 @@ export default function Home() {
   })
   const mobileLayout = (
     <Stack alignItems="center">
-      <CallToAction textColor={textColor} highlightColor={theme.textColor} />
+      <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true}/>
       <Hero desktop={true} />
       <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
