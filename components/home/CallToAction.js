@@ -9,10 +9,10 @@ export default function CallToAction({ textColor, highlightColor, fontSize = "2r
     return (
         <Stack>
             <span style={{textAlign: "center"}}>
-                <Typography display="inline" variant={textVariant} style={regularStyle} >Share </Typography>
-                <Typography display="inline" variant={textVariant} style={highlightStyle}>everything </Typography>
-                <Typography display="inline" variant={textVariant} style={regularStyle} >you love,</Typography>
-                <Typography variant={textVariant} style={regularStyle}>all from one place.</Typography>
+                <Typography display="inline" variant={textVariant} style={regularStyle} >The homepage for your hobbies</Typography>
+                {/* <Typography display="inline" variant={textVariant} style={highlightStyle}>everything </Typography>
+                <Typography display="inline" variant={textVariant} style={regularStyle} >you love,</Typography> */}
+                <Typography variant={textVariant} style={regularStyle}>and all the things you love.</Typography>
             </span>
             <Typography variant="body2" style={subStyle} >{"Join the early-access list and claim your Alcove."}</Typography>
         </Stack>
