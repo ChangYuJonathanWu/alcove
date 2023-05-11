@@ -31,6 +31,7 @@ import jonathan_user from '../examples/jonathan.json'
 import example_user from '../examples/example.json'
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
+const MAX_WIDTH = "600px"
 
 const determineUser = (username) => {
     switch (username) {
@@ -77,7 +78,8 @@ export default function Profile({ username }) {
         const { name, uri } = content
         const listButtonId = `list-button-${itemId}`
         return (
-            <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
+            <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
+            <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
                     <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                         <LinkIcon />
@@ -85,6 +87,8 @@ export default function Profile({ username }) {
                     </Stack>
                 </ListItemButton>
             </Paper>
+            </div>
+
         )
     }
     const buildListItem = (itemId, content) => {
@@ -92,8 +96,8 @@ export default function Profile({ username }) {
         const isOpen = listOpen === itemId
         const listButtonId = `list-button-${itemId}`
         return (
-            <>
-                <Paper variant="" sx={{ margin: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
+            <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
+                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH  }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                             {isOpen ? <ExpandMore /> : <ChevronRight />}
@@ -104,12 +108,12 @@ export default function Profile({ username }) {
                         </Stack>
                     </ListItemButton>
                     <Collapse in={isOpen} timeout={0}>
-                        <List>
+                        <List style={{alignContent: "center"}}>
                             {buildItems(items, itemOrder, listType)}
                         </List>
                     </Collapse>
                 </Paper>
-            </>
+            </div>
         )
     }
 
