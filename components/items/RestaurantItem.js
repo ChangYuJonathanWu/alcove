@@ -14,10 +14,10 @@ export default function RestaurantItem({ item }) {
     const commentaryToUse = commentary ? `"${commentary}"` : ""
     return (
         <ListItemButton target="_blank" href={uri} key={itemId} sx={{ paddingTop: "0.5rem" }}>
-            <Stack direction="row" alignItems="start" >
-                <Avatar variant="square" sx={{ width: 100, height: 80 }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />
+            <Stack direction="column" alignItems="start" spacing={1}>
+                <Avatar variant="square" sx={{ width: '100%', height: '100%' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />
                 <Stack>
-                    <Typography variant="h4">{name}</Typography>
+                    <Typography variant="h4"><b>{name}</b></Typography>
                     <Typography variant="body2" fontSize="0.8rem">{`${cuisine} - ${location}`}</Typography>
                     <Typography variant="caption">{commentaryToUse}</Typography>
                 </Stack>
