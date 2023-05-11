@@ -14,10 +14,10 @@ export default function ShowItem({ item }) {
     const commentaryToUse = commentary ? `"${commentary}"` : ""
     return (
         <ListItemButton target="_blank" href={uri} key={itemId} sx={{ paddingTop: "0.5rem" }}>
-            <Stack direction="row" alignItems="start" >
-                <Avatar variant="square" sx={{ width: 140, height: 100 }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />
+            <Stack direction="column" alignItems="start" spacing={1} >
+                <Avatar variant="square" sx={{ width: '100%', height: '100%' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />
                 <Stack>
-                    <Typography variant="h3">{name}</Typography>
+                    <Typography variant="h3"><b>{name}</b></Typography>
                     <Typography variant="caption">{commentaryToUse}</Typography>
                 </Stack>
             </Stack>
