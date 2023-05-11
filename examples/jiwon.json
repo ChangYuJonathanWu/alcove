@@ -9,6 +9,9 @@
         "instagram": "jiwonnkangg"
     },
     "description_style": {},
+    "profile_style": {
+
+    },
     "config": {},
     "profile": {
         "item_order": [
@@ -86,7 +89,7 @@
                 "id": "l5",
                 "type": "list",
                 "content": {
-                    "name": "Portland coffee shops",
+                    "name": "Portland Coffee Shops",
                     "commentary": "",
                     "type": "show",
                     "item_order": ["i1", "i2", "i3", "i4"],
@@ -127,7 +130,7 @@
                 "id": "l4",
                 "type": "list",
                 "content": {
-                    "name": "Korean restaurants",
+                    "name": "Korean Restaurants",
                     "type": "trail",
                     "item_order": [
                         "i1",
@@ -205,7 +208,7 @@
                 "id": "l3",
                 "type": "list",
                 "content": {
-                    "name": "Current bops",
+                    "name": "Current Bops",
                     "commentary": "[commentary here]",
                     "type": "car",
                     "item_order": ["i1", "i2", "i3", "i4", "i5"],
@@ -267,7 +270,7 @@
                 "id": "l2",
                 "type": "list",
                 "content": {
-                    "name": "Preferred art styles",
+                    "name": "Preferred Art Styles",
                     "commentary": "study and journal to smoky dark roasts",
                     "type": "restaurant",
                     "item_order": [
