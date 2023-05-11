@@ -31,6 +31,8 @@ import jonathan_user from '../examples/jonathan.json'
 import jiwonkang_user from '../examples/jiwon.json'
 import example_user from '../examples/example.json'
 
+import { montserrat } from './fonts';
+
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
 
@@ -51,9 +53,10 @@ const determineUser = (username) => {
 export default function Profile({ username }) {
     const [listOpen, setListOpen] = React.useState(null);
     const user = determineUser(username)
-    const { title, description, handle, photo, background, config, profile = {} } = user
+    const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
     const { items = {}, item_order: itemOrder = [] } = profile
 
+    const { item_font } = profile_style
     const toggleSingleList = (listId) => {
         setListOpen(listOpen === listId ? null : listId)
     }
@@ -94,10 +97,21 @@ export default function Profile({ username }) {
 
         )
     }
+
+    const buildItemHeader = (name) => {
+        switch(item_font) {
+            case 'Montserrat':
+                return <span className={montserrat.className}>{name}</span>
+            default:
+                return <Typography variant="h3">{name}</Typography>
+        }   
+    }
+    
     const buildListItem = (itemId, content) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
         const isOpen = listOpen === itemId
         const listButtonId = `list-button-${itemId}`
+
         return (
             <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH  }}>
@@ -105,7 +119,7 @@ export default function Profile({ username }) {
                         <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                             {isOpen ? <ExpandMore /> : <ChevronRight />}
                             <Stack>
-                                <Typography variant="h3">{name}</Typography>
+                                {buildItemHeader(name)}
                                 {isOpen && <Typography variant="caption">{commentary}</Typography>}
                             </Stack>
                         </Stack>
