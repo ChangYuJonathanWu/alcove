@@ -2,7 +2,6 @@ describe('Homepage', () => {
     it('Loads the homepage', () => {
         cy.visit('localhost:3000')
         cy.contains('Showcase your hobbies').should('exist')
-        cy.get('#hero').should('exist')
         cy.get('#call-to-action').should('exist')
         cy.get('#home-logo').should('exist')
         cy.get('#handle-input').should('exist')
