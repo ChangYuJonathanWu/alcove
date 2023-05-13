@@ -94,11 +94,11 @@ export default function Home() {
       <Stack style={{ marginTop: "5rem" }} spacing={3}>
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
-        <Stack alignItems="center" spacing={1}>
+        {!signupState.completed && <Stack alignItems="center" spacing={1}>
           <Divider style={{ borderColor: 'white', width: '100%', marginTop: '2rem', marginBottom: '1rem' }} />
           <Typography style={{ color: 'white' }} variant="body2">Already have an account?</Typography>
           <Button variant="outlined" style={{ textTransform: 'none', color: 'white', borderColor: 'white', maxWidth: '150px', margin: 'auto', marginTop: '1rem' }}>Login</Button>
-        </Stack>
+        </Stack>}
 
       </Stack>
     </Stack>
