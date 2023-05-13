@@ -9,7 +9,7 @@ describe('Homepage', () => {
         cy.percySnapshot('Homepage', { widths: [768, 1200, 1920] });
     })
     it('Loads my profile', () => {
-        cy.visit('localhost:3000/jonathanwuy')
+        cy.visit('localhost:3000/jonathanwu')
         cy.percySnapshot('Profile', { widths: [768, 1200, 1920] });
     })
   })
