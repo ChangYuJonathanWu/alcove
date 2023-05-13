@@ -36,23 +36,9 @@ import { montserrat } from './fonts';
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
 
-const determineUser = (username) => {
-    switch (username) {
-        case "jonathanwu":
-            return jonathan_user
-        case "jiwonkang":
-            return jiwonkang_user
-        case "gracehopper":
-            return example_user
-        default:
-            return example_user
-    }
 
-}
-
-export default function Profile({ username }) {
+export default function Profile({ user }) {
     const [listOpen, setListOpen] = React.useState(null);
-    const user = determineUser(username)
     const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
     const { items = {}, item_order: itemOrder = [] } = profile
 
