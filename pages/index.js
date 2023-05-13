@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo'
 import FoundationIcon from '@mui/icons-material/Foundation';
-import { Button, Stack, TextField, Typography } from '@mui/material'
+import { Button, Divider, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import { amita } from '../components/fonts'
@@ -77,12 +77,14 @@ export default function Home() {
     completed: false,
     hideFireworks: false, // This is for triggering hiding fireworks
   })
+
   const mobileLayout = (
     <Stack alignItems="center">
-      <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true}/>
+      <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
       <Hero desktop={true} />
       <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
+      <Button variant="outlined" style={{ color: 'white', borderColor: 'white' }}>Sign In</Button>
     </Stack>
   )
 
@@ -92,6 +94,12 @@ export default function Home() {
       <Stack style={{ marginTop: "5rem" }} spacing={3}>
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
+        <Stack alignItems="center" spacing={1}>
+          <Divider style={{ borderColor: 'white', width: '100%', marginTop: '2rem', marginBottom: '1rem' }} />
+          <Typography style={{ color: 'white' }} variant="body2">Already have an account?</Typography>
+          <Button variant="outlined" style={{ textTransform: 'none', color: 'white', borderColor: 'white', maxWidth: '150px', margin: 'auto', marginTop: '1rem' }}>Login</Button>
+        </Stack>
+
       </Stack>
     </Stack>
   )
@@ -116,12 +124,14 @@ export default function Home() {
       </Head>
 
       <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
           <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
             {/* <FoundationIcon style={{ color: theme.buttonColor }}/> */}
-            <Image src="/favicon.svg" width="50" height="50" alt="Alcove logo"/>
+            <Image src="/favicon.svg" width="50" height="50" alt="Alcove logo" />
             <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1>
           </Stack>
+
           {isTabletOrMobile ? mobileLayout : desktopLayout}
         </Stack>
       </main>
