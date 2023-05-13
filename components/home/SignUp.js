@@ -250,7 +250,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
 
                 </Stack>
                 {!desktop && showValidationError && handleValidationErrorText}
-                <Button disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
+                <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
             </Stack>
             {desktop && showValidationError && handleValidationErrorText}
         </Stack>
