@@ -1,0 +1,29 @@
+{
+    "title": "dan dan the chinese man",
+    "title_style": {},
+    "handle": "dandan",
+    "photo": "",
+    "background": "",
+    "description": "[bio placeholder]",
+    "social_links": {
+        "instagram": "danluzhu"
+    },
+    "description_style": {},
+    "profile_style": {
+        "item_font": "Montserrat"
+    },
+    "config": {},
+    "profile": {
+        "item_order": [
+            "l1"
+        ],
+        "items": {
+            "l1": {
+                "id": "l1",
+                "name": "manhattan bars",
+                "commentary": "they're sentimental",
+                "type": "restaurant"
+            }
+        }
+    }
+}
