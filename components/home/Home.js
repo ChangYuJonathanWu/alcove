@@ -7,7 +7,7 @@ import { Button, Divider, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import { amita } from '../fonts'
-
+import Link from 'next/link';
 import SignUp from '@/components/home/SignUp'
 import CallToAction from '@/components/home/CallToAction'
 
@@ -53,7 +53,7 @@ export default function Home() {
       <Hero desktop={true} />
       <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
-      {!signupState.completed && <Button variant="outlined" style={{ color: 'white', borderColor: 'white' }}>Sign In</Button>}
+      {!signupState.completed && <Link href="/login"><Button variant="outlined" style={{ color: 'white', borderColor: 'white' }}>Sign In</Button></Link>}
     </Stack>
   )
 
@@ -66,7 +66,7 @@ export default function Home() {
         {!signupState.completed && <Stack alignItems="center" spacing={1}>
           <Divider style={{ borderColor: 'white', width: '100%', marginTop: '2rem', marginBottom: '1rem' }} />
           <Typography style={{ color: 'white' }} variant="body2">Already have an account?</Typography>
-          <Button variant="outlined" style={{ textTransform: 'none', color: 'white', borderColor: 'white', maxWidth: '150px', margin: 'auto', marginTop: '1rem' }}>Login</Button>
+          <Link href="/login"><Button variant="outlined" style={{ textTransform: 'none', color: 'white', borderColor: 'white', maxWidth: '150px', margin: 'auto', marginTop: '1rem' }}>Login</Button></Link>
         </Stack>}
 
       </Stack>
