@@ -7,6 +7,7 @@ import Profile from '@/components/Profile'
 import jonathan_user from '../examples/jonathan.json'
 import jiwonkang_user from '../examples/jiwon.json'
 import example_user from '../examples/example.json'
+import dan_user from '../examples/dan.json'
 
 export default function ProfileRoute() {
     const router = useRouter()
@@ -18,6 +19,8 @@ export default function ProfileRoute() {
         switch (username) {
             case "jonathanwu":
                 return jonathan_user
+            case "dandan":
+                return dan_user
             case "jiwonkang":
                 return jiwonkang_user
             case "gracehopper":
@@ -31,7 +34,7 @@ export default function ProfileRoute() {
         if(!username) {
             return
         }
-        const validHandles = ["jonathanwu", "gracehopper", "jiwonkang", "jonathanwu_test"]
+        const validHandles = ["jonathanwu", "gracehopper", "jiwonkang", "jonathanwu_test", "dandan"]
         const networkHandles = ["jonathanwu_test"]
         const loadUser = async () => {
             if(!validHandles.includes(username)){
