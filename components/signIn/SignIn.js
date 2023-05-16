@@ -3,20 +3,13 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo'
 import FoundationIcon from '@mui/icons-material/Foundation';
-import { Button, Divider, Stack, TextField, Typography } from '@mui/material'
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
+import {  Stack, TextField, Typography } from '@mui/material'
 import { amita } from '../fonts'
 
-import SignUp from '@/components/home/SignUp'
-import CallToAction from '@/components/home/CallToAction'
+import React, { useState, useEffect } from 'react'
+import { firebase } from '@/lib/Firebase';
 
-import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
-import Hero from '@/components/home/Hero'
-
-import React, { useState } from 'react'
-
-const theme4 = {
+const theme = {
     bgColor: '#7C9070',
     logoColor: "white",
     textColor: "white",
@@ -24,43 +17,10 @@ const theme4 = {
     buttonTextColor: 'white'
 }
 
-
 export default function SignIn() {
-    const isTabletOrMobile = useBetterMediaQuery('(max-width: 800px)')
-    const isLarge = useBetterMediaQuery('(min-width: 1000px)')
-    const isReallyLarge = useBetterMediaQuery('(min-width: 1200px)')
-
-    const theme = theme4;
-    const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
-
-    const [signupState, setSignupState] = useState({
-        handle: "",
-        email: "",
-        showValidationError: false,
-        showEmailInput: false,
-        validationErrorText: "",
-        validationInProgress: false,
-        completed: false,
-        hideFireworks: false, // This is for triggering hiding fireworks
-    })
-
-    const mobileLayout = (
-        <Stack alignItems="center">
-            <TextField></TextField>
-            <TextField></TextField>
-        </Stack>
-    )
-
-    const desktopLayout = (
-        <Stack style={{ marginTop: "4rem" }} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
-            Sign In
-        </Stack>
-    )
-
-    
     return (
         <>
             <Head>
@@ -79,7 +39,7 @@ export default function SignIn() {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
 
-            <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+            <main style={{  backgroundColor, minHeight: '100vh', width: "100%" }}>
 
                 <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
                     <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
@@ -87,8 +47,7 @@ export default function SignIn() {
                         <Image src="/favicon.svg" width="50" height="50" alt="Alcove logo" />
                         <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1>
                     </Stack>
-
-                    {isTabletOrMobile ? mobileLayout : desktopLayout}
+                   
                 </Stack>
             </main>
         </>

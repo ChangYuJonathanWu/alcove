@@ -9,8 +9,9 @@ import '../styles/custom.css'
 
 export default function App({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-      <Analytics />
-    </ThemeProvider>)
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+        <Analytics />
+      </ThemeProvider>
+  )
 }
