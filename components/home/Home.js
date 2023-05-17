@@ -13,6 +13,7 @@ import CallToAction from '@/components/home/CallToAction'
 
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Hero from '@/components/home/Hero'
+import Navbar from '@/components/home/Navbar'
 
 import React, { useState } from 'react'
 
@@ -93,14 +94,8 @@ export default function Home() {
       </Head>
 
       <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
-
+        <Navbar/>
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
-          <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
-            {/* <FoundationIcon style={{ color: theme.buttonColor }}/> */}
-            <Image src="/favicon.svg" width="50" height="50" alt="Alcove logo" />
-            <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1>
-          </Stack>
-
           {isTabletOrMobile ? mobileLayout : desktopLayout}
         </Stack>
       </main>
