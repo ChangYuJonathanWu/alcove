@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { availableHandle } from '../../../lib/queries'
+import { availableHandle } from '../../../lib/api/signup'
 
 export default async function handler(req, res) {
     const { method } = req;
