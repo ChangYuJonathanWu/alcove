@@ -7,10 +7,11 @@ import { Stack, TextField, Typography, Button } from '@mui/material'
 import { amita } from '../fonts'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
+import { useRouter } from 'next/router';
 
 
 import React, { useState, useEffect } from 'react'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
 
 
@@ -27,6 +28,9 @@ export default function SignIn() {
     const logoColor = theme.logoColor
     const textColor = theme.textColor
     const { user } = useAuthContext()
+    const [loginError, setLoginError] = useState(null)
+    const router = useRouter();
+    const auth = getAuth()
     console.log(user)
     return (
         <>
@@ -48,35 +52,49 @@ export default function SignIn() {
 
             <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
                 <Navbar />
-                <div>
-                    {`user: ${user}`}
-                </div>
-                <Formik
-                    initialValues={{
-                        email: '',
-                        password: '',
-                    }}
 
-                    onSubmit={(values) => {
-                        const auth = getAuth()
-                        const { email, password } = values;
-                        signInWithEmailAndPassword(auth, email, password).then((credential) => {
-                            const user = userCredential.user
-                        }).catch((error) => {
-                            const errorCode = error.code;
-                            const errorMessage = error.message;
-                        });
-                    }}
-                >
-                    <Form>
-                        <Stack style={{}} alignItems="center" spacing={1}>
-                            <Field id="email" name="email" type="email" placeholder="Email" />
-                            <Field type="password" id="password" name="password" placeholder="Password" />
-                            <button variant="contained" type="submit">Login</button>
-                        </Stack>
+                <Stack alignItems="center" spacing={1}>
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: '',
+                        }}
 
-                    </Form>
-                </Formik>
+                        onSubmit={async (values) => {
+                            const { email, password } = values;
+                            try {
+                                const credential = await signInWithEmailAndPassword(auth, email, password)
+                                if (credential) {
+                                    setLoginError(null)
+                                    router.replace("/")
+                                }
+
+                            } catch (error) {
+                                const errorCode = error.code;
+                                const errorMessage = error.message;
+                                setLoginError(errorMessage)
+                            };
+
+                        }}
+                    >
+                        <Form>
+                            <Stack style={{}} alignItems="center" spacing={1}>
+                                <Field id="email" name="email" type="email" placeholder="Email" />
+                                <Field type="password" id="password" name="password" placeholder="Password" />
+                                <button variant="contained" type="submit">Login</button>
+                            </Stack>
+
+                        </Form>
+                    </Formik>
+                    <div>
+                        {user ? `You are logged in as ${user.email}` : ' You are not logged in'}
+                    </div>
+                    <div>
+                        {loginError ?? ""}
+                    </div>
+                    <button onClick={() => signOut(auth)}>Sign Out</button>
+                </Stack>
+
             </main>
         </>
     )
