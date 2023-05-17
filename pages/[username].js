@@ -39,7 +39,7 @@ export default function ProfileRoute() {
                 return
             }
             if(networkHandles.includes(username)){
-                const result = await fetch(`/api/profile?handle=${username}`, { method: "GET"})
+                const result = await fetch(`/api/public/profile?handle=${username}`, { method: "GET"})
                 const profile = await result.json()
                 setUser(profile)
                 setLoading(false)

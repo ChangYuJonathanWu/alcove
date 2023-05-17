@@ -20,6 +20,7 @@
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "firebase": "^9.22.0",
+    "firebase-admin": "^11.8.0",
     "firebaseui": "^6.0.2",
     "fireworks-js": "^2.10.3",
     "formik": "^2.2.9",

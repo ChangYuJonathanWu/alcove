@@ -26,9 +26,14 @@ export default function Home() {
     const [profile, setProfile] = useState(null)
     useEffect(() => {
         const loadUser = async () => {
+            const auth = getAuth()
             if (user) {
                 const { uid } = user
-                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+                const token = await auth.currentUser.getIdToken()
+                const headers = {
+                    Authorization : `Bearer ${token}`
+                }
+                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
                 const profile = await result.json()
                 setProfile(profile)
             }

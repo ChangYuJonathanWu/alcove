@@ -1,8 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { getProfile } from '../../../lib/api/profile'
+import { getFullProfile } from '../../../lib/api/profile'
+import { withAuth } from '@/lib/api/withAuth';
 
-
-export default async function handler(req, res) {
+// This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
+// We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
+async function handler(req, res) {
     const { method } = req;
     if (method === "GET") {
         const { query } = req; 
@@ -10,7 +12,7 @@ export default async function handler(req, res) {
         if(!handle && !uid){
             return res.status(200).json({})
         }
-        const profile = await getProfile(handle, uid)
+        const profile = await getFullProfile(handle, uid)
         return res.status(200).json(profile);
     }
     if (method === "PUT" ) {
@@ -23,3 +25,5 @@ export default async function handler(req, res) {
 
     }
 }
+
+export default withAuth(handler)
