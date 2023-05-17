@@ -6,11 +6,11 @@ export default async function handler(req, res) {
     const { method } = req;
     if (method === "GET") {
         const { query } = req; 
-        const { handle } = query
-        if(!handle){
+        const { handle, uid } = query
+        if(!handle && !uid){
             return res.status(200).json({})
         }
-        const profile = await getProfile(handle)
+        const profile = await getProfile(handle, uid)
         return res.status(200).json(profile);
     }
 }

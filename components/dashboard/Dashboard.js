@@ -7,8 +7,10 @@ import Link from 'next/link';
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Navbar from '@/components/home/Navbar'
 import { useAuthContext } from "@/context/AuthContext";
+import { signOut, getAuth } from "firebase/auth";
+import { firebase } from '@/lib/Firebase'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const theme4 = {
     bgColor: '#7C9070',
@@ -20,13 +22,20 @@ const theme4 = {
 
 
 export default function Home() {
-
-    const { user }  = useAuthContext()
-
-    const isTabletOrMobile = useBetterMediaQuery('(max-width: 800px)')
-    const isLarge = useBetterMediaQuery('(min-width: 1000px)')
-    const isReallyLarge = useBetterMediaQuery('(min-width: 1200px)')
-
+    const { user } = useAuthContext()
+    const [profile, setProfile] = useState(null)
+    useEffect(() => {
+        const loadUser = async () => {
+            if (user) {
+                const { uid } = user
+                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+                const profile = await result.json()
+                setProfile(profile)
+            }
+        }
+        loadUser()
+    }, [user])
+    const auth = getAuth()
     const theme = theme4;
     const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
     const backgroundColor = theme.bgColor
@@ -56,7 +65,13 @@ export default function Home() {
                 <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
                     <h1>Dashboard</h1>
                     <div>
-                        {user ? `You are logged in as ${user.email}` : "You are not logged in."}
+                        {user ? `You are logged in as ${user.email} with ID: ${user.uid}` : "You are not logged in."}
+                    </div>
+                    <div>
+                        {`@${profile?.handle}`}
+                    </div>
+                    <div>
+                        {user ? <button onClick={(() => signOut(auth))}>Log Out</button> : null}
                     </div>
                 </Stack>
             </main>
