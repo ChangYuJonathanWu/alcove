@@ -26,6 +26,8 @@ export default function Home() {
     const [profile, setProfile] = useState(null)
     const [description, setDescription] = useState(null)
     const [title, setTitle] = useState(null)
+    const [newItemName, setNewItemName ] = useState("")
+    const [newItemType, setNewItemType] = useState("list")
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
@@ -58,6 +60,19 @@ export default function Home() {
         }
         const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body)})
     }
+
+    const submitNewItem = async () => {
+        const auth = getAuth();
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization : `Bearer ${token}`
+        }
+        const body = {
+            name: newItemName,
+            type: newItemType,
+        }
+        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body)})
+    }
     const auth = getAuth()
     const theme = theme4;
     const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
@@ -88,19 +103,24 @@ export default function Home() {
                 <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
                     <h1>Dashboard</h1>
                     <div>
-                        {user ? `You are logged in as ${user.email} with ID: ${user.uid}` : "You are not logged in."}
+                        {user ? `You are logged in as ${user.email}` : "You are not logged in."}
                     </div>
                     <div>
                         {`@${profile?.handle}`}
                     </div>
+                    Title
+                    <TextField value={title} onChange={(e) => setTitle(e.currentTarget.value)}/>
+                    Description
+                    <TextField value={description} onChange={(e) => setDescription(e.currentTarget.value)}/>
+                   
+                    <button onClick={submitUpdates}>Submit</button>
+                    Name
+                    <TextField value={newItemName} onChange={(e) => setNewItemName(e.currentTarget.value)}/>
+                    Type (list, link)
+                    <button onClick={submitNewItem}>Add Item</button>
                     <div>
                         {user ? <button onClick={(() => signOut(auth))}>Log Out</button> : null}
                     </div>
-                    <TextField value={title} onChange={(e) => setTitle(e.currentTarget.value)}/>
-                    <TextField value={description} onChange={(e) => setDescription(e.currentTarget.value)}/>
-                    <button onClick={submitUpdates}>Submit</button>
-
-                    
                 </Stack>
             </main>
         </>
