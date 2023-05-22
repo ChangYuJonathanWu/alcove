@@ -203,6 +203,7 @@ export default function Profile({ user }) {
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
+                    {editMode && <div style={{color: 'red'}}>Edit Mode</div>}
                     <ProfileHeader user={user} setEditMode={setEditMode} ownerSignedIn={ownerSignedIn}/>
                     {buildProfileItems()}
                     {!config.hide_logo && <AlcoveProfileLogo />}
