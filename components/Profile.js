@@ -9,22 +9,13 @@ import { Button, Typography } from '@mui/material';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
+
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ChevronRight from '@mui/icons-material/ChevronRight'
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import LinkIcon from '@mui/icons-material/Link';
-import Divider from '@mui/material/Divider';
+import { buildProfileItems } from './items/buildItems';
 
-import ProfileHeader from '@/components/ProfileHeader';
-import SpotifyItem from '@/components/items/SpotifyItem';
-import RestaurantItem from '@/components/items/RestaurantItem';
-import TrailItem from '@/components/items/TrailItem';
-
-import ShowItem from '@/components/items/ShowItem';
-import CarItem from '@/components/items/CarItem';
+import ProfileHeader from './ProfileHeader';
 import AlcoveProfileLogo from '@/components/AlcoveProfileLogo';
 
 import jonathan_user from '../examples/jonathan.json'
@@ -64,126 +55,6 @@ export default function Profile({ user }) {
         setListOpen(listOpen === listId ? null : listId)
     }
 
-    const buildProfileItems = () => {
-        const itemComponents = []
-        itemOrder.forEach(itemId => {
-            const item = items[itemId]
-            const { type: itemType, content } = item
-            if (itemType === "list") {
-                itemComponents.push(
-                    buildListItem(itemId, content)
-                )
-            }
-            if (itemType === "uri") {
-                itemComponents.push(
-                    buildUriItem(itemId, content)
-                )
-            }
-
-        })
-        return itemComponents
-    }
-    const buildUriItem = (itemId, content) => {
-        const { name, uri } = content
-        const listButtonId = `list-button-${itemId}`
-        return (
-            <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
-            <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
-                <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
-                    <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
-                        <LinkIcon />
-                        <Typography variant="h3">{name}</Typography>
-                    </Stack>
-                </ListItemButton>
-            </Paper>
-            </div>
-
-        )
-    }
-
-    const buildItemHeader = (name) => {
-        switch(item_font) {
-            case 'Montserrat':
-                return <span className={montserrat.className}>{name}</span>
-            default:
-                return <Typography variant="h3">{name}</Typography>
-        }   
-    }
-    
-    const buildListItem = (itemId, content) => {
-        const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
-        const isOpen = listOpen === itemId
-        const listButtonId = `list-button-${itemId}`
-
-        return (
-            <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
-                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH  }}>
-                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
-                        <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
-                            {isOpen ? <ExpandMore /> : <ChevronRight />}
-                            <Stack>
-                                {buildItemHeader(name)}
-                                {isOpen && <Typography variant="caption">{commentary}</Typography>}
-                            </Stack>
-                        </Stack>
-                    </ListItemButton>
-                    <Collapse in={isOpen} timeout={0}>
-                        <List style={{alignContent: "center"}}>
-                            {buildItems(items, itemOrder, listType)}
-                        </List>
-                    </Collapse>
-                </Paper>
-            </div>
-        )
-    }
-
-    const buildSpotifyItems = (items, itemOrder) => {
-        return itemOrder.map(
-            itemId => <SpotifyItem key={itemId} item={items[itemId]} />
-        )
-    }
-
-    const buildRestaurantItems = (items, itemOrder) => {
-        return itemOrder.map(
-            itemId => <><Divider flexItem /><RestaurantItem key={itemId} item={items[itemId]} /></>
-        )
-    }
-
-    const buildTrailItems = (items, itemOrder) => {
-        return itemOrder.map(
-            itemId => <TrailItem key={itemId} item={items[itemId]} />
-        )
-    }
-
-    const buildShowItems = (items, itemOrder) => {
-        return itemOrder.map(
-            itemId => <ShowItem key={itemId} item={items[itemId]} />
-        )
-    }
-
-    const buildCarItems = (items, itemOrder) => {
-        return itemOrder.map(
-            itemId => <CarItem key={itemId} item={items[itemId]} />
-        )
-    }
-
-    const buildItems = (items, itemOrder, type) => {
-        switch (type) {
-            case "spotify":
-                return buildSpotifyItems(items, itemOrder)
-            case "restaurant":
-                return buildRestaurantItems(items, itemOrder)
-            case "trail":
-                return buildTrailItems(items, itemOrder)
-            case "show":
-                return buildShowItems(items, itemOrder)
-            case "car":
-                return buildCarItems(items, itemOrder)
-            default:
-                return <div></div>
-        }
-    }
-
     return (
         <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
             <Head>
@@ -205,7 +76,7 @@ export default function Profile({ user }) {
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     {editMode && <div style={{color: 'red'}}>Edit Mode</div>}
                     <ProfileHeader user={user} setEditMode={setEditMode} ownerSignedIn={ownerSignedIn}/>
-                    {buildProfileItems()}
+                    {buildProfileItems(items, itemOrder, listOpen, toggleSingleList, item_font)}
                     {!config.hide_logo && <AlcoveProfileLogo />}
                 </Stack>
             </main>
