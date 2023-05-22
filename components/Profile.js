@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
@@ -31,6 +31,9 @@ import jonathan_user from '../examples/jonathan.json'
 import jiwonkang_user from '../examples/jiwon.json'
 import example_user from '../examples/example.json'
 
+import { useAuthContext } from "@/context/AuthContext";
+import { signOut, getAuth } from "firebase/auth";
+
 import { montserrat } from './fonts';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
@@ -38,9 +41,23 @@ const MAX_WIDTH = "600px"
 
 
 export default function Profile({ user }) {
-    const [listOpen, setListOpen] = React.useState(null);
+    const [listOpen, setListOpen] = useState(null);
+    const [editMode, setEditMode] = useState(false);
+    const [ownerSignedIn, setOwnerSignedIn] = useState(false);
+    useEffect(() => {
+        const checkOwnerSignedIn = async () => {
+            const auth = getAuth();
+            const loggedInUid = auth.currentUser.uid
+            if(loggedInUid === user.uid) {
+                setOwnerSignedIn(true)
+            }
+        }
+        checkOwnerSignedIn()
+    }, [user])
+
     const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
     const { items = {}, item_order: itemOrder = [] } = profile
+
 
     const { item_font } = profile_style
     const toggleSingleList = (listId) => {
@@ -186,7 +203,7 @@ export default function Profile({ user }) {
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
-                    <ProfileHeader user={user} />
+                    <ProfileHeader user={user} setEditMode={setEditMode} ownerSignedIn={ownerSignedIn}/>
                     {buildProfileItems()}
                     {!config.hide_logo && <AlcoveProfileLogo />}
                 </Stack>

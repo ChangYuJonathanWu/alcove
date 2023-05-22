@@ -38,11 +38,11 @@ export default function Home() {
                     Authorization : `Bearer ${token}`
                 }
                 const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
-                const profile = await result.json()
-                const { description = "", title = "" } = profile
+                const fullUserProfile = await result.json()
+                const { description = "", title = "", profile } = fullUserProfile
                 setDescription(description)
                 setTitle(title)
-                setProfile(profile)
+                setProfile(fullUserProfile)
             }
         }
         loadUser()
@@ -114,6 +114,9 @@ export default function Home() {
                     <TextField value={description} onChange={(e) => setDescription(e.currentTarget.value)}/>
                    
                     <button onClick={submitUpdates}>Submit</button>
+                    <div>
+                        
+                    </div>
                     Name
                     <TextField value={newItemName} onChange={(e) => setNewItemName(e.currentTarget.value)}/>
                     Type (list, link)
