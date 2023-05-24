@@ -24,7 +24,7 @@ export default function Profile({ user }) {
             const auth = getAuth();
             const loggedIn = auth.currentUser;
             if(!loggedIn) {
-                setOwnedSignedIn(false)
+                setOwnerSignedIn(false)
                 return
             }
             const loggedInUid = auth.currentUser.uid
