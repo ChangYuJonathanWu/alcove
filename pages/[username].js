@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import ErrorPage from 'next/error'
-import Profile from '@/components/Profile'
+import Profile from '@/components/profile/Profile'
 import jonathan_user from '../examples/jonathan.json'
 import jiwonkang_user from '../examples/jiwon.json'
 import example_user from '../examples/example.json'

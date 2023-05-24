@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/AlcoveProfileLogo'
+import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
 import { Button, Divider, Stack, TextField, Typography } from '@mui/material'
 import { amita } from '../fonts'
 import Link from 'next/link';

@@ -1,4 +1,4 @@
-import ProfileHeader from '@/components/ProfileHeader';
+import ProfileHeader from '@/components/profile/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
 import TrailItem from '@/components/items/TrailItem';
