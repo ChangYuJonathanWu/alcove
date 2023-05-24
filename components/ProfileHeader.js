@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 
 import Avatar from '@mui/material/Avatar';
 
@@ -12,7 +12,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 
-export default function ProfileHeader({ user }) {
+export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
     const { title, description, handle, photo, social_links } = user;
     const { instagram, facebook } = social_links
     const hasSocialLinks = instagram || facebook
@@ -34,6 +34,7 @@ export default function ProfileHeader({ user }) {
                             <FacebookIcon />
                         </IconButton>}
                     </Stack>}
+                    {ownerSignedIn && <Button style={{textTransform: 'none', color: 'black', borderColor: 'gray', fontSize: '0.8rem', width: '100%'}} variant="outlined" onClick={() => setEditMode(true)}>Edit Profile</Button>}
                 </Stack>
             </Paper>
         </Stack>
