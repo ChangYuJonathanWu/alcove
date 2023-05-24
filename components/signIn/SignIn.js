@@ -31,7 +31,12 @@ export default function SignIn() {
     const [loginError, setLoginError] = useState(null)
     const router = useRouter();
     const auth = getAuth()
-    console.log(user)
+    
+    const CustomTextField =  (props) => (
+
+        <TextField variant="standard" type="text" {...props} />
+     
+      );
     return (
         <>
             <Head>
@@ -79,20 +84,17 @@ export default function SignIn() {
                     >
                         <Form>
                             <Stack style={{}} alignItems="center" spacing={1}>
-                                <Field id="email" name="email" type="email" placeholder="Email" />
-                                <Field type="password" id="password" name="password" placeholder="Password" />
-                                <button variant="contained" type="submit">Login</button>
+                                <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
+                                <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
+                                <Button variant="contained" type="submit">Login</Button>
                             </Stack>
 
                         </Form>
                     </Formik>
                     <div>
-                        {user ? `You are logged in as ${user.email}` : ' You are not logged in'}
-                    </div>
-                    <div>
                         {loginError ?? ""}
                     </div>
-                    <button onClick={() => signOut(auth)}>Sign Out</button>
+                    {user && <button onClick={() => signOut(auth)}>Sign Out</button>}
                 </Stack>
 
             </main>
