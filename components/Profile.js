@@ -22,6 +22,11 @@ export default function Profile({ user }) {
     useEffect(() => {
         const checkOwnerSignedIn = async () => {
             const auth = getAuth();
+            const loggedIn = auth.currentUser;
+            if(!loggedIn) {
+                setOwnedSignedIn(false)
+                return
+            }
             const loggedInUid = auth.currentUser.uid
             if(loggedInUid === user.uid) {
                 setOwnerSignedIn(true)
