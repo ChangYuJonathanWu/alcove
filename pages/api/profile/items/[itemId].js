@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { deleteProfileItem } from '@/lib/api/profile'
+import { deleteProfileItem, renameProfileItem } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 
 async function handler(req, res) {
 
     const { method, uid } = req;
     if (method === "DELETE") {
-        const { query, body } = req; 
+        const { query, body } = req;
         const { itemId } = query;
         console.log("Attempting to delete item ID: " + itemId)
 
@@ -22,6 +22,24 @@ async function handler(req, res) {
             return res.status(400).json({ error: "Could not delete item from profile" })
         }
 
+    }
+
+    if (method === "POST") {
+        const { query, body } = req;
+        const { itemId } = query;
+        const { name } = JSON.parse(body);
+
+        // Here we need firebase admin to verify the auth information
+        if (!uid) {
+            return res.status(400).json({ error: "Missing UID" })
+        }
+        console.log("Attempting to rename item ID " + itemId + " to " + name)
+        const result = await renameProfileItem(itemId, name, uid)
+        if (result) {
+            return res.status(200).json({ success: true })
+        } else {
+            return res.status(400).json({ error: "Could not rename item from profile" })
+        }
     }
 }
 

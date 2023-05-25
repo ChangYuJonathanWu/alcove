@@ -29,6 +29,22 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         setItemId("")
         triggerReload(Date.now())
     }
+    const onItemUpdate = async () => {
+        setLoading(true)
+        const auth = getAuth()
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization: `Bearer ${token}`
+        }
+        const body = {
+            name: newTitle
+        }
+        const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", headers, body: JSON.stringify(body) })
+        setLoading(false)
+        setEditItem("")
+        setItemId("")
+        triggerReload(Date.now())
+    }
     const modalStyle = {
         position: 'absolute',
         top: '40%',
@@ -48,7 +64,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={() => {}} variant="contained">Update</Button>
+                        <Button disabled={loading} onClick={onItemUpdate} variant="contained">Update</Button>
                     </Stack>
                 </Stack>
             </Box>
