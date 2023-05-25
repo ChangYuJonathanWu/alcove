@@ -64,7 +64,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
             itemId => <ItemComponent key={itemId} item={items[itemId]}/>
         )
     }
-    console.log(editItem)
+
     const buildListItem = (itemId, content, itemFont) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
         const isOpen = listOpen === itemId
