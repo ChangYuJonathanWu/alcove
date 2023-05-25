@@ -4,8 +4,11 @@ import { getAuth } from "firebase/auth";
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
+    const { instagram, facebook } = social_links
     const [newTitle, setNewTitle] = useState(title)
     const [newDescription, setNewDescription] = useState(description)
+    const [newInstagram, setNewInstagram ] = useState(instagram)
+    const [newFacebook, setNewFacebook] = useState(facebook)
     const [loading, setLoading] = useState(false)
     const onBioUpdate = async () => {
         setLoading(true)
@@ -25,20 +28,22 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     }
     const modalStyle = {
         position: 'absolute',
-        top: '20%',
+        top: '40%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '80%',
+        minWidth: "300px",
         backgroundColor: 'white',
         borderRadius: '7px',
-        padding: '1rem',
+        padding: '2rem',
     };
     return (
         <Modal open={open}>
             <Box style={modalStyle}>
-                <Stack alignItems="center" spacing={1}>
-                    <TextField value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    <TextField value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
+                <Stack alignItems="center" spacing={4} >
+                    <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
+                    <TextField style={{ width: "100%" }} multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
+                    <TextField style={{ width: "100%" }} label="Instagram" value={newInstagram}/>
+                    <TextField style={{ width: "100%" }} label="Facebook" value={newFacebook}/>
                     <Stack direction="row" spacing={1}>
                         <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
                         <Button disabled={loading} onClick={onBioUpdate} variant="contained">Update</Button>
