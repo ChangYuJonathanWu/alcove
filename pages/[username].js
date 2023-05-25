@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import ErrorPage from 'next/error'
-import Profile from '@/components/Profile'
+import Profile from '@/components/profile/Profile'
 import jonathan_user from '../examples/jonathan.json'
 import jiwonkang_user from '../examples/jiwon.json'
 import example_user from '../examples/example.json'
@@ -13,6 +13,7 @@ export default function ProfileRoute() {
     const router = useRouter()
     const [ loading, setLoading ] = useState(true)
     const [ user, setUser ] = useState(null)
+    const [ loadTime, setLoadTime ]= useState(Date.now())
     const { username } = router.query;
 
     const determineHardcodedUser = (username) => {
@@ -52,11 +53,11 @@ export default function ProfileRoute() {
             setLoading(false)
         }
         loadUser()
-    }, [username])
+    }, [username, loadTime])
 
     if(loading) {
         return <div></div> // loading animation should go here
     }
 
-    return user ? <Profile user={user} /> : <ErrorPage statusCode={404}/>
+    return user ? <Profile user={user} triggerReload={setLoadTime}/> : <ErrorPage statusCode={404}/>
 }

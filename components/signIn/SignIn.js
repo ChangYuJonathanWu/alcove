@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/AlcoveProfileLogo'
+import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
 import FoundationIcon from '@mui/icons-material/Foundation';
 import { Stack, TextField, Typography, Button } from '@mui/material'
 import { amita } from '../fonts'

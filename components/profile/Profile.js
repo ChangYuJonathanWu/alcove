@@ -4,31 +4,32 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
-import { buildProfileItems } from './items/buildItems';
+import { buildProfileItems } from '../items/buildItems';
 
 import ProfileHeader from './ProfileHeader';
-import AlcoveProfileLogo from '@/components/AlcoveProfileLogo';
+import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo';
 
 import { useAuthContext } from "@/context/AuthContext";
 import { signOut, getAuth } from "firebase/auth";
 
-import { montserrat } from './fonts';
+import { montserrat } from '../fonts';
+import EditBioModal from './EditBioModal';
 
 
-export default function Profile({ user }) {
+export default function Profile({ user, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
-    const [editMode, setEditMode] = useState(false);
+    const [editBio, setEditBio] = useState(false);
     const [ownerSignedIn, setOwnerSignedIn] = useState(false);
     useEffect(() => {
         const checkOwnerSignedIn = async () => {
             const auth = getAuth();
             const loggedIn = auth.currentUser;
-            if(!loggedIn) {
+            if (!loggedIn) {
                 setOwnerSignedIn(false)
                 return
             }
             const loggedInUid = auth.currentUser.uid
-            if(loggedInUid === user.uid) {
+            if (loggedInUid === user.uid) {
                 setOwnerSignedIn(true)
             }
         }
@@ -37,7 +38,6 @@ export default function Profile({ user }) {
 
     const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
     const { items = {}, item_order: itemOrder = [] } = profile
-
 
     const { item_font } = profile_style
     const toggleSingleList = (listId) => {
@@ -62,9 +62,9 @@ export default function Profile({ user }) {
                     {background && <Image fill={true} src={background} alt="background wallpaper" />}
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
+                    <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload}/>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
-                    {editMode && <div style={{color: 'red'}}>Edit Mode</div>}
-                    <ProfileHeader user={user} setEditMode={setEditMode} ownerSignedIn={ownerSignedIn}/>
+                    <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
                     {buildProfileItems(items, itemOrder, listOpen, toggleSingleList, item_font)}
                     {!config.hide_logo && <AlcoveProfileLogo />}
                 </Stack>

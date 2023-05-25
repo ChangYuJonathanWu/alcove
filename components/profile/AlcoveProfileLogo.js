@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import CabinIcon from '@mui/icons-material/Cabin';
-import { amita } from './fonts'
+import { amita } from '../fonts'
 
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
