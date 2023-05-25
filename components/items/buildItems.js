@@ -9,6 +9,7 @@ import CarItem from '@/components/items/CarItem';
 import LinkIcon from '@mui/icons-material/Link';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
+import EditIcon from '@mui/icons-material/Edit';
 import ChevronRight from '@mui/icons-material/ChevronRight'
 import Paper from '@mui/material/Paper';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -74,7 +75,7 @@ export const buildItems = (items, itemOrder, type) => {
     }
 }
 
-export const buildListItem = (itemId, content, listOpen, toggleSingleList, item_font) => {
+export const buildListItem = (itemId, content, listOpen, toggleSingleList, item_font, editMode) => {
     const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
     const isOpen = listOpen === itemId
     const listButtonId = `list-button-${itemId}`
@@ -83,13 +84,17 @@ export const buildListItem = (itemId, content, listOpen, toggleSingleList, item_
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
             <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
-                    <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
-                        {isOpen ? <ExpandMore /> : <ChevronRight />}
-                        <Stack>
-                            {buildItemHeader(name, item_font)}
-                            {isOpen && <Typography variant="caption">{commentary}</Typography>}
+                    <Stack direction="row" justifyContent="space-between" style={{ width: "100%" }} >
+                        <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
+                            {isOpen ? <ExpandMore /> : <ChevronRight />}
+                            <Stack>
+                                {buildItemHeader(name, item_font)}
+                                {isOpen && <Typography variant="caption">{commentary}</Typography>}
+                            </Stack>
                         </Stack>
+                        {editMode && <EditIcon />}
                     </Stack>
+
                 </ListItemButton>
                 <Collapse in={isOpen} timeout={0}>
                     <List style={{ alignContent: "center" }}>
@@ -101,36 +106,40 @@ export const buildListItem = (itemId, content, listOpen, toggleSingleList, item_
     )
 }
 
-export const buildProfileItems = (items, itemOrder, listOpen, toggleSingleList, item_font) => {
+export const buildProfileItems = (items, itemOrder, listOpen, toggleSingleList, item_font, editMode) => {
     const itemComponents = []
     itemOrder.forEach(itemId => {
         const item = items[itemId]
         const { type: itemType, content } = item
         if (itemType === "list") {
             itemComponents.push(
-                buildListItem(itemId, content, listOpen, toggleSingleList, item_font)
+                buildListItem(itemId, content, listOpen, toggleSingleList, item_font, editMode)
             )
         }
         if (itemType === "uri") {
             itemComponents.push(
-                buildUriItem(itemId, content)
+                buildUriItem(itemId, content, editMode)
             )
         }
 
     })
     return itemComponents
 }
-const buildUriItem = (itemId, content) => {
+const buildUriItem = (itemId, content, editMode) => {
     const { name, uri } = content
     const listButtonId = `list-button-${itemId}`
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
             <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
-                    <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
-                        <LinkIcon />
-                        <Typography variant="h3">{name}</Typography>
+                    <Stack direction="row" style={{ width: "100%" }} justifyContent={"space-between"}>
+                        <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
+                            <LinkIcon />
+                            <Typography variant="h3">{name}</Typography>
+                        </Stack>
+                        {editMode && <EditIcon />}
                     </Stack>
+
                 </ListItemButton>
             </Paper>
         </div>
