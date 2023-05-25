@@ -11,13 +11,27 @@ import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import { Typography } from '@mui/material';
 
+import { getAuth } from "firebase/auth";
+
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
-export default function NewItemButton() {
+export default function NewItemButton({onClick}) {
+    const submitNewItem = async () => {
+        const auth = getAuth();
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization : `Bearer ${token}`
+        }
+        const body = {
+            name: newItemName,
+            type: newItemType,
+        }
+        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body)})
+    }
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
             <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
-                <ListItemButton id={'new-item-button'} key={'new-item-button'} disableRipple={true}>
+                <ListItemButton id={'new-item-button'} key={'new-item-button'} disableRipple={true} onClick={onClick}>
                     <Stack direction="row" alignItems="start" spacing={2}>
                         <AddIcon />
                         <Typography variant="h3"><em> New Item</em></Typography>
