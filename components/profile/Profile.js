@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
-import { buildProfileItems } from '../items/buildItems';
 
 import ProfileHeader from './ProfileHeader';
 import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo';
@@ -16,6 +15,7 @@ import { montserrat } from '../fonts';
 import EditBioModal from './EditBioModal';
 import NewItemButton from './NewItemButton';
 import NewItemModal from './NewItemModal';
+import ProfileItems from '../items/ProfileItems';
 
 
 export default function Profile({ user, triggerReload }) {
@@ -70,7 +70,7 @@ export default function Profile({ user, triggerReload }) {
                     <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload}/>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
-                    {buildProfileItems(items, itemOrder, listOpen, toggleSingleList, item_font, ownerSignedIn)}
+                    <ProfileItems user={user} editMode={ownerSignedIn}/>
                     {ownerSignedIn && <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)}/>}
                     {!config.hide_logo && <AlcoveProfileLogo />}
                     
