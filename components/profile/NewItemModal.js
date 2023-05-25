@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 export default function NewItemModal({ open, setOpen, triggerReload }) {
     const [name, setName] = useState("")
+    const [itemType, setItemType] = useState("list")
+    const [linkAddress, setLinkAddress] = useState("")
     const [loading, setLoading] = useState(false)
+    const clearInputs = () => {
+        setItemType("list")
+        setLinkAddress("")
+        setName("")
+    }
     const onNewItem = async () => {
         setLoading(true)
         const auth = getAuth();
         const token = await auth.currentUser.getIdToken();
         const headers = {
-            Authorization : `Bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
         const body = {
             name,
-            type: "list",
+            type: itemType,
+            uri: linkAddress,
         }
-        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body)})
+        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body) })
         setLoading(false)
         setOpen(false)
+        clearInputs()
         triggerReload(Date.now())
     }
     const modalStyle = {
@@ -37,9 +51,24 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
                     <TextField style={{ width: "100%" }} label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+                    <FormControl>
+                        <FormLabel id="item-type">Type</FormLabel>
+                        <RadioGroup
+                            aria-labelledby="item-type"
+                            value={itemType}
+                            onChange={(e) => setItemType(e.currentTarget.value)}
+                            row
+                            name="item-type-radio-buttons-group"
+                        >
+                            <FormControlLabel value="list" control={<Radio />} label="List" />
+                            <FormControlLabel value="uri" control={<Radio />} label="Link" />
+                        </RadioGroup>
+                    </FormControl>
+                    {itemType === "uri" &&
+                     <TextField style={{width: "100%"}} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(e.target.value)}/>}
                     <Stack direction="row" spacing={1}>
                         <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
-                        <Button disabled={loading || !name} onClick={onNewItem} variant="contained">Create</Button>
+                        <Button disabled={loading || !name || (itemType === "uri" && !linkAddress)} onClick={onNewItem} variant="contained">Create</Button>
                     </Stack>
                 </Stack>
 

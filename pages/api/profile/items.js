@@ -14,9 +14,9 @@ async function handler(req, res) {
             return res.status(400).json({error: "Missing UID"})
         }
         
-        const { name, type } = JSON.parse(body);
+        const { name, type, uri } = JSON.parse(body);
         // if null, then do not update the parameter. Otherwise if string (even empty) then update
-        const result = await addProfileItem(name, type, uid)
+        const result = await addProfileItem(name, type, uid, uri)
         console.log(result)
         if(result) {
             return res.status(200).json({success: true})
