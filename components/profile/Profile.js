@@ -14,11 +14,14 @@ import { signOut, getAuth } from "firebase/auth";
 
 import { montserrat } from '../fonts';
 import EditBioModal from './EditBioModal';
+import NewItemButton from './NewItemButton';
+import NewItemModal from './NewItemModal';
 
 
 export default function Profile({ user, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
+    const [newItemOpen, setNewItemOpen] = useState(false)
     const [ownerSignedIn, setOwnerSignedIn] = useState(false);
     useEffect(() => {
         const checkOwnerSignedIn = async () => {
@@ -43,7 +46,8 @@ export default function Profile({ user, triggerReload }) {
     const toggleSingleList = (listId) => {
         setListOpen(listOpen === listId ? null : listId)
     }
-
+    
+    //TODO: Error handling on network request, validation
     return (
         <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
             <Head>
@@ -63,10 +67,13 @@ export default function Profile({ user, triggerReload }) {
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
                     <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload}/>
+                    <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload}/>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
                     {buildProfileItems(items, itemOrder, listOpen, toggleSingleList, item_font)}
+                    {ownerSignedIn && <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)}/>}
                     {!config.hide_logo && <AlcoveProfileLogo />}
+                    
                 </Stack>
             </main>
         </div>

@@ -50,12 +50,12 @@ const buildCarItems = (items, itemOrder) => {
     )
 }
 export const buildItemHeader = (name, item_font) => {
-    switch(item_font) {
+    switch (item_font) {
         case 'Montserrat':
             return <span className={montserrat.className}>{name}</span>
         default:
             return <Typography variant="h3">{name}</Typography>
-    }   
+    }
 }
 export const buildItems = (items, itemOrder, type) => {
     switch (type) {
@@ -74,14 +74,14 @@ export const buildItems = (items, itemOrder, type) => {
     }
 }
 
-export const buildListItem = (itemId, content, listOpen,toggleSingleList, item_font) => {
+export const buildListItem = (itemId, content, listOpen, toggleSingleList, item_font) => {
     const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
     const isOpen = listOpen === itemId
     const listButtonId = `list-button-${itemId}`
 
     return (
-        <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
-            <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH  }}>
+        <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                     <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                         {isOpen ? <ExpandMore /> : <ChevronRight />}
@@ -92,7 +92,7 @@ export const buildListItem = (itemId, content, listOpen,toggleSingleList, item_f
                     </Stack>
                 </ListItemButton>
                 <Collapse in={isOpen} timeout={0}>
-                    <List style={{alignContent: "center"}}>
+                    <List style={{ alignContent: "center" }}>
                         {buildItems(items, itemOrder, listType)}
                     </List>
                 </Collapse>
@@ -124,15 +124,15 @@ const buildUriItem = (itemId, content) => {
     const { name, uri } = content
     const listButtonId = `list-button-${itemId}`
     return (
-        <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
-        <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
-            <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
-                <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
-                    <LinkIcon />
-                    <Typography variant="h3">{name}</Typography>
-                </Stack>
-            </ListItemButton>
-        </Paper>
+        <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
+                <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
+                    <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
+                        <LinkIcon />
+                        <Typography variant="h3">{name}</Typography>
+                    </Stack>
+                </ListItemButton>
+            </Paper>
         </div>
 
     )
