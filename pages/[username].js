@@ -13,6 +13,7 @@ export default function ProfileRoute() {
     const router = useRouter()
     const [ loading, setLoading ] = useState(true)
     const [ user, setUser ] = useState(null)
+    const [ loadTime, setLoadTime ]= useState(Date.now())
     const { username } = router.query;
 
     const determineHardcodedUser = (username) => {
@@ -52,11 +53,11 @@ export default function ProfileRoute() {
             setLoading(false)
         }
         loadUser()
-    }, [username])
+    }, [username, loadTime])
 
     if(loading) {
         return <div></div> // loading animation should go here
     }
 
-    return user ? <Profile user={user} /> : <ErrorPage statusCode={404}/>
+    return user ? <Profile user={user} triggerReload={setLoadTime}/> : <ErrorPage statusCode={404}/>
 }
