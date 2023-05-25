@@ -19,12 +19,15 @@ import List from '@mui/material/List';
 import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import { Typography } from '@mui/material';
+import EditItemModal from '../profile/EditItemModal';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
 
 export default function ProfileItems({ user, editMode }) {
     const [listOpen, setListOpen] = useState(null);
+    const [editItem, setEditItem] = useState(null);
+
     const { profile } = user
     const { items, item_order: itemOrder = [] } = profile
 
@@ -61,12 +64,11 @@ export default function ProfileItems({ user, editMode }) {
             itemId => <ItemComponent key={itemId} item={items[itemId]}/>
         )
     }
-
+    console.log(editItem)
     const buildListItem = (itemId, content, itemFont) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
         const isOpen = listOpen === itemId
         const listButtonId = `list-button-${itemId}`
-
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
@@ -79,7 +81,7 @@ export default function ProfileItems({ user, editMode }) {
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
                             </Stack>
-                            {editMode && <EditIcon />}
+                            {editMode && <EditIcon onClick={() => setEditItem(content)}/>}
                         </Stack>
 
                     </ListItemButton>
@@ -139,6 +141,12 @@ export default function ProfileItems({ user, editMode }) {
         })
         return itemComponents
     }
+    const profileItems = buildProfileItems()
 
-    return buildProfileItems()
+    return (
+        <div>
+            <EditItemModal editItem={editItem} setEditItem={setEditItem}/>
+            {buildProfileItems()}
+        </div>
+    )
 }
