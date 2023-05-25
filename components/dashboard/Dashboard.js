@@ -24,8 +24,8 @@ const theme4 = {
 export default function Home() {
     const { user } = useAuthContext()
     const [profile, setProfile] = useState(null)
-    const [description, setDescription] = useState(null)
-    const [title, setTitle] = useState(null)
+    const [description, setDescription] = useState("")
+    const [title, setTitle] = useState("")
     const [newItemName, setNewItemName ] = useState("")
     const [newItemType, setNewItemType] = useState("list")
     useEffect(() => {
