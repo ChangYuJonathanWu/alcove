@@ -40,9 +40,11 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         borderRadius: '7px',
         padding: '2rem',
     };
+    //TODO: Validate input; set character limits
     return (
         <Modal open={open}>
             <Box style={modalStyle}>
+                
                 <Stack alignItems="center" spacing={4} >
                     <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField style={{ width: "100%" }} multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
