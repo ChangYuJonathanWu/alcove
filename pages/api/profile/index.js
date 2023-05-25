@@ -24,7 +24,6 @@ async function handler(req, res) {
         }
         
         const { description, title, social_links } = JSON.parse(body);
-        console.log(description)
         // if null, then do not update the parameter. Otherwise if string (even empty) then update
         const updateQuery = {}
         if(description || description === "") {
@@ -46,7 +45,6 @@ async function handler(req, res) {
         }
         console.log("Update Query: " + JSON.stringify(updateQuery))
         const result = await updateProfile(updateQuery, uid)
-        console.log(result)
         if(result) {
             return res.status(200).json({success: true})
         } else {

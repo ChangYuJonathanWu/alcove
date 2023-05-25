@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { addProfileItem } from '../../../lib/api/profile'
+import { addProfileItem } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
@@ -24,7 +24,6 @@ async function handler(req, res) {
         }
         // if null, then do not update the parameter. Otherwise if string (even empty) then update
         const result = await addProfileItem(name, type, uid, newUri)
-        console.log(result)
         if (result) {
             return res.status(200).json({ success: true })
         } else {

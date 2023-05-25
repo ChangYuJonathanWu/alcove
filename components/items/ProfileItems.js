@@ -24,12 +24,12 @@ import EditItemModal from '../profile/EditItemModal';
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
 
-export default function ProfileItems({ user, editMode }) {
+export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editItem, setEditItem] = useState(null);
 
     const { profile } = user
-    const { items, item_order: itemOrder = [] } = profile
+    const { items: profileItems, item_order: itemOrder = [] } = profile
 
     const buildItemHeader = (name, item_font) => {
         switch (item_font) {
@@ -81,7 +81,7 @@ export default function ProfileItems({ user, editMode }) {
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
                             </Stack>
-                            {editMode && <EditIcon onClick={() => setEditItem(content)}/>}
+                            {editMode && <EditIcon onClick={() => setEditItem(profileItems[itemId])}/>}
                         </Stack>
 
                     </ListItemButton>
@@ -125,7 +125,7 @@ export default function ProfileItems({ user, editMode }) {
     const buildProfileItems = () => {
         const itemComponents = []
         itemOrder.forEach(itemId => {
-            const item = items[itemId]
+            const item = profileItems[itemId]
             const { type: itemType, content, item_font: itemFont } = item
             if (itemType === "list") {
                 itemComponents.push(
@@ -141,11 +141,11 @@ export default function ProfileItems({ user, editMode }) {
         })
         return itemComponents
     }
-    const profileItems = buildProfileItems()
+    const builtProfileItems = buildProfileItems()
 
     return (
         <div>
-            <EditItemModal editItem={editItem} setEditItem={setEditItem}/>
+            <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload}/>
             {buildProfileItems()}
         </div>
     )

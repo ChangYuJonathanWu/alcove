@@ -6,32 +6,28 @@ import DeleteIcon from '@mui/icons-material/Delete';
 // support delete and rename item
 export default function EditItemModal({ editItem, setEditItem, triggerReload }) {
     useEffect(() => {
-        if(editItem) {
-            const { name } = editItem
+        if (editItem) {
+            const { id, content } = editItem
+            const { name } = content;
             setNewTitle(name)
+            setItemId(id)
         }
     }, [editItem])
     const [newTitle, setNewTitle] = useState("")
+    const [itemId, setItemId] = useState("")
     const [loading, setLoading] = useState(false)
-    const onBioUpdate = async () => {
-        // setLoading(true)
-        // const auth = getAuth()
-        // const token = await auth.currentUser.getIdToken();
-        // const headers = {
-        //     Authorization: `Bearer ${token}`
-        // }
-        // const body = {
-        //     description: newDescription,
-        //     title: newTitle,
-        //     social_links: {
-        //         instagram: newInstagram,
-        //         facebook: newFacebook
-        //     }
-        // }
-        // const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body) })
-        // setLoading(false)
-        // setOpen(false)
-        // triggerReload(Date.now())
+    const onItemDelete = async () => {
+        setLoading(true)
+        const auth = getAuth()
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization: `Bearer ${token}`
+        }
+        const result = await fetch(`/api/profile/items/${itemId}`, { method: "DELETE", headers })
+        setLoading(false)
+        setEditItem("")
+        setItemId("")
+        triggerReload(Date.now())
     }
     const modalStyle = {
         position: 'absolute',
@@ -51,8 +47,8 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
                     <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
-                        <Button disabled={loading} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={onBioUpdate} variant="contained">Update</Button>
+                        <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>
+                        <Button disabled={loading} onClick={() => {}} variant="contained">Update</Button>
                     </Stack>
                 </Stack>
             </Box>

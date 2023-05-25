@@ -70,7 +70,7 @@ export default function Profile({ user, triggerReload }) {
                     <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload}/>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
-                    <ProfileItems user={user} editMode={ownerSignedIn}/>
+                    <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload}/>
                     {ownerSignedIn && <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)}/>}
                     {!config.hide_logo && <AlcoveProfileLogo />}
                     
