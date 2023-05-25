@@ -46,7 +46,8 @@ export default function Profile({ user, triggerReload }) {
     const toggleSingleList = (listId) => {
         setListOpen(listOpen === listId ? null : listId)
     }
-
+    
+    //TODO: Error handling on network request, validation
     return (
         <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
             <Head>
