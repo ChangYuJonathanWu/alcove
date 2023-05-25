@@ -23,16 +23,26 @@ async function handler(req, res) {
             return res.status(400).json({error: "Missing UID"})
         }
         
-        const { description, title } = JSON.parse(body);
+        const { description, title, social_links } = JSON.parse(body);
         console.log(description)
         // if null, then do not update the parameter. Otherwise if string (even empty) then update
         const updateQuery = {}
-        if(description !== null && description !== undefined) {
+        if(description || description === "") {
             updateQuery.description = description;
         }
 
-        if(title !== null && title !== undefined) {
+        if(title || title === "") {
             updateQuery.title = title;
+        }
+        if(social_links) {
+            const { instagram, facebook } = social_links
+            
+            if(instagram || instagram === "") {
+                updateQuery["social_links.instagram"] = instagram
+            }
+            if(facebook || facebook === "") {
+                updateQuery["social_links.facebook"] = facebook
+            }
         }
         console.log("Update Query: " + JSON.stringify(updateQuery))
         const result = await updateProfile(updateQuery, uid)

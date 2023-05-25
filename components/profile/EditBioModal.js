@@ -20,6 +20,10 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const body = {
             description: newDescription,
             title: newTitle,
+            social_links: {
+                instagram: newInstagram,
+                facebook: newFacebook
+            }
         }
         const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body) })
         setLoading(false)
@@ -42,8 +46,8 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                 <Stack alignItems="center" spacing={4} >
                     <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField style={{ width: "100%" }} multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
-                    <TextField style={{ width: "100%" }} label="Instagram" value={newInstagram}/>
-                    <TextField style={{ width: "100%" }} label="Facebook" value={newFacebook}/>
+                    <TextField style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)}/>
+                    <TextField style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)}/>
                     <Stack direction="row" spacing={1}>
                         <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
                         <Button disabled={loading} onClick={onBioUpdate} variant="contained">Update</Button>
