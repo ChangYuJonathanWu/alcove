@@ -61,7 +61,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 ItemComponent = ShowItem
         }
         return itemOrder.map(
-            itemId => <ItemComponent key={itemId} item={items[itemId]}/>
+            itemId => <ItemComponent key={itemId} item={items[itemId]} />
         )
     }
 
@@ -81,7 +81,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
                             </Stack>
-                            {editMode && <EditIcon onClick={() => setEditItem(profileItems[itemId])}/>}
+                            {editMode && <EditIcon onClick={(e) => {e.preventDefault(); setEditItem(profileItems[itemId])}} />}
                         </Stack>
 
                     </ListItemButton>
@@ -95,7 +95,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         )
     }
 
-
+    const onEditLink = (e) => {
+        e.preventDefault() 
+    }
     const buildUriItem = (itemId, content) => {
         const { name, uri } = content
         const listButtonId = `list-button-${itemId}`
@@ -108,7 +110,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                                 <LinkIcon />
                                 <Typography variant="h3">{name}</Typography>
                             </Stack>
-                            {editMode && <EditIcon />}
+                            {editMode && <EditIcon onClick={(e) => {e.preventDefault(); setEditItem(profileItems[itemId])}} />}
                         </Stack>
 
                     </ListItemButton>
@@ -145,7 +147,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
     return (
         <div>
-            <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload}/>
+            <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
             {buildProfileItems()}
         </div>
     )
