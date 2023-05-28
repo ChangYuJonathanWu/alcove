@@ -1,7 +1,0 @@
-{
-    "functions": {
-      "lib/firebase-admin.js": {
-        "includeFiles": "*.json"
-      }
-    }
-  }
