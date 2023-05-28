@@ -1,0 +1,8 @@
+.firework-hidden {
+    opacity: 0;
+    transition: all 1000ms linear 3s; 
+  }
+  
+.firework-shown {
+    opacity: 1;
+}
