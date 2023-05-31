@@ -11,6 +11,9 @@ export default function NewListItemModal({ newListItem, setNewListItem, triggerR
         }
     }, [newListItem])
     const [listId, setListId] = useState("")
+    const [title, setTitle] = useState("")
+    const [subtitle, setSubtitle] = useState("")
+    const [caption, setCaption] = useState("")
     const [loading, setLoading] = useState(false)
    
     const modalStyle = {
@@ -29,10 +32,13 @@ export default function NewListItemModal({ newListItem, setNewListItem, triggerR
         <Modal open={!!newListItem}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
-                    {/* <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} /> */}
-                    <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
-                        <Button disabled={loading} onClick={() => setNewListItem(null)}>Cancel</Button>
+                    <TextField style={{ width: "100%" }} label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
+                    <TextField style={{ width: "100%" }} label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />
+                    <TextField style={{ width: "100%" }} multiline rows={5} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
                     
+                    <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
+                        
+                        <Button disabled={loading} onClick={() => setNewListItem(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={() => {}} variant="contained">Post</Button>
                     </Stack>
                 </Stack>
