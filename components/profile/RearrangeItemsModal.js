@@ -11,6 +11,15 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
   const [loading, setLoading] = useState(false)
   const [order, setOrder] = useState(item_order)
 
+  useEffect(() => {
+    setOrder(item_order)
+  }, [item_order])
+
+  const onCancel = () => {
+    setOrder(item_order)
+    setOpen(false)
+  }
+
   const onMoveDown = (idx) => {
     if(idx >= order.length - 1){
       return
@@ -31,8 +40,20 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
     setOrder(newOrder)
   }
 
-  const onUpdate = () => {
-
+  const onUpdate = async () => {
+    setLoading(true)
+    const auth = getAuth();
+    const token = await auth.currentUser.getIdToken();
+    const headers = {
+        Authorization : `Bearer ${token}`
+    }
+    const body = {
+        item_order: order
+    }
+    const result = await fetch(`/api/profile/items`, { method: "PUT", headers, body: JSON.stringify(body)})
+    setLoading(false)
+    triggerReload(Date.now())
+    setOpen(false)
   }
 
   const buildItems = () => {
@@ -69,8 +90,7 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
         <Stack alignItems="center" spacing={4} >
           {buildItems()}
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
-            <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
-
+            <Button disabled={loading} onClick={onCancel}>Cancel</Button>
             <Button disabled={loading} onClick={onUpdate} variant="contained">Update</Button>
           </Stack>
         </Stack>
