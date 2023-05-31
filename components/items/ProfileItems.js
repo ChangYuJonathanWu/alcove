@@ -20,6 +20,8 @@ import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import { Typography } from '@mui/material';
 import EditItemModal from '../profile/EditItemModal';
+import EditListItemsButtonRow from './EditListItemsButtonRow';
+import NewListItemModal from '../profile/NewListItemModal';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
@@ -27,6 +29,7 @@ const MAX_WIDTH = "600px"
 export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editItem, setEditItem] = useState(null);
+    const [newListItem, setNewListItem] = useState(null)
 
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
@@ -69,6 +72,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
         const isOpen = listOpen === itemId
         const listButtonId = `list-button-${itemId}`
+
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
@@ -88,6 +92,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <Collapse in={isOpen} timeout={0}>
                         <List style={{ alignContent: "center" }}>
                             {buildItems(items, itemOrder, listType)}
+                            {editMode && <EditListItemsButtonRow onNewItemClick={() => setNewListItem(itemId)}/>}
                         </List>
                     </Collapse>
                 </Paper>
@@ -148,6 +153,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     return (
         <div>
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
+            <NewListItemModal newListItem={newListItem} setNewListItem={setNewListItem} triggerReload={triggerReload}/>
             {buildProfileItems()}
         </div>
     )
