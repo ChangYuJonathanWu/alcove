@@ -11,20 +11,40 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
   const [loading, setLoading] = useState(false)
   const [order, setOrder] = useState(item_order)
 
+  const onMoveDown = (idx) => {
+    if(idx >= order.length - 1){
+      return
+    }
+    const newOrder = order.slice()
+    const item = newOrder.splice(idx, 1)[0]
+    newOrder.splice(idx + 1, 0, item)
+    setOrder(newOrder)
+  }
+
+  const onMoveUp = (idx) => {
+    if(idx === 0){
+      return
+    }
+    const newOrder = order.slice()
+    const item = newOrder.splice(idx, 1)[0]
+    newOrder.splice(idx - 1, 0, item)
+    setOrder(newOrder)
+  }
+
   const onUpdate = () => {
 
   }
 
   const buildItems = () => {
-    const itemList = item_order.map((id, idx) => {
+    const itemList = order.map((id, idx) => {
       return (
         <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%' }}>
           {items[id]["content"]["name"]}
           <Stack direction="row" spacing={2}>
-            <Button disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
+            <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
               <ArrowUpwardIcon />
             </Button>
-            <Button disabled={idx === item_order.length - 1} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
+            <Button onClick={() => onMoveDown(idx)} disabled={idx === item_order.length - 1} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
               <ArrowDownwardIcon />
             </Button>
           </Stack>
