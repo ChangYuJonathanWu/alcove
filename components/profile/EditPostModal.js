@@ -36,7 +36,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setPostToEdit(null)
         triggerReload(Date.now())
     }
-    const onItemUpdate = async () => {
+    const onPostUpdate = async () => {
         setLoading(true)
         const auth = getAuth()
         const token = await auth.currentUser.getIdToken();
@@ -44,9 +44,13 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             Authorization: `Bearer ${token}`
         }
         const body = {
-            name: newTitle
+            title: newTitle,
+            subtitle: newSubtitle,
+            caption: newCaption,
+            image: "",
+            uri: ""
         }
-        const result = await fetch(`/api/profile/items/${postId}`, { method: "POST", headers, body: JSON.stringify(body) })
+        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "PUT", headers, body: JSON.stringify(body) })
         setLoading(false)
         setPostToEdit("")
         setPostId("")
@@ -74,7 +78,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={onItemUpdate} variant="contained">Update</Button>
+                        <Button disabled={loading} onClick={onPostUpdate} variant="contained">Update</Button>
                     </Stack>
                 </Stack>
             </Box>
