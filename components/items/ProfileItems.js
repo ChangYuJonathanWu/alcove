@@ -23,6 +23,7 @@ import EditItemModal from '../profile/EditItemModal';
 import EditListItemsButtonRow from './EditListPostButtonRow';
 import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
+import RearrangePostsModal from '../profile/RearrangePostsModal';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
@@ -32,6 +33,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const [editItem, setEditItem] = useState(null);
     const [listIdToPostTo, setListIdToPostTo] = useState(null)
     const [postToEdit, setPostToEdit] = useState(null)
+    const [itemIdToReorder, setItemIdToReorder] = useState(null)
 
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
@@ -97,7 +99,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <Collapse in={isOpen} timeout={0}>
                         <List style={{ alignContent: "center" }}>
                             {buildPosts(items, itemOrder, listType)}
-                            {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1}onNewItemClick={() => setListIdToPostTo(itemId)}/>}
+                            {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)}/>}
                         </List>
                     </Collapse>
                 </Paper>
@@ -157,6 +159,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
     return (
         <div>
+            <RearrangePostsModal itemIdToReorder={itemIdToReorder} setItemIdToReorder={setItemIdToReorder} user={user} triggerReload={triggerReload}/>
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
             <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload}/>
             <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload}/>
