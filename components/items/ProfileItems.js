@@ -20,8 +20,8 @@ import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import { Typography } from '@mui/material';
 import EditItemModal from '../profile/EditItemModal';
-import EditListItemsButtonRow from './EditListItemsButtonRow';
-import NewListPostModal from '../profile/NewListItemModal';
+import EditListItemsButtonRow from './EditListPostButtonRow';
+import PostToListModal from '../profile/PostToListModal';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
@@ -29,7 +29,7 @@ const MAX_WIDTH = "600px"
 export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editItem, setEditItem] = useState(null);
-    const [newListItem, setNewListItem] = useState(null)
+    const [listIdToPostTo, setListIdToPostTo] = useState(null)
 
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
@@ -42,7 +42,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 return <Typography variant="h3">{name}</Typography>
         }
     }
-    const buildItems = (items, itemOrder, type) => {
+    const buildPosts = (items, itemOrder, type) => {
         let ItemComponent
         switch (type) {
             case "standard":
@@ -94,8 +94,8 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     </ListItemButton>
                     <Collapse in={isOpen} timeout={0}>
                         <List style={{ alignContent: "center" }}>
-                            {buildItems(items, itemOrder, listType)}
-                            {editMode && <EditListItemsButtonRow onNewItemClick={() => setNewListItem(itemId)}/>}
+                            {buildPosts(items, itemOrder, listType)}
+                            {editMode && <EditListItemsButtonRow onNewItemClick={() => setListIdToPostTo(itemId)}/>}
                         </List>
                     </Collapse>
                 </Paper>
@@ -156,7 +156,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     return (
         <div>
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
-            <NewListPostModal newListItem={newListItem} setNewListItem={setNewListItem} triggerReload={triggerReload}/>
+            <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload}/>
             {buildProfileItems()}
         </div>
     )

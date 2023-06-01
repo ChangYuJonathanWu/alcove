@@ -6,7 +6,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 const buttonStyle = {
     textTransform: 'none'
 }
-export default function EditListItemsButtonRow({ rearrangeEnabled = false, onNewItemClick }) {
+export default function EditListPostButtonRow({ rearrangeEnabled = false, onNewItemClick }) {
     return (
         <Stack direction="row" justifyContent="center" spacing={3}>
             {rearrangeEnabled && <Button style={buttonStyle}>

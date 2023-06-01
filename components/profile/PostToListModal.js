@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 // support delete and rename item
-export default function NewListPostModal({ newListItem, setNewListItem, triggerReload }) {
+export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
     useEffect(() => {
-        if (newListItem) {
-            setListId(newListItem)
+        if (listIdToPostTo) {
+            setListId(listIdToPostTo)
         }
-    }, [newListItem])
+    }, [listIdToPostTo])
     const [listId, setListId] = useState("")
     const [title, setTitle] = useState("")
     const [subtitle, setSubtitle] = useState("")
@@ -30,7 +30,7 @@ export default function NewListPostModal({ newListItem, setNewListItem, triggerR
         }
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: JSON.stringify(body) })
         setLoading(false)
-        setNewListItem("")
+        setListIdToPostTo("")
         triggerReload(Date.now())
     }
    
@@ -47,7 +47,7 @@ export default function NewListPostModal({ newListItem, setNewListItem, triggerR
     //TODO: Validate input; set character limits
     //TODO: Allow setting new Link instead of having to delete and recreate
     return (
-        <Modal open={!!newListItem}>
+        <Modal open={!!listIdToPostTo}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
                     <TextField style={{ width: "100%" }} label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
@@ -56,7 +56,7 @@ export default function NewListPostModal({ newListItem, setNewListItem, triggerR
                     
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         
-                        <Button disabled={loading} onClick={() => setNewListItem(null)}>Cancel</Button>
+                        <Button disabled={loading} onClick={() => setListIdToPostTo(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
                     </Stack>
                 </Stack>

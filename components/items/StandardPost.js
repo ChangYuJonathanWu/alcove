@@ -15,7 +15,7 @@ export default function StandardPost({ item }) {
     return (
         <ListItemButton target="_blank" href={uri} key={id} sx={{ paddingTop: "0.5rem" }}>
             <Stack direction="column" alignItems="start" spacing={1}>
-                <Avatar variant="square" sx={{ width: '100%', height: '100%' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />
+                {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />}
                 <Stack>
                     <Typography variant="h4"><b>{title}</b></Typography>
                     <Typography variant="body2" fontSize="0.8rem">{`${subtitle}`}</Typography>
