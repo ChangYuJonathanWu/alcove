@@ -10,10 +10,12 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
   const { item_order = [], items = {} } = profile
   const [loading, setLoading] = useState(false)
   const [order, setOrder] = useState(item_order)
+  const [profileItems, setProfileItems] = useState({})
 
   useEffect(() => {
     setOrder(item_order)
-  }, [item_order])
+    setProfileItems(items)
+  }, [items, item_order])
 
   const onCancel = () => {
     setOrder(item_order)
@@ -57,10 +59,14 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
   }
 
   const buildItems = () => {
+    // It seems like it's possible for the list items to be null at some points during changes, so this prevents the component from breaking as the list order is retained in state
+    if(!Object.keys(profileItems).length) {
+      return
+    }
     const itemList = order.map((id, idx) => {
       return (
         <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%' }}>
-          {items[id]["content"]["name"]}
+          {profileItems[id]["content"]["name"]}
           <Stack direction="row" spacing={2}>
             <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
               <ArrowUpwardIcon />
