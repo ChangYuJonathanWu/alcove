@@ -22,6 +22,7 @@ import { Typography } from '@mui/material';
 import EditItemModal from '../profile/EditItemModal';
 import EditListItemsButtonRow from './EditListPostButtonRow';
 import PostToListModal from '../profile/PostToListModal';
+import EditPostModal from '../profile/EditPostModal';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
@@ -30,6 +31,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editItem, setEditItem] = useState(null);
     const [listIdToPostTo, setListIdToPostTo] = useState(null)
+    const [postToEdit, setPostToEdit] = useState(null)
 
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
@@ -67,7 +69,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 ItemComponent = ShowItem
         }
         return itemOrder.map(
-            itemId => <ItemComponent key={itemId} item={items[itemId]} />
+            itemId => <ItemComponent key={itemId} item={items[itemId]} editMode={editMode} setPostToEdit={setPostToEdit}/>
         )
     }
 
@@ -157,6 +159,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         <div>
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
             <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload}/>
+            <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload}/>
             {buildProfileItems()}
         </div>
     )
