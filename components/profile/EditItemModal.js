@@ -56,6 +56,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         padding: '2rem',
     };
     //TODO: Validate input; set character limits
+    //TODO: Allow setting new Link instead of having to delete and recreate
     return (
         <Modal open={!!editItem}>
             <Box style={modalStyle}>

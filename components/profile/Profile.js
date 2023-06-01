@@ -18,6 +18,7 @@ import NewItemModal from './NewItemModal';
 import ProfileItems from '../items/ProfileItems';
 import RearrangeItemsButton from './RearrangeItemsButton';
 import RearrangeItemsModal from './RearrangeItemsModal';
+import NewListPostModal from './NewListItemModal';
 
 
 export default function Profile({ user, triggerReload }) {
