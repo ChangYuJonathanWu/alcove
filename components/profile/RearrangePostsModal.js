@@ -18,7 +18,6 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
         const item = items[itemIdToReorder]
         const { content } = item
         const { item_order } = content
-        console.log(item_order)
         setPostsToRearrange(content["items"])
         setOrder(item_order)
     }
@@ -66,7 +65,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     const body = {
         item_order: order
     }
-    // const result = await fetch(`/api/profile/items`, { method: "PUT", headers, body: JSON.stringify(body)})
+    const result = await fetch(`/api/profile/items/${itemIdToReorder}`, { method: "PUT", headers, body: JSON.stringify(body)})
     setLoading(false)
     triggerReload(Date.now())
     setItemIdToReorder(null)

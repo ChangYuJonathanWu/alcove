@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { deleteProfileItem, renameProfileItem } from '@/lib/api/profile'
+import { deleteProfileItem, renameProfileItem, reorderPosts } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 
 async function handler(req, res) {
@@ -35,6 +35,22 @@ async function handler(req, res) {
         }
         console.log("Attempting to rename item ID " + itemId + " to " + name)
         const result = await renameProfileItem(itemId, name, uid)
+        if (result) {
+            return res.status(200).json({ success: true })
+        } else {
+            return res.status(400).json({ error: "Could not rename item from profile" })
+        }
+    }
+
+    if (method === "PUT") {
+        const { query, body} = req;
+        const { itemId} = query;
+        const { item_order } = JSON.parse(body);
+        if (!uid) {
+            return res.status(400).json({ error: "Missing UID" })
+        }
+        console.log("Attempting to reorder posts in item ID " + itemId)
+        const result = await reorderPosts(item_order, itemId, uid)
         if (result) {
             return res.status(200).json({ success: true })
         } else {
