@@ -4,7 +4,7 @@ import ProfileHeader from '@/components/profile/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
 import TrailItem from '@/components/items/TrailItem';
-
+import StandardPost from '@/components/items/StandardPost';
 import ShowItem from '@/components/items/ShowItem';
 import CarItem from '@/components/items/CarItem';
 
@@ -21,7 +21,7 @@ import Collapse from '@mui/material/Collapse';
 import { Typography } from '@mui/material';
 import EditItemModal from '../profile/EditItemModal';
 import EditListItemsButtonRow from './EditListItemsButtonRow';
-import NewListItemModal from '../profile/NewListItemModal';
+import NewListPostModal from '../profile/NewListItemModal';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
@@ -45,6 +45,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const buildItems = (items, itemOrder, type) => {
         let ItemComponent
         switch (type) {
+            case "standard":
+                ItemComponent = StandardPost
+                break;
             case "spotify":
                 ItemComponent = SpotifyItem
                 break;
@@ -153,7 +156,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     return (
         <div>
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
-            <NewListItemModal newListItem={newListItem} setNewListItem={setNewListItem} triggerReload={triggerReload}/>
+            <NewListPostModal newListItem={newListItem} setNewListItem={setNewListItem} triggerReload={triggerReload}/>
             {buildProfileItems()}
         </div>
     )

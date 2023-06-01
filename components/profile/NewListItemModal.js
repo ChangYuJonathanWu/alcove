@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 // support delete and rename item
-export default function NewListItemModal({ newListItem, setNewListItem, triggerReload }) {
+export default function NewListPostModal({ newListItem, setNewListItem, triggerReload }) {
     useEffect(() => {
         if (newListItem) {
             setListId(newListItem)
@@ -15,10 +15,28 @@ export default function NewListItemModal({ newListItem, setNewListItem, triggerR
     const [subtitle, setSubtitle] = useState("")
     const [caption, setCaption] = useState("")
     const [loading, setLoading] = useState(false)
+
+    const onPost = async () => {
+        setLoading(true)
+        const auth = getAuth()
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization: `Bearer ${token}`
+        }
+        const body = {
+            title,
+            subtitle,
+            caption
+        }
+        const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: JSON.stringify(body) })
+        setLoading(false)
+        setNewListItem("")
+        triggerReload(Date.now())
+    }
    
     const modalStyle = {
         position: 'absolute',
-        top: '40%',
+        top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         minWidth: "300px",
@@ -39,7 +57,7 @@ export default function NewListItemModal({ newListItem, setNewListItem, triggerR
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         
                         <Button disabled={loading} onClick={() => setNewListItem(null)}>Cancel</Button>
-                        <Button disabled={loading} onClick={() => {}} variant="contained">Post</Button>
+                        <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
                     </Stack>
                 </Stack>
             </Box>
