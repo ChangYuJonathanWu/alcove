@@ -6,10 +6,10 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 const buttonStyle = {
     textTransform: 'none'
 }
-export default function EditListPostButtonRow({ rearrangeEnabled = true, onNewItemClick }) {
+export default function EditListPostButtonRow({ rearrangeEnabled = true, onNewItemClick, onReorderClick }) {
     return (
         <Stack direction="row" justifyContent="center" spacing={3}>
-            {rearrangeEnabled && <Button style={buttonStyle}>
+            {rearrangeEnabled && <Button style={buttonStyle} onClick={onReorderClick}> 
                 <Stack direction="row" alignContent="center">
                     <ImportExportIcon />
                     Reorder

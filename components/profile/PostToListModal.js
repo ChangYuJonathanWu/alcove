@@ -16,6 +16,12 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const [caption, setCaption] = useState("")
     const [loading, setLoading] = useState(false)
 
+    const clearItems = () => {
+        setTitle("")
+        setSubtitle("")
+        setCaption("")
+    }
+
     const onPost = async () => {
         setLoading(true)
         const auth = getAuth()
@@ -30,6 +36,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         }
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: JSON.stringify(body) })
         setLoading(false)
+        clearItems()
         setListIdToPostTo("")
         triggerReload(Date.now())
     }
