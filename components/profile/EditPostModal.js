@@ -7,11 +7,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
     useEffect(() => {
         if (postToEdit) {
-            const { postId, parentId, title, subtitle, caption, uri, image } = postToEdit;
+            const { id, parentId, title, subtitle, caption, uri, image } = postToEdit;
             setNewTitle(title)
             setNewSubtitle(subtitle)
             setNewCaption(caption)
-            setPostId(postId)
+            setPostId(id)
             setParentId(parentId)
         }
     }, [postToEdit])
