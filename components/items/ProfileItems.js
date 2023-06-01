@@ -97,7 +97,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <Collapse in={isOpen} timeout={0}>
                         <List style={{ alignContent: "center" }}>
                             {buildPosts(items, itemOrder, listType)}
-                            {editMode && <EditListItemsButtonRow onNewItemClick={() => setListIdToPostTo(itemId)}/>}
+                            {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1}onNewItemClick={() => setListIdToPostTo(itemId)}/>}
                         </List>
                     </Collapse>
                 </Paper>
