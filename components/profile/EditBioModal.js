@@ -11,7 +11,20 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const [newInstagram, setNewInstagram] = useState(instagram)
     const [newFacebook, setNewFacebook] = useState(facebook)
     const [loading, setLoading] = useState(false)
+
+    const userMadeChanges = () => {
+        const photoChanged = newProfilePhoto !== photo
+        const titleChanged = newTitle !== title
+        const descriptionChanged = newDescription !== description
+        const instagramChanged = newInstagram !== instagram
+        const facebookChanged = newFacebook !== facebook
+        return photoChanged || titleChanged || descriptionChanged || instagramChanged || facebookChanged
+    }
+
     const onBioUpdate = async () => {
+        if(!userMadeChanges()) {
+            setOpen(false)
+        }
         setLoading(true)
         const auth = getAuth()
         const token = await auth.currentUser.getIdToken();
