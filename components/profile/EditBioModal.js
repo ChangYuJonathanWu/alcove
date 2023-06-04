@@ -59,6 +59,18 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         setLoading(false)
     }
 
+    const removeProfilePhoto = async () => {
+        setLoading(true)
+        const auth = getAuth()
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization: `Bearer ${token}`
+        }
+        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "DELETE", headers })
+        setNewProfilePhoto("")
+        setLoading(false)
+    }
+
     const modalStyle = {
         position: 'absolute',
         top: '40%',
@@ -78,7 +90,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                     <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} src={newProfilePhoto} />
                     <Stack direction="row" spacing={2}>
                         {newProfilePhoto && <div>
-                            <Button disabled={loading} style={{ margin: 0, padding: 0 }}>Remove</Button>
+                            <Button disabled={loading} onClick={removeProfilePhoto} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
                         <div>
                             <input
@@ -90,7 +102,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                             />
                             <label htmlFor="profile-photo-upload">
                                 <Button disabled={loading} style={{margin:0, padding:0}} component="span">
-                                    Upload
+                                    Change
                                 </Button>
                             </label>
 

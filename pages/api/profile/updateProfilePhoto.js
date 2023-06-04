@@ -11,6 +11,39 @@ import sharp from 'sharp'
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
 async function handler(req, res) {
     const { method } = req;
+    if (method === "DELETE") {
+        const { query, uid, body } = req;
+        if (!uid) {
+            return res.status(400).json({ error: "Missing UID" })
+        }
+
+        try {
+            const fullProfile = await getFullProfile(uid)
+            if (fullProfile.photo) {
+                const bucket = getStorage().bucket();
+                const fileName = fullProfile.photo.split("/").pop()
+                const file = bucket.file(`public/profile/images/${fileName}`)
+                await file.delete()
+            }
+        } catch (e) {
+            console.error(e)
+            console.error("Could not get full profile - will still try to remove profile photo")
+        }
+
+        try {
+            const updateQuery = {
+                photo: ""
+            }
+            const result = await updateProfile(updateQuery, uid)
+        }
+        catch (e) {
+            console.error(e)
+            return res.status(400).json({ error: "Error updating profile - please try again." })
+        }
+
+        return res.status(200).json({ success: true })
+
+    }
     if (method === "POST") {
         const { query, uid, body } = req; // don't really need UID from request as have it from auth
 
@@ -23,7 +56,7 @@ async function handler(req, res) {
 
         form.parse(req, async (err, fields, files) => {
             console.log(err)
-            if(err) {
+            if (err) {
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
             const { profilePhoto } = files
@@ -52,7 +85,7 @@ async function handler(req, res) {
                     }
                 })
                 const makePublicResponse = await bucket.file(destinationPath).makePublic();
-            } catch(e) {
+            } catch (e) {
                 console.error(e)
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
