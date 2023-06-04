@@ -73,7 +73,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
 
     const modalStyle = {
         position: 'absolute',
-        top: '40%',
+        top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         minWidth: "300px",
