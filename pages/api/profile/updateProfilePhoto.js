@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { getFullProfile, updateProfile } from '../../../lib/api/profile'
+import { getFullProfile, updateProfile } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 import multiparty from 'multiparty'
 import util from 'util'
@@ -34,7 +34,7 @@ async function handler(req, res) {
             const imageFile = profilePhoto[0];
             const imagePath = imageFile.path;
 
-            const compressedImage = await sharp(imagePath).resize(400, 400, {
+            const compressedImage = await sharp(imagePath).resize(600, 600, {
                 fit: 'inside',
             }).toBuffer()
 
@@ -59,6 +59,17 @@ async function handler(req, res) {
 
             const publicURL = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
             console.log(publicURL)
+
+            const updateQuery = {
+                photo: publicURL
+            }
+            try {
+                const result = await updateProfile(updateQuery, uid)
+            }
+            catch (e) {
+                console.error(e)
+                return res.status(400).json({ error: "Error updating profile - please try again." })
+            }
             return res.status(200).json({ success: true })
 
         })
