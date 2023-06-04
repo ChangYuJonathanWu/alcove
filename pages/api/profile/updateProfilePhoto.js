@@ -9,8 +9,47 @@ import sharp from 'sharp'
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
+
+const deleteProfilePhoto = async (uid) => {
+
+    const fullProfile = await getFullProfile(uid)
+    if (fullProfile.photo) {
+        const bucket = getStorage().bucket();
+        const fileName = fullProfile.photo.split("/").pop()
+        const file = bucket.file(`public/profile/images/${fileName}`)
+        await file.delete()
+    }
+}
+
 async function handler(req, res) {
     const { method } = req;
+    if (method === "DELETE") {
+        const { query, uid, body } = req;
+        if (!uid) {
+            return res.status(400).json({ error: "Missing UID" })
+        }
+
+        try {
+            await deleteProfilePhoto(uid)
+        } catch (e) {
+            console.error(e)
+            console.error("Could not get full profile - will still try to remove profile photo")
+        }
+
+        try {
+            const updateQuery = {
+                photo: ""
+            }
+            const result = await updateProfile(updateQuery, uid)
+        }
+        catch (e) {
+            console.error(e)
+            return res.status(400).json({ error: "Error updating profile - please try again." })
+        }
+
+        return res.status(200).json({ success: true })
+
+    }
     if (method === "POST") {
         const { query, uid, body } = req; // don't really need UID from request as have it from auth
 
@@ -23,7 +62,7 @@ async function handler(req, res) {
 
         form.parse(req, async (err, fields, files) => {
             console.log(err)
-            if(err) {
+            if (err) {
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
             const { profilePhoto } = files
@@ -43,6 +82,12 @@ async function handler(req, res) {
 
             const bucket = getStorage().bucket();
             try {
+                await deleteProfilePhoto(uid)
+            } catch (e) {
+                console.error(e)
+                console.error("Could not delete previous profile photo")
+            }
+            try {
                 const response = await bucket.file(destinationPath).save(compressedImage, {
                     metadata: {
                         contentType: imageFile.headers['content-type'],
@@ -52,7 +97,7 @@ async function handler(req, res) {
                     }
                 })
                 const makePublicResponse = await bucket.file(destinationPath).makePublic();
-            } catch(e) {
+            } catch (e) {
                 console.error(e)
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
@@ -70,7 +115,7 @@ async function handler(req, res) {
                 console.error(e)
                 return res.status(400).json({ error: "Error updating profile - please try again." })
             }
-            return res.status(200).json({ success: true })
+            return res.status(200).json({ success: true, url: publicURL })
 
         })
 

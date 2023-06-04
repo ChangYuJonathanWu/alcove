@@ -12,7 +12,7 @@ async function handler(req, res) {
         if(!handle && !uid){
             return res.status(200).json({})
         }
-        const profile = await getFullProfile(handle, uid)
+        const profile = await getFullProfile(uid)
         return res.status(200).json(profile);
     }
     if (method === "PUT" ) {
