@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import { Button, Divider, Stack, TextField, Typography } from '@mui/material'
+import { Button, Divider, Stack, TextField, Typography, Avatar } from '@mui/material'
 import { amita } from '../fonts'
 import Link from 'next/link';
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
@@ -25,8 +25,9 @@ export default function Home() {
     const { user } = useAuthContext()
     const [profile, setProfile] = useState(null)
     const [description, setDescription] = useState("")
+    const [profilePhoto, setProfilePhoto] = useState("")
     const [title, setTitle] = useState("")
-    const [newItemName, setNewItemName ] = useState("")
+    const [newItemName, setNewItemName] = useState("")
     const [newItemType, setNewItemType] = useState("list")
     useEffect(() => {
         const loadUser = async () => {
@@ -35,14 +36,16 @@ export default function Home() {
                 const { uid } = user
                 const token = await auth.currentUser.getIdToken()
                 const headers = {
-                    Authorization : `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
                 const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
                 const fullUserProfile = await result.json()
-                const { description = "", title = "", profile } = fullUserProfile
+                const { description = "", title = "", photo, profile } = fullUserProfile
                 setDescription(description)
                 setTitle(title)
                 setProfile(fullUserProfile)
+                setProfilePhoto(photo)
+
             }
         }
         loadUser()
@@ -52,27 +55,51 @@ export default function Home() {
         const auth = getAuth()
         const token = await auth.currentUser.getIdToken();
         const headers = {
-            Authorization : `Bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
         const body = {
             description,
             title
         }
-        const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body)})
+        const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body) })
     }
 
     const submitNewItem = async () => {
         const auth = getAuth();
         const token = await auth.currentUser.getIdToken();
         const headers = {
-            Authorization : `Bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
         const body = {
             name: newItemName,
             type: newItemType,
         }
-        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body)})
+        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body) })
     }
+
+    const onUploadProfilePhoto = async (e) => {
+        const auth = getAuth();
+        const token = await auth.currentUser.getIdToken();
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        console.log("Uploading photo...")
+        const photo = e.target.files[0]
+        const formData = new FormData();
+        formData.append('profilePhoto', photo)
+
+        const result = await fetch('/api/profile/updateProfilePhoto', {
+            method: 'POST',
+            headers,
+            body: formData,    
+        })
+        // const result = await fetch('http://localhost:3001/upload', {
+        //     method: 'POST',
+        //     headers,
+        //     body: formData,    
+        // })
+    }
+
     const auth = getAuth()
     const theme = theme4;
     const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
@@ -105,20 +132,29 @@ export default function Home() {
                     <div>
                         {user ? `You are logged in as ${user.email}` : "You are not logged in."}
                     </div>
+                    <Stack direction="column">
+                    <div>
+                        <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={profilePhoto} />
+                        
+                    </div>
+                    <input type="file" onChange={(e) => onUploadProfilePhoto(e)}/>
+                    </Stack>
+                    {profilePhoto}
+
                     <div>
                         {`@${profile?.handle}`}
                     </div>
                     Title
-                    <TextField value={title} onChange={(e) => setTitle(e.currentTarget.value)}/>
+                    <TextField value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
                     Description
-                    <TextField value={description} onChange={(e) => setDescription(e.currentTarget.value)}/>
-                   
+                    <TextField value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
+
                     <button onClick={submitUpdates}>Submit</button>
                     <div>
-                        
+
                     </div>
                     Name
-                    <TextField value={newItemName} onChange={(e) => setNewItemName(e.currentTarget.value)}/>
+                    <TextField value={newItemName} onChange={(e) => setNewItemName(e.currentTarget.value)} />
                     Type (list, link)
                     <button onClick={submitNewItem}>Add Item</button>
                     <div>
