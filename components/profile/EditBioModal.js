@@ -86,7 +86,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         <Modal open={open}>
             <Box style={modalStyle}>
 
-                <Stack alignItems="center" spacing={4} >
+                <Stack alignItems="center" spacing={2} >
                     <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} src={newProfilePhoto} />
                     <Stack direction="row" spacing={2}>
                         {newProfilePhoto && <div>
