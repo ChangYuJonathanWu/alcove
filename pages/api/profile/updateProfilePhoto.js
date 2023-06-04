@@ -70,7 +70,7 @@ async function handler(req, res) {
                 console.error(e)
                 return res.status(400).json({ error: "Error updating profile - please try again." })
             }
-            return res.status(200).json({ success: true })
+            return res.status(200).json({ success: true, url: publicURL })
 
         })
 
