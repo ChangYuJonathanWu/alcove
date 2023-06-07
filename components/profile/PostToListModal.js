@@ -31,12 +31,15 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         const headers = {
             Authorization: `Bearer ${token}`
         }
-        const body = {
-            title,
-            subtitle,
-            caption
-        }
-        const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: JSON.stringify(body) })
+
+        const formData = new FormData()
+        formData.append("photo", postPhoto)
+        formData.append("title", title)
+        formData.append("subtitle", subtitle)
+        formData.append("caption", caption)
+
+        const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: formData })
+        // TODO: If request failed, dont clear everything here
         setLoading(false)
         clearItems()
         setListIdToPostTo("")
@@ -45,26 +48,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
 
     const updatePostPhoto = async (e) => {
         const photo = e.target.files[0]
-        console.log(photo)
         setPostPhoto(photo)
-
-        // setLoading(true)
-        // const auth = getAuth()
-        // const token = await auth.currentUser.getIdToken();
-        // const headers = {
-        //     Authorization: `Bearer ${token}`
-        // }
-        // const formData = new FormData();
-        // formData.append('file', e.target.files[0]);
-        // const result = await fetch(`/api/profile/items/${listId}/post/photo`, { method: "POST", headers, body: formData })
-        // setLoading(false)
-        // clearItems()
-        // setListIdToPostTo("")
-        // triggerReload(Date.now())
     }
-
-
-
 
     const modalStyle = {
         position: 'absolute',
