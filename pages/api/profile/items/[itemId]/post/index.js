@@ -44,7 +44,13 @@ async function handler(req, res) {
                 console.error(err)
                 return res.status(400).json({ error: "Error parsing form" })
             }
-            const { title, subtitle, caption } = fields
+            let { title, subtitle, caption, uri = "" } = fields
+            
+            title = title[0]
+            subtitle = subtitle[0]
+            caption = caption[0]
+            uri = uri[0]
+
             const { photo } = files
             let publicUrl = ""
             if (photo) {
@@ -77,8 +83,16 @@ async function handler(req, res) {
 
 
             console.log("Adding post to list " + itemId + " with title " + title)
+            console.log(uri)
+            let newUri = ""
+            if (uri) {
+                newUri = uri.replace("http://", "https://")
+                if (!newUri.startsWith("https://")) {
+                    newUri = "https://" + newUri
+                }
+            }
             try{
-                const result = await addPostToList(title, subtitle, caption, itemId, publicUrl, uid)
+                const result = await addPostToList(title, subtitle, caption, itemId, publicUrl, newUri, uid)
                 return res.status(200).json({ success: true })
             } catch (e) {
                 console.error(e)

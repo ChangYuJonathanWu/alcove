@@ -16,12 +16,14 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const [subtitle, setSubtitle] = useState("")
     const [caption, setCaption] = useState("")
     const [loading, setLoading] = useState(false)
+    const [uri, setUri] = useState("")
     const [postPhoto, setPostPhoto] = useState(null)
 
     const clearItems = () => {
         setTitle("")
         setSubtitle("")
         setCaption("")
+        setUri("")
         setPostPhoto(null)
     }
 
@@ -38,6 +40,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         formData.append("title", title)
         formData.append("subtitle", subtitle)
         formData.append("caption", caption)
+        formData.append("uri", uri)
 
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: formData })
         setLoading(false)
@@ -54,6 +57,11 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const updatePostPhoto = async (e) => {
         const photo = e.target.files[0]
         setPostPhoto(photo)
+    }
+
+    const onExit = () => {
+        clearItems()
+        setListIdToPostTo(null)
     }
 
     const modalStyle = {
@@ -101,10 +109,10 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                     <TextField style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
                     <TextField style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />
                     <TextField style={{ width: "100%" }} size="small" multiline rows={5} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
-
+                    <TextField style={{ width: "100%" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
-                        <Button disabled={loading} onClick={() => setListIdToPostTo(null)}>Cancel</Button>
+                        <Button disabled={loading} onClick={onExit}>Cancel</Button>
                         <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
                     </Stack>
                 </Stack>

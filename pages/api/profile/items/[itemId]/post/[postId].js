@@ -28,7 +28,13 @@ async function handler(req, res) {
             }
 
             const { image } = files
-            const { title = "", subtitle = "", caption = "", photo_changed = false, uri = "" } = fields
+            let { title = "", subtitle = "", caption = "", photo_changed = false, uri = "" } = fields
+            title = title[0]
+            subtitle = subtitle[0]
+            caption = caption[0]
+            photo_changed = photo_changed[0] === "true"
+            uri = uri[0]
+
             let publicUrl = ""
 
             if (image && image.length > 0) {
@@ -63,6 +69,7 @@ async function handler(req, res) {
                 caption,
                 image: publicUrl,
                 photoChanged: photo_changed,
+                uri
             }
 
             // if null, then do not update the parameter. Otherwise if string (even empty) then update
