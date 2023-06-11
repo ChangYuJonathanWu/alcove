@@ -27,14 +27,14 @@ async function handler(req, res) {
     if (method === "POST") {
         const { query, body } = req;
         const { itemId } = query;
-        const { name } = JSON.parse(body);
+        const { name, subtitle } = JSON.parse(body);
 
         // Here we need firebase admin to verify the auth information
         if (!uid) {
             return res.status(400).json({ error: "Missing UID" })
         }
         console.log("Attempting to rename item ID " + itemId + " to " + name)
-        const result = await renameProfileItem(itemId, name, uid)
+        const result = await renameProfileItem(itemId, name, subtitle, uid)
         if (result) {
             return res.status(200).json({ success: true })
         } else {

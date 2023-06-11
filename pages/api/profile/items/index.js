@@ -23,7 +23,7 @@ async function handler(req, res) {
     if (method === "POST") {
         const { query, body } = req; // don't really need UID from request as have it from auth
 
-        const { name, type, uri } = JSON.parse(body);
+        const { name, subtitle, type, uri } = JSON.parse(body);
         let newUri
         if (uri) {
             newUri = uri.replace("http://", "https://")
@@ -32,7 +32,7 @@ async function handler(req, res) {
             }
         }
         // if null, then do not update the parameter. Otherwise if string (even empty) then update
-        const result = await addProfileItem(name, type, uid, newUri)
+        const result = await addProfileItem(name, type, uid, newUri, subtitle)
         if (result) {
             return res.status(200).json({ success: true })
         } else {

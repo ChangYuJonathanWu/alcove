@@ -7,14 +7,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function EditItemModal({ editItem, setEditItem, triggerReload }) {
     useEffect(() => {
         if (editItem) {
-            const { id, content } = editItem
-            const { name } = content;
+            const { id, content, } = editItem
+            const { name, commentary} = content;
             setNewTitle(name)
+            setNewSubtitle(commentary)
             setItemId(id)
         }
     }, [editItem])
     const [newTitle, setNewTitle] = useState("")
     const [itemId, setItemId] = useState("")
+    const [newSubtitle, setNewSubtitle] = useState("")
     const [loading, setLoading] = useState(false)
     const onItemDelete = async () => {
         setLoading(true)
@@ -37,7 +39,8 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
             Authorization: `Bearer ${token}`
         }
         const body = {
-            name: newTitle
+            name: newTitle,
+            subtitle: newSubtitle
         }
         const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", headers, body: JSON.stringify(body) })
         setLoading(false)
@@ -61,7 +64,8 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         <Modal open={!!editItem}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
-                    <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
+                    <TextField size="small" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
+                    <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>

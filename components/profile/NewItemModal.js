@@ -9,6 +9,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 export default function NewItemModal({ open, setOpen, triggerReload }) {
     const [name, setName] = useState("")
+    const [subtitle, setSubtitle] = useState("")
     const [itemType, setItemType] = useState("list")
     const [linkAddress, setLinkAddress] = useState("")
     const [loading, setLoading] = useState(false)
@@ -26,6 +27,7 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
         }
         const body = {
             name,
+            subtitle,
             type: itemType,
             uri: linkAddress,
         }
@@ -50,7 +52,8 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
         <Modal open={open}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
-                    <TextField style={{ width: "100%" }} label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+                    <TextField style={{ width: "100%" }} size="small" label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+                    {itemType === "list" && <TextField style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />}
                     <FormControl>
                         <FormLabel id="item-type">Type</FormLabel>
                         <RadioGroup
@@ -65,7 +68,7 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
                         </RadioGroup>
                     </FormControl>
                     {itemType === "uri" &&
-                     <TextField style={{width: "100%"}} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(e.target.value)}/>}
+                        <TextField size="small" style={{ width: "100%" }} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(e.target.value)} />}
                     <Stack direction="row" spacing={1}>
                         <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
                         <Button disabled={loading || !name || (itemType === "uri" && !linkAddress)} onClick={onNewItem} variant="contained">Create</Button>
