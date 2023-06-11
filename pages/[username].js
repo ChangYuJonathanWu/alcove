@@ -36,7 +36,7 @@ export default function ProfileRoute() {
             return
         }
         const validHandles = ["jonathanwu", "gracehopper", "jiwonkang", "jonathanwu_test", "dandan"]
-        const networkHandles = ["jonathanwu_test"]
+        const networkHandles = ["jonathanwu_test", "jiwonkang"]
         const loadUser = async () => {
             if(!validHandles.includes(username)){
                 setLoading(false)
