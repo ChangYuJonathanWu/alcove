@@ -12,6 +12,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             setNewSubtitle(subtitle)
             setNewCaption(caption)
             setDisplayPhoto(image)
+            setNewLink(uri)
             setPostId(id)
             setParentId(parentId)
         }
@@ -19,6 +20,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     const [newTitle, setNewTitle] = useState("")
     const [newSubtitle, setNewSubtitle] = useState("")
     const [newCaption, setNewCaption] = useState("")
+    const [newLink, setNewLink] = useState("")
     const [displayPhoto, setDisplayPhoto] = useState("")
     const [photoUpload, setPhotoUpload] = useState(null)
     const [photoChanged, setPhotoChanged] = useState(false)
@@ -51,6 +53,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         formData.append("title", newTitle)
         formData.append("subtitle", newSubtitle)
         formData.append("caption", newCaption)
+        formData.append("uri", newLink)
         if (photoUpload) {
             formData.append("image", photoUpload)
         }
@@ -138,7 +141,8 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     </Stack>
                     <TextField size="small" style={{ width: "100%" }} label="Title" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
-                    <TextField size="small" style={{ width: "100%" }} label="Caption" value={newCaption} onChange={(e) => setNewCaption(e.currentTarget.value)} />
+                    <TextField size="small" style={{ width: "100%" }} multiline rows={5} label="Caption" value={newCaption} onChange={(e) => setNewCaption(e.currentTarget.value)} />
+                    <TextField size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <Button disabled={loading} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
