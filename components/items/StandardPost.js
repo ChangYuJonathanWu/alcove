@@ -15,7 +15,8 @@ export default function StandardPost({ item, editMode=false, setPostToEdit }) {
     const { id, parentId, uri, title, image, subtitle, caption } = item
     const captionToUse = caption ? `"${caption}"` : ""
 
-    const onEditClick = () => {
+    const onEditClick = (e) => {
+        e.preventDefault()
         setPostToEdit(item)
     }
     return (
