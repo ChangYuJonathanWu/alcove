@@ -15,7 +15,7 @@ describe('Homepage', () => {
     })
     it('Loads login page', () => {
         cy.visit('http://localhost:3000/login')
-        cy.contains('LOGIN').should('exist')
+        cy.contains('Login').should('exist')
         cy.percySnapshot('Login', { widths: [768, 1200, 1920] });
     })
   })
