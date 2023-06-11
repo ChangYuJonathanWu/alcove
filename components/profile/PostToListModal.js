@@ -22,6 +22,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setTitle("")
         setSubtitle("")
         setCaption("")
+        setPostPhoto(null)
     }
 
     const onPost = async () => {
@@ -39,8 +40,12 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         formData.append("caption", caption)
 
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: formData })
-        // TODO: If request failed, dont clear everything here
         setLoading(false)
+        if(result.status !== 200) {
+            console.error("Error posting. Try again")
+        }
+        // TODO: If request failed, dont clear everything here
+
         clearItems()
         setListIdToPostTo("")
         triggerReload(Date.now())
