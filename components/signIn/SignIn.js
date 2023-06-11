@@ -8,6 +8,7 @@ import { amita } from '../fonts'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
+import { redirect } from 'next/navigation';
 
 
 import React, { useState, useEffect } from 'react'
@@ -71,7 +72,15 @@ export default function SignIn() {
                                 const credential = await signInWithEmailAndPassword(auth, email, password)
                                 if (credential) {
                                     setLoginError(null)
-                                    router.replace("/")
+                                    const { uid } = credential.user
+                                    const token = await auth.currentUser.getIdToken()
+                                    const headers = {
+                                        Authorization: `Bearer ${token}`
+                                    }
+                                    const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
+                                    const fullUserProfile = await result.json()
+                                    const { handle } = fullUserProfile
+                                    router.replace(`/${handle}`)
                                 }
 
                             } catch (error) {
