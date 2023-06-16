@@ -87,7 +87,8 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
         <Modal open={!!open}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
-                    Background
+                    <b>Background</b>
+                    Landscape images work best
                     {hasPhoto &&
                         <Avatar variant="square" sx={{ height: '50%', width: "80%" }} src={photoOperation === "new" ? URL.createObjectURL(photoUpload) : background?.url} style={{ marginRight: "1rem", borderRadius: '5px' }} />
                     }

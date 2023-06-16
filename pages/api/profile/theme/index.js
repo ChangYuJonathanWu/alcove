@@ -52,7 +52,7 @@ async function handler(req, res) {
                 const imageFile = background_image[0]   
                 const imagePath = imageFile.path
 
-                const compressedImage = await sharp(imagePath).resize(1920, 1080, { fit: 'inside'}).toBuffer()
+                const compressedImage = await sharp(imagePath).resize(2600, 2600, { fit: 'inside'}).toBuffer()
                 const fileName = uuidv4()
                 const destinationPath = `public/profile/images/${fileName}`;
     
@@ -77,9 +77,9 @@ async function handler(req, res) {
                     return res.status(400).json({ error: "Error uploading image - please try again." })
                 }
 
-                return res.status(400).json({error: "Invalid photo operation"})
+                
             }
-
+            return res.status(400).json({error: "Invalid photo operation"})
         })
 
     }

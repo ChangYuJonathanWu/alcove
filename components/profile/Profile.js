@@ -72,7 +72,8 @@ export default function Profile({ user, triggerReload }) {
             </Head>
             <main>
                 <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center" }}>
-                    {backgroundType == "image" && <Image fill={true} src={backgroundUrl} alt="background wallpaper"/>}
+                    
+                    {backgroundType == "image" && <Image fill={true} src={backgroundUrl} objectFit='cover' alt="background wallpaper"/>}
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
                     <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload}/>
