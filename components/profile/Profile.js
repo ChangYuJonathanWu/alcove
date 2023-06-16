@@ -19,12 +19,15 @@ import ProfileItems from '../items/ProfileItems';
 import RearrangeItemsButton from './RearrangeItemsButton';
 import RearrangeItemsModal from './RearrangeItemsModal';
 import PostToListModal from './PostToListModal';
+import ThemingButton from './ThemingButton';
+import ThemingModal from './ThemingModal';
 
 
 export default function Profile({ user, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
     const [newItemOpen, setNewItemOpen] = useState(false)
+    const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
     const [ownerSignedIn, setOwnerSignedIn] = useState(false);
     useEffect(() => {
@@ -50,6 +53,8 @@ export default function Profile({ user, triggerReload }) {
     const toggleSingleList = (listId) => {
         setListOpen(listOpen === listId ? null : listId)
     }
+
+    const { type: backgroundType, url: backgroundUrl } = background || {}
     
     //TODO: Error handling on network request, validation
     return (
@@ -66,18 +71,21 @@ export default function Profile({ user, triggerReload }) {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <main>
-                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'black' }}>
-                    {background && <Image fill={true} src={background} alt="background wallpaper" />}
+                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center" }}>
+                    
+                    {backgroundType == "image" && <Image fill={true} src={backgroundUrl} objectFit='cover' alt="background wallpaper"/>}
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
                     <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload}/>
                     <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload}/>
                     <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={user} triggerReload={triggerReload}/>
+                    <ThemingModal open={themeOpen} setOpen={setThemeOpen} user={user} triggerReload={triggerReload}/>
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
                     <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload}/>
                     {ownerSignedIn && <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)}/>}
                     {ownerSignedIn && <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)}/>}
+                    {ownerSignedIn && <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)}/>}
                     {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
                     
                 </Stack>

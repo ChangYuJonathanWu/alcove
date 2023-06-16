@@ -3,7 +3,11 @@
     "title_style": {},
     "handle": "jonathanwu",
     "photo": "https://alcove.place/profiles/photos/tH7kAkdmO20akaAjkd.jpeg",
-    "background": "/mountains.jpg",
+    "background": {
+        "type": "image",
+        "url": "/mountains.jpg"
+    },
+
     "description": "my favorites",
     "social_links": {
         "instagram": "jonathannwuu",
