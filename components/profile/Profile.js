@@ -71,7 +71,7 @@ export default function Profile({ user, triggerReload }) {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <main>
-                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'black', alignItems: "center" }}>
+                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center" }}>
                     {backgroundType == "image" && <Image fill={true} src={backgroundUrl} alt="background wallpaper"/>}
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
