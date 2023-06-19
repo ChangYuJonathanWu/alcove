@@ -33,6 +33,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setCaption("")
         setUri("")
         setPostPhoto(null)
+        setSpotifyUri("")
+        setValidSpotifyUri(false)
     }
 
     const onPost = async () => {

@@ -10,8 +10,8 @@ import '../../styles/Home.module.css'
 export default function SpotifyItem({ item, editMode = false, triggerReload }) {
     const [loading, setLoading] = useState(true)
     const [deleteRunning, setDeleteRunning] = useState(false)
-    const { id, spotify_id, spotify_type, parentId } = item
-    const uri = `https://open.spotify.com/embed/${spotify_type}/${spotify_id}`
+    const { id, spotifyId, spotifyType, parentId } = item
+    const uri = `https://open.spotify.com/embed/${spotifyType}/${spotifyId}`
 
     const onDeleteSong = async () => {
         setDeleteRunning(true)
