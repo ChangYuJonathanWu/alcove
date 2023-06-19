@@ -358,39 +358,39 @@
                         "i1": {
                             "id": "i1",
                             "type": "spotify",
-                            "spotify_type": "track",
-                            "spotify_id": "5XijWLBY0vwl5MPUpQA2Ha"
+                            "spotifyType": "track",
+                            "spotifyId": "5XijWLBY0vwl5MPUpQA2Ha"
                         },
                         "i2": {
                             "id": "i2",
                             "type": "spotify",
-                            "spotify_id": "1EXMjx4nCIvYTaY5CZMUSl",
-                            "spotify_type": "track"
+                            "spotifyId": "1EXMjx4nCIvYTaY5CZMUSl",
+                            "spotifyType": "track"
                         },
                         "i3": {
                             "id": "i3",
                             "type": "spotify",
-                            "spotify_id": "487OPlneJNni3NWC8SYqhW",
-                            "spotify_type": "track"
+                            "spotifyId": "487OPlneJNni3NWC8SYqhW",
+                            "spotifyType": "track"
                         },
                         "i4": {
                             "id": "i4",
                             "type": "spotify",
-                            "spotify_id": "2M9ro2krNb7nr7HSprkEgo",
-                            "spotify_type": "track"
+                            "spotifyId": "2M9ro2krNb7nr7HSprkEgo",
+                            "spotifyType": "track"
                         },
                         "i5": {
                             "id": "i5",
                             "type": "spotify",
-                            "spotify_id": "5NdxiycRi3nP2v7RJoAJIT",
-                            "spotify_type": "track"
+                            "spotifyId": "5NdxiycRi3nP2v7RJoAJIT",
+                            "spotifyType": "track"
                         },
                         "i6": {
                             "id": "i6",
                             "type": "spotify",
                             "uri": "https://open.spotify.com/embed/track/2x8aFYMNPezraBxfjxnQEP?utm_source=generator",
-                            "spotify_id": "2x8aFYMNPezraBxfjxnQEP",
-                            "spotify_type": "track"
+                            "spotifyId": "2x8aFYMNPezraBxfjxnQEP",
+                            "spotifyType": "track"
                         }
                     }
                 }
