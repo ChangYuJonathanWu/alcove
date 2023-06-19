@@ -10,24 +10,6 @@ import sharp from 'sharp'
 async function handler(req, res) {
 
     const { method, uid } = req;
-    // if (method === "DELETE") {
-    //     const { query, body } = req;
-    //     const { itemId } = query;
-    //     console.log("Attempting to delete item ID: " + itemId)
-
-    //     // Here we need firebase admin to verify the auth information
-    //     if (!uid) {
-    //         return res.status(400).json({ error: "Missing UID" })
-    //     }
-    //     // if null, then do not update the parameter. Otherwise if string (even empty) then update
-    //     const result = await deleteProfileItem(itemId, uid)
-    //     if (result) {
-    //         return res.status(200).json({ success: true })
-    //     } else {
-    //         return res.status(400).json({ error: "Could not delete item from profile" })
-    //     }
-
-    // }
 
     if (method === "POST") {
         const { query, body } = req;
@@ -44,58 +26,92 @@ async function handler(req, res) {
                 console.error(err)
                 return res.status(400).json({ error: "Error parsing form" })
             }
-            let { title, subtitle, caption, uri = "" } = fields
-            
-            title = title[0]
-            subtitle = subtitle[0]
-            caption = caption[0]
-            uri = uri[0]
+            let { postType = ["standard"] } = fields
+            postType = postType[0]
+            if (postType === "spotify") {
+                let { spotifyUri = [""] } = fields
+                spotifyUri = spotifyUri[0];
+                const regex = /\bhttps:\/\/open\.spotify\.com\/(track|playlist|artist|show|episode|audiobook)\//
+                const valid = regex.test(spotifyUri)
+                if (!valid) {
+                    return res.status(400).json({ error: "Invalid Spotify URI" })
+                }
+                const postBody = {
+                    listId: itemId,
+                    postType,
+                    spotifyUri,
+                    uid
+                }
+                const result = await addPostToList(postBody)
+            }
 
-            const { photo } = files
-            let publicUrl = ""
-            if (photo) {
-                const imageFile = photo[0]
-                const imagePath = imageFile.path
+            else {
 
-                const compressedImage = await sharp(imagePath).resize(1000, 1000, { fit: "inside" }).toBuffer()
 
-                const fileName = uuidv4()
-                const destinationPath = `public/content/${fileName}`
-                const bucket = getStorage().bucket();
-                try {
-                    const response = await bucket.file(destinationPath).save(compressedImage, {
-                        metadata: {
-                            contentType: imageFile.headers['content-type'],
+                let { title = [""], subtitle = [""], caption = [""], uri = [""] } = fields
+
+                title = title[0]
+                subtitle = subtitle[0]
+                caption = caption[0]
+                uri = uri[0]
+
+                const { photo } = files
+                let publicUrl = ""
+                if (photo) {
+                    const imageFile = photo[0]
+                    const imagePath = imageFile.path
+
+                    const compressedImage = await sharp(imagePath).resize(1000, 1000, { fit: "inside" }).toBuffer()
+
+                    const fileName = uuidv4()
+                    const destinationPath = `public/content/${fileName}`
+                    const bucket = getStorage().bucket();
+                    try {
+                        const response = await bucket.file(destinationPath).save(compressedImage, {
                             metadata: {
-                                owner: uid
+                                contentType: imageFile.headers['content-type'],
+                                metadata: {
+                                    owner: uid
+                                }
                             }
-                        }
-                    })
-                    const makePublicResponse = await bucket.file(destinationPath).makePublic();
+                        })
+                        const makePublicResponse = await bucket.file(destinationPath).makePublic();
+                    } catch (e) {
+                        console.error(e)
+                        return res.status(400).json({ error: "Error uploading image - please try again." })
+                    }
+                    publicUrl = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
+                }
+
+
+
+
+                console.log("Adding post to list " + itemId + " with title " + title)
+                console.log(uri)
+                let newUri = ""
+                if (uri) {
+                    newUri = uri.replace("http://", "https://")
+                    if (!newUri.startsWith("https://")) {
+                        newUri = "https://" + newUri
+                    }
+                }
+                try {
+                    const postBody = {
+                        listId: itemId, 
+                        postType,
+                        title,
+                        subtitle,
+                        caption,
+                        uri: newUri,
+                        photo: publicUrl,
+                        uid
+                    }
+
+                    const result = await addPostToList(postBody)
+                    return res.status(200).json({ success: true })
                 } catch (e) {
                     console.error(e)
-                    return res.status(400).json({ error: "Error uploading image - please try again." })
                 }
-                publicUrl = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
-            }
-
-
-
-
-            console.log("Adding post to list " + itemId + " with title " + title)
-            console.log(uri)
-            let newUri = ""
-            if (uri) {
-                newUri = uri.replace("http://", "https://")
-                if (!newUri.startsWith("https://")) {
-                    newUri = "https://" + newUri
-                }
-            }
-            try{
-                const result = await addPostToList(title, subtitle, caption, itemId, publicUrl, newUri, uid)
-                return res.status(200).json({ success: true })
-            } catch (e) {
-                console.error(e)
             }
 
             return res.status(400).json({ error: "Could not add post to list" })
