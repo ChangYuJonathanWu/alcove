@@ -47,31 +47,37 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         }
     }
     const buildPosts = (items, itemOrder, type) => {
-        let ItemComponent
-        switch (type) {
-            case "standard":
-                ItemComponent = StandardPost
-                break;
-            case "spotify":
-                ItemComponent = SpotifyItem
-                break;
-            case "restaurant":
-                ItemComponent = RestaurantItem
-                break
-            case "trail":
-                ItemComponent = TrailItem
-                break
-            case "show":
-                ItemComponent = ShowItem
-                break
-            case "car":
-                ItemComponent = CarItem
-                break;
-            default:
-                ItemComponent = ShowItem
-        }
         return itemOrder.map(
-            itemId => <ItemComponent key={itemId} item={items[itemId]} editMode={editMode} setPostToEdit={setPostToEdit}/>
+            itemId => {
+                let ItemComponent
+
+                const item = items[itemId]
+                const { type = "standard"} = item
+                switch (type) {
+                    case "standard":
+                        ItemComponent = StandardPost
+                        break;
+                    case "spotify":
+                        ItemComponent = SpotifyItem
+                        break;
+                    case "restaurant":
+                        ItemComponent = RestaurantItem
+                        break
+                    case "trail":
+                        ItemComponent = TrailItem
+                        break
+                    case "show":
+                        ItemComponent = ShowItem
+                        break
+                    case "car":
+                        ItemComponent = CarItem
+                        break;
+                    default:
+                        ItemComponent = StandardPost
+                }
+
+                return <ItemComponent key={itemId} item={item} editMode={editMode} setPostToEdit={setPostToEdit} />
+            }
         )
     }
 
@@ -92,14 +98,14 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
                             </Stack>
-                            {editMode && <EditIcon onClick={(e) => {e.preventDefault(); setEditItem(profileItems[itemId])}} />}
+                            {editMode && <EditIcon onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
 
                     </ListItemButton>
                     <Collapse in={isOpen} timeout={0}>
                         <List style={{ alignContent: "center" }}>
                             {buildPosts(items, itemOrder, listType)}
-                            {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)}/>}
+                            {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)} />}
                         </List>
                     </Collapse>
                 </Paper>
@@ -108,7 +114,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     }
 
     const onEditLink = (e) => {
-        e.preventDefault() 
+        e.preventDefault()
     }
     const buildUriItem = (itemId, content) => {
         const { name, uri } = content
@@ -122,7 +128,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                                 <LinkIcon />
                                 <Typography variant="h3">{name}</Typography>
                             </Stack>
-                            {editMode && <EditIcon onClick={(e) => {e.preventDefault(); setEditItem(profileItems[itemId])}} />}
+                            {editMode && <EditIcon onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
 
                     </ListItemButton>
@@ -159,10 +165,10 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
     return (
         <div>
-            <RearrangePostsModal itemIdToReorder={itemIdToReorder} setItemIdToReorder={setItemIdToReorder} user={user} triggerReload={triggerReload}/>
+            <RearrangePostsModal itemIdToReorder={itemIdToReorder} setItemIdToReorder={setItemIdToReorder} user={user} triggerReload={triggerReload} />
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
-            <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload}/>
-            <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload}/>
+            <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} />
+            <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload} />
             {buildProfileItems()}
         </div>
     )
