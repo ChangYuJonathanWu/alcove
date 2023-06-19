@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 
 import ErrorPage from 'next/error'
 import Profile from '@/components/profile/Profile'
-import jonathan_user from '../examples/jonathan.json'
-import jiwonkang_user from '../examples/jiwon.json'
-import example_user from '../examples/example.json'
-import dan_user from '../examples/dan.json'
+import jonathan_user from '@/examples/jonathan.json'
+import jiwonkang_user from '@/examples/jiwon.json'
+import example_user from '@/examples/example.json'
+import dan_user from '@/examples/dan.json'
 
 export default function ProfileRoute() {
     const router = useRouter()
@@ -59,5 +59,5 @@ export default function ProfileRoute() {
         return <div></div> // loading animation should go here
     }
 
-    return user ? <Profile user={user} triggerReload={setLoadTime}/> : <ErrorPage statusCode={404}/>
+    return user ? <Profile user={user} triggerReload={setLoadTime} publicView={true}/> : <ErrorPage statusCode={404}/>
 }
