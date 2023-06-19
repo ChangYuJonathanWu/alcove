@@ -118,7 +118,11 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                         </RadioGroup>
                     </FormControl>
                     {postType === "spotify" && <div style={{ width: "100%" }}>
-                        <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
+                        <Stack spacing={2}>
+                            <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
+                            <Typography variant="subtitle2">{`To get the Spotify link, click the three dots on the song, click "Share", then "Copy Song Link"`}</Typography>
+                        </Stack>
+
                     </div>}
                     {postType === "standard" && <div style={{ width: "100%" }}>
                         <Stack alignItems="center" spacing={2} >
