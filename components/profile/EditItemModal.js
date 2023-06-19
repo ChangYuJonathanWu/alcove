@@ -7,16 +7,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function EditItemModal({ editItem, setEditItem, triggerReload }) {
     useEffect(() => {
         if (editItem) {
-            const { id, content, } = editItem
-            const { name, commentary} = content;
+            const { id, type, content, } = editItem
+            const { name, commentary, uri} = content;
             setNewTitle(name)
             setNewSubtitle(commentary)
             setItemId(id)
+            setItemType(type)
+            setNewLink(uri)
         }
     }, [editItem])
     const [newTitle, setNewTitle] = useState("")
     const [itemId, setItemId] = useState("")
     const [newSubtitle, setNewSubtitle] = useState("")
+    const [itemType, setItemType] = useState("")
+    const [newLink, setNewLink] = useState("")
     const [loading, setLoading] = useState(false)
     const onItemDelete = async () => {
         setLoading(true)
@@ -65,7 +69,8 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
                     <TextField size="small" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
+                    {itemType === "uri" && <TextField size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />}
+                    {itemType === "list" && <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />}
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>
