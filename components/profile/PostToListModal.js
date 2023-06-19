@@ -44,11 +44,16 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         }
 
         const formData = new FormData()
-        formData.append("photo", postPhoto)
-        formData.append("title", title)
-        formData.append("subtitle", subtitle)
-        formData.append("caption", caption)
-        formData.append("uri", uri)
+        formData.append("postType", postType)
+        if (postType === 'spotify') {
+            formData.append("spotifyUri", spotifyUri)
+        } else {
+            formData.append("photo", postPhoto)
+            formData.append("title", title)
+            formData.append("subtitle", subtitle)
+            formData.append("caption", caption)
+            formData.append("uri", uri)
+        }
 
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: formData })
         setLoading(false)
@@ -110,10 +115,10 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                             <FormControlLabel value="spotify" control={<Radio />} label="Song" />
                         </RadioGroup>
                     </FormControl>
-                    {postType === "spotify" && <div style={{width: "100%"}}>
-                    <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
-                        </div>}
-                    {postType === "standard" && <div style={{width: "100%"}}>
+                    {postType === "spotify" && <div style={{ width: "100%" }}>
+                        <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
+                    </div>}
+                    {postType === "standard" && <div style={{ width: "100%" }}>
                         <Stack alignItems="center" spacing={2} >
                             {postPhoto &&
                                 <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={URL.createObjectURL(postPhoto)} style={{ marginRight: "1rem", borderRadius: '5px' }} />
@@ -122,7 +127,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                                 {postPhoto && <div>
                                     <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
                                 </div>}
-                                <div style={{width: "100%"}}>
+                                <div style={{ width: "100%" }}>
                                     <input
                                         accept="image/*"
                                         style={{ display: 'none' }}
@@ -148,7 +153,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                         <Button disabled={loading} onClick={onExit}>Cancel</Button>
-                        <Button disabled={loading || (postType==="spotify" && !validSpotifyUri)} onClick={onPost} variant="contained">Post</Button>
+                        <Button disabled={loading || (postType === "spotify" && !validSpotifyUri)} onClick={onPost} variant="contained">Post</Button>
                     </Stack>
                 </Stack>
             </Box>
