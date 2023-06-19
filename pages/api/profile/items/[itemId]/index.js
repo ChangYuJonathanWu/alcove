@@ -27,14 +27,23 @@ async function handler(req, res) {
     if (method === "POST") {
         const { query, body } = req;
         const { itemId } = query;
-        const { name, subtitle } = JSON.parse(body);
+        const { type, name, subtitle, uri } = JSON.parse(body);
+
+        let newUri;
+        if (uri) {
+            newUri = uri.replace("http://", "https://")
+            if (!newUri.startsWith("https://")) {
+                newUri = "https://" + newUri
+            }
+        }
+
 
         // Here we need firebase admin to verify the auth information
         if (!uid) {
             return res.status(400).json({ error: "Missing UID" })
         }
         console.log("Attempting to rename item ID " + itemId + " to " + name)
-        const result = await renameProfileItem(itemId, name, subtitle, uid)
+        const result = await renameProfileItem(itemId, type, name, subtitle, newUri, uid)
         if (result) {
             return res.status(200).json({ success: true })
         } else {
@@ -43,8 +52,8 @@ async function handler(req, res) {
     }
 
     if (method === "PUT") {
-        const { query, body} = req;
-        const { itemId} = query;
+        const { query, body } = req;
+        const { itemId } = query;
         const { item_order } = JSON.parse(body);
         if (!uid) {
             return res.status(400).json({ error: "Missing UID" })
