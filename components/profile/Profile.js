@@ -20,10 +20,11 @@ import RearrangeItemsButton from './RearrangeItemsButton';
 import RearrangeItemsModal from './RearrangeItemsModal';
 import PostToListModal from './PostToListModal';
 import ThemingButton from './ThemingButton';
+import ViewAsPublicButton from './ViewAsPublicButton';
 import ThemingModal from './ThemingModal';
 
 
-export default function Profile({ user, triggerReload }) {
+export default function Profile({ user, triggerReload, publicView = false }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
     const [newItemOpen, setNewItemOpen] = useState(false)
@@ -34,7 +35,7 @@ export default function Profile({ user, triggerReload }) {
         const checkOwnerSignedIn = async () => {
             const auth = getAuth();
             const loggedIn = auth.currentUser;
-            if (!loggedIn) {
+            if (!loggedIn || publicView) {
                 setOwnerSignedIn(false)
                 return
             }
@@ -44,7 +45,7 @@ export default function Profile({ user, triggerReload }) {
             }
         }
         checkOwnerSignedIn()
-    }, [user])
+    }, [user, publicView])
 
     const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
     const { items = {}, item_order: itemOrder = [] } = profile
@@ -55,7 +56,7 @@ export default function Profile({ user, triggerReload }) {
     }
 
     const { type: backgroundType, url: backgroundUrl } = background || {}
-    
+
     //TODO: Error handling on network request, validation
     return (
         <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
@@ -72,22 +73,26 @@ export default function Profile({ user, triggerReload }) {
             </Head>
             <main>
                 <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center" }}>
-                    
-                    {backgroundType == "image" && <Image fill={true} src={backgroundUrl} objectFit='cover' alt="background wallpaper"/>}
+
+                    {backgroundType == "image" && <Image fill={true} src={backgroundUrl} objectFit='cover' alt="background wallpaper" />}
                 </div>
                 <Stack style={{ marginBottom: "100px" }}>
-                    <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload}/>
-                    <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload}/>
-                    <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={user} triggerReload={triggerReload}/>
-                    <ThemingModal open={themeOpen} setOpen={setThemeOpen} user={user} triggerReload={triggerReload}/>
+                    <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload} />
+                    <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload} />
+                    <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={user} triggerReload={triggerReload} />
+                    <ThemingModal open={themeOpen} setOpen={setThemeOpen} user={user} triggerReload={triggerReload} />
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
-                    <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload}/>
-                    {ownerSignedIn && <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)}/>}
-                    {ownerSignedIn && <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)}/>}
-                    {ownerSignedIn && <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)}/>}
+                    <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload} />
+                    {ownerSignedIn && <Stack>
+                        <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
+                        <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
+                        <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
+                        <ViewAsPublicButton link={`${handle}/public`}key="view-as-public-button" />
+                    </Stack>}
+
                     {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
-                    
+
                 </Stack>
             </main>
         </div>
