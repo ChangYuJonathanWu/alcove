@@ -43,8 +43,10 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
             Authorization: `Bearer ${token}`
         }
         const body = {
+            type: itemType,
             name: newTitle,
-            subtitle: newSubtitle
+            subtitle: newSubtitle,
+            uri: newLink
         }
         const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", headers, body: JSON.stringify(body) })
         setLoading(false)
