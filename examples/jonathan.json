@@ -357,43 +357,40 @@
                     "items": {
                         "i1": {
                             "id": "i1",
-                            "album_cover": "https://album.com/photo.jpg",
-                            "name": "Is There Somewhere",
-                            "artist": "Halsey",
-                            "album": "Room 93",
-                            "uri": "https://open.spotify.com/embed/track/5XijWLBY0vwl5MPUpQA2Ha?utm_source=generator&theme=0"
+                            "type": "spotify",
+                            "spotify_type": "track",
+                            "spotify_id": "5XijWLBY0vwl5MPUpQA2Ha"
                         },
                         "i2": {
                             "id": "i2",
-                            "album_cover": "https://album.com/photo1.jpg",
-                            "name": "Run",
-                            "artist": "George Strait",
-                            "album": "The Road Less Travelled",
-                            "uri": "https://open.spotify.com/embed/track/1EXMjx4nCIvYTaY5CZMUSl?utm_source=generator&theme=0"
+                            "type": "spotify",
+                            "spotify_id": "1EXMjx4nCIvYTaY5CZMUSl",
+                            "spotify_type": "track"
                         },
                         "i3": {
                             "id": "i3",
-                            "album_cover": "https://album.com/photo2.jpg",
-                            "name": "Born to Die",
-                            "artist": "Lana Del Rey",
-                            "album": "Born to Die",
-                            "uri": "https://open.spotify.com/embed/track/487OPlneJNni3NWC8SYqhW?utm_source=generator&theme=0"
+                            "type": "spotify",
+                            "spotify_id": "487OPlneJNni3NWC8SYqhW",
+                            "spotify_type": "track"
                         },
                         "i4": {
                             "id": "i4",
-                            "album_cover": "https://album.com/photo2.jpg",
-                            "name": "Fast Car",
-                            "artist": "Tracy Chapman",
-                            "album": "",
-                            "uri": "https://open.spotify.com/embed/track/2M9ro2krNb7nr7HSprkEgo?utm_source=generator"
+                            "type": "spotify",
+                            "spotify_id": "2M9ro2krNb7nr7HSprkEgo",
+                            "spotify_type": "track"
                         },
                         "i5": {
                             "id": "i5",
-                            "uri": "https://open.spotify.com/embed/track/5NdxiycRi3nP2v7RJoAJIT?utm_source=generator"
+                            "type": "spotify",
+                            "spotify_id": "5NdxiycRi3nP2v7RJoAJIT",
+                            "spotify_type": "track"
                         },
                         "i6": {
                             "id": "i6",
-                            "uri": "https://open.spotify.com/embed/track/2x8aFYMNPezraBxfjxnQEP?utm_source=generator"
+                            "type": "spotify",
+                            "uri": "https://open.spotify.com/embed/track/2x8aFYMNPezraBxfjxnQEP?utm_source=generator",
+                            "spotify_id": "2x8aFYMNPezraBxfjxnQEP",
+                            "spotify_type": "track"
                         }
                     }
                 }

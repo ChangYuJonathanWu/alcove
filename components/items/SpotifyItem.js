@@ -6,7 +6,8 @@ import '../../styles/Home.module.css'
 
 export default function SpotifyItem({ item }) {
     const [loading, setLoading] = useState(true)
-    const { itemId, uri } = item
+    const { itemId, spotify_id, spotify_type } = item
+    const uri = `https://open.spotify.com/embed/${spotify_type}/${spotify_id}`
     return (
         <ListItem key={itemId} sx={{ paddingBottom: 0, paddingTop: 0 }}>
             {loading && <Skeleton height={92} style={{ width: "90%", opacity: 1, position: "absolute"}} />}
