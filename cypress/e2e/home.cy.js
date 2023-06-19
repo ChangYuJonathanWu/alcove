@@ -13,6 +13,11 @@ describe('Homepage', () => {
         cy.contains('jonathan wu').should('exist')
         cy.percySnapshot('Profile', { widths: [768, 1200, 1920] });
     })
+    it('Loads my profile on public view', () => {
+        cy.visit('http://localhost:3000/jonathanwu/public')
+        cy.contains('jonathan wu').should('exist')
+        cy.percySnapshot('Profile (Public)', { widths: [768, 1200, 1920] });
+    })
     it('Loads login page', () => {
         cy.visit('http://localhost:3000/login')
         cy.contains('Login').should('exist')
