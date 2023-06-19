@@ -76,7 +76,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         ItemComponent = StandardPost
                 }
 
-                return <ItemComponent key={itemId} item={item} editMode={editMode} setPostToEdit={setPostToEdit} />
+                return <ItemComponent key={itemId} item={item} editMode={editMode} setPostToEdit={setPostToEdit} triggerReload={triggerReload}/>
             }
         )
     }
