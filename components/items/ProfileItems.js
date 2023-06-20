@@ -103,7 +103,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
                     </ListItemButton>
                     <Collapse in={isOpen} timeout={0}>
-                        <List style={{ alignContent: "center" }}>
+                        <List id={`list-id-${itemId}`} style={{ alignContent: "center" }}>
                             {buildPosts(items, itemOrder, listType)}
                             {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)} />}
                         </List>
