@@ -17,6 +17,8 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
         setItemType("list")
         setLinkAddress("")
         setName("")
+        setSubtitle("")
+        setLoading(false)
     }
     const onNewItem = async () => {
         setLoading(true)
