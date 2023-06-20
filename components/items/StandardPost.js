@@ -33,7 +33,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                             
                             {uri && <OpenInNewIcon style={{ width: "1rem" }} />}
                         </Stack>
-                        <Typography variant="body2" fontSize="0.8rem">{`${subtitle}`}</Typography>
+                        {subtitle && <Typography variant="body2" fontSize="0.8rem">{`${subtitle}`}</Typography>}
                         {captionToUse && <Typography variant="caption">{captionToUse}</Typography>}
                     </Stack>
                     {editMode && <EditNoteIcon onClick={onEditClick} />}
