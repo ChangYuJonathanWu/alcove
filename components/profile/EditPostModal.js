@@ -65,6 +65,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setLoading(false)
         setPostToEdit("")
         setPostId("")
+        setPhotoUpload(null)
         triggerReload(Date.now())
     }
 
@@ -83,6 +84,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
     const onExit = () => {
         setPostToEdit(null)
+        setPhotoUpload(null)
         setPhotoChanged(false)
     }
 
