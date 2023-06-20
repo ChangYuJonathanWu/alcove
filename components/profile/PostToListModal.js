@@ -8,7 +8,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import useDetectKeyboardOpen from "use-detect-keyboard-open";
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -16,14 +15,6 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const scrollToBottom = () => {
         bottomRef.current.scrollIntoView({ behavior: "smooth" })
     }
-
-    const isKeyboardOpen = useDetectKeyboardOpen();
-
-    useEffect(() => {
-        if (isKeyboardOpen) {
-            scrollToBottom()
-        }
-    }, [isKeyboardOpen])
 
     useEffect(() => {
         if (listIdToPostTo) {
@@ -110,7 +101,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         backgroundColor: 'white',
         borderRadius: '7px',
         padding: '2rem',
-        maxHeight: '80vh',
+        maxHeight: '60vh',
         overflowY: 'auto'
     };
     //TODO: Validate input; set character limits
