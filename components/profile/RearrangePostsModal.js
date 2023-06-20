@@ -3,6 +3,7 @@ import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material'
 import { getAuth } from "firebase/auth";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import SpotifyItem from '../items/SpotifyItem';
 
 
 export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorder, triggerReload, user }) {
@@ -77,9 +78,11 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       return
     }
     const itemList = order.map((id, idx) => {
+      const postType = postsToRearrange[id]["type"]
       return (
         <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%' }}>
-          {postsToRearrange[id]["title"]}
+
+          {postType === "spotify" ? <SpotifyItem noPadding={true} item={postsToRearrange[id]} /> : <b>{postsToRearrange[id]["title"]}</b> }
           <Stack direction="row" spacing={2}>
             <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
               <ArrowUpwardIcon />
@@ -98,10 +101,10 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     top: '40%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    minWidth: "300px",
+    minWidth: "340px",
     backgroundColor: 'white',
     borderRadius: '7px',
-    padding: '2rem',
+    padding: '1rem',
   };
   return (
     <Modal open={!!itemIdToReorder}>
