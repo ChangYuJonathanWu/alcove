@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
+    const bottomRef = useRef(null)
+    const scrollToBottom = () => {
+        bottomRef.current.scrollIntoView({ behavior: "smooth" })
+    }
     useEffect(() => {
         if (postToEdit) {
             const { id, parentId, title, subtitle, caption, uri, image } = postToEdit;
@@ -144,9 +148,9 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     <TextField size="small" style={{ width: "100%" }} label="Title" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} multiline rows={5} label="Caption" value={newCaption} onChange={(e) => setNewCaption(e.currentTarget.value)} />
-                    <TextField size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />
+                    <TextField size="small" onClick={scrollToBottom} style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                        <Button disabled={loading} onClick={() => setPostToEdit(null)}>Cancel</Button>
+                        <Button disabled={loading} ref={bottomRef} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
                         <Button disabled={loading} onClick={onPostUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
