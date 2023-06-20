@@ -25,13 +25,14 @@ describe('Profile', () => {
         cy.contains("hiking trails").should('exist')
         cy.contains("old but charming cars").should('exist')
         cy.contains("shows in recent memory").should('exist')
-        cy.contains("@988lifeline").should('exist')
+        cy.contains("@988lifeline").should('exist').should('have.attr', 'href', 'https://www.instagram.com/988lifeline/')
     })
 
-    it('Can open a list and render posts', () => {
+    it('Can open a restaurant list and render posts', () => {
         // Open up list
         cy.contains("sushi restaurants").click()
         cy.contains("sushi restaurants").should('exist')
+        cy.percySnapshot('Sushi Restaurants List', { widths: [768, 1200, 1920], fullPage: true });
 
         // Verify first post
         cy.contains("they're sentimental").should('exist')
@@ -39,5 +40,14 @@ describe('Profile', () => {
         cy.contains("Japanese - Portland, OR, USA").should('exist')
         cy.contains("where my earliest memories of sushi begin, earmarking many celebrations and occasions.").should('exist')
         cy.find('img').should('have.attr', 'src', 'content/saburos.jpg')
+    })
+    it('Can open song list and render Spotify iFrames', () => {
+        // Open up list
+        cy.contains("songs of all time").click()
+        cy.contains("some of them atleast").should('exist')
+        cy.percySnapshot('Sushi Restaurants List', { widths: [768, 1200, 1920], fullPage: true });
+
+        // iFrame should exist
+        cy.find('.iframe').should('have.attr', 'src', 'https://open.spotify.com/embed/track/1EXMjx4nCIvYTaY5CZMUSl')
     })
 })
