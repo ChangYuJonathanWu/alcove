@@ -31,7 +31,6 @@ describe('Profile', () => {
     it('Can open a restaurant list and render posts', () => {
         // Open up list
         cy.visit('http://localhost:3000/jHak91janUhqmOakso')
-        cy.wait(3000)
         cy.get("#background-photo").should('exist')
         cy.contains("sushi restaurants").click()
         cy.contains("sushi restaurants").should('exist')
