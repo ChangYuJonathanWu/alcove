@@ -79,8 +79,9 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     }
     const itemList = order.map((id, idx) => {
       const postType = postsToRearrange[id]["type"]
+      const padding = postType === "spotify" ? 0 : "1rem"
       return (
-        <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%' }}>
+        <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop: padding, paddingBottom: padding }}>
 
           {postType === "spotify" ? <SpotifyItem noPadding={true} item={postsToRearrange[id]} /> : <b>{postsToRearrange[id]["title"]}</b> }
           <Stack direction="row" spacing={2}>
@@ -98,18 +99,20 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
   }
   const modalStyle = {
     position: 'absolute',
-    top: '40%',
+    top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     minWidth: "340px",
     backgroundColor: 'white',
     borderRadius: '7px',
     padding: '1rem',
+    maxHeight: '80vh',
+    overflowY: 'auto'
   };
   return (
     <Modal open={!!itemIdToReorder}>
       <Box style={modalStyle}>
-        <Stack alignItems="center" spacing={4} >
+        <Stack alignItems="center" >
           {buildItems()}
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
             <Button disabled={loading} onClick={onCancel}>Cancel</Button>
