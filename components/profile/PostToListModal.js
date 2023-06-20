@@ -8,7 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { useDetectKeyboardOpen } from 'react-detect-keyboard-height';
+import useDetectKeyboardOpen from "use-detect-keyboard-open";
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
