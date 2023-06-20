@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { useDetectKeyboardOpen } from 'react-detect-keyboard-height';
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -15,6 +16,15 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const scrollToBottom = () => {
         bottomRef.current.scrollIntoView({ behavior: "smooth" })
     }
+
+    const isKeyboardOpen = useDetectKeyboardOpen();
+
+    useEffect(() => {
+        if (isKeyboardOpen) {
+            scrollToBottom()
+        }
+    }, [isKeyboardOpen])
+
     useEffect(() => {
         if (listIdToPostTo) {
             setListId(listIdToPostTo)

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
+import useDetectKeyboardOpen from "use-detect-keyboard-open";
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -9,6 +10,13 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     const scrollToBottom = () => {
         bottomRef.current.scrollIntoView({ behavior: "smooth" })
     }
+    const isKeyboardOpen = useDetectKeyboardOpen();
+
+    useEffect(() => {
+        if (isKeyboardOpen) {
+            scrollToBottom()
+        }
+    }, [isKeyboardOpen])
     useEffect(() => {
         if (postToEdit) {
             const { id, parentId, title, subtitle, caption, uri, image } = postToEdit;

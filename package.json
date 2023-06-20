@@ -34,6 +34,7 @@
     "react-loading-skeleton": "^3.2.1",
     "react-responsive": "^9.0.2",
     "sharp": "^0.32.1",
+    "use-detect-keyboard-open": "^0.4.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
