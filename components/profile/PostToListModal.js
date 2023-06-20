@@ -152,8 +152,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
 
                             <TextField style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
                             <TextField style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />
-                            <TextField style={{ width: "100%" }} size="small" multiline rows={5} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
-                            <TextField style={{ width: "100%" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
+                            <TextField style={{ width: "100%" }} size="small" multiline rows={3} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
+                            <TextField style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
                         </Stack>
                     </div>}
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
