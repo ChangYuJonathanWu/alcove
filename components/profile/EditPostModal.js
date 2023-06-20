@@ -148,7 +148,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <Button disabled={loading} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={onPostUpdate} variant="contained">Update</Button>
+                        <Button disabled={loading} onClick={onPostUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>
