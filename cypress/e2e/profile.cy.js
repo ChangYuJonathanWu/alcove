@@ -31,6 +31,7 @@ describe('Profile', () => {
     it('Can open a restaurant list and render posts', () => {
         // Open up list
         cy.visit('http://localhost:3000/jHak91janUhqmOakso')
+        cy.get("#background-photo").should('exist')
         cy.contains("sushi restaurants").click()
         cy.contains("sushi restaurants").should('exist')
         cy.percySnapshot('Sushi Restaurants List', { widths: [768, 1200, 1920], fullPage: true });

@@ -9,6 +9,7 @@ import jiwonkang_user from '@/examples/jiwon.json'
 import example_user from '@/examples/example.json'
 import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
+import ProfileLoader from '@/components/profile/ProfileLoader'
 
 export default function ProfileRoute() {
     const router = useRouter()
@@ -36,6 +37,7 @@ export default function ProfileRoute() {
         if(!username) {
             return
         }
+        setLoading(true)
         const validHandles = ["jonathanwu", "gracehopper", "jiwonkang", "jonathanwu_test", "dandan", "jHak91janUhqmOakso"]
         const networkHandles = ["jonathanwu_test", "jiwonkang"]
         const loadUser = async () => {
@@ -57,7 +59,7 @@ export default function ProfileRoute() {
     }, [username, loadTime])
 
     if(loading) {
-        return <div></div> // loading animation should go here
+        return <ProfileLoader/>
     }
 
     return user ? <Profile user={user} triggerReload={setLoadTime}/> : <ErrorPage statusCode={404}/>

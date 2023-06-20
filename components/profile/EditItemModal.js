@@ -22,6 +22,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     const [itemType, setItemType] = useState("")
     const [newLink, setNewLink] = useState("")
     const [loading, setLoading] = useState(false)
+    
     const onItemDelete = async () => {
         setLoading(true)
         const auth = getAuth()
