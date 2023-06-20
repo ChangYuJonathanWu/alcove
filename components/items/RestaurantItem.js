@@ -12,7 +12,6 @@ import StandardPost from './StandardPost';
 
 export default function RestaurantItem({ item }) {
     const { itemId, uri, name, image, cuisine, location, commentary } = item
-    const commentaryToUse = commentary ? `${commentary}` : ""
 
     const newItem = {
         id: itemId,
@@ -20,7 +19,7 @@ export default function RestaurantItem({ item }) {
         title: name,
         image,
         subtitle: `${cuisine} - ${location}`,
-        caption: commentaryToUse
+        caption: commentary
     }
     return (
         <StandardPost item={newItem} />
