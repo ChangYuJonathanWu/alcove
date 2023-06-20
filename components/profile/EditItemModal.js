@@ -77,7 +77,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={onItemUpdate} variant="contained">Update</Button>
+                        <Button disabled={loading} onClick={onItemUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>
