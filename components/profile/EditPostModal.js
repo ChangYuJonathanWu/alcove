@@ -104,7 +104,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         backgroundColor: 'white',
         borderRadius: '7px',
         padding: '2rem',
-        maxHeight: '60vh',
+        maxHeight: '80vh',
         overflowY: 'auto'
     };
     //TODO: Validate input; set character limits
