@@ -6,8 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
     const bottomRef = useRef(null)
-    const scrollToBottom = () => {
-        bottomRef.current.scrollIntoView({ behavior: "smooth" })
+    const scrollToBottom = async () => {
+        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 300 )
+        
     }
 
     useEffect(() => {
@@ -92,15 +93,6 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setPhotoUpload(null)
         setPhotoChanged(false)
     }
-
-
-    // Cases:
-    // 1. Photo removed
-    // 2. Photo added
-    // 3. Photo changed
-    // 4. Photo unchanged
-    // 5. Photo removed, then added
-
 
     
     const modalStyle = {

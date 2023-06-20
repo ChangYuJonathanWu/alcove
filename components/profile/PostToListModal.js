@@ -13,7 +13,7 @@ import FormLabel from '@mui/material/FormLabel';
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
     const bottomRef = useRef(null)
     const scrollToBottom = () => {
-        bottomRef.current.scrollIntoView({ behavior: "smooth" })
+        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 300 )
     }
 
     useEffect(() => {
