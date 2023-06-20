@@ -14,7 +14,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 // TODO: Rename item to post. Keeping to maintain interface with other bespoke item/post types
 export default function StandardPost({ item, editMode = false, setPostToEdit }) {
     const { id, parentId, uri, title, image, subtitle, caption } = item
-    const captionToUse = caption ? `"${caption}"` : ""
+    const captionToUse = caption ? `${caption}` : ""
 
     const onEditClick = (e) => {
         e.preventDefault()
