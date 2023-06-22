@@ -61,7 +61,7 @@ async function handler(req, res) {
                     const imageFile = photo[0]
                     const imagePath = imageFile.path
 
-                    const compressedImage = await sharp(imagePath).resize(1000, 1000, { fit: "inside" }).toBuffer()
+                    const compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
 
                     const fileName = uuidv4()
                     const destinationPath = `public/content/${fileName}`

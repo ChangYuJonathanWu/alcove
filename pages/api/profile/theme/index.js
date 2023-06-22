@@ -52,7 +52,7 @@ async function handler(req, res) {
                 const imageFile = background_image[0]   
                 const imagePath = imageFile.path
 
-                const compressedImage = await sharp(imagePath).resize(2600, 2600, { fit: 'inside'}).toBuffer()
+                const compressedImage = await sharp(imagePath).rotate().resize(2600, 2600, { fit: 'inside'}).toBuffer()
                 const fileName = uuidv4()
                 const destinationPath = `public/profile/images/${fileName}`;
     
