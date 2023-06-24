@@ -5,9 +5,9 @@ import multiparty from 'multiparty'
 import util from 'util'
 import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
-import sharp from 'sharp'
 
 import * as Sentry from "@sentry/nextjs";
+import { resizeImage } from '@/utils/imageProcessing';
 
 async function handler(req, res) {
 
@@ -46,7 +46,7 @@ async function handler(req, res) {
                 const imagePath = imageFile.path
                 let compressedImage
                 try {
-                    compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
+                    compressedImage = await resizeImage(imagePath, 1000, 1000)
                 } catch (e) {
                     console.error(e)
                     Sentry.captureException(e)

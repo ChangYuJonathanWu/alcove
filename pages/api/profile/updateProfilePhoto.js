@@ -7,6 +7,7 @@ import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
+import { resizeImage } from '@/utils/imageProcessing';
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
@@ -77,9 +78,7 @@ async function handler(req, res) {
             const imagePath = imageFile.path;
             let compressedImage
             try {
-                compressedImage = await sharp(imagePath).rotate().resize(600, 600, {
-                    fit: 'inside',
-                }).toBuffer()
+                compressedImage = await resizeImage(imagePath, 600, 600)
             } catch (e) {
                 console.error(e)
                 Sentry.captureException(e)

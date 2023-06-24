@@ -7,6 +7,7 @@ import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
+import { resizeImage } from '@/utils/imageProcessing';
 
 
 const deleteBackgroundPhoto = async (uid) => {
@@ -55,7 +56,7 @@ async function handler(req, res) {
                 const imagePath = imageFile.path
                 let compressedImage
                 try {                
-                    compressedImage = await sharp(imagePath).rotate().resize(2600, 2600, { fit: 'inside'}).toBuffer()
+                    compressedImage = await resizeImage(imagePath, 2600, 2600)
                 } catch(e) {
                     console.error(e)
                     Sentry.captureException(e)
