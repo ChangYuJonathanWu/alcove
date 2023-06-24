@@ -45,7 +45,13 @@ async function handler(req, res) {
                 const imageFile = image[0]
                 const imagePath = imageFile.path
 
-                const compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
+                try {
+                    const compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
+                } catch (e) {
+                    console.error(e)
+                    Sentry.captureException(e)
+                    return res.status(400).json({ error: "Error compressing image - please try a different image." })
+                }
 
                 const fileName = uuidv4()
                 const destinationPath = `public/content/${fileName}`
