@@ -6,6 +6,7 @@ import util from 'util'
 import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
+import * as Sentry from '@sentry/nextjs'
 
 async function handler(req, res) {
 
@@ -78,6 +79,7 @@ async function handler(req, res) {
                         const makePublicResponse = await bucket.file(destinationPath).makePublic();
                     } catch (e) {
                         console.error(e)
+                        Sentry.captureException(e)
                         return res.status(400).json({ error: "Error uploading image - please try again." })
                     }
                     publicUrl = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
@@ -110,6 +112,7 @@ async function handler(req, res) {
                     const result = await addPostToList(postBody)
                     return res.status(200).json({ success: true })
                 } catch (e) {
+                    Sentry.captureException(e)
                     console.error(e)
                 }
             }

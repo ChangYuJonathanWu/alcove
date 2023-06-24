@@ -7,9 +7,13 @@ import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
 
+import * as Sentry from "@sentry/nextjs";
+
 async function handler(req, res) {
 
     const { method, uid } = req;
+    
+    // Edit post
     if (method === "PUT") {
         const { query, body } = req;
         const { itemId, postId } = query;
@@ -58,6 +62,7 @@ async function handler(req, res) {
                     const makePublicResponse = await bucket.file(destinationPath).makePublic();
                 } catch (e) {
                     console.error(e)
+                    Sentry.captureException(e)
                     return res.status(400).json({ error: "Error uploading image - please try again." })
                 }
                 publicUrl = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
@@ -72,7 +77,6 @@ async function handler(req, res) {
                 uri
             }
 
-            // if null, then do not update the parameter. Otherwise if string (even empty) then update
             const result = await editPost(itemId, postId, post, uid)
             if (result) {
                 return res.status(200).json({ success: true })
@@ -102,6 +106,7 @@ async function handler(req, res) {
         if (result) {
             return res.status(200).json({ success: true })
         } else {
+            Sentry.captureException("Could not delete post from profile")
             return res.status(400).json({ error: "Could not delete post from profile" })
         }
 
