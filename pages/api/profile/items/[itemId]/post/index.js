@@ -61,7 +61,7 @@ async function handler(req, res) {
                 if (photo) {
                     const imageFile = photo[0]
                     const imagePath = imageFile.path
-                    let com
+                    let compressedImage
                     try {
                         compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
                     } catch (e) {
