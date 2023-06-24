@@ -31,6 +31,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const [postPhoto, setPostPhoto] = useState(null)
     const [postType, setPostType] = useState('standard')
     const [validSpotifyUri, setValidSpotifyUri] = useState(false)
+    const [error, setError] = useState("")
 
     const clearItems = () => {
         setTitle("")
@@ -40,6 +41,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setPostPhoto(null)
         setSpotifyUri("")
         setValidSpotifyUri(false)
+        setError("")
     }
 
     const onPost = async () => {
@@ -66,6 +68,9 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setLoading(false)
         if (result.status !== 200) {
             console.error("Error posting. Try again")
+            const parsedResult = await result.json()
+            setError(parsedResult ?? "Error posting. Try again")
+            return
         }
         // TODO: If request failed, dont clear everything here
 
@@ -161,6 +166,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                             <TextField onClick={scrollToBottom} style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
                         </Stack>
                     </div>}
+                    {error && <span>{error}</span>}
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                         <Button disabled={loading}  ref={bottomRef}  onClick={onExit}>Cancel</Button>

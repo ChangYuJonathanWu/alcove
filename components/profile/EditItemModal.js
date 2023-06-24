@@ -22,6 +22,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     const [itemType, setItemType] = useState("")
     const [newLink, setNewLink] = useState("")
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
     
     const onItemDelete = async () => {
         setLoading(true)
@@ -34,6 +35,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         setLoading(false)
         setEditItem("")
         setItemId("")
+        setError("")
         triggerReload(Date.now())
     }
     const onItemUpdate = async () => {
@@ -51,8 +53,14 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         }
         const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", headers, body: JSON.stringify(body) })
         setLoading(false)
+        if(result.status !== 200) {
+            const parsedResult = await result.json()
+            setError(parsedResult.error ?? "Could not update item. Please try again later.")
+            return
+        }
         setEditItem("")
         setItemId("")
+        setError("")
         triggerReload(Date.now())
     }
     const modalStyle = {
@@ -74,6 +82,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
                     <TextField size="small" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     {itemType === "uri" && <TextField size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />}
                     {itemType === "list" && <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />}
+                    {error && <Typography color="error">{error}</Typography>}
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                         <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>

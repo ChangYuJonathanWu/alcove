@@ -6,6 +6,7 @@ import util from 'util'
 import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
+import * as Sentry from '@sentry/nextjs'
 
 
 const deleteBackgroundPhoto = async (uid) => {
@@ -43,6 +44,7 @@ async function handler(req, res) {
                 } catch(e) {
                     console.error(e)
                     console.error("Error deleting background photo from profile")
+                    Sentry.captureException(e)
                 }
                 await updateTheme({ background: {type: "none"}}, uid)
                 return res.status(200).json({success: true})
@@ -74,6 +76,7 @@ async function handler(req, res) {
                     return res.status(200).json({success: true})
                 } catch (e) {
                     console.error(e)
+                    Sentry.captureException(e)
                     return res.status(400).json({ error: "Error uploading image - please try again." })
                 }
 

@@ -21,6 +21,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             setNewLink(uri)
             setPostId(id)
             setParentId(parentId)
+            setError("")
         }
     }, [postToEdit])
     const [newTitle, setNewTitle] = useState("")
@@ -33,6 +34,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     const [loading, setLoading] = useState(false)
     const [postId, setPostId] = useState("")
     const [parentId, setParentId] = useState("")
+    const [error, setError] = useState("")
 
     const open = !!postToEdit
 
@@ -44,8 +46,14 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             Authorization: `Bearer ${token}`
         }
         const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "DELETE", headers })
+        if (result.status !== 200) {
+            const parsedResult = await result.json()
+            setError(parsedResult.error ?? "Error deleting post. Please try again.")
+            return
+        }
         setLoading(false)
         setPostToEdit(null)
+        setError("")
         triggerReload(Date.now())
     }
     const onPostUpdate = async () => {
@@ -69,7 +77,13 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
         const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "PUT", headers, body: formData })
         setLoading(false)
+        if (result.status !== 200) {
+            const parsedResult = await result.json()
+            setError(parsedResult.error ?? "Error updating post. Please try again.")
+
+        }
         setPostToEdit("")
+        setError("")
         setPostId("")
         setPhotoUpload(null)
         triggerReload(Date.now())

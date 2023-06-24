@@ -6,6 +6,7 @@ import util from 'util'
 import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
+import * as Sentry from '@sentry/nextjs'
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
@@ -33,6 +34,7 @@ async function handler(req, res) {
             await deleteProfilePhoto(uid)
         } catch (e) {
             console.error(e)
+            Sentry.captureException(e)
             console.error("Could not get full profile - will still try to remove profile photo")
         }
 
@@ -44,6 +46,7 @@ async function handler(req, res) {
         }
         catch (e) {
             console.error(e)
+            Sentry.captureException(e)
             return res.status(400).json({ error: "Error updating profile - please try again." })
         }
 
@@ -85,6 +88,7 @@ async function handler(req, res) {
                 await deleteProfilePhoto(uid)
             } catch (e) {
                 console.error(e)
+                Sentry.captureException(e)
                 console.error("Could not delete previous profile photo")
             }
             try {
@@ -99,6 +103,7 @@ async function handler(req, res) {
                 const makePublicResponse = await bucket.file(destinationPath).makePublic();
             } catch (e) {
                 console.error(e)
+                Sentry.captureException(e)
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
 
@@ -113,6 +118,7 @@ async function handler(req, res) {
             }
             catch (e) {
                 console.error(e)
+                Sentry.captureException(e)
                 return res.status(400).json({ error: "Error updating profile - please try again." })
             }
             return res.status(200).json({ success: true, url: publicURL })
