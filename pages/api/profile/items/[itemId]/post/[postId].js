@@ -3,11 +3,9 @@ import { deletePost, editPost } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 import multiparty from 'multiparty'
 import util from 'util'
-import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
-
 import * as Sentry from "@sentry/nextjs";
-import { resizeImage } from '@/utils/imageProcessing';
+import { resizeImage, uploadImage } from '@/utils/imageProcessing';
 
 async function handler(req, res) {
 
@@ -42,36 +40,21 @@ async function handler(req, res) {
             let publicUrl = ""
 
             if (image && image.length > 0) {
-                const imageFile = image[0]
-                const imagePath = imageFile.path
-                let compressedImage
                 try {
-                    compressedImage = await resizeImage(imagePath, 1000, 1000)
+                    console.log("Post contains photo")
+                    const imageFile = image[0]
+                    const imagePath = imageFile.path
+                    const compressedImage = await resizeImage(imagePath, 1000, 1000)
+                    console.log("Photo compressed successfully ")
+                    const fileName = uuidv4()
+                    const destinationPath = `public/content/${fileName}`
+                    publicUrl = await uploadImage(compressedImage, destinationPath, imageFile.headers['content-type'], uid)
+                    console.log("Photo uploaded successfully, public URL: " + publicUrl)
                 } catch (e) {
                     console.error(e)
                     Sentry.captureException(e)
                     return res.status(400).json({ error: "Error compressing image - please try a different image." })
                 }
-
-                const fileName = uuidv4()
-                const destinationPath = `public/content/${fileName}`
-                const bucket = getStorage().bucket();
-                try {
-                    const response = await bucket.file(destinationPath).save(compressedImage, {
-                        metadata: {
-                            contentType: imageFile.headers['content-type'],
-                            metadata: {
-                                owner: uid
-                            }
-                        }
-                    })
-                    const makePublicResponse = await bucket.file(destinationPath).makePublic();
-                } catch (e) {
-                    console.error(e)
-                    Sentry.captureException(e)
-                    return res.status(400).json({ error: "Error uploading image - please try again." })
-                }
-                publicUrl = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
             }
 
             const post = {
@@ -89,13 +72,7 @@ async function handler(req, res) {
             } else {
                 return res.status(400).json({ error: "Could not delete post from profile" })
             }
-
-
         });
-
-
-
-
 
     }
     if (method === "DELETE") {

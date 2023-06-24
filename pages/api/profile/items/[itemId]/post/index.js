@@ -3,9 +3,8 @@ import { addPostToList } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 import multiparty from 'multiparty'
 import util from 'util'
-import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { resizeImage } from '@/utils/imageProcessing'
+import { resizeImage, uploadImage } from '@/utils/imageProcessing'
 import * as Sentry from '@sentry/nextjs'
 
 async function handler(req, res) {
@@ -61,36 +60,22 @@ async function handler(req, res) {
                     const { photo } = files
                     let publicUrl = ""
                     if (photo) {
-                        const imageFile = photo[0]
-                        const imagePath = imageFile.path
-                        let compressedImage
+                        console.log("Post contains image. Processing...")
                         try {
+                            const imageFile = photo[0]
+                            const imagePath = imageFile.path
+                            let compressedImage
                             compressedImage = await resizeImage(imagePath, 1000, 1000)
+                            console.log("Image resized")
+                            const fileName = uuidv4()
+                            const destinationPath = `public/content/${fileName}`
+                            publicUrl = await uploadImage(compressedImage, destinationPath, imageFile.headers['content-type'], uid)
+                            console.log("Image uploaded, public URL is " + publicUrl)
                         } catch (e) {
                             console.error(e)
                             Sentry.captureException(e)
                             return res.status(400).json({ error: "Error processing image - please try a different image." })
                         }
-
-                        const fileName = uuidv4()
-                        const destinationPath = `public/content/${fileName}`
-                        const bucket = getStorage().bucket();
-                        try {
-                            const response = await bucket.file(destinationPath).save(compressedImage, {
-                                metadata: {
-                                    contentType: imageFile.headers['content-type'],
-                                    metadata: {
-                                        owner: uid
-                                    }
-                                }
-                            })
-                            const makePublicResponse = await bucket.file(destinationPath).makePublic();
-                        } catch (e) {
-                            console.error(e)
-                            Sentry.captureException(e)
-                            return res.status(400).json({ error: "Error uploading image - please try again." })
-                        }
-                        publicUrl = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
                     }
 
                     console.log("Adding post to list " + itemId + " with title " + title)

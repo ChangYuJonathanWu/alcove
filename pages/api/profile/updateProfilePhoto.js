@@ -3,9 +3,7 @@ import { getFullProfile, updateProfile } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 import multiparty from 'multiparty'
 import util from 'util'
-import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
-import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
 import { resizeImage, uploadImage } from '@/utils/imageProcessing';
 
