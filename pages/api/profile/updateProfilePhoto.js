@@ -75,8 +75,9 @@ async function handler(req, res) {
 
             const imageFile = profilePhoto[0];
             const imagePath = imageFile.path;
+            let compressedImage
             try {
-                const compressedImage = await sharp(imagePath).rotate().resize(600, 600, {
+                compressedImage = await sharp(imagePath).rotate().resize(600, 600, {
                     fit: 'inside',
                 }).toBuffer()
             } catch (e) {

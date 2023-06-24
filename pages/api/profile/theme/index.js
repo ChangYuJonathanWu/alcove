@@ -53,9 +53,9 @@ async function handler(req, res) {
                 const { background_image } = files
                 const imageFile = background_image[0]   
                 const imagePath = imageFile.path
-
+                let compressedImage
                 try {                
-                    const compressedImage = await sharp(imagePath).rotate().resize(2600, 2600, { fit: 'inside'}).toBuffer()
+                    compressedImage = await sharp(imagePath).rotate().resize(2600, 2600, { fit: 'inside'}).toBuffer()
                 } catch(e) {
                     console.error(e)
                     Sentry.captureException(e)

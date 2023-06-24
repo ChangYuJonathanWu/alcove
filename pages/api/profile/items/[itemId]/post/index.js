@@ -61,8 +61,9 @@ async function handler(req, res) {
                 if (photo) {
                     const imageFile = photo[0]
                     const imagePath = imageFile.path
+                    let com
                     try {
-                        const compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
+                        compressedImage = await sharp(imagePath).rotate().resize(1000, 1000, { fit: "inside" }).toBuffer()
                     } catch (e) {
                         console.error(e)
                         Sentry.captureException(e)
