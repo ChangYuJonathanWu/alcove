@@ -3,11 +3,10 @@ import { getFullProfile, updateProfile, updateTheme } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 import multiparty from 'multiparty'
 import util from 'util'
-import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
-import { resizeImage } from '@/utils/imageProcessing';
+import { resizeImage, uploadImage } from '@/utils/imageProcessing';
 
 
 const deleteBackgroundPhoto = async (uid) => {
@@ -21,75 +20,56 @@ const deleteBackgroundPhoto = async (uid) => {
 }
 async function handler(req, res) {
     const { method } = req;
-    if (method === "POST" ) {
+    if (method === "POST") {
         const { query, uid, body } = req; // don't really need UID from request as have it from auth
 
         // Here we need firebase admin to verify the auth information
-        if(!uid) {
-            return res.status(400).json({error: "Missing UID"})
+        if (!uid) {
+            return res.status(400).json({ error: "Missing UID" })
         }
 
         const form = new multiparty.Form()
 
         form.parse(req, async (err, fields, files) => {
-            if(err) {
-                return res.status(400).json({error: err.message})
+            if (err) {
+                return res.status(400).json({ error: err.message })
             }
 
             const { background_image_operation = ["none"] } = fields
             const photo_operation = background_image_operation[0]
-            if(photo_operation === "clear") {
-                try {
-                    await deleteBackgroundPhoto(uid)
+            try {
+                await deleteBackgroundPhoto(uid)
 
-                } catch(e) {
-                    console.error(e)
-                    console.error("Error deleting background photo from profile")
-                    Sentry.captureException(e)
-                }
-                await updateTheme({ background: {type: "none"}}, uid)
-                return res.status(200).json({success: true})
+            } catch (e) {
+                console.error(e)
+                console.error("Error deleting background photo from profile")
+                Sentry.captureException(e)
+            }
+            if (photo_operation === "clear") {
+                const result = await updateTheme({ background: { type: "none" } }, uid)
+                return res.status(result ? 200 : 400).json({ success: !!result })
 
             } else if (photo_operation === "new") {
                 const { background_image } = files
-                const imageFile = background_image[0]   
+                const imageFile = background_image[0]
                 const imagePath = imageFile.path
                 let compressedImage
-                try {                
-                    compressedImage = await resizeImage(imagePath, 2600, 2600)
-                } catch(e) {
-                    console.error(e)
-                    Sentry.captureException(e)
-                    return res.status(400).json({error: "Error uploading image - please try a different image."})
-                }
-                const fileName = uuidv4()
-                const destinationPath = `public/profile/images/${fileName}`;
-    
-                const bucket = getStorage().bucket();
                 try {
-                    const response = await bucket.file(destinationPath).save(compressedImage, {
-                        metadata: {
-                            contentType: imageFile.headers['content-type'],
-                            metadata: {
-                                owner: uid
-                            }
-                        }
-                    })
-                    const makePublicResponse = await bucket.file(destinationPath).makePublic();
-                    const publicURL = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
-                    console.log(publicURL)
-    
-                    await updateTheme({background: {type: "image", url: publicURL}}, uid)
-                    return res.status(200).json({success: true})
+                    compressedImage = await resizeImage(imagePath, 2600, 2600)
                 } catch (e) {
                     console.error(e)
                     Sentry.captureException(e)
-                    return res.status(400).json({ error: "Error uploading image - please try again." })
+                    return res.status(400).json({ error: "Error uploading image - please try a different image." })
                 }
+                const fileName = uuidv4()
+                const destinationPath = `public/profile/images/${fileName}`;
 
-                
+                const publicURL = await uploadImage(compressedImage, destinationPath, imageFile.headers['content-type'], uid)
+
+                const result = await updateTheme({ background: { type: "image", url: publicURL } }, uid)
+                return res.status(result ? 200 : 400).json({ success: !!result })
             }
-            return res.status(400).json({error: "Invalid photo operation"})
+            return res.status(400).json({ error: "Invalid photo operation" })
         })
 
     }

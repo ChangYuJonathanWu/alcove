@@ -7,7 +7,7 @@ import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
-import { resizeImage } from '@/utils/imageProcessing';
+import { resizeImage, uploadImage } from '@/utils/imageProcessing';
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
@@ -84,12 +84,6 @@ async function handler(req, res) {
                 Sentry.captureException(e)
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
-
-
-            const fileName = uuidv4()
-            const destinationPath = `public/profile/images/${fileName}`;
-
-            const bucket = getStorage().bucket();
             try {
                 await deleteProfilePhoto(uid)
             } catch (e) {
@@ -97,24 +91,19 @@ async function handler(req, res) {
                 Sentry.captureException(e)
                 console.error("Could not delete previous profile photo")
             }
+
+            const fileName = uuidv4()
+            const destinationPath = `public/profile/images/${fileName}`;
+
+            const bucket = getStorage().bucket();
+
             try {
-                const response = await bucket.file(destinationPath).save(compressedImage, {
-                    metadata: {
-                        contentType: imageFile.headers['content-type'],
-                        metadata: {
-                            owner: uid
-                        }
-                    }
-                })
-                const makePublicResponse = await bucket.file(destinationPath).makePublic();
+                const publicURL = await uploadImage(compressedImage, destinationPath, imageFile.headers['content-type'], uid)
             } catch (e) {
                 console.error(e)
                 Sentry.captureException(e)
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
-
-            const publicURL = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
-            console.log(publicURL)
 
             const updateQuery = {
                 photo: publicURL
