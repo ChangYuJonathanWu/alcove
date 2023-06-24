@@ -3,10 +3,9 @@ import { getFullProfile, updateProfile } from '@/lib/api/profile'
 import { withAuth } from '@/lib/api/withAuth';
 import multiparty from 'multiparty'
 import util from 'util'
-import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
-import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
+import { resizeImage, uploadImage } from '@/utils/imageProcessing';
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
@@ -77,20 +76,12 @@ async function handler(req, res) {
             const imagePath = imageFile.path;
             let compressedImage
             try {
-                compressedImage = await sharp(imagePath).rotate().resize(600, 600, {
-                    fit: 'inside',
-                }).toBuffer()
+                compressedImage = await resizeImage(imagePath, 600, 600)
             } catch (e) {
                 console.error(e)
                 Sentry.captureException(e)
                 return res.status(400).json({ error: "Error uploading image - please try again." })
             }
-
-
-            const fileName = uuidv4()
-            const destinationPath = `public/profile/images/${fileName}`;
-
-            const bucket = getStorage().bucket();
             try {
                 await deleteProfilePhoto(uid)
             } catch (e) {
@@ -98,50 +89,25 @@ async function handler(req, res) {
                 Sentry.captureException(e)
                 console.error("Could not delete previous profile photo")
             }
-            try {
-                const response = await bucket.file(destinationPath).save(compressedImage, {
-                    metadata: {
-                        contentType: imageFile.headers['content-type'],
-                        metadata: {
-                            owner: uid
-                        }
-                    }
-                })
-                const makePublicResponse = await bucket.file(destinationPath).makePublic();
-            } catch (e) {
-                console.error(e)
-                Sentry.captureException(e)
-                return res.status(400).json({ error: "Error uploading image - please try again." })
-            }
 
-            const publicURL = `https://storage.googleapis.com/${bucket.name}/${destinationPath}`
-            console.log(publicURL)
+            const fileName = uuidv4()
+            const destinationPath = `public/profile/images/${fileName}`;
 
-            const updateQuery = {
-                photo: publicURL
-            }
             try {
+                const publicURL = await uploadImage(compressedImage, destinationPath, imageFile.headers['content-type'], uid)
+                const updateQuery = {
+                    photo: publicURL
+                }
                 const result = await updateProfile(updateQuery, uid)
-            }
-            catch (e) {
+                return res.status(result ? 200 : 400).json({ success: !!result, url: publicURL })
+            } catch (e) {
                 console.error(e)
                 Sentry.captureException(e)
                 return res.status(400).json({ error: "Error updating profile - please try again." })
             }
-            return res.status(200).json({ success: true, url: publicURL })
-
         })
-
-
-
-
-
-
-
     }
 }
-
-
 
 export default withAuth(handler)
 
