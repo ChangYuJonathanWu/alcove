@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import * as Sentry from '@sentry/react';
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -67,9 +68,14 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: formData })
         setLoading(false)
         if (result.status !== 200) {
-            console.error("Error posting. Try again")
-            const parsedResult = await result.json()
-            setError(parsedResult.error ?? "Error posting. Try again")
+            console.error("Error posting. Try again. Status: " + result.status)
+            try {
+                const parsedResult = await result.json()
+                setError(parsedResult.error ?? "Error posting. Try again")
+            } catch (e) {
+                setError("Error posting. Try again")
+                Sentry.captureException(e)
+            }
             return
         }
         // TODO: If request failed, dont clear everything here
