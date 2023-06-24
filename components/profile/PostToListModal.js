@@ -69,7 +69,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         if (result.status !== 200) {
             console.error("Error posting. Try again")
             const parsedResult = await result.json()
-            setError(parsedResult ?? "Error posting. Try again")
+            setError(parsedResult.error ?? "Error posting. Try again")
             return
         }
         // TODO: If request failed, dont clear everything here
