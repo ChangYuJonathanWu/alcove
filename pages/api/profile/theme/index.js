@@ -54,7 +54,13 @@ async function handler(req, res) {
                 const imageFile = background_image[0]   
                 const imagePath = imageFile.path
 
-                const compressedImage = await sharp(imagePath).rotate().resize(2600, 2600, { fit: 'inside'}).toBuffer()
+                try {                
+                    const compressedImage = await sharp(imagePath).rotate().resize(2600, 2600, { fit: 'inside'}).toBuffer()
+                } catch(e) {
+                    console.error(e)
+                    Sentry.captureException(e)
+                    return res.status(400).json({error: "Error uploading image - please try a different image."})
+                }
                 const fileName = uuidv4()
                 const destinationPath = `public/profile/images/${fileName}`;
     
