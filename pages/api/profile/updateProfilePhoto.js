@@ -95,41 +95,21 @@ async function handler(req, res) {
             const fileName = uuidv4()
             const destinationPath = `public/profile/images/${fileName}`;
 
-            const bucket = getStorage().bucket();
-
             try {
                 const publicURL = await uploadImage(compressedImage, destinationPath, imageFile.headers['content-type'], uid)
-            } catch (e) {
-                console.error(e)
-                Sentry.captureException(e)
-                return res.status(400).json({ error: "Error uploading image - please try again." })
-            }
-
-            const updateQuery = {
-                photo: publicURL
-            }
-            try {
+                const updateQuery = {
+                    photo: publicURL
+                }
                 const result = await updateProfile(updateQuery, uid)
-            }
-            catch (e) {
+                return res.status(result ? 200 : 400).json({ success: !!result, url: publicURL })
+            } catch (e) {
                 console.error(e)
                 Sentry.captureException(e)
                 return res.status(400).json({ error: "Error updating profile - please try again." })
             }
-            return res.status(200).json({ success: true, url: publicURL })
-
         })
-
-
-
-
-
-
-
     }
 }
-
-
 
 export default withAuth(handler)
 
