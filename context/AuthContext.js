@@ -4,6 +4,7 @@ import {
     getAuth,
 } from 'firebase/auth';
 import { firebase } from '@/lib/Firebase';
+import ProfileLoader from '@/components/profile/ProfileLoader';
 
 const auth = getAuth();
 
@@ -32,7 +33,7 @@ export const AuthContextProvider = ({
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {loading ? <div>Loading...</div> : children}
+            {loading ? <ProfileLoader/> : children}
         </AuthContext.Provider>
     );
 };
