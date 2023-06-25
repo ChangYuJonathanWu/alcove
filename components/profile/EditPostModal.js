@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { compressImage } from '@/utils/localImageProcessing';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -95,11 +96,12 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setPhotoChanged(true)
     }
 
-    const updatePostPhoto = (e) => {
+    const updatePostPhoto = async (e) => {
         const file = e.target.files[0]
+        const compressedFile = await compressImage(file)
         setPhotoChanged(true)
-        setPhotoUpload(file)
-        setDisplayPhoto(URL.createObjectURL(file))
+        setPhotoUpload(compressedFile)
+        setDisplayPhoto(URL.createObjectURL(compressedFile))
     }
 
     const onExit = () => {

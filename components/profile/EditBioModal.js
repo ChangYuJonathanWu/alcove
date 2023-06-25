@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
+import { compressImage } from '@/utils/localImageProcessing';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
@@ -59,8 +60,9 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const updateProfilePhoto = async (e) => {
         setLoading(true)
         const file = e.target.files[0]
+        const compressedFile = await compressImage(file)
         const formData = new FormData()
-        formData.append('profilePhoto', file)
+        formData.append('profilePhoto', compressedFile)
         const auth = getAuth()
         const token = await auth.currentUser.getIdToken();
         const headers = {

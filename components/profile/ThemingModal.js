@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { compressImage } from '@/utils/localImageProcessing';
 
 // support delete and rename item
 export default function ThemingModal({ open, setOpen, user, triggerReload }) {
@@ -44,14 +45,15 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
         triggerReload(Date.now())
     }
 
-    const updateBackgroundPhoto = (e) => {
+    const updateBackgroundPhoto =  async (e) => {
         const file = e.target.files[0]
         if (file) {
-            setPhotoUpload(file)
+            const compressedFile = await compressImage(file)
+            setPhotoUpload(compressedFile)
             setPhotoOperation('new')
             setBackground({
                 type: 'photo',
-                url: URL.createObjectURL(file)
+                url: URL.createObjectURL(compressedFile)
             })
         }
     }
