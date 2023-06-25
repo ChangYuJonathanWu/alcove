@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
 
 // support delete and rename item
@@ -87,7 +88,14 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
 
     const updatePostPhoto = async (e) => {
         const photo = e.target.files[0]
-        setPostPhoto(photo)
+        try {
+            const compressedFile = await compressImage(photo)
+            setPostPhoto(compressedFile)
+        } catch (e) {
+            console.error(e)
+            Sentry.captureException(e)
+        }
+
     }
 
     const onExit = () => {
