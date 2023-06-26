@@ -6,6 +6,7 @@ import util from 'util'
 import { v4 as uuidv4 } from 'uuid';
 import * as Sentry from '@sentry/nextjs'
 import { resizeImage, uploadImage } from '@/utils/imageProcessing';
+import { getStorage } from 'firebase-admin/storage';
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
