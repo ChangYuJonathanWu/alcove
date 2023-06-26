@@ -47,6 +47,7 @@ async function handler(req, res) {
                         uid
                     }
                     const result = await addPostToList(postBody)
+                    return res.status(200).json({ success: true })
                 }
 
                 else {
