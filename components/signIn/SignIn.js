@@ -40,7 +40,7 @@ export default function SignIn() {
             "& .MuiOutlinedInput-notchedOutline": {
                 border: 'none',
             }
-        }} style={{ backgroundColor: 'white', borderRadius: '15px', minWidth: '250px' }} type="text" {...props} />
+        }} style={{ backgroundColor: 'white', borderRadius: '15px', minWidth: '270px' }} type="text" {...props} />
 
     );
 
@@ -84,11 +84,11 @@ export default function SignIn() {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
-                <Navbar />
+                
 
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
-                    <div style={{borderStyle: 'solid', borderWidth: '1px', borderColor: 'grey', minWidth: '200px', minHeight: '300px', padding: '3em'} }>
-
+                    <div style={{borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '3em', paddingBottom: '5em', marginTop: '3em'} }>
+                    <Navbar />
                     
                     <Formik
                         initialValues={{
