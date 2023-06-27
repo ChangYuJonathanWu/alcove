@@ -9,6 +9,7 @@ import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
 import { redirect } from 'next/navigation';
+import { styled } from '@mui/material';
 
 
 import React, { useState, useEffect } from 'react'
@@ -35,15 +36,20 @@ export default function SignIn() {
 
     const CustomTextField = (props) => (
 
-        <TextField variant="standard" type="text" {...props} />
+        <TextField variant="outlined" size="small" sx={{
+            "& .MuiOutlinedInput-notchedOutline": {
+                border: 'none',
+            }
+        }} style={{ backgroundColor: 'white', borderRadius: '15px', minWidth: '250px' }} type="text" {...props} />
 
     );
+
     const [pageLoading, setPageLoading] = useState(true)
 
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
-            
+
             if (user) {
                 const { uid } = user
                 const token = await auth.currentUser.getIdToken()
@@ -77,56 +83,60 @@ export default function SignIn() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-             <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
-                    <Navbar />
+            <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+                <Navbar />
 
-                    {!pageLoading && <Stack alignItems="center" spacing={1}>
-                        <Formik
-                            initialValues={{
-                                email: '',
-                                password: '',
-                            }}
+                {!pageLoading && <Stack alignItems="center" spacing={1}>
+                    <div style={{borderStyle: 'solid', borderWidth: '1px', borderColor: 'grey', minWidth: '200px', minHeight: '300px', padding: '3em'} }>
 
-                            onSubmit={async (values) => {
-                                const { email, password } = values;
-                                try {
-                                    const credential = await signInWithEmailAndPassword(auth, email, password)
-                                    if (credential) {
-                                        setLoginError(null)
-                                        const { uid } = credential.user
-                                        const token = await auth.currentUser.getIdToken()
-                                        const headers = {
-                                            Authorization: `Bearer ${token}`
-                                        }
-                                        const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
-                                        const fullUserProfile = await result.json()
-                                        const { handle } = fullUserProfile
-                                        router.replace(`/${handle}`)
+                    
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: '',
+                        }}
+
+                        onSubmit={async (values) => {
+                            const { email, password } = values;
+                            try {
+                                const credential = await signInWithEmailAndPassword(auth, email, password)
+                                if (credential) {
+                                    setLoginError(null)
+                                    const { uid } = credential.user
+                                    const token = await auth.currentUser.getIdToken()
+                                    const headers = {
+                                        Authorization: `Bearer ${token}`
                                     }
+                                    const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
+                                    const fullUserProfile = await result.json()
+                                    const { handle } = fullUserProfile
+                                    router.replace(`/${handle}`)
+                                }
 
-                                } catch (error) {
-                                    const errorCode = error.code;
-                                    const errorMessage = error.message;
-                                    setLoginError(errorMessage)
-                                };
+                            } catch (error) {
+                                const errorCode = error.code;
+                                const errorMessage = error.message;
+                                setLoginError(errorMessage)
+                            };
 
-                            }}
-                        >
-                            <Form>
-                                <Stack style={{}} alignItems="center" spacing={1}>
-                                    <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
-                                    <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                    <Button variant="contained" type="submit">Login</Button>
-                                </Stack>
+                        }}
+                    >
+                        <Form>
+                            <Stack style={{}} alignItems="center" spacing={1}>
+                                <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
+                                <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
+                                <Button variant="contained" type="submit" style={{width: "100%", borderRadius: '15px'}}>Login</Button>
+                            </Stack>
 
-                            </Form>
-                        </Formik>
-                        <div>
-                            {loginError ?? ""}
-                        </div>
-                        {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>}
-                    </Stack>}
-                </main>
+                        </Form>
+                    </Formik>
+                    </div>
+                    <div>
+                        {loginError ?? ""}
+                    </div>
+                    {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>}
+                </Stack>}
+            </main>
         </>
     )
 }
