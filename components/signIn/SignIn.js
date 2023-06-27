@@ -39,13 +39,15 @@ export default function SignIn() {
         <TextField variant="standard" type="text" {...props} />
 
     );
-
-    const [loading, setLoading] = useState(true)
+    const [pageLoading, setPageLoading] = useState(true)
+    const [profileLoading, setProfileLoading] = useState(false)
 
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
+            
             if (user) {
+                setProfileLoading(true)
                 const { uid } = user
                 const token = await auth.currentUser.getIdToken()
                 const headers = {
@@ -56,7 +58,8 @@ export default function SignIn() {
                 const { handle } = fullUserProfile
                 router.replace(`/${handle}`)
             }
-            setLoading(false)
+            setProfileLoading(false)
+            setPageLoading(false)
         }
         loadUser()
     }, [user, router])
@@ -78,8 +81,8 @@ export default function SignIn() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            {loading ? <ProfileLoader /> :
-                <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+            {profileLoading && <ProfileLoader /> }
+            {true && <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
                     <Navbar />
 
                     <Stack alignItems="center" spacing={1}>
