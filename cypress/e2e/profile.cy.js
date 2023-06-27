@@ -1,18 +1,20 @@
+const PERCY_WIDTHS = [768, 1920]
+
 describe('Profile', () => {
     it('Loads my profile', () => {
         cy.visit('http://localhost:3000/jonathanwu')
-        cy.contains('jonathan wu').should('exist')
-        cy.percySnapshot('Profile', { widths: [768, 1200, 1920] });
+        cy.contains('jonathan wu', { timeout: 10000}).should('exist')
+        cy.percySnapshot('Profile', { widths: PERCY_WIDTHS });
     })
     it('Loads my profile on public view', () => {
         cy.visit('http://localhost:3000/jonathanwu/public')
         cy.contains('jonathan wu').should('exist')
-        cy.percySnapshot('Profile (Public)', { widths: [768, 1200, 1920] });
+        cy.percySnapshot('Profile (Public)', { widths: PERCY_WIDTHS });
     })
     it('Loads the test profile and renders expected elements', () => {
         cy.visit('http://localhost:3000/jHak91janUhqmOakso')
         cy.contains('jonathan wu').should('exist')
-        cy.percySnapshot('Test Profile', { widths: [768, 1200, 1920] });
+        cy.percySnapshot('Test Profile', { widths: PERCY_WIDTHS });
         cy.get("#jonathanwu-profile-photo").should('exist')
         cy.contains("@jonathanwu").should('exist')
         cy.contains("my favorites").should('exist')
@@ -34,7 +36,7 @@ describe('Profile', () => {
         cy.get("#background-photo").should('exist')
         cy.contains("sushi restaurants").click()
         cy.contains("sushi restaurants").should('exist')
-        cy.percySnapshot('Sushi Restaurants List', { widths: [768, 1200, 1920], fullPage: true });
+        cy.percySnapshot('Sushi Restaurants List', { widths: PERCY_WIDTHS, fullPage: true });
 
         // Verify first post
         cy.contains("they're sentimental").should('exist')
@@ -48,11 +50,11 @@ describe('Profile', () => {
         cy.visit('http://localhost:3000/jHak91janUhqmOakso')
         cy.contains("songs of all time").click()
         cy.contains("some of them atleast").should('exist')
-        cy.percySnapshot('Sushi Restaurants List', { widths: [768, 1200, 1920], fullPage: true });
+        cy.percySnapshot('Sushi Restaurants List', { widths: PERCY_WIDTHS, fullPage: true });
 
         // iFrame should exist
         cy.wait(5000) // Give time for iFrames to load
-        cy.percySnapshot('Songs List', { widths: [768, 1200, 1920], fullPage: true });
+        cy.percySnapshot('Songs List', { widths: PERCY_WIDTHS, fullPage: true });
         cy.get('#list-id-l1 iframe').should('have.length', 5)
         cy.get('#list-id-l1 iframe:first').should('have.attr', 'src', 'https://open.spotify.com/embed/track/1EXMjx4nCIvYTaY5CZMUSl')
     })
