@@ -14,7 +14,6 @@ import { redirect } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
-import ProfileLoader from '../profile/ProfileLoader';
 
 
 const theme = {
@@ -40,14 +39,12 @@ export default function SignIn() {
 
     );
     const [pageLoading, setPageLoading] = useState(true)
-    const [profileLoading, setProfileLoading] = useState(false)
 
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
             
             if (user) {
-                setProfileLoading(true)
                 const { uid } = user
                 const token = await auth.currentUser.getIdToken()
                 const headers = {
@@ -58,7 +55,6 @@ export default function SignIn() {
                 const { handle } = fullUserProfile
                 router.replace(`/${handle}`)
             }
-            setProfileLoading(false)
             setPageLoading(false)
         }
         loadUser()
@@ -81,11 +77,10 @@ export default function SignIn() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            {profileLoading && <ProfileLoader /> }
-            {true && <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+             <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
                     <Navbar />
 
-                    <Stack alignItems="center" spacing={1}>
+                    {!pageLoading && <Stack alignItems="center" spacing={1}>
                         <Formik
                             initialValues={{
                                 email: '',
@@ -130,8 +125,8 @@ export default function SignIn() {
                             {loginError ?? ""}
                         </div>
                         {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>}
-                    </Stack>
-                </main>}
+                    </Stack>}
+                </main>
         </>
     )
 }
