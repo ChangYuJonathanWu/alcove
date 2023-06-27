@@ -20,10 +20,8 @@ export default function ProfileRoute() {
 
     const determineHardcodedUser = (username) => {
         switch (username) {
-            case "jonathanwu":
+            case "jonathanwu_hardcoded":
                 return jonathan_user
-            case "dandan":
-                return dan_user
             case "gracehopper":
                 return example_user
             case "jHak91janUhqmOakso":
@@ -38,8 +36,8 @@ export default function ProfileRoute() {
             return
         }
         setLoading(true)
-        const validHandles = ["jonathanwu", "gracehopper", "jiwonkang", "jonathanwu_test", "dandan", "jHak91janUhqmOakso"]
-        const networkHandles = ["jonathanwu_test", "jiwonkang"]
+        const validHandles = ["jonathanwu", "jonathanwu_hardcoded", "gracehopper", "jiwonkang", "jonathanwu_test", "dandan", "jHak91janUhqmOakso"]
+        const networkHandles = ["jonathanwu", "jonathanwu_test", "jiwonkang", "theyselim", "dandan", "michekkeshieh", "aayush", "filmer", "keekzcat", "thefoodcollector", "mohamedabuzaid" ]
         const loadUser = async () => {
             if(!validHandles.includes(username)){
                 setLoading(false)
