@@ -22,6 +22,7 @@ import PostToListModal from './PostToListModal';
 import ThemingButton from './ThemingButton';
 import ViewAsPublicButton from './ViewAsPublicButton';
 import ThemingModal from './ThemingModal';
+import LogoutButton from './LogoutButton';
 
 
 export default function Profile({ user, triggerReload, publicView = false }) {
@@ -31,6 +32,8 @@ export default function Profile({ user, triggerReload, publicView = false }) {
     const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
     const [ownerSignedIn, setOwnerSignedIn] = useState(false);
+
+    const router = useRouter();
     useEffect(() => {
         const checkOwnerSignedIn = async () => {
             const auth = getAuth();
@@ -56,6 +59,13 @@ export default function Profile({ user, triggerReload, publicView = false }) {
     }
 
     const { type: backgroundType, url: backgroundUrl } = background || {}
+
+    const logoutUser = async () => {
+
+        const auth = getAuth();
+        await signOut(auth);
+        router.replace('/login')
+    }
 
     //TODO: Error handling on network request, validation
     return (
@@ -88,7 +98,8 @@ export default function Profile({ user, triggerReload, publicView = false }) {
                         <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
                         <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
                         <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
-                        <ViewAsPublicButton link={`${handle}/public`}key="view-as-public-button" />
+                        <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
+                        <LogoutButton onClick={logoutUser}/>
                     </Stack>}
 
                     {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}

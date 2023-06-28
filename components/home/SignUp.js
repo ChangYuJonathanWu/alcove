@@ -198,9 +198,9 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                     }}
                     className={`${hideFireworks ? 'firework-hidden' : 'firework-shown'}`}
                 />
-                <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem" }}>
-                    <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
-                    <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+                <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem", marginLeft: 0 }}>
+                    <Typography color="white" variant="body2">{`You've claimed your Alcove handle!`}</Typography>
+                    <Typography color="white" variant="body2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
                 </span>
             </>
 

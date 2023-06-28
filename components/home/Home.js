@@ -14,6 +14,7 @@ import CallToAction from '@/components/home/CallToAction'
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Hero from '@/components/home/Hero'
 import Navbar from '@/components/home/Navbar'
+import { useRouter } from 'next/router';
 
 import React, { useState } from 'react'
 
@@ -37,6 +38,8 @@ export default function Home() {
   const logoColor = theme.logoColor
   const textColor = theme.textColor
 
+  const router = useRouter();
+
   const [signupState, setSignupState] = useState({
     handle: "",
     email: "",
@@ -48,6 +51,10 @@ export default function Home() {
     hideFireworks: false, // This is for triggering hiding fireworks
   })
 
+  const onLogin = () => {
+    router.replace('/login')
+  }
+
   const mobileLayout = (
     <Stack alignItems="center">
       <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
@@ -55,6 +62,7 @@ export default function Home() {
       <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
       {/* {!signupState.completed && <Link href="/login"><Button variant="outlined" style={{ color: 'white', borderColor: 'white' }}>Sign In</Button></Link>} */}
+      <Typography variant="subtitle2" style={{color: 'white'}}> Already have an account? Login <Link style={{color: 'white'}} href="/login">here</Link>.</Typography>
     </Stack>
   )
 
@@ -64,6 +72,7 @@ export default function Home() {
       <Stack style={{ marginTop: "5rem" }} spacing={3}>
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
+        <Typography style={{color: 'white'}}> Already have an account? Login <Link style={{color: 'white'}} href="/login">here</Link>.</Typography>
         {/* {!signupState.completed && <Stack alignItems="center" spacing={1}>
           <Divider style={{ borderColor: 'white', width: '100%', marginTop: '2rem', marginBottom: '1rem' }} />
           <Typography style={{ color: 'white' }} variant="body2">Already have an account?</Typography>
