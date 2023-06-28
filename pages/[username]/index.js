@@ -45,7 +45,7 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
     if (!user) {
         return <ErrorPage statusCode={404} />
     }
-    const { title, handle, description } = user
+    const { title, handle, description, photo } = user
 
     const determineHardcodedUser = (username) => {
         switch (username) {
@@ -69,7 +69,7 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
                 <meta property="og:title" content={`${title} - @${handle} - Alcove`} />
                 <meta
                     property="og:image"
-                    content="/social-share-profile.png"
+                    content={photo ?? "/social-share-profile.png"}
                 />
                 <meta
                     property="og:description"
