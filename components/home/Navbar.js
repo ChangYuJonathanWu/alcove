@@ -14,15 +14,15 @@ const theme = {
     buttonTextColor: 'white'
 }
 
-export default function SignIn() {
+export default function Navbar({mobile}) {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
     return (
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
             <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
-                <Image src="/favicon.svg" width="50" height="50" alt="Alcove logo" />
-                <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1>
+                <Image src="/alcove-logo.svg" width={mobile ? 200 : 250} height={mobile ? 50 : 80} alt="Alcove logo" />
+                {/* <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1> */}
             </Stack>
         </Stack>
     )

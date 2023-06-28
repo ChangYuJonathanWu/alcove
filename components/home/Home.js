@@ -67,7 +67,7 @@ export default function Home() {
   )
 
   const desktopLayout = (
-    <Stack style={{ marginTop: "4rem" }} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
+    <Stack style={{ marginTop: "0rem" }} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
       <Hero desktop={true} width={isReallyLarge ? 300 : isLarge ? 270 : 250} style={{ paddingBottom: "3rem" }} />
       <Stack style={{ marginTop: "5rem" }} spacing={3}>
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
@@ -103,7 +103,7 @@ export default function Home() {
       </Head>
 
       <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
-        <Navbar/>
+        <Navbar mobile={isTabletOrMobile}/>
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
           {isTabletOrMobile ? mobileLayout : desktopLayout}
         </Stack>
