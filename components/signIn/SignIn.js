@@ -107,7 +107,6 @@ export default function SignIn() {
                                 } catch (error) {
                                     const errorCode = error.code;
                                     const errorMessage = error.message;
-                                    console.log(errorCode, errorMessage)
                                     setLoginError("Invalid email/password or account doesn't exist")
                                 };
 
