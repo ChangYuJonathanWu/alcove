@@ -104,6 +104,8 @@ export default function SignIn() {
                                         const fullUserProfile = await result.json()
                                         const { handle } = fullUserProfile
                                         router.replace(`/${handle}`)
+                                        
+                                        return
                                     }
 
                                 } catch (error) {
