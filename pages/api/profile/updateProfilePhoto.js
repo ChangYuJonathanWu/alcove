@@ -6,7 +6,7 @@ import util from 'util'
 import { v4 as uuidv4 } from 'uuid';
 import * as Sentry from '@sentry/nextjs'
 import { resizeImage, uploadImage } from '@/utils/imageProcessing';
-import { getStorage } from 'firebase-admin/storage';
+import { firebaseAdmin } from '@/lib/firebase-admin';
 
 // This is the Administrative /profile endpoint, intended to be accessed only by the owner of the profile.
 // We don't want to expose profile information like email, etc. This endpoint can reveal sensitive information. 
@@ -15,7 +15,7 @@ const deleteProfilePhoto = async (uid) => {
 
     const fullProfile = await getFullProfile(uid)
     if (fullProfile.photo) {
-        const bucket = getStorage().bucket();
+        const bucket = firebaseAdmin.storage().bucket();
         const fileName = fullProfile.photo.split("/").pop()
         const file = bucket.file(`public/profile/images/${fileName}`)
         await file.delete()
