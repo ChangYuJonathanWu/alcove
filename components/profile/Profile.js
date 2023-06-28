@@ -25,30 +25,30 @@ import ThemingModal from './ThemingModal';
 import LogoutButton from './LogoutButton';
 
 
-export default function Profile({ user, publicView = false }) {
+export default function Profile({ user, ownerSignedIn = false, publicView = false }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
     const [newItemOpen, setNewItemOpen] = useState(false)
     const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
-    const [ownerSignedIn, setOwnerSignedIn] = useState(false);
+    // const [ownerSignedIn, setOwnerSignedIn] = useState(false);
 
     const router = useRouter();
-    useEffect(() => {
-        const checkOwnerSignedIn = async () => {
-            const auth = getAuth();
-            const loggedIn = auth.currentUser;
-            if (!loggedIn || publicView) {
-                setOwnerSignedIn(false)
-                return
-            }
-            const loggedInUid = auth.currentUser.uid
-            if (loggedInUid === user.uid) {
-                setOwnerSignedIn(true)
-            }
-        }
-        checkOwnerSignedIn()
-    }, [user, publicView])
+    // useEffect(() => {
+    //     const checkOwnerSignedIn = async () => {
+    //         const auth = getAuth();
+    //         const loggedIn = auth.currentUser;
+    //         if (!loggedIn || publicView) {
+    //             setOwnerSignedIn(false)
+    //             return
+    //         }
+    //         const loggedInUid = auth.currentUser.uid
+    //         if (loggedInUid === user.uid) {
+    //             setOwnerSignedIn(true)
+    //         }
+    //     }
+    //     checkOwnerSignedIn()
+    // }, [user, publicView])
 
     const triggerReload = () => {
         router.replace(router.asPath)

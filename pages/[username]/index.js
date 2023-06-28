@@ -10,25 +10,36 @@ import example_user from '@/examples/example.json'
 import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
+import { useAuthContext } from "@/context/AuthContext";
+
+import { getAuth } from 'firebase-admin/auth'
+import nookies from 'nookies';
 
 import { getPublicProfile } from '@/lib/api/profile'
 
 export const getServerSideProps = async (context) => {
+    const cookies = nookies.get(context)
+    const token = await getAuth().verifyIdToken(cookies.token)
+    const { uid } = token
+
     const username = context.params.username
 
     const profile = await getPublicProfile(username, null)
+    const ownerSignedIn = uid === profile.uid 
     if (profile) {
         profile["_id"] = null
     }
     return {
         props: {
-            profile
+            profile,
+            ownerSignedIn
         }
     }
 }
 
 
-export default function ProfileRoute({ profile }) {
+export default function ProfileRoute({ profile, ownerSignedIn }) {
+    console.log(ownerSignedIn)
     const router = useRouter()
     const user = profile
     if (!user) {
@@ -66,7 +77,7 @@ export default function ProfileRoute({ profile }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <Profile user={user} />
+            <Profile user={user} ownerSignedIn={ownerSignedIn}/>
         </>
     )
 }
