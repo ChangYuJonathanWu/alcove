@@ -97,6 +97,7 @@ export default function SignIn() {
                                     const credential = await signInWithEmailAndPassword(auth, email, password)
                                     if (credential) {
                                         setLoginError(null)
+                                        const { uid } = credential.user
                                         const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                                         const fullUserProfile = await result.json()
                                         const { handle } = fullUserProfile
