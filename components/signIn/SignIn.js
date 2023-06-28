@@ -50,6 +50,7 @@ export default function SignIn() {
     useEffect(() => {
         const loadUser = async () => {
             if (user) {
+                const { uid } = user
                 const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
@@ -105,6 +106,7 @@ export default function SignIn() {
                                 } catch (error) {
                                     const errorCode = error.code;
                                     const errorMessage = error.message;
+                                    console.log(errorCode, errorMessage)
                                     setLoginError("Invalid email/password or account doesn't exist")
                                 };
 

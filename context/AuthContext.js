@@ -10,6 +10,7 @@ export const AuthContext = React.createContext({});
 
 export const useAuthContext = () => React.useContext(AuthContext);
 
+// https://colinhacks.com/essays/nextjs-firebase-authentication
 export const AuthContextProvider = ({
     children,
 }) => {
@@ -29,16 +30,6 @@ export const AuthContextProvider = ({
             nookies.set(undefined, 'token', token, { path: '/'});
         });
     }, [auth])
-
-    useEffect(() => {
-        const handle = setInterval(async () => {
-            const user = auth.currentUser;
-            if (user) await user.getIdToken(true);
-        }, 10 * 60 * 1000);
-
-        return () => clearInterval(handle);
-    }, [auth]);
-
 
     return (
         <AuthContext.Provider value={{ user }}>
