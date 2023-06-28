@@ -76,6 +76,10 @@ export default function Profile({ user, triggerReload, publicView = false }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta property="og:title" content={`${title} - @${handle} - Alcove`} />
                 <meta
+                    property="og:image"
+                    content="/social-share-profile.png"
+                />
+                <meta
                     property="og:description"
                     content={`See @${handle}'s profile on Alcove`}
                 />
@@ -99,7 +103,7 @@ export default function Profile({ user, triggerReload, publicView = false }) {
                         <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
                         <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
                         <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
-                        <LogoutButton onClick={logoutUser}/>
+                        <LogoutButton onClick={logoutUser} />
                     </Stack>}
 
                     {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
