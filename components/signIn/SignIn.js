@@ -117,7 +117,7 @@ export default function SignIn() {
                                 } catch (error) {
                                     const errorCode = error.code;
                                     const errorMessage = error.message;
-                                    setLoginError(errorMessage)
+                                    setLoginError("Invalid email/password or account doesn't exist")
                                 };
 
                             }}
@@ -132,9 +132,9 @@ export default function SignIn() {
                             </Form>
                         </Formik>
                     </div>
-                    <div>
+                    <Typography style={{color: 'white'}}>
                         {loginError ?? ""}
-                    </div>
+                    </Typography>
                     {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>}
                 </Stack>}
             </main>
