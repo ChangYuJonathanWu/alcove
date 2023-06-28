@@ -19,6 +19,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             setNewSubtitle(subtitle)
             setNewCaption(caption)
             setDisplayPhoto(image)
+            setPhotoChanged(false)
             setNewLink(uri)
             setPostId(id)
             setParentId(parentId)
