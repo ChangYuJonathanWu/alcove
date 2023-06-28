@@ -83,7 +83,7 @@ export default function SignIn() {
 
                 {pageLoading && <ProfileLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
-                    <div style={{ borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '3em', paddingBottom: '5em', marginTop: '3em' }}>
+                    <div style={{ borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
                         <Navbar />
 
                         <Formik
@@ -121,7 +121,7 @@ export default function SignIn() {
                                 <Stack style={{}} alignItems="center" spacing={1}>
                                     <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
                                     <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                    <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px' }}>{loading ? "Logging in..." : "Login"}</Button>
+                                    <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Logging in..." : "Login"}</Button>
                                 </Stack>
 
                             </Form>
