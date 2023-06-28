@@ -48,12 +48,6 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
 
     const onPost = async () => {
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-
         const formData = new FormData()
         formData.append("postType", postType)
         if (postType === 'spotify') {
@@ -66,7 +60,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
             formData.append("uri", uri)
         }
 
-        const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", headers, body: formData })
+        const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", body: formData })
         setLoading(false)
         if (result.status !== 200) {
             console.error("Error posting. Try again. Status: " + result.status)

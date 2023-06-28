@@ -41,12 +41,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
     const onPostDelete = async () => {
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "DELETE", headers })
+        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "DELETE" })
         if (result.status !== 200) {
             const parsedResult = await result.json()
             setError(parsedResult.error ?? "Error deleting post. Please try again.")
@@ -59,11 +54,6 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     }
     const onPostUpdate = async () => {
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const formData = new FormData()
         formData.append("title", newTitle)
         formData.append("subtitle", newSubtitle)
@@ -76,7 +66,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             formData.append("photo_changed", true)
         }
 
-        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "PUT", headers, body: formData })
+        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "PUT", body: formData })
         setLoading(false)
         if (result.status !== 200) {
             const parsedResult = await result.json()

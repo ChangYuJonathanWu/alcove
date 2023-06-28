@@ -49,15 +49,8 @@ export default function SignIn() {
 
     useEffect(() => {
         const loadUser = async () => {
-            const auth = getAuth()
-
             if (user) {
-                const { uid } = user
-                const token = await auth.currentUser.getIdToken()
-                const headers = {
-                    Authorization: `Bearer ${token}`
-                }
-                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
+                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
                 router.replace(`/${handle}`)
@@ -103,12 +96,7 @@ export default function SignIn() {
                                     const credential = await signInWithEmailAndPassword(auth, email, password)
                                     if (credential) {
                                         setLoginError(null)
-                                        const { uid } = credential.user
-                                        const token = await auth.currentUser.getIdToken()
-                                        const headers = {
-                                            Authorization: `Bearer ${token}`
-                                        }
-                                        const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
+                                        const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                                         const fullUserProfile = await result.json()
                                         const { handle } = fullUserProfile
                                         router.replace(`/${handle}`)

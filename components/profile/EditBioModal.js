@@ -27,11 +27,6 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
             setOpen(false)
         }
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const body = {
             description: newDescription,
             title: newTitle,
@@ -40,7 +35,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                 facebook: newFacebook
             }
         }
-        const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body) })
+        const result = await fetch(`/api/profile`, { method: "PUT", body: JSON.stringify(body) })
         setLoading(false)
         setOpen(false)
         triggerReload(Date.now())
@@ -63,12 +58,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const compressedFile = await compressImage(file)
         const formData = new FormData()
         formData.append('profilePhoto', compressedFile)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "POST", headers, body: formData })
+        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "POST", body: formData })
         const data = await result.json()
         setNewProfilePhoto(data.url)
         setLoading(false)
@@ -76,12 +66,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
 
     const removeProfilePhoto = async () => {
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "DELETE", headers })
+        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "DELETE" })
         setNewProfilePhoto("")
         setLoading(false)
     }

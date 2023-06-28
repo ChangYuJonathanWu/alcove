@@ -33,12 +33,7 @@ export default function Home() {
         const loadUser = async () => {
             const auth = getAuth()
             if (user) {
-                const { uid } = user
-                const token = await auth.currentUser.getIdToken()
-                const headers = {
-                    Authorization: `Bearer ${token}`
-                }
-                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET", headers: headers })
+                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                 const fullUserProfile = await result.json()
                 const { description = "", title = "", photo, profile } = fullUserProfile
                 setDescription(description)
@@ -52,37 +47,22 @@ export default function Home() {
     }, [user])
 
     const submitUpdates = async () => {
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const body = {
             description,
             title
         }
-        const result = await fetch(`/api/profile`, { method: "PUT", headers, body: JSON.stringify(body) })
+        const result = await fetch(`/api/profile`, { method: "PUT", body: JSON.stringify(body) })
     }
 
     const submitNewItem = async () => {
-        const auth = getAuth();
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const body = {
             name: newItemName,
             type: newItemType,
         }
-        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body) })
+        const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body) })
     }
 
     const onUploadProfilePhoto = async (e) => {
-        const auth = getAuth();
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        }
         console.log("Uploading photo...")
         const photo = e.target.files[0]
         const formData = new FormData();
@@ -90,7 +70,6 @@ export default function Home() {
 
         const result = await fetch('/api/profile/updateProfilePhoto', {
             method: 'POST',
-            headers,
             body: formData,    
         })
         // const result = await fetch('http://localhost:3001/upload', {

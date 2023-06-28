@@ -14,12 +14,7 @@ export default function SpotifyItem({ item, editMode = false, triggerReload, noP
 
     const onDeleteSong = async () => {
         setDeleteRunning(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-        const result = await fetch(`/api/profile/items/${parentId}/post/${id}`, { method: "DELETE", headers })
+        const result = await fetch(`/api/profile/items/${parentId}/post/${id}`, { method: "DELETE" })
         setDeleteRunning(false)
         triggerReload(Date.now())
     }
