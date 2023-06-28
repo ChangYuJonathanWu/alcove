@@ -12,6 +12,19 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         
     }
 
+    const reset = () => {
+        setNewTitle("")
+        setNewSubtitle("")
+        setNewCaption("")
+        setDisplayPhoto("")
+        setPhotoUpload(null)
+        setPhotoChanged(false)
+        setNewLink("")
+        setPostId("")
+        setParentId("")
+        setError("")
+    }
+
     useEffect(() => {
         if (postToEdit) {
             const { id, parentId, title, subtitle, caption, uri, image } = postToEdit;
@@ -49,8 +62,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             return
         }
         setLoading(false)
-        setPostToEdit(null)
-        setError("")
+        reset()
         triggerReload(Date.now())
     }
     const onPostUpdate = async () => {
@@ -74,10 +86,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             setError(parsedResult.error ?? "Error updating post. Please try again.")
 
         }
-        setPostToEdit("")
-        setError("")
-        setPostId("")
-        setPhotoUpload(null)
+        reset()
         triggerReload(Date.now())
     }
 
@@ -96,9 +105,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     }
 
     const onExit = () => {
-        setPostToEdit(null)
-        setPhotoUpload(null)
-        setPhotoChanged(false)
+        reset()
     }
 
     
