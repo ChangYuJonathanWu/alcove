@@ -17,6 +17,19 @@ import nookies from 'nookies';
 
 import { getPublicProfile } from '@/lib/api/profile'
 
+const determineHardcodedUser = (username) => {
+    switch (username) {
+        case "jonathanwu_hardcoded":
+            return jonathan_user
+        case "gracehopper":
+            return example_user
+        case "jHak91janUhqmOakso":
+            return test_user
+        default:
+            return example_user
+    }
+}
+
 export const getServerSideProps = async (context) => {
     let loggedInUid = null
     try {
@@ -29,6 +42,16 @@ export const getServerSideProps = async (context) => {
     }
 
     const username = context.params.username
+    const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", "jHak91janUhqmOakso"]
+    if (hardcodedUsers.includes(username)) {
+        const hardcodedUser = determineHardcodedUser(username)
+        return {
+            props: {
+                profile: hardcodedUser,
+                ownerSignedIn: false
+            }
+        }
+    }
 
     const profile = await getPublicProfile(username)
     const ownerSignedIn = loggedInUid && (loggedInUid === profile.uid)
@@ -52,19 +75,6 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
     }
     const { title, handle, description, photo } = user
 
-    const determineHardcodedUser = (username) => {
-        switch (username) {
-            case "jonathanwu_hardcoded":
-                return jonathan_user
-            case "gracehopper":
-                return example_user
-            case "jHak91janUhqmOakso":
-                return test_user
-            default:
-                return example_user
-        }
-    }
-
     return (
         <>
             <Head>
@@ -82,7 +92,7 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <Profile user={user} ownerSignedIn={ownerSignedIn}/>
+            <Profile user={user} ownerSignedIn={ownerSignedIn} />
         </>
     )
 }
