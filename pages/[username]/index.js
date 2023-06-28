@@ -10,55 +10,88 @@ import example_user from '@/examples/example.json'
 import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
+import { useAuthContext } from "@/context/AuthContext";
+import { firebaseAdmin } from '@/lib/firebase-admin';
+import nookies from 'nookies';
 
-export default function ProfileRoute() {
+import { getPublicProfile } from '@/lib/api/profile'
+
+const determineHardcodedUser = (username) => {
+    switch (username) {
+        case "jonathanwu_hardcoded":
+            return jonathan_user
+        case "gracehopper":
+            return example_user
+        case "jHak91janUhqmOakso":
+            return test_user
+        default:
+            return example_user
+    }
+}
+
+export const getServerSideProps = async (context) => {
+    let loggedInUid = null
+    try {
+        const cookies = nookies.get(context)
+        const token = await firebaseAdmin.auth().verifyIdToken(cookies.token)
+        const { uid } = token
+        loggedInUid = uid
+    } catch (err) {
+        console.log(err)
+    }
+
+    const username = context.params.username
+    const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", "jHak91janUhqmOakso"]
+    if (hardcodedUsers.includes(username)) {
+        const hardcodedUser = determineHardcodedUser(username)
+        return {
+            props: {
+                profile: hardcodedUser,
+                ownerSignedIn: false
+            }
+        }
+    }
+
+    const profile = await getPublicProfile(username)
+    const ownerSignedIn = loggedInUid && (loggedInUid === profile.uid)
+    if (profile) {
+        profile["_id"] = null
+    }
+    return {
+        props: {
+            profile,
+            ownerSignedIn
+        }
+    }
+}
+
+
+export default function ProfileRoute({ profile, ownerSignedIn }) {
     const router = useRouter()
-    const [ loading, setLoading ] = useState(true)
-    const [ user, setUser ] = useState(null)
-    const [ loadTime, setLoadTime ]= useState(Date.now())
-    const { username } = router.query;
-
-    const determineHardcodedUser = (username) => {
-        switch (username) {
-            case "jonathanwu_hardcoded":
-                return jonathan_user
-            case "gracehopper":
-                return example_user
-            case "jHak91janUhqmOakso":
-                return test_user
-            default:
-                return example_user
-        }
+    const user = profile
+    if (!user) {
+        return <ErrorPage statusCode={404} />
     }
+    const { title, handle, description, photo } = user
 
-    useEffect(() => {
-        if(!username) {
-            return
-        }
-        setLoading(true)
-        const validHandles = ["jonathanwu", "jonathanwu_hardcoded", "gracehopper", "jiwonkang", "jonathanwu_test", "dandan", "jHak91janUhqmOakso"]
-        const networkHandles = ["jonathanwu", "jonathanwu_test", "jiwonkang", "theyselim", "dandan", "michekkeshieh", "aayush", "filmer", "keekzcat", "thefoodcollector", "mohamedabuzaid" ]
-        const loadUser = async () => {
-            if(!validHandles.includes(username)){
-                setLoading(false)
-                return
-            }
-            if(networkHandles.includes(username)){
-                const result = await fetch(`/api/public/profile?handle=${username}`, { method: "GET"})
-                const profile = await result.json()
-                setUser(profile)
-                setLoading(false)
-                return
-            }
-            setUser(determineHardcodedUser(username))
-            setLoading(false)
-        }
-        loadUser()
-    }, [username, loadTime])
-
-    if(loading) {
-        return <ProfileLoader/>
-    }
-
-    return user ? <Profile user={user} triggerReload={setLoadTime}/> : <ErrorPage statusCode={404}/>
+    return (
+        <>
+            <Head>
+                <title>{`${title} (@${handle}) - alcove`}</title>
+                <meta name="description" content={description} />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta property="og:title" content={`${title} - @${handle} - Alcove`} />
+                <meta
+                    property="og:image"
+                    content={photo ?? "/social-share-profile.png"}
+                />
+                <meta
+                    property="og:description"
+                    content={`See @${handle}'s profile on Alcove`}
+                />
+                <link rel="icon" href="/favicon.svg" />
+            </Head>
+            <Profile user={user} ownerSignedIn={ownerSignedIn} />
+        </>
+    )
 }

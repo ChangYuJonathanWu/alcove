@@ -26,12 +26,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     
     const onItemDelete = async () => {
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
-        const result = await fetch(`/api/profile/items/${itemId}`, { method: "DELETE", headers })
+        const result = await fetch(`/api/profile/items/${itemId}`, { method: "DELETE" })
         setLoading(false)
         setEditItem("")
         setItemId("")
@@ -40,18 +35,13 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     }
     const onItemUpdate = async () => {
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const body = {
             type: itemType,
             name: newTitle,
             subtitle: newSubtitle,
             uri: newLink
         }
-        const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", headers, body: JSON.stringify(body) })
+        const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", body: JSON.stringify(body) })
         setLoading(false)
         if(result.status !== 200) {
             const parsedResult = await result.json()

@@ -17,16 +17,11 @@ const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 const MAX_WIDTH = "600px"
 export default function NewItemButton({onClick}) {
     const submitNewItem = async () => {
-        const auth = getAuth();
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization : `Bearer ${token}`
-        }
         const body = {
             name: newItemName,
             type: newItemType,
         }
-        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body)})
+        const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body)})
     }
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>

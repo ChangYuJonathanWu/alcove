@@ -25,30 +25,18 @@ import ThemingModal from './ThemingModal';
 import LogoutButton from './LogoutButton';
 
 
-export default function Profile({ user, triggerReload, publicView = false }) {
+export default function Profile({ user, ownerSignedIn = false, publicView = false }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
     const [newItemOpen, setNewItemOpen] = useState(false)
     const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
-    const [ownerSignedIn, setOwnerSignedIn] = useState(false);
 
     const router = useRouter();
-    useEffect(() => {
-        const checkOwnerSignedIn = async () => {
-            const auth = getAuth();
-            const loggedIn = auth.currentUser;
-            if (!loggedIn || publicView) {
-                setOwnerSignedIn(false)
-                return
-            }
-            const loggedInUid = auth.currentUser.uid
-            if (loggedInUid === user.uid) {
-                setOwnerSignedIn(true)
-            }
-        }
-        checkOwnerSignedIn()
-    }, [user, publicView])
+
+    const triggerReload = () => {
+        router.replace(router.asPath)
+    }
 
     const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
     const { items = {}, item_order: itemOrder = [] } = profile
@@ -61,7 +49,6 @@ export default function Profile({ user, triggerReload, publicView = false }) {
     const { type: backgroundType, url: backgroundUrl } = background || {}
 
     const logoutUser = async () => {
-
         const auth = getAuth();
         await signOut(auth);
         router.replace('/login')
@@ -70,21 +57,6 @@ export default function Profile({ user, triggerReload, publicView = false }) {
     //TODO: Error handling on network request, validation
     return (
         <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
-            <Head>
-                <title>{`${title} (@${handle}) - alcove`}</title>
-                <meta name="description" content={description} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta property="og:title" content={`${title} - @${handle} - Alcove`} />
-                <meta
-                    property="og:image"
-                    content="/social-share-profile.png"
-                />
-                <meta
-                    property="og:description"
-                    content={`See @${handle}'s profile on Alcove`}
-                />
-                <link rel="icon" href="/favicon.svg" />
-            </Head>
             <main>
                 <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center" }}>
 

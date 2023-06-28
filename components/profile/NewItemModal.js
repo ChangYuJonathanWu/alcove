@@ -22,18 +22,13 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
     }
     const onNewItem = async () => {
         setLoading(true)
-        const auth = getAuth();
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const body = {
             name,
             subtitle,
             type: itemType,
             uri: linkAddress,
         }
-        const result = await fetch(`/api/profile/items`, { method: "POST", headers, body: JSON.stringify(body) })
+        const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body) })
         setLoading(false)
         setOpen(false)
         clearInputs()

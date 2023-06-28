@@ -28,18 +28,13 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
         }
 
         setLoading(true)
-        const auth = getAuth()
-        const token = await auth.currentUser.getIdToken();
-        const headers = {
-            Authorization: `Bearer ${token}`
-        }
         const formData = new FormData()
         formData.append("background_image_operation", photoOperation)
         if(photoOperation === 'new') {
             formData.append("background_image", photoUpload)
         }
 
-        const result = await fetch(`/api/profile/theme`, { method: "POST", headers, body: formData })
+        const result = await fetch(`/api/profile/theme`, { method: "POST", body: formData })
         setLoading(false)
         setOpen(false)
         triggerReload(Date.now())

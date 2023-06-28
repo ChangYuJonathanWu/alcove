@@ -1,5 +1,5 @@
 import sharp from 'sharp'
-import { getStorage } from 'firebase-admin/storage';
+import { firebaseAdmin } from '@/lib/firebase-admin'
 
 export const resizeImage = async (imagePath, width, height) => {
     const compressedImage = await sharp(imagePath).rotate().resize(width, height, {
@@ -9,7 +9,7 @@ export const resizeImage = async (imagePath, width, height) => {
 }
 
 export const uploadImage = async (imageBuffer, destinationPath, contentType, owner) => {
-    const bucket = getStorage().bucket();
+    const bucket = firebaseAdmin.storage().bucket();
     const response = await bucket.file(destinationPath).save(imageBuffer, {
         metadata: {
             contentType: contentType,

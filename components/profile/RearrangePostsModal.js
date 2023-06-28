@@ -58,15 +58,10 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
 
   const onUpdate = async () => {
     setLoading(true)
-    const auth = getAuth();
-    const token = await auth.currentUser.getIdToken();
-    const headers = {
-        Authorization : `Bearer ${token}`
-    }
     const body = {
         item_order: order
     }
-    const result = await fetch(`/api/profile/items/${itemIdToReorder}`, { method: "PUT", headers, body: JSON.stringify(body)})
+    const result = await fetch(`/api/profile/items/${itemIdToReorder}`, { method: "PUT", body: JSON.stringify(body)})
     setLoading(false)
     triggerReload(Date.now())
     setItemIdToReorder(null)
