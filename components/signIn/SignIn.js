@@ -126,7 +126,7 @@ export default function SignIn() {
                                 <Stack style={{}} alignItems="center" spacing={1}>
                                     <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
                                     <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                    <Button variant="contained" type="submit" style={{ width: "100%", borderRadius: '15px' }}>Login</Button>
+                                    <Button variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px' }}>Login</Button>
                                 </Stack>
 
                             </Form>
