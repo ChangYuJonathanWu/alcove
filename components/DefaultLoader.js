@@ -3,6 +3,7 @@
 import { useState, CSSProperties } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import CircleLoader from 'react-spinners/CircleLoader';
+import Navbar from "./home/Navbar";
 
 const override = {
     display: "block",
@@ -12,15 +13,8 @@ const override = {
 
 export default function DefaultLoader() {
     return (
-        <div>
-            <CircleLoader
-                loading={true}
-                color={'#F97B22'}
-                cssOverride={override}
-                size={150}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-            />
+        <div style={{height: '100vh', backgroundColor: 'black', width: '100%'}}>
+           
         </div>
     )
 }
