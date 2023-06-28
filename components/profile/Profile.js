@@ -31,24 +31,8 @@ export default function Profile({ user, ownerSignedIn = false, publicView = fals
     const [newItemOpen, setNewItemOpen] = useState(false)
     const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
-    // const [ownerSignedIn, setOwnerSignedIn] = useState(false);
 
     const router = useRouter();
-    // useEffect(() => {
-    //     const checkOwnerSignedIn = async () => {
-    //         const auth = getAuth();
-    //         const loggedIn = auth.currentUser;
-    //         if (!loggedIn || publicView) {
-    //             setOwnerSignedIn(false)
-    //             return
-    //         }
-    //         const loggedInUid = auth.currentUser.uid
-    //         if (loggedInUid === user.uid) {
-    //             setOwnerSignedIn(true)
-    //         }
-    //     }
-    //     checkOwnerSignedIn()
-    // }, [user, publicView])
 
     const triggerReload = () => {
         router.replace(router.asPath)
@@ -65,7 +49,6 @@ export default function Profile({ user, ownerSignedIn = false, publicView = fals
     const { type: backgroundType, url: backgroundUrl } = background || {}
 
     const logoutUser = async () => {
-
         const auth = getAuth();
         await signOut(auth);
         router.replace('/login')

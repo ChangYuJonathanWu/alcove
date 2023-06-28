@@ -18,14 +18,20 @@ import nookies from 'nookies';
 import { getPublicProfile } from '@/lib/api/profile'
 
 export const getServerSideProps = async (context) => {
-    const cookies = nookies.get(context)
-    const token = await getAuth().verifyIdToken(cookies.token)
-    const { uid } = token
+    let loggedInUid = null
+    try {
+        const cookies = nookies.get(context)
+        const token = await getAuth().verifyIdToken(cookies.token)
+        const { uid } = token
+        loggedInUid = uid
+    } catch (err) {
+        console.log(err)
+    }
 
     const username = context.params.username
 
-    const profile = await getPublicProfile(username, null)
-    const ownerSignedIn = uid === profile.uid 
+    const profile = await getPublicProfile(username)
+    const ownerSignedIn = loggedInUid && (loggedInUid === profile.uid)
     if (profile) {
         profile["_id"] = null
     }
@@ -39,7 +45,6 @@ export const getServerSideProps = async (context) => {
 
 
 export default function ProfileRoute({ profile, ownerSignedIn }) {
-    console.log(ownerSignedIn)
     const router = useRouter()
     const user = profile
     if (!user) {
