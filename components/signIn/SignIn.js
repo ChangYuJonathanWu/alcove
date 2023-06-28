@@ -32,6 +32,7 @@ export default function SignIn() {
     const textColor = theme.textColor
     const { user } = useAuthContext()
     const [loginError, setLoginError] = useState(null)
+    const [loading, setLoading] = useState(false)
     const router = useRouter();
     const auth = getAuth()
 
@@ -92,6 +93,7 @@ export default function SignIn() {
                             }}
 
                             onSubmit={async (values) => {
+                                setLoading(true)
                                 const { email, password } = values;
                                 try {
                                     const credential = await signInWithEmailAndPassword(auth, email, password)
@@ -109,6 +111,7 @@ export default function SignIn() {
                                     const errorMessage = error.message;
                                     setLoginError("Invalid email/password or account doesn't exist")
                                 };
+                                setLoading(false)
 
                             }}
                         >
@@ -116,7 +119,7 @@ export default function SignIn() {
                                 <Stack style={{}} alignItems="center" spacing={1}>
                                     <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
                                     <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                    <Button variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px' }}>Login</Button>
+                                    <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px' }}>Login</Button>
                                 </Stack>
 
                             </Form>
@@ -125,7 +128,7 @@ export default function SignIn() {
                     <Typography style={{color: 'white'}}>
                         {loginError ?? ""}
                     </Typography>
-                    {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>}
+                    {/* {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>} */}
                 </Stack>}
             </main>
         </>
