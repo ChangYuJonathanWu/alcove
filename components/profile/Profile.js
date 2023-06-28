@@ -32,6 +32,8 @@ export default function Profile({ user, triggerReload, publicView = false }) {
     const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
     const [ownerSignedIn, setOwnerSignedIn] = useState(false);
+
+    const router = useRouter();
     useEffect(() => {
         const checkOwnerSignedIn = async () => {
             const auth = getAuth();
@@ -59,9 +61,10 @@ export default function Profile({ user, triggerReload, publicView = false }) {
     const { type: backgroundType, url: backgroundUrl } = background || {}
 
     const logoutUser = async () => {
+
         const auth = getAuth();
         await signOut(auth);
-        triggerReload()
+        router.replace('/login')
     }
 
     //TODO: Error handling on network request, validation
