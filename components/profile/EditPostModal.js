@@ -21,6 +21,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setPhotoChanged(false)
         setNewLink("")
         setPostId("")
+        setPostToEdit(null)
         setParentId("")
         setError("")
     }
