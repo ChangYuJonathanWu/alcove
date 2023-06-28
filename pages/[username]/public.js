@@ -11,7 +11,7 @@ import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
 import { useAuthContext } from "@/context/AuthContext";
-
+import { firebase } from '@/lib/Firebase';
 import { getAuth } from 'firebase-admin/auth'
 import nookies from 'nookies';
 

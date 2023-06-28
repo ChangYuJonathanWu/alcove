@@ -11,8 +11,7 @@ import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
 import { useAuthContext } from "@/context/AuthContext";
-
-import { getAuth } from 'firebase-admin/auth'
+import { firebaseAdmin } from '@/lib/firebase-admin';
 import nookies from 'nookies';
 
 import { getPublicProfile } from '@/lib/api/profile'
@@ -34,7 +33,7 @@ export const getServerSideProps = async (context) => {
     let loggedInUid = null
     try {
         const cookies = nookies.get(context)
-        const token = await getAuth().verifyIdToken(cookies.token)
+        const token = await firebaseAdmin.auth().verifyIdToken(cookies.token)
         const { uid } = token
         loggedInUid = uid
     } catch (err) {
