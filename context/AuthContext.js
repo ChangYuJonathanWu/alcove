@@ -5,6 +5,7 @@ import {
 } from 'firebase/auth';
 import { firebase } from '@/lib/Firebase';
 import ProfileLoader from '@/components/profile/ProfileLoader';
+import DefaultLoader from '@/components/DefaultLoader';
 
 const auth = getAuth();
 
@@ -16,7 +17,6 @@ export const AuthContextProvider = ({
     children,
 }) => {
     const [user, setUser] = React.useState(null);
-    const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -25,7 +25,6 @@ export const AuthContextProvider = ({
             } else {
                 setUser(null);
             }
-            setLoading(false);
         });
 
         return () => unsubscribe();
@@ -33,7 +32,7 @@ export const AuthContextProvider = ({
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {loading ? <ProfileLoader/> : children}
+            {children}
         </AuthContext.Provider>
     );
 };
