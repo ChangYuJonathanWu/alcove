@@ -18,7 +18,7 @@ export default function AlcoveProfileLogo() {
     return (
         <Link href="/" style={{ textDecoration: 'none' }}>
             <Stack direction="row" justifyContent="center">
-                <Paper sx={{ padding: '0.5rem 1rem 0.5rem 1rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
+                <Paper sx={{ padding: '0.5rem 1.2rem 0.5rem 1.2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
                     <Image src="/alcove-logo-dark.svg" width={70} height={25} alt="Alcove logo" />
                 </Paper>
             </Stack>
