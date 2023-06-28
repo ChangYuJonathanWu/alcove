@@ -16,15 +16,12 @@ const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 export default function AlcoveProfileLogo() {
 
     return (
-            <Link href="/" style={{ textDecoration: 'none' }}>
-                <Stack direction="row" justifyContent="center">
-                    <Paper sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
-                        <Stack direction="row" spacing={1} alignItems="center" style={{ padding: "1rem"}}>
-                            <Image src="/favicon.svg" width="20" height="20" alt="Alcove logo"/>
-                            <p className={amita.className} style={{fontWeight: 400}}>alcove</p>
-                        </Stack>
-                    </Paper>
-                </Stack>
-            </Link>
+        <Link href="/" style={{ textDecoration: 'none' }}>
+            <Stack direction="row" justifyContent="center">
+                <Paper sx={{ padding: '0.5rem 1rem 0.5rem 1rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
+                    <Image src="/alcove-logo-dark.svg" width={70} height={25} alt="Alcove logo" />
+                </Paper>
+            </Stack>
+        </Link>
     )
 }
