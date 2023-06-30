@@ -98,7 +98,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
                             </Stack>
-                            {editMode && <EditIcon onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+                            {editMode && <EditIcon data-cy="edit-item-icon" onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
 
                     </ListItemButton>

@@ -4,6 +4,7 @@ describe('Profile', () => {
     it('Loads my profile', () => {
         cy.visit('http://localhost:3000/jonathanwu')
         cy.contains('jonathan wu', { timeout: 10000}).should('exist')
+        cy.contains('Edit Profile').should('not.exist')
         cy.percySnapshot('Profile', { widths: PERCY_WIDTHS });
     })
     it('Loads my profile on public view', () => {
@@ -14,10 +15,10 @@ describe('Profile', () => {
     it('Loads the test profile and renders expected elements', () => {
         cy.visit('http://localhost:3000/jHak91janUhqmOakso')
         cy.contains('jonathan wu').should('exist')
-        cy.percySnapshot('Test Profile', { widths: PERCY_WIDTHS });
         cy.get("#jonathanwu-profile-photo").should('exist')
         cy.contains("@jonathanwu").should('exist')
         cy.contains("my favorites").should('exist')
+        cy.contains("Edit Profile").should('exist')
         cy.get("#instagram-bio-link").should('exist')
         cy.get('#instagram-bio-link').should('have.attr', 'href', 'https://www.instagram.com/jonathannwuu')
         cy.get("#facebook-bio-link").should('exist')
@@ -53,7 +54,7 @@ describe('Profile', () => {
         cy.percySnapshot('Sushi Restaurants List', { widths: PERCY_WIDTHS, fullPage: true });
 
         // iFrame should exist
-        cy.wait(5000) // Give time for iFrames to load
+        cy.wait(3000) // Give time for iFrames to load
         cy.percySnapshot('Songs List', { widths: PERCY_WIDTHS, fullPage: true });
         cy.get('#list-id-l1 iframe').should('have.length', 5)
         cy.get('#list-id-l1 iframe:first').should('have.attr', 'src', 'https://open.spotify.com/embed/track/1EXMjx4nCIvYTaY5CZMUSl')
