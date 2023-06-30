@@ -18,6 +18,7 @@ export const AuthContextProvider = ({
 
     const auth = getAuth();
     useEffect(() => {
+    
         return auth.onIdTokenChanged(async (user) => {
             if (!user) {
                 setUser(null);

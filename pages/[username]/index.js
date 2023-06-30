@@ -9,6 +9,7 @@ import jiwonkang_user from '@/examples/jiwon.json'
 import example_user from '@/examples/example.json'
 import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
+import test_user_no_spotify from '@/examples/test_profile_no_spotify.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
 import { useAuthContext } from "@/context/AuthContext";
 import { firebaseAdmin } from '@/lib/firebase-admin';
@@ -16,14 +17,19 @@ import nookies from 'nookies';
 
 import { getPublicProfile } from '@/lib/api/profile'
 
+const TEST_USER = "jHak91janUhqmOakso"
+const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
+
 const determineHardcodedUser = (username) => {
     switch (username) {
         case "jonathanwu_hardcoded":
             return jonathan_user
         case "gracehopper":
             return example_user
-        case "jHak91janUhqmOakso":
+        case TEST_USER:
             return test_user
+        case TEST_USER_NO_SPOTIFY:
+            return test_user_no_spotify
         default:
             return example_user
     }
@@ -61,14 +67,14 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-
-    const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", "jHak91janUhqmOakso"]
+    const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", TEST_USER, TEST_USER_NO_SPOTIFY]
+    const test_users = [TEST_USER, TEST_USER_NO_SPOTIFY]
     if (hardcodedUsers.includes(username)) {
         const hardcodedUser = determineHardcodedUser(username)
         return {
             props: {
                 profile: hardcodedUser,
-                ownerSignedIn: false
+                ownerSignedIn: test_users.includes(username) 
             }
         }
     }

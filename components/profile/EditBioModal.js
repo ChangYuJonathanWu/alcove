@@ -49,7 +49,8 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         setNewDescription(description)
         setNewInstagram(instagram)
         setNewFacebook(facebook)
-        triggerReload(Date.now())
+        // Only if profile photo was updated do we trigger a reload on cancel
+        newProfilePhoto !== photo && triggerReload(Date.now())
         setOpen(false)
         
     }
@@ -87,14 +88,14 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     };
     //TODO: Validate input; set character limits
     return (
-        <Modal open={open}>
+        <Modal open={open} id="edit-bio-modal">
             <Box style={modalStyle}>
 
                 <Stack alignItems="center" spacing={2} >
-                    <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} src={newProfilePhoto} />
+                    <Avatar id="edit-bio-profile-photo" alt={"profile-photo"} sx={{ width: 100, height: 100 }} src={newProfilePhoto} />
                     <Stack direction="row" spacing={2}>
                         {newProfilePhoto && <div>
-                            <Button disabled={loading} onClick={removeProfilePhoto} style={{ margin: 0, padding: 0 }}>Remove</Button>
+                            <Button id="edit-bio-remove-profile-photo" disabled={loading} onClick={removeProfilePhoto} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
                         <div>
                             <input
@@ -105,7 +106,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                                 onChange={updateProfilePhoto}
                             />
                             <label htmlFor="profile-photo-upload">
-                                <Button disabled={loading} style={{margin:0, padding:0}} component="span">
+                                <Button id="edit-bio-change-profile-photo" disabled={loading} style={{margin:0, padding:0}} component="span">
                                     Change
                                 </Button>
                             </label>
@@ -113,13 +114,13 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                         </div>
                     </Stack>
 
-                    <TextField style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    <TextField style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
-                    <TextField style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
-                    <TextField style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
+                    <TextField id="edit-bio-name" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
+                    <TextField id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
+                    <TextField id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
+                    <TextField id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
                     <Stack direction="row" spacing={1}>
-                        <Button disabled={loading} onClick={handleClose}>Cancel</Button>
-                        <Button disabled={loading} onClick={onBioUpdate} variant="contained">Done</Button>
+                        <Button id="edit-bio-cancel" disabled={loading} onClick={handleClose}>Cancel</Button>
+                        <Button id="edit-bio-done" disabled={loading} onClick={onBioUpdate} variant="contained">Done</Button>
                     </Stack>
                 </Stack>
 

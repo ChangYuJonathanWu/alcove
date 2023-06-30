@@ -49,29 +49,30 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
     };
     //TODO: Validate input; set character limits
     return (
-        <Modal open={open}>
+        <Modal data-cy="new-item-modal" open={open}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
-                    <TextField style={{ width: "100%" }} size="small" label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
-                    {itemType === "list" && <TextField style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />}
+                    <TextField data-cy="new-item-modal--item-name" style={{ width: "100%" }} size="small" label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+                    {itemType === "list" && <TextField data-cy="new-item-modal--item-subtitle" style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />}
                     <FormControl>
                         <FormLabel id="item-type">Type</FormLabel>
                         <RadioGroup
                             aria-labelledby="item-type"
+                            data-cy="new-item-modal--item-type"
                             value={itemType}
                             onChange={(e) => setItemType(e.currentTarget.value)}
                             row
                             name="item-type-radio-buttons-group"
                         >
-                            <FormControlLabel value="list" control={<Radio />} label="List" />
-                            <FormControlLabel value="uri" control={<Radio />} label="Link" />
+                            <FormControlLabel data-cy="new-item-modal--item-type--list" value="list" control={<Radio />} label="List" />
+                            <FormControlLabel data-cy="new-item-modal--item-type--link" value="uri" control={<Radio />} label="Link" />
                         </RadioGroup>
                     </FormControl>
                     {itemType === "uri" &&
-                        <TextField size="small" style={{ width: "100%" }} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(e.target.value)} />}
+                        <TextField data-cy="new-item-modal--item-uri" size="small" style={{ width: "100%" }} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(e.target.value)} />}
                     <Stack direction="row" spacing={1}>
-                        <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
-                        <Button disabled={loading || !name || (itemType === "uri" && !linkAddress)} onClick={onNewItem} variant="contained">Create</Button>
+                        <Button data-cy="new-item-modal--cancel" disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button data-cy="new-item-modal--create" disabled={loading || !name || (itemType === "uri" && !linkAddress)} onClick={onNewItem} variant="contained">Create</Button>
                     </Stack>
                 </Stack>
 

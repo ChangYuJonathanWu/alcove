@@ -11,8 +11,6 @@ import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
 import { useAuthContext } from "@/context/AuthContext";
-import { firebase } from '@/lib/Firebase';
-import { firebaseAdmin } from '@/lib/firebase-admin'
 import nookies from 'nookies';
 
 import { getPublicProfile } from '@/lib/api/profile'
@@ -31,16 +29,7 @@ const determineHardcodedUser = (username) => {
 }
 
 export const getServerSideProps = async (context) => {
-    let loggedInUid = null
-    try {
-        const cookies = nookies.get(context)
-        const token = await firebaseAdmin.auth().verifyIdToken(cookies.token)
-        const { uid } = token
-        loggedInUid = uid
-    } catch (err) {
-        console.log(err)
-    }
-
+   
     const username = context.params.username
     const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", "jHak91janUhqmOakso"]
     if (hardcodedUsers.includes(username)) {
@@ -54,23 +43,21 @@ export const getServerSideProps = async (context) => {
     }
 
     const profile = await getPublicProfile(username)
-    const ownerSignedIn = loggedInUid && (loggedInUid === profile.uid)
     if (profile) {
         profile["_id"] = null
     }
     return {
         props: {
             profile,
-            ownerSignedIn
+            ownerSignedIn: false
         }
     }
 }
 
 
-export default function ProfileRoute({ profile }) {
+export default function ProfileRoute({ profile, ownerSignedIn }) {
     const router = useRouter()
     const user = profile
-    const ownerSignedIn = false
     if (!user) {
         return <ErrorPage statusCode={404} />
     }
