@@ -49,7 +49,8 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         setNewDescription(description)
         setNewInstagram(instagram)
         setNewFacebook(facebook)
-        userMadeChanges() && triggerReload(Date.now())
+        // Only if profile photo was updated do we trigger a reload on cancel
+        newProfilePhoto !== photo && triggerReload(Date.now())
         setOpen(false)
         
     }
