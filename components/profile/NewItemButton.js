@@ -28,10 +28,10 @@ export default function NewItemButton({onClick}) {
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
             <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
-                <ListItemButton id={'new-item-button'} key={'new-item-button'} disableRipple={true} onClick={onClick}>
+                <ListItemButton data-cy="new-item-button" id={'new-item-button'} key={'new-item-button'} disableRipple={true} onClick={onClick}>
                     <Stack direction="row" alignItems="start" spacing={2}>
                         <AddIcon />
-                        <Typography variant="h3"><em> New Item</em></Typography>
+                        <Typography variant="h3"><em>New Item</em></Typography>
                     </Stack>
                 </ListItemButton>
             </Paper>

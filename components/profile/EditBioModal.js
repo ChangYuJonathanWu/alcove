@@ -49,7 +49,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         setNewDescription(description)
         setNewInstagram(instagram)
         setNewFacebook(facebook)
-        triggerReload(Date.now())
+        userMadeChanges() && triggerReload(Date.now())
         setOpen(false)
         
     }
