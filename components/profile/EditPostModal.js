@@ -3,6 +3,7 @@ import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/m
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -56,6 +57,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
     const onPostDelete = async () => {
         setLoading(true)
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "DELETE" })
         if (result.status !== 200) {
             const parsedResult = await result.json()
@@ -79,7 +81,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         if (photoChanged) {
             formData.append("photo_changed", true)
         }
-
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "PUT", body: formData })
         setLoading(false)
         if (result.status !== 200) {
