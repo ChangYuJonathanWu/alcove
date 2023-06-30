@@ -9,6 +9,7 @@ import Navbar from '@/components/home/Navbar'
 import { useAuthContext } from "@/context/AuthContext";
 import { signOut, getAuth } from "firebase/auth";
 import { firebase } from '@/lib/Firebase'
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 import React, { useState, useEffect } from 'react'
 
@@ -33,6 +34,7 @@ export default function Home() {
         const loadUser = async () => {
             const auth = getAuth()
             if (user) {
+                const token = await refreshFirebaseToken()
                 const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                 const fullUserProfile = await result.json()
                 const { description = "", title = "", photo, profile } = fullUserProfile
@@ -51,6 +53,7 @@ export default function Home() {
             description,
             title
         }
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile`, { method: "PUT", body: JSON.stringify(body) })
     }
 
@@ -59,6 +62,7 @@ export default function Home() {
             name: newItemName,
             type: newItemType,
         }
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body) })
     }
 
@@ -67,7 +71,7 @@ export default function Home() {
         const photo = e.target.files[0]
         const formData = new FormData();
         formData.append('profilePhoto', photo)
-
+        const token = await refreshFirebaseToken()
         const result = await fetch('/api/profile/updateProfilePhoto', {
             method: 'POST',
             body: formData,    

@@ -37,6 +37,9 @@ jobs:
           NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY}}
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
           # # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          

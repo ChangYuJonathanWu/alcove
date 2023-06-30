@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import { compressImage } from '@/utils/localImageProcessing';
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
@@ -35,6 +36,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                 facebook: newFacebook
             }
         }
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile`, { method: "PUT", body: JSON.stringify(body) })
         setLoading(false)
         setOpen(false)
@@ -58,6 +60,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const compressedFile = await compressImage(file)
         const formData = new FormData()
         formData.append('profilePhoto', compressedFile)
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "POST", body: formData })
         const data = await result.json()
         setNewProfilePhoto(data.url)
@@ -66,6 +69,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
 
     const removeProfilePhoto = async () => {
         setLoading(true)
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "DELETE" })
         setNewProfilePhoto("")
         setLoading(false)

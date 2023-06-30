@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 
 // support delete and rename item
 export default function EditItemModal({ editItem, setEditItem, triggerReload }) {
@@ -26,6 +27,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     
     const onItemDelete = async () => {
         setLoading(true)
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items/${itemId}`, { method: "DELETE" })
         setLoading(false)
         setEditItem("")
@@ -41,6 +43,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
             subtitle: newSubtitle,
             uri: newLink
         }
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", body: JSON.stringify(body) })
         setLoading(false)
         if(result.status !== 200) {
