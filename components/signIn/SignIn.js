@@ -16,6 +16,7 @@ import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
 import ProfileLoader from '../profile/ProfileLoader';
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 
 const theme = {
@@ -31,10 +32,15 @@ export default function SignIn() {
     const logoColor = theme.logoColor
     const textColor = theme.textColor
     const { user } = useAuthContext()
-    const [loginError, setLoginError] = useState(null)
-    const [loading, setLoading] = useState(false)
     const router = useRouter();
     const auth = getAuth()
+
+    const redirectUser = router.query.r
+
+
+    const [loginError, setLoginError] = useState(null)
+    const [pageLoading, setPageLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     const CustomTextField = (props) => (
 
@@ -46,21 +52,26 @@ export default function SignIn() {
 
     );
 
-    const [pageLoading, setPageLoading] = useState(true)
-
     useEffect(() => {
+        if (redirectUser) {
+            router.replace(`/${redirectUser}`)
+            return
+        }
         const loadUser = async () => {
             if (user) {
+                setPageLoading(true)
                 const { uid } = user
+                const token = await refreshFirebaseToken()
                 const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
                 router.replace(`/${handle}`)
+                return
             }
             setPageLoading(false)
         }
         loadUser()
-    }, [user, router])
+    }, [user, router, redirectUser])
 
     return (
         <>
@@ -104,7 +115,7 @@ export default function SignIn() {
                                         const fullUserProfile = await result.json()
                                         const { handle } = fullUserProfile
                                         router.replace(`/${handle}`)
-                                        
+
                                         return
                                     }
 
@@ -127,7 +138,7 @@ export default function SignIn() {
                             </Form>
                         </Formik>
                     </div>
-                    <Typography style={{color: 'white'}}>
+                    <Typography style={{ color: 'white' }}>
                         {loginError ?? ""}
                     </Typography>
                     {/* {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>} */}

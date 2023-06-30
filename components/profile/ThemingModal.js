@@ -3,7 +3,7 @@ import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/m
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
-
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 // support delete and rename item
 export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
         if(photoOperation === 'new') {
             formData.append("background_image", photoUpload)
         }
-
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/theme`, { method: "POST", body: formData })
         setLoading(false)
         setOpen(false)

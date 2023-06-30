@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -59,7 +60,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
             formData.append("caption", caption)
             formData.append("uri", uri)
         }
-
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items/${listId}/post`, { method: "POST", body: formData })
         setLoading(false)
         if (result.status !== 200) {

@@ -6,6 +6,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+
 
 export default function NewItemModal({ open, setOpen, triggerReload }) {
     const [name, setName] = useState("")
@@ -28,6 +30,7 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
             type: itemType,
             uri: linkAddress,
         }
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body) })
         setLoading(false)
         setOpen(false)

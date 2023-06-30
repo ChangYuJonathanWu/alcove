@@ -37,15 +37,34 @@ const determineHardcodedUser = (username) => {
 
 export const getServerSideProps = async (context) => {
     let loggedInUid = null
+    const username = context.params.username
     try {
         const cookies = nookies.get(context)
-        if(cookies.token) {
-            const token = await firebaseAdmin.auth().verifyIdToken(cookies.token)
+        const tokenFromCookie = cookies.token
+        if(tokenFromCookie) {
+            const token = await firebaseAdmin.auth().verifyIdToken(tokenFromCookie)
             const { uid } = token
             loggedInUid = uid
         }
+        
     } catch (err) {
         console.log(err)
+        const { errorInfo } = err
+        if (errorInfo.code === "auth/id-token-expired") {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: `/a/${username}`,
+                }
+            }
+        } else {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: `/login`,
+                }
+            }
+        }
     }
 
     const username = context.params.username
@@ -62,7 +81,7 @@ export const getServerSideProps = async (context) => {
     }
 
     const profile = await getPublicProfile(username)
-    const ownerSignedIn = loggedInUid && (loggedInUid === profile.uid)
+    const ownerSignedIn = loggedInUid && (loggedInUid === profile?.uid)
     if (profile) {
         profile["_id"] = null
     }

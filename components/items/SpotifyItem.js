@@ -4,7 +4,7 @@ import { Skeleton, Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getAuth } from "firebase/auth";
-
+import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 import '../../styles/Home.module.css'
 
 export default function SpotifyItem({ item, editMode = false, triggerReload, noPadding = false }) {
@@ -14,6 +14,7 @@ export default function SpotifyItem({ item, editMode = false, triggerReload, noP
 
     const onDeleteSong = async () => {
         setDeleteRunning(true)
+        const token = await refreshFirebaseToken()
         const result = await fetch(`/api/profile/items/${parentId}/post/${id}`, { method: "DELETE" })
         setDeleteRunning(false)
         triggerReload(Date.now())
