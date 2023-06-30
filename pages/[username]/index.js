@@ -44,7 +44,7 @@ export const getServerSideProps = async (context) => {
             return {
                 redirect: {
                     permanent: false,
-                    destination: `/login?r=${username}`,
+                    destination: `/a/${username}`,
                 }
             }
         } else {
