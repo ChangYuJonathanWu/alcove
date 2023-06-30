@@ -69,17 +69,17 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     //TODO: Validate input; set character limits
     //TODO: Allow setting new Link instead of having to delete and recreate
     return (
-        <Modal open={!!editItem}>
+        <Modal open={!!editItem} data-cy="edit-item-modal">
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
-                    <TextField size="small" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    {itemType === "uri" && <TextField size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />}
-                    {itemType === "list" && <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />}
-                    {error && <Typography color="error">{error}</Typography>}
+                    <TextField data-cy="edit-item-modal--item-name" size="small" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
+                    {itemType === "uri" && <TextField data-cy="edit-item-modal--item-uri" size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />}
+                    {itemType === "list" && <TextField data-cy="edit-item-modal--item-subtitle" size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />}
+                    {error && <Typography data-cy="edit-item-modal--error" color="error">{error}</Typography>}
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
-                        <Button disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
-                        <Button disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={onItemUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
+                        <Button data-cy="edit-item-modal--cancel-button" disabled={loading} onClick={() => setEditItem(null)}>Cancel</Button>
+                        <Button data-cy="edit-item-modal--delete-button" disabled={loading} onClick={onItemDelete} variant="outlined" color="error">Delete</Button>
+                        <Button data-cy="edit-item-modal--update-button" disabled={loading} onClick={onItemUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>

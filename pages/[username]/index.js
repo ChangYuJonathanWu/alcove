@@ -67,7 +67,6 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-    const username = context.params.username
     const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", TEST_USER, TEST_USER_NO_SPOTIFY]
     const test_users = [TEST_USER, TEST_USER_NO_SPOTIFY]
     if (hardcodedUsers.includes(username)) {
