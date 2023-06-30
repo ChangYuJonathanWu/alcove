@@ -32,6 +32,8 @@ export default function Home() {
   const isLarge = useBetterMediaQuery('(min-width: 1000px)')
   const isReallyLarge = useBetterMediaQuery('(min-width: 1200px)')
 
+  const minQueriesComplete = isTabletOrMobile || isLarge || isReallyLarge
+
   const theme = theme4;
   const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
   const backgroundColor = theme.bgColor
@@ -105,7 +107,7 @@ export default function Home() {
       <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
         <Navbar mobile={isTabletOrMobile}/>
         <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
-          {isTabletOrMobile ? mobileLayout : desktopLayout}
+          {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
         </Stack>
       </main>
     </>
