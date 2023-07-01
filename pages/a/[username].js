@@ -18,7 +18,7 @@ export default function RefreshToken() {
             router.replace(`/${redirectUser}`, undefined, { shallow: true })
             return
         }
-        refreshTokenAndRedirect()
+        router.isReady && refreshTokenAndRedirect()
     }, [user, router])
 
     return <ProfileLoader />
