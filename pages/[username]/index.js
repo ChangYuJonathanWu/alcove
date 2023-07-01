@@ -41,6 +41,9 @@ export const getServerSideProps = async (context) => {
     try {
         const cookies = nookies.get(context)
         const tokenFromCookie = cookies.token
+        if(!tokenFromCookie) {
+            console.log("Missing token from cookie!")
+        }
         if(tokenFromCookie) {
             const token = await firebaseAdmin.auth().verifyIdToken(tokenFromCookie)
             const { uid } = token

@@ -6,7 +6,7 @@ import ProfileLoader from '@/components/profile/ProfileLoader';
 
 
 export default function RefreshToken() {
-    const { user } = useAuthContext()
+    const { user, authReady } = useAuthContext()
     const router = useRouter();
 
     useEffect(() => {
@@ -18,8 +18,8 @@ export default function RefreshToken() {
             router.replace(`/${redirectUser}`, undefined, { shallow: true })
             return
         }
-        router.isReady && refreshTokenAndRedirect()
-    }, [user, router])
+        router.isReady && authReady && refreshTokenAndRedirect()
+    }, [user, authReady, router])
 
     return <ProfileLoader />
 }
