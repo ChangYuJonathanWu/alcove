@@ -29,8 +29,10 @@ const determineHardcodedUser = (username) => {
 }
 
 export const getServerSideProps = async (context) => {
-   
     const username = context.params.username
+    const userRequestTimerName = `getServerSideProps: ${username}`
+    const userRequestDbTimerName = `getServerSideProps: getPublicProfile: ${username}`
+    console.time(userRequestTimerName)
     const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", "jHak91janUhqmOakso"]
     if (hardcodedUsers.includes(username)) {
         const hardcodedUser = determineHardcodedUser(username)
@@ -42,10 +44,13 @@ export const getServerSideProps = async (context) => {
         }
     }
 
+    console.time(userRequestDbTimerName)
     const profile = await getPublicProfile(username)
+    console.timeEnd(userRequestDbTimerName)
     if (profile) {
         profile["_id"] = null
     }
+    console.timeEnd(userRequestTimerName)
     return {
         props: {
             profile,
