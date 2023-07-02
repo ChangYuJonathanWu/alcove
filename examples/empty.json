@@ -1,0 +1,25 @@
+{
+    "title": "healthcheck",
+    "title_style": {},
+    "handle": "healthcheck_test_endpoint",
+    "photo": "",
+    "uid": "",
+    "background": {
+        "type": "none"
+    },
+
+    "description": "healthcheck",
+    "social_links": {
+        "instagram": "",
+        "facebook": ""
+    },
+    "description_style": {},
+    "config": {},
+    "profile": {
+        "item_order": [
+
+        ],
+        "items": {
+        }
+    }
+}
