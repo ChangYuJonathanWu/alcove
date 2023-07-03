@@ -22,7 +22,6 @@ import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
-import { set } from 'cypress/types/lodash';
 YupPassword(Yup);
 
 
@@ -143,9 +142,11 @@ export default function Welcome({ signup }) {
                                 password: '',
                                 passwordConfirm: ''
                             }}
-                            validationSchema={SignupSchema}
+                            // validationSchema={SignupSchema}
                             onSubmit={async (values) => {
+                                console.log("Attempting to complete signup")
                                 const { password, passwordConfirm } = values;
+                                
                                 if (password !== passwordConfirm) {
                                     setLoginError("Passwords do not match")
                                     return
@@ -179,7 +180,7 @@ export default function Welcome({ signup }) {
 
                             }}
                         >
-                            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                            {({ values, errors, touched}) => (
                                 <Form>
                                     <Stack style={{}} alignItems="center" spacing={1}>
                                         <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
@@ -188,6 +189,7 @@ export default function Welcome({ signup }) {
                                         {!(/\d/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
                                         {!(/[A-Z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
                                         {!(/[a-z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
+                                        {(values.password !== values.passwordConfirm || values.password.length === 0 )&& <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
                                         <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Get Started"}</Button>
                                     </Stack>
 
