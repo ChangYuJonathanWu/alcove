@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { redirect } from 'next/navigation';
 import { styled } from '@mui/material';
 import { getSignup } from '@/lib/api/signup';
+import * as Sentry from '@sentry/nextjs'
 
 
 import React, { useState, useEffect } from 'react'
@@ -21,6 +22,7 @@ import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
+import { set } from 'cypress/types/lodash';
 YupPassword(Yup);
 
 
@@ -151,22 +153,27 @@ export default function Welcome({ signup }) {
                                 setLoading(true)
 
                                 try {
-                                    const credential = await createUserWithEmailAndPassword(auth, email, password)
-                                    if (credential) {
-                                        setLoginError(null)
-                                        const { uid } = credential.user
-                                        const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
-                                        const fullUserProfile = await result.json()
-                                        const { handle } = fullUserProfile
-                                        router.replace(`/${handle}`)
-
-                                        return
+                                    const completeSignupResult = await fetch(`/api/signup/complete`, {
+                                        method: "POST",
+                                        body: JSON.stringify({
+                                            password,
+                                            signupId: _id
+                                        })
+                                    })
+                                    const { success, error } = await completeSignupResult.json()
+                                    if (success) {
+                                        router.replace('/login')
+                                    } else {
+                                        Sentry.captureException(error)
+                                        setLoginError("Could not complete signup - please try again later")
                                     }
 
                                 } catch (error) {
                                     const errorCode = error.code;
                                     const errorMessage = error.message;
-                                    setLoginError("Invalid email/password or account doesn't exist")
+                                    console.error(errorCode, errorMessage)
+                                    Sentry.captureException(error)
+                                    setLoginError("Could not complete signup - please try again later")
                                 };
                                 setLoading(false)
 
@@ -178,9 +185,9 @@ export default function Welcome({ signup }) {
                                         <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
                                         <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
                                         {values.password.length < 8 && <Typography variant="body2" style={{ color: 'white', margin: 0, marginTop: '0.5rem' }}> • Minimum 8 characters</Typography>}
-                                        {!(/\d/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0  }}> • Atleast 1 number</Typography>}
-                                        { !(/[A-Z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0  }}> • Atleast 1 uppercase letter</Typography>}
-                                        { !(/[a-z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0  }}> • Atleast 1 lowercase letter</Typography>}
+                                        {!(/\d/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
+                                        {!(/[A-Z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
+                                        {!(/[a-z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
                                         <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Get Started"}</Button>
                                     </Stack>
 

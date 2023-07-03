@@ -6,30 +6,15 @@ export default async function handler(req, res) {
 
     const { method } = req;
     if (method === "POST") {
-        const { body } = req; 
-        const { id, password } = JSON.parse(body)
+        const { body } = req;
+        const { signupId, password } = JSON.parse(body)
 
-        const handleAvailable = await availableHandle(handle)
-        const validEmail = await availableEmail(email)
-        
-        const errors = []
-        if (!handleAvailable){
-          errors.push("HANDLE_TAKEN")
+        const signupResult = await completeSignup(id, password)
+        const { success, error } = signupResult
+        if (success) {
+            return res.status(200).json({ success: true });
+        } else {
+            return res.status(400).json({ success: false, error });
         }
-        if (!validEmail) {
-          errors.push("EMAIL_TAKEN")
-        }
-        let signupSuccess = false
-        if(handleAvailable && validEmail) {
-        // This is NOT transactional. It's possible for duplicates to exist. This is only acceptable for MVP.
-          signupSuccess = await createSignup(email, handle)
-        } 
-
-
-        const data = {
-            success: signupSuccess,
-            errors
-        }
-        return res.status(200).json(data);
     }
 }
