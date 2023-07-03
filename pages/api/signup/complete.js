@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { completeSignup } from '@/lib/api/signup'
-
 import { firebaseAdmin } from '@/lib/firebase-admin';
 export default async function handler(req, res) {
 

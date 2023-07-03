@@ -163,7 +163,7 @@ export default function Welcome({ signup }) {
                                     })
                                     const { success, error } = await completeSignupResult.json()
                                     if (success) {
-                                        router.replace('/login')
+                                        router.replace(`/login?email=${email}`)
                                     } else {
                                         Sentry.captureException(error)
                                         setLoginError("Could not complete signup - please try again later")
