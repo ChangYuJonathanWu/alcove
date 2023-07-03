@@ -108,6 +108,25 @@ export default function Welcome({ signup }) {
         loadUser()
     }, [user, router])
 
+    const validatePasswordLength = (password) => {
+        return password.length >= 8
+    }
+
+    const validatePasswordUpperCase = (password) => {
+        return /[A-Z]/.test(password)
+    }
+    const validatePasswordLowerCase = (password) => {
+        return /[a-z]/.test(password)
+    }
+
+    const validatePasswordContainsNumber = (password) => {
+        return /\d/.test(password)
+    }
+
+    const validPassword = (password) => {
+        return validatePasswordLength(password) && validatePasswordUpperCase(password) && validatePasswordLowerCase(password) && validatePasswordContainsNumber(password)
+    }
+
     return (
         <>
             <Head>
@@ -146,9 +165,7 @@ export default function Welcome({ signup }) {
                             onSubmit={async (values) => {
                                 console.log("Attempting to complete signup")
                                 const { password, passwordConfirm } = values;
-                                
-                                if (password !== passwordConfirm) {
-                                    setLoginError("Passwords do not match")
+                                if (password !== passwordConfirm || !validPassword(password)) {
                                     return
                                 }
                                 setLoading(true)
@@ -180,16 +197,19 @@ export default function Welcome({ signup }) {
 
                             }}
                         >
-                            {({ values, errors, touched}) => (
+                            {({ values, errors, touched }) => (
                                 <Form>
                                     <Stack style={{}} alignItems="center" spacing={1}>
                                         <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
                                         <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                        {values.password.length < 8 && <Typography variant="body2" style={{ color: 'white', margin: 0, marginTop: '0.5rem' }}> • Minimum 8 characters</Typography>}
-                                        {!(/\d/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
-                                        {!(/[A-Z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
-                                        {!(/[a-z]/.test(values.password)) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
-                                        {(values.password !== values.passwordConfirm || values.password.length === 0 )&& <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
+                                        <div>
+                                            {!validatePasswordLength(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Minimum 8 characters</Typography>}
+                                            {!validatePasswordContainsNumber(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
+                                            {!validatePasswordUpperCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
+                                            {!validatePasswordLowerCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
+                                            {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
+                                        </div>
+
                                         <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Get Started"}</Button>
                                     </Stack>
 

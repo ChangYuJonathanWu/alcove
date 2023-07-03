@@ -90,8 +90,8 @@ export default function SignIn() {
                 {pageLoading && <ProfileLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
                     <div style={{ borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
-                        <Navbar />
-                        <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>
+                        <Navbar/>
+                        {showOnboardMessage && <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
 
                         <Formik
                             enableReinitialize={true}
