@@ -38,7 +38,7 @@ export const getServerSideProps = async (context) => {
     const signupId = context.params.signup_id
     console.log(signupId)
     const signup = await getSignup(signupId)
-    if (!signup) {
+    if (!signup || signup.complete) {
         return {
             redirect: {
                 destination: '/login',
