@@ -38,7 +38,9 @@
     "react-responsive": "^9.0.2",
     "react-spinners": "^0.13.8",
     "sharp": "^0.32.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yup": "^1.2.0",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "@percy/cli": "^1.24.0",
