@@ -8,7 +8,6 @@ import { amita } from '../fonts'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
-import { redirect } from 'next/navigation';
 import { styled } from '@mui/material';
 
 
@@ -34,9 +33,9 @@ export default function SignIn() {
     const { user } = useAuthContext()
     const router = useRouter();
     const auth = getAuth()
-
-    const redirectUser = router.query.r
-
+    
+    const email = router.query.email
+    const showOnboardMessage = !!email
 
     const [loginError, setLoginError] = useState(null)
     const [pageLoading, setPageLoading] = useState(true)
@@ -53,10 +52,6 @@ export default function SignIn() {
     );
 
     useEffect(() => {
-        if (redirectUser) {
-            router.replace(`/${redirectUser}`)
-            return
-        }
         const loadUser = async () => {
             if (user) {
                 setPageLoading(true)
@@ -71,7 +66,7 @@ export default function SignIn() {
             setPageLoading(false)
         }
         loadUser()
-    }, [user, router, redirectUser])
+    }, [user, router])
 
     return (
         <>
@@ -95,11 +90,13 @@ export default function SignIn() {
                 {pageLoading && <ProfileLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
                     <div style={{ borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
-                        <Navbar />
+                        <Navbar/>
+                        {showOnboardMessage && <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
 
                         <Formik
+                            enableReinitialize={true}
                             initialValues={{
-                                email: '',
+                                email: email ?? "",
                                 password: '',
                             }}
 
