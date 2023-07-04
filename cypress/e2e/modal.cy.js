@@ -107,8 +107,16 @@ describe('Modal', () => {
             cy.get('#edit-bio-change-profile-photo').should('exist').should('have.text', 'Change')
             cy.get('#edit-bio-name').should('exist').should('have.value', 'jonathan wu')
             cy.get('#edit-bio-bio').should('exist').should('have.value', 'my favorites')
-            cy.get('#edit-bio-instagram').should('exist').should('have.value', 'jonathannwuu')
-            cy.get('#edit-bio-facebook').should('exist').should('have.value', 'jonathannwuu')
+            
+            cy.get('#edit-bio-instagram').should('exist').should('have.value', 'test-ig')
+            cy.get('#edit-bio-facebook').should('exist').should('have.value', 'test-facebook')
+            cy.get('#edit-bio-twitter').should('exist').should('have.value', 'test-twitter')
+            cy.get('#edit-bio-reddit').should('exist').should('have.value', 'test-reddit')
+            cy.get('#edit-bio-linkedin').should('exist').should('have.value', 'test-linkedin')
+            cy.get('#edit-bio-tiktok').should('exist').should('have.value', 'test-tik-tok')
+            cy.get('#edit-bio-snapchat').should('exist').should('have.value', 'test-snapchat')
+            cy.get('#edit-bio-bereal').should('exist').should('have.value', 'test-bereal')
+
             cy.get('#edit-bio-cancel').should('exist').should('have.text', 'Cancel')
             cy.get('#edit-bio-done').should('exist').should('have.text', 'Done')
         })
