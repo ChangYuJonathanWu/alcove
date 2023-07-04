@@ -54,6 +54,7 @@ describe('Profile', () => {
         cy.get("#reddit-bio-link").should('have.attr', 'href', 'https://www.reddit.com/user/test-reddit')
         cy.get("#snapchat-bio-link").should('exist')
         cy.get("#snapchat-bio-link").should('have.attr', 'href', 'https://www.snapchat.com/add/test-snapchat')
+        cy.percySnapshot('Profile: All Social Links)', { widths: PERCY_WIDTHS });
         cy.contains("sushi restaurants").should('exist')
         cy.contains("hiking trails").should('exist')
         cy.contains("old but charming cars").should('exist')
