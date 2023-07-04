@@ -10,8 +10,14 @@
 
     "description": "my favorites",
     "social_links": {
-        "instagram": "jonathannwuu",
-        "facebook": "jonathannwuu"
+        "instagram": "test-ig",
+        "facebook": "test-facebook",
+        "bereal": "test-bereal",
+        "snapchat": "test-snapchat",
+        "tiktok": "test-tik-tok",
+        "twitter": "test-twitter",
+        "reddit": "test-reddit",
+        "linkedin": "test-linkedin"
     },
     "description_style": {},
     "config": {},
