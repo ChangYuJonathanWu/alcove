@@ -32,7 +32,14 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const descriptionChanged = newDescription !== description
         const instagramChanged = newInstagram !== instagram
         const facebookChanged = newFacebook !== facebook
-        return photoChanged || titleChanged || descriptionChanged || instagramChanged || facebookChanged
+        const berealChanged = newBereal !== bereal
+        const snapchatChanged = newSnapchat !== snapchat
+        const tiktokChanged = newTiktok !== tiktok
+        const twitterChanged = newTwitter !== twitter
+        const redditChanged = newReddit !== reddit
+        const linkedinChanged = newLinkedin !== linkedin
+
+        return photoChanged || titleChanged || descriptionChanged || instagramChanged || facebookChanged || berealChanged || snapchatChanged || tiktokChanged || twitterChanged || redditChanged || linkedinChanged
     }
 
     const onBioUpdate = async () => {
@@ -45,7 +52,13 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
             title: newTitle,
             social_links: {
                 instagram: newInstagram,
-                facebook: newFacebook
+                facebook: newFacebook,
+                bereal: newBereal,
+                snapchat: newSnapchat,
+                tiktok: newTiktok,
+                twitter: newTwitter,
+                reddit: newReddit,
+                linkedin: newLinkedin
             }
         }
         const token = await refreshFirebaseToken()

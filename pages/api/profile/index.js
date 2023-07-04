@@ -34,7 +34,7 @@ async function handler(req, res) {
             updateQuery.title = title;
         }
         if(social_links) {
-            const { instagram, facebook } = social_links
+            const { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
             
             if(instagram || instagram === "") {
                 updateQuery["social_links.instagram"] = instagram
@@ -42,6 +42,25 @@ async function handler(req, res) {
             if(facebook || facebook === "") {
                 updateQuery["social_links.facebook"] = facebook
             }
+            if(bereal || bereal === "") {
+                updateQuery["social_links.bereal"] = bereal
+            }
+            if(snapchat || snapchat === "") {
+                updateQuery["social_links.snapchat"] = snapchat
+            }
+            if(tiktok || tiktok === "") {
+                updateQuery["social_links.tiktok"] = tiktok
+            }
+            if(twitter || twitter === "") {
+                updateQuery["social_links.twitter"] = twitter
+            }
+            if(reddit || reddit === "") {
+                updateQuery["social_links.reddit"] = reddit
+            }
+            if(linkedin || linkedin === "") {
+                updateQuery["social_links.linkedin"] = linkedin
+            }
+            
         }
         console.log("Update Query: " + JSON.stringify(updateQuery))
         const result = await updateProfile(updateQuery, uid)
