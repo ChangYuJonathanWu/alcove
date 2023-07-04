@@ -47,7 +47,7 @@ describe('Profile', () => {
         cy.get("#twitter-bio-link").should('exist')
         cy.get("#twitter-bio-link").should('have.attr', 'href', 'https://www.twitter.com/test-twitter')
         cy.get("#bereal-bio-link").should('exist')
-        cy.get("#bereal-bio-link").should('have.attr', 'href', 'https://www.BeRe.cal/test-bereal')
+        cy.get("#bereal-bio-link").should('have.attr', 'href', 'https://www.BeRe.al/test-bereal')
         cy.get("#linkedin-bio-link").should('exist')
         cy.get("#linkedin-bio-link").should('have.attr', 'href', 'https://www.linkedin.com/in/test-linkedin')
         cy.get("#reddit-bio-link").should('exist')
