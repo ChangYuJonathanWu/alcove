@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import { compressImage } from '@/utils/localImageProcessing';
@@ -6,13 +6,25 @@ import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
-    const { instagram, facebook } = social_links
+    const { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
     const [newProfilePhoto, setNewProfilePhoto] = useState(photo)
     const [newTitle, setNewTitle] = useState(title)
     const [newDescription, setNewDescription] = useState(description)
     const [newInstagram, setNewInstagram] = useState(instagram)
     const [newFacebook, setNewFacebook] = useState(facebook)
+    const [newBereal, setNewBereal] = useState(bereal)
+    const [newSnapchat, setNewSnapchat] = useState(snapchat)
+    const [newTiktok, setNewTiktok] = useState(tiktok)
+    const [newTwitter, setNewTwitter] = useState(twitter)
+    const [newReddit, setNewReddit] = useState(reddit)
+    const [newLinkedin, setNewLinkedin] = useState(linkedin)
+
     const [loading, setLoading] = useState(false)
+
+    const bottomRef = useRef(null)
+    const scrollToBottom = () => {
+        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500 )
+    }
 
     const userMadeChanges = () => {
         const photoChanged = newProfilePhoto !== photo
@@ -78,6 +90,8 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
 
     const modalStyle = {
         position: 'absolute',
+        maxHeight: '60vh',
+        overflowY: 'scroll',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
@@ -114,12 +128,19 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                         </div>
                     </Stack>
 
-                    <TextField id="edit-bio-name" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    <TextField id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
-                    <TextField id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
-                    <TextField id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-name" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-bereal" style={{ width: "100%" }} label="BeReal" value={newBereal} onChange={(e) => setNewBereal(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-snapchat" style={{ width: "100%" }} label="Snapchat" value={newSnapchat} onChange={(e) => setNewSnapchat(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-tiktok" style={{ width: "100%" }} label="Tiktok" value={newTiktok} onChange={(e) => setNewTiktok(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-twitter" style={{ width: "100%" }} label="Twitter" value={newTwitter} onChange={(e) => setNewTwitter(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-reddit" style={{ width: "100%" }} label="Reddit" value={newReddit} onChange={(e) => setNewReddit(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-linkedin" style={{ width: "100%" }} label="Linkedin" value={newLinkedin} onChange={(e) => setNewLinkedin(e.currentTarget.value)} />
+
                     <Stack direction="row" spacing={1}>
-                        <Button id="edit-bio-cancel" disabled={loading} onClick={handleClose}>Cancel</Button>
+                        <Button id="edit-bio-cancel" ref={bottomRef} disabled={loading} onClick={handleClose}>Cancel</Button>
                         <Button id="edit-bio-done" disabled={loading} onClick={onBioUpdate} variant="contained">Done</Button>
                     </Stack>
                 </Stack>
