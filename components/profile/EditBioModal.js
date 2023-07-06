@@ -152,9 +152,9 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                     <TextField size="small" id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
                     <TextField size="small" id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
                     <TextField size="small" id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-bereal" style={{ width: "100%" }} label="BeReal" value={newBereal} onChange={(e) => setNewBereal(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-snapchat" style={{ width: "100%" }} label="Snapchat" value={newSnapchat} onChange={(e) => setNewSnapchat(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-tiktok" style={{ width: "100%" }} label="Tiktok" value={newTiktok} onChange={(e) => setNewTiktok(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-bereal" style={{ width: "100%" }} label="BeReal" value={newBereal} onChange={(e) => setNewBereal(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-snapchat" style={{ width: "100%" }} label="Snapchat" value={newSnapchat} onChange={(e) => setNewSnapchat(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-tiktok" style={{ width: "100%" }} label="Tiktok" value={newTiktok} onChange={(e) => setNewTiktok(e.currentTarget.value)} />
                     <TextField onClick={scrollToBottom} size="small" id="edit-bio-twitter" style={{ width: "100%" }} label="Twitter" value={newTwitter} onChange={(e) => setNewTwitter(e.currentTarget.value)} />
                     <TextField onClick={scrollToBottom} size="small" id="edit-bio-reddit" style={{ width: "100%" }} label="Reddit" value={newReddit} onChange={(e) => setNewReddit(e.currentTarget.value)} />
                     <TextField onClick={scrollToBottom} size="small" id="edit-bio-linkedin" style={{ width: "100%" }} label="Linkedin" value={newLinkedin} onChange={(e) => setNewLinkedin(e.currentTarget.value)} />
