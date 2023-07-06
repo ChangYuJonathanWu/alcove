@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }) {
   return (
     <AuthContextProvider>
       <ThemeProvider theme={theme}>
-        {loading ?  <DefaultLoader /> : <Component {...pageProps} /> }
+        {true ?  <DefaultLoader /> : <Component {...pageProps} /> }
         <Analytics />
       </ThemeProvider>
     </AuthContextProvider>
