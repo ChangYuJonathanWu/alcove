@@ -24,6 +24,7 @@ import EditListItemsButtonRow from './EditListPostButtonRow';
 import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
+import { formatUri } from '@/utils/formatters';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.82)'
 const MAX_WIDTH = "600px"
@@ -121,11 +122,12 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     }
     const buildUriItem = (itemId, content) => {
         const { name, uri } = content
+        const formattedUri = formatUri(uri)
         const listButtonId = `list-button-${itemId}`
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1.5rem 1.5rem 1.5rem 1.5rem' }}>
-                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
+                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%" }} justifyContent={"space-between"}>
                             <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                                 <LinkIcon />

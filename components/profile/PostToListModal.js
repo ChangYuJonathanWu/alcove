@@ -11,6 +11,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -48,6 +49,11 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     }
 
     const onPost = async () => {
+        setError("")
+        if(uri && !isValidUrlWithoutProtocol(uri)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const formData = new FormData()
         formData.append("postType", postType)
@@ -97,6 +103,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         clearItems()
         setListIdToPostTo(null)
     }
+
+
 
     const onSpotifyUriChange = (e) => {
         const uri = e.target.value
@@ -172,7 +180,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                             <TextField style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
                             <TextField style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />
                             <TextField style={{ width: "100%" }} size="small" multiline rows={3} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
-                            <TextField onClick={scrollToBottom} style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
+                            <TextField onClick={scrollToBottom} style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(formatUri(e.currentTarget.value))} />
                         </Stack>
                     </div>}
                     {error && <span>{error}</span>}

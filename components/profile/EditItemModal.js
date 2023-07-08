@@ -3,6 +3,8 @@ import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material'
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
+
 
 // support delete and rename item
 export default function EditItemModal({ editItem, setEditItem, triggerReload }) {
@@ -36,6 +38,12 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         triggerReload(Date.now())
     }
     const onItemUpdate = async () => {
+        setError("")
+        // validate URI
+        if(newLink && !isValidUrlWithoutProtocol(newLink)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const body = {
             type: itemType,
@@ -73,7 +81,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
                     <TextField data-cy="edit-item-modal--item-name" size="small" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    {itemType === "uri" && <TextField data-cy="edit-item-modal--item-uri" size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />}
+                    {itemType === "uri" && <TextField data-cy="edit-item-modal--item-uri" size="small" style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(formatUri(e.currentTarget.value))} />}
                     {itemType === "list" && <TextField data-cy="edit-item-modal--item-subtitle" size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />}
                     {error && <Typography data-cy="edit-item-modal--error" color="error">{error}</Typography>}
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
