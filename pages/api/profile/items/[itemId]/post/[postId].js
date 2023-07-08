@@ -37,6 +37,7 @@ async function handler(req, res) {
             photo_changed = photo_changed[0] === "true"
             uri = uri[0]
 
+            let newUri = ""
             if (uri) {
                 newUri = uri.replace("http://", "https://")
                 if (!newUri.startsWith("https://")) {
@@ -70,7 +71,7 @@ async function handler(req, res) {
                 caption,
                 image: publicUrl,
                 photoChanged: photo_changed,
-                uri
+                uri: newUri
             }
 
             const result = await editPost(itemId, postId, post, uid)
