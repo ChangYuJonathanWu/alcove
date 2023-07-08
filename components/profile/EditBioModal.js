@@ -108,6 +108,27 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         setLoading(false)
     }
 
+    const processHandle = (handle, setHandle, type) => {
+        let newHandle = handle?.toLowerCase()
+        const regexMap = {
+            "instagram": /(?:https?:\/\/)?(?:www\.)?instagram\.com\/([a-zA-Z0-9\.\_]+)/,
+            "facebook": /(?:https?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9\.\_]+)/,
+            "bereal": /(?:https?:\/\/)?(?:www\.)?bere\.al\/([a-zA-Z0-9\.\_]+)/,
+            "twitter": /(?:https?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9\.\_]+)/,
+            "reddit": /(?:https?:\/\/)?(?:www\.)?reddit\.com\/user\/([a-zA-Z0-9\.\_]+)/,
+            "linkedin": /(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/([a-zA-Z0-9\.\_]+)/,
+            "tiktok": /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9\.\_]+)/,
+
+        }
+        const match = handle?.match(regexMap[type])
+        if (match && match[1]) {
+            newHandle = match[1]
+        }
+        setHandle(newHandle)
+
+    }
+
+
     const modalStyle = {
         position: 'absolute',
         maxHeight: '60vh',
@@ -147,17 +168,18 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
 
                         </div>
                     </Stack>
-
+                    
                     <TextField size="small" id="edit-bio-name" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField size="small" id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
-                    <TextField size="small" id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
-                    <TextField size="small" id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
-                    <TextField size="small" id="edit-bio-bereal" style={{ width: "100%" }} label="BeReal" value={newBereal} onChange={(e) => setNewBereal(e.currentTarget.value)} />
+                    <Typography variant="body1">Social Media</Typography>
+                    <TextField size="small" id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onBlur={() => processHandle(newInstagram, setNewInstagram, "instagram")} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onBlur={() => processHandle(newFacebook, setNewFacebook, "facebook")} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-bereal" style={{ width: "100%" }} label="BeReal" value={newBereal} onBlur={() => processHandle(newBereal, setNewBereal, "bereal")} onChange={(e) => setNewBereal(e.currentTarget.value)} />
                     <TextField size="small" id="edit-bio-snapchat" style={{ width: "100%" }} label="Snapchat" value={newSnapchat} onChange={(e) => setNewSnapchat(e.currentTarget.value)} />
-                    <TextField size="small" id="edit-bio-tiktok" style={{ width: "100%" }} label="Tiktok" value={newTiktok} onChange={(e) => setNewTiktok(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-twitter" style={{ width: "100%" }} label="Twitter" value={newTwitter} onChange={(e) => setNewTwitter(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-reddit" style={{ width: "100%" }} label="Reddit" value={newReddit} onChange={(e) => setNewReddit(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-linkedin" style={{ width: "100%" }} label="Linkedin" value={newLinkedin} onChange={(e) => setNewLinkedin(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-tiktok" style={{ width: "100%" }} label="Tiktok" value={newTiktok} onBlur={() => processHandle(newTiktok, setNewTiktok, "tiktok")} onChange={(e) => setNewTiktok(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-twitter" style={{ width: "100%" }} label="Twitter" onBlur={() => processHandle(newTwitter, setNewTwitter, "twitter")} value={newTwitter} onChange={(e) => setNewTwitter(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-reddit" style={{ width: "100%" }} label="Reddit" onBlur={() => processHandle(newReddit, setNewReddit, "reddit")} value={newReddit} onChange={(e) => setNewReddit(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-linkedin" style={{ width: "100%" }} label="Linkedin" onBlur={() => processHandle(newLinkedin, setNewLinkedin, "linkedin")} value={newLinkedin} onChange={(e) => setNewLinkedin(e.currentTarget.value)} />
 
                     <Stack direction="row" spacing={1}>
                         <Button id="edit-bio-cancel" ref={bottomRef} disabled={loading} onClick={handleClose}>Cancel</Button>
