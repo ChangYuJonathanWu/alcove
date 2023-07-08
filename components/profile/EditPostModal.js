@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { formatUri } from '@/utils/formatters';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -158,7 +159,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     <TextField size="small" style={{ width: "100%" }} label="Title" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} multiline rows={5} label="Caption" value={newCaption} onChange={(e) => setNewCaption(e.currentTarget.value)} />
-                    <TextField size="small" onClick={scrollToBottom} style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(e.currentTarget.value)} />
+                    <TextField size="small" onClick={scrollToBottom} style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(formatUri(e.currentTarget.value))} />
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <Button disabled={loading} ref={bottomRef} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>

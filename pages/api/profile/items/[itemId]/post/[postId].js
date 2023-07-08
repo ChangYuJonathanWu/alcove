@@ -37,6 +37,13 @@ async function handler(req, res) {
             photo_changed = photo_changed[0] === "true"
             uri = uri[0]
 
+            if (uri) {
+                newUri = uri.replace("http://", "https://")
+                if (!newUri.startsWith("https://")) {
+                    newUri = "https://" + newUri
+                }
+            }
+
             let publicUrl = ""
 
             if (image && image.length > 0) {

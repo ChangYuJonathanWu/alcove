@@ -3,6 +3,7 @@ import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/m
 import { getAuth } from "firebase/auth";
 import { compressImage } from '@/utils/localImageProcessing';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { stripSpaces } from '@/utils/formatters';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
@@ -109,7 +110,8 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     }
 
     const processHandle = (handle, setHandle, type) => {
-        let newHandle = handle?.toLowerCase()
+        let newHandle = handle ? handle.toLowerCase() : ""
+        newHandle = stripSpaces(newHandle)
         const regexMap = {
             "instagram": /(?:https?:\/\/)?(?:www\.)?instagram\.com\/([a-zA-Z0-9\.\_]+)/,
             "facebook": /(?:https?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9\.\_]+)/,
