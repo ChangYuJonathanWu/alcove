@@ -25,7 +25,7 @@ import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
+const PAPER_COLOR = 'rgba(255, 255, 255, 0.82)'
 const MAX_WIDTH = "600px"
 
 export default function ProfileItems({ user, editMode, triggerReload }) {
@@ -91,9 +91,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: itemHeaderColor, maxWidth: MAX_WIDTH }}>
-                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
-                        <Stack direction="row" justifyContent="space-between" style={{ width: "100%" }} >
+                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', borderRadius: '0.5rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: itemHeaderColor, maxWidth: MAX_WIDTH }}>
+                    <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
+                        <Stack direction="row" justifyContent="space-between" style={{ width: "100%"}} >
                             <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                                 {isOpen ? <ExpandMore /> : <ChevronRight />}
                                 <Stack>
@@ -124,7 +124,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const listButtonId = `list-button-${itemId}`
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
+                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1.5rem 1.5rem 1.5rem 1.5rem' }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={uri} target="_blank">
                         <Stack direction="row" style={{ width: "100%" }} justifyContent={"space-between"}>
                             <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
