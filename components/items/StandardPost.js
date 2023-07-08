@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
+const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 // TODO: Rename item to post. Keeping to maintain interface with other bespoke item/post types
 export default function StandardPost({ item, editMode = false, setPostToEdit }) {
     const { id, parentId, uri, title, image, subtitle, caption } = item
@@ -21,7 +22,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
         setPostToEdit(item)
     }
     return (
-        <ListItem key={id} sx={{ paddingTop: "0.5rem" }}>
+        <ListItem key={id} sx={{ paddingTop: "0.5rem", backgroundColor: PAPER_COLOR }}>
             <Stack direction="column" alignItems="start" spacing={1} style={{ width: "100%" }}>
                 {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />}
                 <Stack direction="row" style={{ width: "100%" }} alignContent="space-between" justifyContent="space-between">
