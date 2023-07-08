@@ -25,8 +25,9 @@ import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 import { formatUri } from '@/utils/formatters';
+import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
 
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.82)'
+const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = "600px"
 
 export default function ProfileItems({ user, editMode, triggerReload }) {

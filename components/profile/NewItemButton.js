@@ -13,8 +13,9 @@ import { Typography } from '@mui/material';
 
 import { getAuth } from "firebase/auth";
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
 
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
+const PAPER_COLOR =  DEFAULT_PAPER_COLOR
 const MAX_WIDTH = "600px"
 export default function NewItemButton({onClick}) {
     const submitNewItem = async () => {

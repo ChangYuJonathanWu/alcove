@@ -1,0 +1,1 @@
+export const DEFAULT_PAPER_COLOR = 'rgba(255, 255, 255, .90)'
