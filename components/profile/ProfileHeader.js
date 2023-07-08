@@ -37,7 +37,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
                     <Typography variant="h1">{title}</Typography>
                     {handle && <Typography variant="subtitle1">{`@${handle}`}</Typography>}
 
-                    <Typography variant="body">{description}</Typography>
+                    <Typography style={{textAlign: "center"}} variant="body">{description}</Typography>
                     {hasSocialLinks && <Grid style={{maxWidth: "180px"}} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
                         {instagram && <IconGridItem><IconButton id="instagram-bio-link" href={`https://www.instagram.com/${instagram}`} target="_blank">
                             <InstagramIcon />
