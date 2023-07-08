@@ -38,7 +38,8 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
 
-    const buildItemHeader = (name, item_font) => {
+    const buildItemHeader = (name) => {
+        const item_font = "default"
         switch (item_font) {
             case 'Montserrat':
                 return <span className={montserrat.className}>{name}</span>
@@ -81,20 +82,22 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         )
     }
 
-    const buildListItem = (itemId, content, itemFont) => {
+    const buildListItem = (itemId, content, config = {}) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
+        const { background = {}} = config
+        const { color: itemHeaderColor = PAPER_COLOR } = background
         const isOpen = listOpen === itemId
         const listButtonId = `list-button-${itemId}`
 
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
+                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 0, marginBottom: '0.5rem', backgroundColor: itemHeaderColor, maxWidth: MAX_WIDTH }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%" }} >
                             <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
                                 {isOpen ? <ExpandMore /> : <ChevronRight />}
                                 <Stack>
-                                    {buildItemHeader(name, itemFont)}
+                                    {buildItemHeader(name)}
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
                                 </Stack>
                             </Stack>
@@ -146,10 +149,10 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const itemComponents = []
         itemOrder.forEach(itemId => {
             const item = profileItems[itemId]
-            const { type: itemType, content, item_font: itemFont } = item
+            const { type: itemType, content, config } = item
             if (itemType === "list") {
                 itemComponents.push(
-                    buildListItem(itemId, content, itemFont)
+                    buildListItem(itemId, content, config)
                 )
             }
             if (itemType === "uri") {
