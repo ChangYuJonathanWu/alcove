@@ -10,6 +10,7 @@ import { Button, Typography, Link } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { isValidUrl } from '@/utils/formatters';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 // TODO: Rename item to post. Keeping to maintain interface with other bespoke item/post types
@@ -21,6 +22,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
         e.preventDefault()
         setPostToEdit(item)
     }
+
     return (
         <ListItem key={id} sx={{ paddingTop: "0.5rem", backgroundColor: PAPER_COLOR }}>
             <Stack direction="column" alignItems="start" spacing={1} style={{ width: "100%" }}>
@@ -29,7 +31,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                     <Stack>
 
                         <Typography variant="h4">
-                            {uri ?
+                            {isValidUrl(uri) ?
                                 <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
                                     <Stack direction="row" spacing={1} alignItems={"center"}>
                                         <b>{title}</b>

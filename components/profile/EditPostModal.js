@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
-import { formatUri } from '@/utils/formatters';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -70,6 +70,12 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         triggerReload(Date.now())
     }
     const onPostUpdate = async () => {
+        setError("")
+        // verify uri is valid
+        if (newLink && !isValidUrlWithoutProtocol(newLink)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const formData = new FormData()
         formData.append("title", newTitle)
@@ -160,6 +166,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} multiline rows={5} label="Caption" value={newCaption} onChange={(e) => setNewCaption(e.currentTarget.value)} />
                     <TextField size="small" onClick={scrollToBottom} style={{ width: "100%" }} label="Link" value={newLink} onChange={(e) => setNewLink(formatUri(e.currentTarget.value))} />
+                    {error && <Typography data-cy="edit-item-modal--error" color="error">{error}</Typography>}
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <Button disabled={loading} ref={bottomRef} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>

@@ -3,7 +3,8 @@ import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material'
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
-import { formatUri } from '@/utils/formatters';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
+
 
 // support delete and rename item
 export default function EditItemModal({ editItem, setEditItem, triggerReload }) {
@@ -37,6 +38,12 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         triggerReload(Date.now())
     }
     const onItemUpdate = async () => {
+        setError("")
+        // validate URI
+        if(newLink && !isValidUrlWithoutProtocol(newLink)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const body = {
             type: itemType,

@@ -11,7 +11,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
-import { formatUri } from '@/utils/formatters';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -49,6 +49,11 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     }
 
     const onPost = async () => {
+        setError("")
+        if(uri && !isValidUrlWithoutProtocol(uri)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const formData = new FormData()
         formData.append("postType", postType)

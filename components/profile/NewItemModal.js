@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 
 
 export default function NewItemModal({ open, setOpen, triggerReload }) {
@@ -15,14 +16,21 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
     const [itemType, setItemType] = useState("list")
     const [linkAddress, setLinkAddress] = useState("")
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
     const clearInputs = () => {
         setItemType("list")
         setLinkAddress("")
         setName("")
         setSubtitle("")
+        setError("")
         setLoading(false)
     }
     const onNewItem = async () => {
+        setError("")
+        if(linkAddress && !isValidUrlWithoutProtocol(linkAddress)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const body = {
             name,
@@ -69,7 +77,8 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
                         </RadioGroup>
                     </FormControl>
                     {itemType === "uri" &&
-                        <TextField data-cy="new-item-modal--item-uri" size="small" style={{ width: "100%" }} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(e.target.value)} />}
+                        <TextField data-cy="new-item-modal--item-uri" size="small" style={{ width: "100%" }} label="Link (URL)" value={linkAddress} onChange={(e) => setLinkAddress(formatUri(e.target.value))} />}
+                    {error && <Typography color="error">{error}</Typography>}
                     <Stack direction="row" spacing={1}>
                         <Button data-cy="new-item-modal--cancel" disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
                         <Button data-cy="new-item-modal--create" disabled={loading || !name || (itemType === "uri" && !linkAddress)} onClick={onNewItem} variant="contained">Create</Button>
