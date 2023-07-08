@@ -13,7 +13,7 @@ export default function TestHarness() {
                 <Link href="/239jsdfk9Q2jjsk_no_spotify">Profile: No Spotify</Link>
                 <Link href="/demo_the_artist">The Artist: demo1</Link>
                 <Link href="/demo_the_foodie">The Foodie: demo2</Link>
-                <Link href="/demo_the_outdoors">The Foodie: demo3</Link>
+                <Link href="/demo_the_outdoors">The Outdoors: demo3</Link>
                 <Link href="/demo_the_baker">The Baker: demo4</Link>
                 <Link href="/demo_the_hacker">The Hacker: demo5</Link>
                 
