@@ -11,7 +11,8 @@ export default function TestHarness() {
     <div>
         <Stack>
         <Link href="/239jsdfk9Q2jjsk_no_spotify">Profile: No Spotify</Link>
-        <Link href="/demo_the_artist">The Artist</Link>
+        <Link href="/demo_the_artist">The Artist: demo1</Link>
+        <Link href="/demo_the_foodie">The Foodie: demo2</Link>
         </Stack>
         
     </div>
