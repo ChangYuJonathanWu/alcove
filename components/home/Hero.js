@@ -7,6 +7,14 @@ import { Carousel } from 'react-responsive-carousel';
 import Image from 'next/image';
 import { Stack } from '@mui/material';
 
+import TheBaker from '@/components/home/static/the_baker_rounded.png'
+import TheArtist from '@/components/home/static/the_artist_rounded.png'
+import TheFoodie from '@/components/home/static/the_foodie_rounded.png'
+import TheHacker from '@/components/home/static/the_hacker_rounded.png'
+import TheOutdoors from '@/components/home/static/the_outdoors_rounded.png'
+import Avatar from '@mui/material';
+
+
 export default function Hero({ desktop }) {
   const perspective = "none" // desktop ? "perspective(400px) rotateY(3deg) rotateX(5deg)" : "perspective(400px) rotateY(-3deg) rotateX(3deg)"
 
@@ -18,21 +26,39 @@ export default function Hero({ desktop }) {
     "/home/thebaker.png"
   ]
 
-  const containerStyle = desktop ? {marginTop: '1rem', height: "100vh", width: '410px'} : {padding: '0.5rem', marginBottom: '4rem', width: '100%'}
-  const imageShadowStyle = desktop ? {margin: '2rem' } : {}
+  const importedProfilesToShow = [
+    TheArtist,
+    TheFoodie,
+    TheHacker,
+    TheOutdoors,
+    TheBaker
+  ]
+
+  const containerStyle = desktop ? { marginTop: '1rem', height: "100vh", width: '410px' } : { height: "55vh", position: 'relative' }
+  const imageShadowStyle = desktop ? { margin: '2rem' } : {}
 
   const buildCarouselItems = () => {
-    return profilesToShow.map((profile) => {
-      return (
-        <Stack key={profile} style={containerStyle}>
-          <ImageShadow shadowBlur={20} width={desktop ? 340 : "70%"} style={imageShadowStyle} shadowHover={desktop} src={profile} />
-        </Stack>
-      )
-    })
+    if (desktop) {
+      return profilesToShow.map((profile) => {
+        return (
+          <Stack key={profile} style={containerStyle}>
+            <ImageShadow shadowBlur={20} width={340} style={imageShadowStyle} shadowHover={desktop} src={profile} />
+          </Stack>)
+      })
+    } else {
+      return importedProfilesToShow.map((profile, idx) => {
+        return (<div key={`profile-${idx}`} style={containerStyle}>
+          <Image style={{ borderRadius: '12px', objectFit: "contain"}} fill={true} src={profile} alt={"Alcove Profile"} />
+        </div>)
+
+      })
+    }
+
   }
+
   return (
-    <div style={{ height: desktop ? '100vh' : '100%'}}>
-      <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={true} dynamicHeight={false} >
+    <div style={{ height: desktop ? '100vh' : "100%", width: '100%' }}>
+      <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={desktop} dynamicHeight={false} >
         {buildCarouselItems()}
       </Carousel>
     </div>
