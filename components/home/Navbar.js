@@ -19,7 +19,7 @@ export default function Navbar({mobile}) {
     const logoColor = theme.logoColor
     const textColor = theme.textColor
     return (
-        <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
+        <Stack alignItems="start" style={{ paddingBottom: mobile ? '1rem' : '3rem' }}>
             <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
                 <Image src="/alcove-logo.svg" width={mobile ? 200 : 250} height={mobile ? 50 : 80} alt="Alcove logo" />
                 {/* <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1> */}
