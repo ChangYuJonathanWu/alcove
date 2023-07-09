@@ -48,7 +48,7 @@ export default function Hero({ desktop }) {
     } else {
       return importedProfilesToShow.map((profile, idx) => {
         return (<div key={`profile-${idx}`} style={containerStyle}>
-          <Image style={{ borderRadius: '12px', objectFit: "contain"}} fill={true} src={profile} alt={"Alcove Profile"} />
+          <Image priority={true} style={{ borderRadius: '12px', objectFit: "contain"}} fill={true} src={profile} alt={"Alcove Profile"} />
         </div>)
 
       })
@@ -57,7 +57,7 @@ export default function Hero({ desktop }) {
   }
 
   return (
-    <div style={{ height: desktop ? '100vh' : "100%", width: '100%' }}>
+    <div style={{ height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%"}}>
       <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={desktop} dynamicHeight={false} >
         {buildCarouselItems()}
       </Carousel>
