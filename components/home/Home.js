@@ -72,7 +72,7 @@ export default function Home() {
   const desktopLayout = (
     <Stack style={{ marginTop: "0rem" }} direction="row" spacing={4} alignItems="start" justifyContent="start">
       <Hero desktop={true} />
-      <Stack style={{ marginTop: "1rem" }} spacing={3}>
+      <Stack style={{ marginTop: "2rem" }} spacing={3}>
         <Navbar mobile={isTabletOrMobile} />
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />

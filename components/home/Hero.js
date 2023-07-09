@@ -34,7 +34,7 @@ export default function Hero({ desktop }) {
     TheBaker
   ]
 
-  const containerStyle = desktop ? { marginTop: '1rem', height: "100vh", width: '410px' } : { height: "520px", position: 'relative' }
+  const containerStyle = desktop ? { height: "100vh", width: '410px' } : { height: "520px", position: 'relative' }
   const imageShadowStyle = desktop ? { margin: '2rem' } : {}
 
   const buildCarouselItems = () => {
@@ -57,8 +57,8 @@ export default function Hero({ desktop }) {
   }
 
   return (
-    <div style={{ height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%"}}>
-      <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={desktop} dynamicHeight={false} >
+    <div style={{ marginTop: desktop? "2rem" : "0rem", height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%"}}>
+      <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={false} dynamicHeight={true} >
         {buildCarouselItems()}
       </Carousel>
     </div>
