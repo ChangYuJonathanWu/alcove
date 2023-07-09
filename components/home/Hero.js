@@ -34,7 +34,7 @@ export default function Hero({ desktop }) {
     TheBaker
   ]
 
-  const containerStyle = desktop ? { marginTop: '1rem', height: "100vh", width: '410px' } : { height: "55vh", position: 'relative' }
+  const containerStyle = desktop ? { marginTop: '1rem', height: "100vh", width: '410px' } : { height: "520px", position: 'relative' }
   const imageShadowStyle = desktop ? { margin: '2rem' } : {}
 
   const buildCarouselItems = () => {

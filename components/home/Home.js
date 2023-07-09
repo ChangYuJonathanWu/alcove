@@ -100,7 +100,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main style={{ backgroundColor, minHeight: isTabletOrMobile ? '140vh' : '100vh', width: "100%" }}>
+      <main style={{ backgroundColor, minHeight: isTabletOrMobile ? '130vh' : '100vh', width: "100%" }}>
         <Stack alignItems="center" style={{ paddingBottom: '3rem', height: '100vh' }}>
           {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
         </Stack>
