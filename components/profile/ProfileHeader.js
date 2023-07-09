@@ -13,8 +13,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import RedditIcon from '@mui/icons-material/Reddit';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Image from 'next/image';
-
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
+import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
+const PAPER_COLOR = DEFAULT_PAPER_COLOR
+const MAX_WIDTH = 220
 
 const IconGridItem = ({ children }) => {
     return (
@@ -25,17 +26,17 @@ const IconGridItem = ({ children }) => {
     )
 }
 export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
-    const { title, description, handle, photo, social_links } = user;
+    const { title, description, handle, photo, social_links, demo=false } = user;
     const { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
     const hasSocialLinks = instagram || facebook
 
     return (
         <Stack direction="row" justifyContent={"center"} >
-            <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '1rem', borderRadius: '1rem',  backgroundColor: PAPER_COLOR, maxWidth: '300px' }}>
+            <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '1rem', borderRadius: '1rem',  backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem" }}>
                     <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={photo} />
                     <Typography variant="h1">{title}</Typography>
-                    {handle && <Typography variant="subtitle1">{`@${handle}`}</Typography>}
+                    {!demo && handle && <Typography variant="subtitle1">{`@${handle}`}</Typography>}
 
                     <Typography style={{textAlign: "center"}} variant="body">{description}</Typography>
                     {hasSocialLinks && <Grid style={{maxWidth: "180px"}} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>

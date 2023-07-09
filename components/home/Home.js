@@ -59,28 +59,24 @@ export default function Home() {
 
   const mobileLayout = (
     <Stack alignItems="center">
+      <Navbar mobile={isTabletOrMobile} />
       <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
-      <Hero desktop={true} />
+      <Hero desktop={false} />
       <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
-      {/* {!signupState.completed && <Link href="/login"><Button variant="outlined" style={{ color: 'white', borderColor: 'white' }}>Sign In</Button></Link>} */}
-      <Typography variant="subtitle2" style={{color: 'white'}}> Already have an account? Login <Link style={{color: 'white'}} href="/login">here</Link>.</Typography>
+    
+      <Typography variant="subtitle2" style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
     </Stack>
   )
 
   const desktopLayout = (
-    <Stack style={{ marginTop: "0rem" }} direction="row" spacing={isLarge ? 10 : 6} alignItems="start" justifyContent="start">
-      <Hero desktop={true} width={isReallyLarge ? 300 : isLarge ? 270 : 250} style={{ paddingBottom: "3rem" }} />
-      <Stack style={{ marginTop: "5rem" }} spacing={3}>
+    <Stack style={{ marginTop: "0rem" }} direction="row" spacing={4} alignItems="start" justifyContent="start">
+      <Hero desktop={true} />
+      <Stack style={{ marginTop: "2rem" }} spacing={3}>
+        <Navbar mobile={isTabletOrMobile} />
         <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
-        <Typography style={{color: 'white'}}> Already have an account? Login <Link style={{color: 'white'}} href="/login">here</Link>.</Typography>
-        {/* {!signupState.completed && <Stack alignItems="center" spacing={1}>
-          <Divider style={{ borderColor: 'white', width: '100%', marginTop: '2rem', marginBottom: '1rem' }} />
-          <Typography style={{ color: 'white' }} variant="body2">Already have an account?</Typography>
-          <Link href="/login"><Button variant="outlined" style={{ textTransform: 'none', color: 'white', borderColor: 'white', maxWidth: '150px', margin: 'auto', marginTop: '1rem' }}>Login</Button></Link>
-        </Stack>} */}
-
+        <Typography style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
       </Stack>
     </Stack>
   )
@@ -104,9 +100,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
-        <Navbar mobile={isTabletOrMobile}/>
-        <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
+      <main style={{ backgroundColor, minHeight: isTabletOrMobile ? '130vh' : '100vh', width: "100%" }}>
+        <Stack alignItems="center" style={{ paddingBottom: '3rem', height: '100vh' }}>
           {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
         </Stack>
       </main>
