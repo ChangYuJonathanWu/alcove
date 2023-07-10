@@ -17,7 +17,7 @@ import * as Sentry from '@sentry/nextjs'
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
-import ProfileLoader from '@/components/profile/ProfileLoader';
+import DefaultLoader from '@/components/DefaultLoader';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 import * as Yup from 'yup';
@@ -146,7 +146,7 @@ export default function Welcome({ signup }) {
             </Head>
             <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
 
-                {pageLoading && <ProfileLoader />}
+                {pageLoading && <DefaultLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
                     <div style={{ borderStyle: 'solid', maxWidth: "350px", borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
                         <Navbar mobile={true} />

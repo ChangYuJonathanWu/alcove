@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import React, { useState, useEffect } from 'react'
 import { useAuthContext } from "@/context/AuthContext";
-import ProfileLoader from '@/components/profile/ProfileLoader';
+import DefaultLoader from '@/components/DefaultLoader';
 
 
 export default function RefreshToken() {
@@ -21,5 +21,5 @@ export default function RefreshToken() {
         router.isReady && authReady && refreshTokenAndRedirect()
     }, [user, authReady, router])
 
-    return <ProfileLoader />
+    return <DefaultLoader />
 }
