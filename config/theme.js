@@ -22,7 +22,7 @@ const theme = createTheme({
             fontWeight: "500"
 
         }
-    }
+    },
 });
 
 

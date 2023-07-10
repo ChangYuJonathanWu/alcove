@@ -24,7 +24,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     }
 
     return (
-        <ListItem key={id} sx={{ paddingTop: "0.5rem", backgroundColor: PAPER_COLOR }}>
+        <ListItem key={id} sx={{ paddingTop: "0.5rem" }}>
             <Stack direction="column" alignItems="start" spacing={1} style={{ width: "100%" }}>
                 {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />}
                 <Stack direction="row" style={{ width: "100%" }} alignContent="space-between" justifyContent="space-between">

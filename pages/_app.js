@@ -9,6 +9,7 @@ import '../styles/custom.css'
 import { useState, useEffect } from 'react'
 import DefaultLoader from '@/components/DefaultLoader';
 import Router from 'next/router';
+import { HOME_THEME } from '@/utils/themeConfig';
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false)
@@ -33,7 +34,10 @@ export default function App({ Component, pageProps }) {
   return (
     <AuthContextProvider>
       <ThemeProvider theme={theme}>
-        {loading ?  <DefaultLoader /> : <Component {...pageProps} /> }
+        <div style={{backgroundColor: HOME_THEME.bgColor}}>
+          {loading ? <DefaultLoader /> : <Component {...pageProps}  />}
+        </div>
+
         <Analytics />
       </ThemeProvider>
     </AuthContextProvider>

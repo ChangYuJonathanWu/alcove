@@ -56,13 +56,13 @@ export default function Profile({ user, ownerSignedIn = false, publicView = fals
 
     //TODO: Error handling on network request, validation
     return (
-        <div style={{ height: '100%', minHeight: '100vh', width: '100%', padding: 0, margin: 0 }}>
-            <main>
-                <div style={{ zIndex: -1, height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center" }}>
+        <main>
+            <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
 
-                    {backgroundType == "image" && <Image priority={true} fill={true} src={backgroundUrl} objectFit='cover' id="background-photo" alt="background wallpaper" />}
-                </div>
-                <Stack style={{ marginBottom: "100px" }}>
+                {backgroundType == "image" && <Image priority={true} fill={true} src={backgroundUrl} objectFit='cover' id="background-photo" alt="background wallpaper" />}
+            </div>
+            <Stack style={{ marginBottom: "100px" }}>
+                <div style={{ zIndex: 1 }}>
                     <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload} />
                     <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload} />
                     <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={user} triggerReload={triggerReload} />
@@ -70,18 +70,20 @@ export default function Profile({ user, ownerSignedIn = false, publicView = fals
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
                     <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
                     <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload} />
-                    {ownerSignedIn && <Stack>
-                        <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
-                        <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
-                        <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
-                        <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
-                        <LogoutButton onClick={logoutUser} />
-                    </Stack>}
+                </div>
 
-                    {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
+                {ownerSignedIn && 
+                <Stack style={{zIndex: 1}}>
+                    <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
+                    <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
+                    <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
+                    <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
+                    <LogoutButton onClick={logoutUser} />
+                </Stack>}
 
-                </Stack>
-            </main>
-        </div>
+                {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
+
+            </Stack>
+        </main>
     )
 }
