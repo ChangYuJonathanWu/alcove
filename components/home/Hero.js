@@ -12,6 +12,8 @@ import TheArtist from '@/components/home/static/the_artist_rounded.png'
 import TheFoodie from '@/components/home/static/the_foodie_rounded.png'
 import TheHacker from '@/components/home/static/the_hacker_rounded.png'
 import TheOutdoors from '@/components/home/static/the_outdoors_rounded.png'
+import TheGeneralist from '@/components/home/static/the_generalist.png'
+import TheReader from '@/components/home/static/thereader.png'
 import Avatar from '@mui/material';
 
 
@@ -21,17 +23,21 @@ export default function Hero({ desktop }) {
   const profilesToShow = [
     "/home/theartist.png",
     "/home/thefoodie.png",
-    "/home/thehacker.png",
+    "/home/thegeneralist.png",
     "/home/theoutdoors.png",
-    "/home/thebaker.png"
+    "/home/thereader.png",
+    "/home/thehacker.png",
+    "/home/thebaker.png",
   ]
 
   const importedProfilesToShow = [
     TheArtist,
     TheFoodie,
-    TheHacker,
+    TheGeneralist,
     TheOutdoors,
-    TheBaker
+    TheReader,
+    TheHacker,
+    TheBaker,
   ]
 
   const containerStyle = desktop ? { height: "100vh", width: '410px' } : { height: "520px", position: 'relative' }
@@ -48,7 +54,7 @@ export default function Hero({ desktop }) {
     } else {
       return importedProfilesToShow.map((profile, idx) => {
         return (<div key={`profile-${idx}`} style={containerStyle}>
-          <Image priority={true} style={{ borderRadius: '12px', objectFit: "contain"}} fill={true} src={profile} alt={"Alcove Profile"} />
+          <Image priority={true} style={{ borderRadius: '12px', objectFit: "contain" }} fill={true} src={profile} alt={"Alcove Profile"} />
         </div>)
 
       })
@@ -57,7 +63,7 @@ export default function Hero({ desktop }) {
   }
 
   return (
-    <div style={{ marginTop: desktop? "2rem" : "0rem", height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%"}}>
+    <div style={{ marginTop: desktop ? "2rem" : "0rem", height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%" }}>
       <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={false} dynamicHeight={true} >
         {buildCarouselItems()}
       </Carousel>
