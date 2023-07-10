@@ -18,14 +18,7 @@ import { useRouter } from 'next/router';
 
 import React, { useState } from 'react'
 
-const theme4 = {
-  bgColor: '#7C9070',
-  logoColor: "white",
-  textColor: "white",
-  buttonColor: '#F97B22',
-  buttonTextColor: 'white'
-}
-
+import { HOME_THEME } from '@/utils/themeConfig';
 
 export default function Home() {
   const isTabletOrMobile = useBetterMediaQuery('(max-width: 800px)')
@@ -34,7 +27,7 @@ export default function Home() {
 
   const minQueriesComplete = isTabletOrMobile || isLarge || isReallyLarge
 
-  const theme = theme4;
+  const theme = HOME_THEME
   const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
   const backgroundColor = theme.bgColor
   const logoColor = theme.logoColor
@@ -100,8 +93,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main style={{ backgroundColor, minHeight: isTabletOrMobile ? '130vh' : '100vh', width: "100%" }}>
-        <Stack alignItems="center" style={{ paddingBottom: '3rem', height: '100vh' }}>
+      <main>
+        <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
           {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
         </Stack>
       </main>
