@@ -16,6 +16,8 @@ export default function TestHarness() {
                 <Link href="/demo_the_outdoors">The Outdoors: demo3</Link>
                 <Link href="/demo_the_baker">The Baker: demo4</Link>
                 <Link href="/demo_the_hacker">The Hacker: demo5</Link>
+                <Link href="/demo_the_generalist">The Generalist: demo6</Link>
+                <Link href="/demo_the_reader">The Reader: demo7</Link>
                 
             </Stack>
 
