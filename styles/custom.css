@@ -6,3 +6,7 @@
 .firework-shown {
     opacity: 1;
 }
+
+.Paper {
+  z-index: 10;
+}
