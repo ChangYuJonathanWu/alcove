@@ -15,7 +15,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Image from 'next/image';
 import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
-const MAX_WIDTH = 220
+const MAX_WIDTH = 260
 
 const IconGridItem = ({ children }) => {
     return (
@@ -35,7 +35,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
             <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '1rem', borderRadius: '1rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH  }}>
                 <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem" }}>
                     <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={photo} />
-                    <Typography variant="h1">{title}</Typography>
+                    <Typography variant="h1" style={{textAlign: "center"}}>{title}</Typography>
                     {!demo && handle && <Typography variant="subtitle1">{`@${handle}`}</Typography>}
 
                     <Typography style={{textAlign: "center"}} variant="body">{description}</Typography>
