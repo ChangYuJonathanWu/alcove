@@ -42,7 +42,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                         </Typography>
 
                         {subtitle && <Typography variant="body2" fontSize="0.8rem">{`${subtitle}`}</Typography>}
-                        {captionToUse && <Typography variant="caption">{captionToUse}</Typography>}
+                        {captionToUse && <Typography variant="caption" style={{whiteSpace: "pre-wrap"}}>{captionToUse}</Typography>}
                     </Stack>
                     {editMode && <EditNoteIcon onClick={onEditClick} />}
                 </Stack>
