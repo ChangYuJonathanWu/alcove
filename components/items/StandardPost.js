@@ -12,7 +12,6 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { isValidUrl } from '@/utils/formatters';
 
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 // TODO: Rename item to post. Keeping to maintain interface with other bespoke item/post types
 export default function StandardPost({ item, editMode = false, setPostToEdit }) {
     const { id, parentId, uri, title, image, subtitle, caption } = item
@@ -42,7 +41,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                         </Typography>
 
                         {subtitle && <Typography variant="body2" fontSize="0.8rem">{`${subtitle}`}</Typography>}
-                        {captionToUse && <Typography variant="caption">{captionToUse}</Typography>}
+                        {captionToUse && <Typography variant="caption" style={{whiteSpace: "pre-wrap"}}>{captionToUse}</Typography>}
                     </Stack>
                     {editMode && <EditNoteIcon onClick={onEditClick} />}
                 </Stack>
