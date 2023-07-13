@@ -93,7 +93,7 @@ export default function SignIn() {
                 </div>
                 {pageLoading && <DefaultLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
-                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '320px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
+                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
                         <Stack alignItems={"center"} style={{ width: "100%" }}>
                             <Link href="/">
                                 <Navbar />
