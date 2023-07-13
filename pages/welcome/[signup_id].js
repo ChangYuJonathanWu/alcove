@@ -144,80 +144,88 @@ export default function Welcome({ signup }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
+            <main style={{ minHeight: '100vh', width: "100%" }}>
+                <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
+                    <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
+
+                </div>
 
                 {pageLoading && <DefaultLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
-                    <div style={{ borderStyle: 'solid', maxWidth: "350px", borderWidth: '1px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
-                        <Navbar mobile={true} />
-                        <Stack alignItems={"center"}>
-                            <Typography variant="h3" style={{ color: 'white', fontWeight: 700, marginBottom: '1em' }}>{`Hey @${handle}, you're in!`}</Typography>
-                            <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Create your Alcove now and join an exclusive group of early-access users.`}</Typography>
-                            <Typography variant="subtitle1" style={{ color: 'white', marginTop: '3rem', fontWeight: 700 }}>{`Email: ${email}`}</Typography>
-                        </Stack>
+                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', maxWidth: "350px", borderWidth: '0px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
+                        <Stack alignItems="center">
 
-                        <Formik
-                            initialValues={{
-                                password: '',
-                                passwordConfirm: ''
-                            }}
-                            // validationSchema={SignupSchema}
-                            onSubmit={async (values) => {
-                                console.log("Attempting to complete signup")
-                                const { password, passwordConfirm } = values;
-                                if (password !== passwordConfirm || !validPassword(password)) {
-                                    return
-                                }
-                                setLoading(true)
 
-                                try {
-                                    const completeSignupResult = await fetch(`/api/signup/complete`, {
-                                        method: "POST",
-                                        body: JSON.stringify({
-                                            password,
-                                            signupId: _id
+                            <Navbar mobile={true} />
+                            <Stack alignItems={"center"}>
+                                <Typography variant="h3" style={{ color: 'white', fontWeight: 700, marginBottom: '1em' }}>{`Hey @${handle}, you're in!`}</Typography>
+                                <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Create your Alcove now and join an exclusive group of early-access users.`}</Typography>
+                                <Typography variant="subtitle1" style={{ color: 'white', marginTop: '3rem', fontWeight: 700 }}>{`Email: ${email}`}</Typography>
+                            </Stack>
+
+                            <Formik
+                                initialValues={{
+                                    password: '',
+                                    passwordConfirm: ''
+                                }}
+                                // validationSchema={SignupSchema}
+                                onSubmit={async (values) => {
+                                    console.log("Attempting to complete signup")
+                                    const { password, passwordConfirm } = values;
+                                    if (password !== passwordConfirm || !validPassword(password)) {
+                                        return
+                                    }
+                                    setLoading(true)
+
+                                    try {
+                                        const completeSignupResult = await fetch(`/api/signup/complete`, {
+                                            method: "POST",
+                                            body: JSON.stringify({
+                                                password,
+                                                signupId: _id
+                                            })
                                         })
-                                    })
-                                    const { success, error } = await completeSignupResult.json()
-                                    if (success) {
-                                        router.replace(`/login?email=${email}`)
-                                    } else {
+                                        const { success, error } = await completeSignupResult.json()
+                                        if (success) {
+                                            router.replace(`/login?email=${email}`)
+                                        } else {
+                                            Sentry.captureException(error)
+                                            setLoginError("Could not complete signup - please try again later")
+                                        }
+
+                                    } catch (error) {
+                                        const errorCode = error.code;
+                                        const errorMessage = error.message;
+                                        console.error(errorCode, errorMessage)
                                         Sentry.captureException(error)
                                         setLoginError("Could not complete signup - please try again later")
-                                    }
+                                    };
+                                    setLoading(false)
 
-                                } catch (error) {
-                                    const errorCode = error.code;
-                                    const errorMessage = error.message;
-                                    console.error(errorCode, errorMessage)
-                                    Sentry.captureException(error)
-                                    setLoginError("Could not complete signup - please try again later")
-                                };
-                                setLoading(false)
+                                }}
+                            >
+                                {({ values, errors, touched }) => (
+                                    <Form>
+                                        <Stack style={{}} alignItems="center" spacing={1}>
+                                            <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
+                                            <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
+                                            <div>
+                                                {!validatePasswordLength(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Minimum 8 characters</Typography>}
+                                                {!validatePasswordContainsNumber(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
+                                                {!validatePasswordUpperCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
+                                                {!validatePasswordLowerCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
+                                                {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
+                                            </div>
 
-                            }}
-                        >
-                            {({ values, errors, touched }) => (
-                                <Form>
-                                    <Stack style={{}} alignItems="center" spacing={1}>
-                                        <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                        <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                        <div>
-                                            {!validatePasswordLength(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Minimum 8 characters</Typography>}
-                                            {!validatePasswordContainsNumber(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
-                                            {!validatePasswordUpperCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
-                                            {!validatePasswordLowerCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
-                                            {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
-                                        </div>
+                                            <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Get Started"}</Button>
+                                        </Stack>
 
-                                        <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Get Started"}</Button>
-                                    </Stack>
-
-                                </Form>
-                            )}
+                                    </Form>
+                                )}
 
 
-                        </Formik>
+                            </Formik>
+                        </Stack>
                     </div>
                     <Typography style={{ color: 'white' }}>
                         {loginError ?? ""}
