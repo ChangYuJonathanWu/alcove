@@ -25,7 +25,7 @@ import ThemingModal from './ThemingModal';
 import LogoutButton from './LogoutButton';
 
 
-export default function Profile({ user, ownerSignedIn = false, publicView = false }) {
+export default function Profile({ user, ownerSignedIn = false }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
     const [newItemOpen, setNewItemOpen] = useState(false)
@@ -72,16 +72,18 @@ export default function Profile({ user, ownerSignedIn = false, publicView = fals
                     <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload} />
                 </div>
 
-                {ownerSignedIn && 
-                <Stack style={{zIndex: 1}}>
-                    <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
-                    <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
-                    <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
-                    <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
-                    <LogoutButton onClick={logoutUser} />
-                </Stack>}
+                {ownerSignedIn &&
+                    <Stack style={{ zIndex: 1 }}>
+                        <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
+                        <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
+                        <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
+                        <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
+                        <LogoutButton onClick={logoutUser} />
+                    </Stack>}
+                <div style={{ zIndex: 1 }}>
+                    {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
+                </div>
 
-                {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
 
             </Stack>
         </main>
