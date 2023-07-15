@@ -141,13 +141,14 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                             name="item-type-radio-buttons-group"
                         >
                             <FormControlLabel value="standard" control={<Radio />} label="Post" />
-                            <FormControlLabel value="spotify" control={<Radio />} label="Song" />
+                            <FormControlLabel value="spotify" control={<Radio />} label="Spotify" />
                         </RadioGroup>
                     </FormControl>
                     {postType === "spotify" && <div style={{ width: "100%" }}>
                         <Stack spacing={2}>
+                            <Typography variant="subtitle2">You can post a song, album, playlist and more from Spotify</Typography>
                             <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
-                            <Typography variant="subtitle2">{`To get the Spotify link, click the three dots on the song, click "Share", then "Copy Song Link"`}</Typography>
+                            <Typography variant="subtitle2">{`To get the Spotify link, click the three dots on the song or item, click Share, then Copy Link`}</Typography>
                         </Stack>
 
                     </div>}
