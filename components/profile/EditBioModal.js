@@ -122,7 +122,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
             "tiktok": /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9\.\_]+)/,
 
         }
-        const match = handle?.match(regexMap[type])
+        const match = newHandle?.match(regexMap[type])
         if (match && match[1]) {
             newHandle = match[1]
         }

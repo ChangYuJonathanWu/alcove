@@ -21,8 +21,8 @@ import React, { useState } from 'react'
 import { HOME_THEME } from '@/utils/themeConfig';
 
 export default function Home() {
-  const isTabletOrMobile = useBetterMediaQuery('(max-width: 800px)')
-  const isLarge = useBetterMediaQuery('(min-width: 1000px)')
+  const isTabletOrMobile = useBetterMediaQuery('(max-width: 930px)')
+  const isLarge = useBetterMediaQuery('(min-width: 930px)')
   const isReallyLarge = useBetterMediaQuery('(min-width: 1200px)')
 
   const minQueriesComplete = isTabletOrMobile || isLarge || isReallyLarge
@@ -67,7 +67,7 @@ export default function Home() {
       <Hero desktop={true} />
       <Stack style={{ marginTop: "2rem" }} spacing={3}>
         <Navbar mobile={isTabletOrMobile} />
-        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isLarge ? "3.2rem" : "2.5rem"} />
+        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isReallyLarge ? "3rem" : "2.5rem"} />
         <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
         <Typography style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
       </Stack>
