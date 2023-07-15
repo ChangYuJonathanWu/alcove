@@ -64,7 +64,7 @@ export default function Hero({ desktop }) {
 
   return (
     <div style={{ marginTop: desktop ? "2rem" : "0rem", height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%" }}>
-      <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={2800} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={false} dynamicHeight={true} >
+      <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={3000} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={false} dynamicHeight={true} >
         {buildCarouselItems()}
       </Carousel>
     </div>
