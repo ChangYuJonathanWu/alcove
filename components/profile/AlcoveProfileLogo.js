@@ -16,12 +16,14 @@ const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 export default function AlcoveProfileLogo() {
 
     return (
-        <Link href="/" style={{ textDecoration: 'none' }}>
-            <Stack direction="row" justifyContent="center">
+
+        <Stack direction="row" justifyContent="center">
+            <Link href="/" style={{ textDecoration: 'none' }}>
                 <Paper sx={{ padding: '0.5rem 1.2rem 0.5rem 1.2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
                     <Image src="/alcove-logo-dark.svg" width={70} height={25} alt="Alcove logo" />
                 </Paper>
-            </Stack>
-        </Link>
+            </Link>
+        </Stack>
+
     )
 }
