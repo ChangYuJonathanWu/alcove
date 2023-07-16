@@ -28,7 +28,7 @@ import { formatUri } from '@/utils/formatters';
 import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
-const MAX_WIDTH = "600px"
+const MAX_WIDTH = "500px"
 
 export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);

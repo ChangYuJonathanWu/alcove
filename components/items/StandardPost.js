@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import { Button, Typography, Link } from '@mui/material';
+import { Button, Typography, Link, Divider } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -23,25 +23,26 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     }
 
     return (
-        <ListItem key={id} sx={{ paddingTop: "0.5rem" }}>
-            <Stack direction="column" alignItems="start" spacing={1} style={{ width: "100%" }}>
-                {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ marginRight: "1rem", borderRadius: '5px' }} />}
-                <Stack direction="row" style={{ width: "100%" }} alignContent="space-between" justifyContent="space-between">
+        <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem" }}>
+
+            <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
+                <Divider sx={{ width: "100%", marginBottom: '1rem' }}></Divider>
+                <Typography variant="h4">
+                    {isValidUrl(uri) ?
+                        <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
+                            <Stack direction="row" spacing={1} alignItems={"center"}>
+                                <b>{title}</b>
+                                <OpenInNewIcon style={{ width: "1rem" }} />
+                            </Stack>
+                        </Link>
+                        : <b>{title}</b>}
+                </Typography>
+
+                {subtitle && <Typography variant="subtitle2" fontSize="0.7rem" style={{marginBottom: '0.2rem'}}>{`${subtitle}`}</Typography>}
+                {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{borderRadius: '5px'}} />}
+                <Stack direction="row" style={{ width: "100%", marginTop: '0.8rem' }} alignContent="space-between" justifyContent="space-between">
                     <Stack>
-
-                        <Typography variant="h4">
-                            {isValidUrl(uri) ?
-                                <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
-                                    <Stack direction="row" spacing={1} alignItems={"center"}>
-                                        <b>{title}</b>
-                                        <OpenInNewIcon style={{ width: "1rem" }} />
-                                    </Stack>
-                                </Link>
-                                : <b>{title}</b>}
-                        </Typography>
-
-                        {subtitle && <Typography variant="body2" fontSize="0.8rem">{`${subtitle}`}</Typography>}
-                        {captionToUse && <Typography variant="caption" style={{whiteSpace: "pre-wrap"}}>{captionToUse}</Typography>}
+                        {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
                     </Stack>
                     {editMode && <EditNoteIcon onClick={onEditClick} />}
                 </Stack>
