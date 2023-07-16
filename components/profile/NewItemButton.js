@@ -13,10 +13,10 @@ import { Typography } from '@mui/material';
 
 import { getAuth } from "firebase/auth";
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
-import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
+import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH } from '@/utils/themeConfig';
 
 const PAPER_COLOR =  DEFAULT_PAPER_COLOR
-const MAX_WIDTH = "600px"
+const MAX_WIDTH =  PROFILE_ITEMS_WIDTH
 export default function NewItemButton({onClick}) {
     const submitNewItem = async () => {
         const body = {

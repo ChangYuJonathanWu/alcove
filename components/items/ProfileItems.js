@@ -25,11 +25,10 @@ import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 import { formatUri } from '@/utils/formatters';
-import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
+import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH } from '@/utils/themeConfig';
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
-const MAX_WIDTH = "600px"
-
+const MAX_WIDTH = PROFILE_ITEMS_WIDTH
 export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState(null);
     const [editItem, setEditItem] = useState(null);
