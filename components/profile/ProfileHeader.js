@@ -13,9 +13,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import RedditIcon from '@mui/icons-material/Reddit';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Image from 'next/image';
-import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
+import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH } from '@/utils/themeConfig';
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
-const MAX_WIDTH = 260
+const MAX_WIDTH = PROFILE_ITEMS_WIDTH
 
 const IconGridItem = ({ children }) => {
     return (
@@ -26,20 +26,20 @@ const IconGridItem = ({ children }) => {
     )
 }
 export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
-    const { title, description, handle, photo, social_links, demo=false } = user;
+    const { title, description, handle, photo, social_links, demo = false } = user;
     const { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
     const hasSocialLinks = instagram || facebook || bereal || snapchat || tiktok || twitter || reddit || linkedin
 
     return (
-        <Stack direction="row" justifyContent={"center"} >
-            <Paper variant="" sx={{ paddingLeft: '2rem', paddingRight: '2rem', margin: '1rem', marginBottom: '1rem', borderRadius: '1rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH  }}>
+        <Stack direction="row" justifyContent={"center"} style={{ paddingTop: '1rem', paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1rem' }}>
+            <Paper variant="" sx={{ borderRadius: '1rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, width: '100%' }}>
                 <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem" }}>
                     <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={photo} />
-                    <Typography variant="h1" style={{textAlign: "center"}}>{title}</Typography>
+                    <Typography variant="h1" style={{ textAlign: "center" }}>{title}</Typography>
                     {!demo && handle && <Typography variant="subtitle1">{`@${handle}`}</Typography>}
 
-                    <Typography style={{textAlign: "center", whiteSpace: "pre-wrap"}} variant="body">{description}</Typography>
-                    {hasSocialLinks && <Grid style={{maxWidth: "180px"}} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
+                    <Typography style={{ textAlign: "center", whiteSpace: "pre-wrap" }} variant="body">{description}</Typography>
+                    {hasSocialLinks && <Grid style={{ maxWidth: "180px" }} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
                         {instagram && <IconGridItem><IconButton id="instagram-bio-link" href={`https://www.instagram.com/${instagram}`} target="_blank">
                             <InstagramIcon />
                         </IconButton></IconGridItem>}
@@ -65,7 +65,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
                             <LinkedInIcon />
                         </IconButton></IconGridItem>}
                     </Grid>}
-                    {ownerSignedIn && <Button style={{ textTransform: 'none', color: 'black', borderColor: 'gray', fontSize: '0.8rem', width: '100%' }} variant="outlined" onClick={() => setEditMode(true)}>Edit Profile</Button>}
+                    {ownerSignedIn && <Button style={{ textTransform: 'none', color: 'black', borderColor: 'gray', fontSize: '0.8rem', }} variant="outlined" onClick={() => setEditMode(true)}>Edit Profile</Button>}
                 </Stack>
             </Paper>
         </Stack>

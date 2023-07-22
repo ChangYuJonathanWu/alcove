@@ -91,8 +91,8 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const listButtonId = `list-button-${itemId}`
 
         return (
-            <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', borderRadius: '1rem', marginTop: 0, marginBottom: '0.5rem', backgroundColor: itemHeaderColor, maxWidth: MAX_WIDTH }}>
+            <div key={itemId}  style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+                <Paper sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
                     <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
