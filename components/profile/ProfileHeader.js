@@ -31,7 +31,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
     const hasSocialLinks = instagram || facebook || bereal || snapchat || tiktok || twitter || reddit || linkedin
 
     return (
-        <Stack direction="row" justifyContent={"center"} style={{ paddingTop: '1rem', paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1rem' }}>
+        <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1rem' }}>
 
             <Stack alignItems="center" style={{ width: '100%' }}>
                 <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ position: 'relative', top: '4rem', margin: "1rem", borderColor: PAPER_COLOR, borderWidth: '0.2rem', borderStyle: 'solid' }} src={photo} />
@@ -69,7 +69,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
                                 <LinkedInIcon />
                             </IconButton></IconGridItem>}
                         </Grid>}
-                        {ownerSignedIn && <Button style={{ textTransform: 'none', color: 'black', borderColor: 'gray', fontSize: '0.8rem', }} variant="outlined" onClick={() => setEditMode(true)}>Edit Profile</Button>}
+                        {ownerSignedIn && <Button style={{ textTransform: 'none', color: 'black', borderColor: 'gray', fontSize: '0.8rem', marginTop: '0.5rem'}} variant="outlined" onClick={() => setEditMode(true)}>Edit Profile</Button>}
                     </Stack>
                 </Paper>
             </Stack>
