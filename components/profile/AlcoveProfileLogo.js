@@ -3,10 +3,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { Button, Typography } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import CabinIcon from '@mui/icons-material/Cabin';
-import { amita } from '../fonts'
+
 
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
@@ -16,13 +16,15 @@ const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 export default function AlcoveProfileLogo() {
 
     return (
+        <Stack direction="row" justifyContent="center" style={{ width: '100%', marginTop: '2rem' }}>
+            <Stack alignItems="center" style={{ width: '100%' }}>
+                {/* <Divider sx={{ width: "100%", margin: '0.4rem', backgroundColor: 'white' }} /> */}
+                <Link href="/" style={{ textDecoration: 'none' }}>
 
-        <Stack direction="row" justifyContent="center">
-            <Link href="/" style={{ textDecoration: 'none' }}>
-                <Paper sx={{ padding: '0.5rem 1.2rem 0.5rem 1.2rem', margin: '1rem', marginBottom: '0.5rem', backgroundColor: PAPER_COLOR }}>
-                    <Image src="/alcove-logo-dark.svg" width={70} height={25} alt="Alcove logo" />
-                </Paper>
-            </Link>
+                    <Image src="/alcove-logo.svg" width={80} height={50} alt="Alcove logo" />
+
+                </Link>
+            </Stack>
         </Stack>
 
     )
