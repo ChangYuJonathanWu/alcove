@@ -6,4 +6,4 @@ export const HOME_THEME = {
     buttonColor: '#F97B22',
     buttonTextColor: 'white'
 }
-export const PROFILE_ITEMS_WIDTH = '500px'
+export const PROFILE_ITEMS_WIDTH = '420px'
