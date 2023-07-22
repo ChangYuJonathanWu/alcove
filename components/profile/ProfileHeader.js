@@ -39,10 +39,10 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
                     <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem", paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
 
                         <Typography variant="h3" style={{ textAlign: "center", fontSize: '20px' }}>{title}</Typography>
-                        {/* {!demo && handle && <Typography variant="subtitle2">{`@${handle}`}</Typography>} */}
+                        {!demo && handle && <Typography variant="subtitle2">{`@${handle}`}</Typography>}
 
                         <Typography style={{ textAlign: "center", whiteSpace: "pre-wrap" }} variant="body2">{description}</Typography>
-                        {hasSocialLinks && <Divider sx={{ width: "100%", margin: '0.5rem'}}/>}
+                        {hasSocialLinks && <Divider sx={{ width: "100%", margin: '0.4rem'}}/>}
                         {hasSocialLinks && <Grid style={{ maxWidth: "180px" }} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
                             {instagram && <IconGridItem><IconButton id="instagram-bio-link" href={`https://www.instagram.com/${instagram}`} target="_blank">
                                 <InstagramIcon />

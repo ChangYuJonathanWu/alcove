@@ -129,11 +129,15 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
-                            <Stack id={listButtonId} direction="row" alignItems="start" spacing={2}>
+                            <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}} spacing={2}>
+                                
+                                {buildItemHeader(name)}
                                 <LinkIcon />
-                                <Typography variant="h3">{name}</Typography>
+        
                             </Stack>
-                            {editMode && <EditIcon data-cy="edit-item-icon" onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+                            
+                            {editMode && <EditIcon data-cy="edit-item-icon" style={{paddingLeft: '0.5rem'}} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+
                         </Stack>
 
                     </ListItemButton>
