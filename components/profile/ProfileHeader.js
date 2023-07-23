@@ -31,7 +31,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
     const hasSocialLinks = instagram || facebook || bereal || snapchat || tiktok || twitter || reddit || linkedin
 
     return (
-        <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1rem' }}>
+        <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1.5rem' }}>
 
             <Stack alignItems="center" style={{ width: '100%' }}>
                 <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ position: 'relative', top: '4rem', margin: "1rem", borderColor: PAPER_COLOR, borderWidth: '0.2rem', borderStyle: 'solid' }} src={photo} />
