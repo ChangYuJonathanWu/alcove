@@ -46,7 +46,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
             case 'Montserrat':
                 return <span className={montserrat.className}>{name}</span>
             default:
-                return <Typography style={{fontSize: ITEM_FONT_SIZE, textAlign: "center", fontWeight: bold ? 800 : 400}}>{name}</Typography>
+                return <Typography style={{fontSize: ITEM_FONT_SIZE, textAlign: "center", fontWeight: 400}}>{name}</Typography>
         }
     }
     const buildPosts = (items, itemOrder, type) => {
