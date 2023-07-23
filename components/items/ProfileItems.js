@@ -25,7 +25,7 @@ import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 import { formatUri } from '@/utils/formatters';
-import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH } from '@/utils/themeConfig';
+import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE } from '@/utils/themeConfig';
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
@@ -45,7 +45,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
             case 'Montserrat':
                 return <span className={montserrat.className}>{name}</span>
             default:
-                return <Typography style={{fontSize: 16}}>{name}</Typography>
+                return <Typography style={{fontSize: ITEM_FONT_SIZE}}>{name}</Typography>
         }
     }
     const buildPosts = (items, itemOrder, type) => {

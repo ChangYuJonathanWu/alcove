@@ -1,13 +1,13 @@
 import React from 'react'
 import { Button, Typography, Stack } from '@mui/material';
 import PublicIcon from '@mui/icons-material/Public';
+import { DEFAULT_PAPER_COLOR } from '@/utils/themeConfig';
 
-const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 
 export default function ViewAsPublicButton({link}) {
     return (
 
-        <Button target='_blank' href={link} variant="contained" style={{ width: "100%", maxWidth: "12rem", textTransform: 'none', color: "black", backgroundColor: "white", margin: 'auto', marginTop: "1rem" }}>
+        <Button target='_blank' href={link} variant="contained" style={{ borderRadius: '1rem', width: "100%", maxWidth: "12rem", textTransform: 'none', color: "black", backgroundColor: DEFAULT_PAPER_COLOR, margin: 'auto', marginTop: "1rem" }}>
             <Stack direction="row" spacing={1}>
                 <span>
                 View as Public
