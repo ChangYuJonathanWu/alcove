@@ -7,13 +7,13 @@ import { Carousel } from 'react-responsive-carousel';
 import Image from 'next/image';
 import { Stack } from '@mui/material';
 
-import TheBaker from '@/components/home/static/the_baker_rounded.png'
-import TheArtist from '@/components/home/static/the_artist_rounded.png'
-import TheFoodie from '@/components/home/static/the_foodie_rounded.png'
-import TheHacker from '@/components/home/static/the_hacker_rounded.png'
-import TheOutdoors from '@/components/home/static/the_outdoors_rounded.png'
-import TheGeneralist from '@/components/home/static/the_generalist.png'
-import TheReader from '@/components/home/static/thereader.png'
+import TheBaker from '@/components/home/static/thebaker_rounded.png'
+import TheArtist from '@/components/home/static/theartist_rounded.png'
+import TheFoodie from '@/components/home/static/thefoodie_rounded.png'
+import TheHacker from '@/components/home/static/thehacker_rounded.png'
+import TheOutdoors from '@/components/home/static/theoutdoors_rounded.png'
+import TheGeneralist from '@/components/home/static/thegeneralist_rounded.png'
+import TheReader from '@/components/home/static/thereader_rounded.png'
 import Avatar from '@mui/material';
 
 
@@ -21,13 +21,13 @@ export default function Hero({ desktop }) {
   const perspective = "none" // desktop ? "perspective(400px) rotateY(3deg) rotateX(5deg)" : "perspective(400px) rotateY(-3deg) rotateX(3deg)"
 
   const profilesToShow = [
-    "/home/theartist.png",
-    "/home/thefoodie.png",
-    "/home/thegeneralist.png",
-    "/home/theoutdoors.png",
-    "/home/thereader.png",
-    "/home/thehacker.png",
-    "/home/thebaker.png",
+    "/home/web/optimized/theartist_1.png",
+    "/home/web/optimized/thefoodie_1.png",
+    "/home/web/optimized/thegeneralist_1.png",
+    "/home/web/optimized/theoutdoors_1.png",
+    "/home/web/optimized/thereader_1.png",
+    "/home/web/optimized/thehacker_1.png",
+    "/home/web/optimized/thebaker_1.png",
   ]
 
   const importedProfilesToShow = [
