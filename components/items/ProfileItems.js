@@ -128,7 +128,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const listButtonId = `list-button-${itemId}`
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
+                <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
                             
