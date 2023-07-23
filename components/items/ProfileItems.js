@@ -11,6 +11,7 @@ import CarItem from '@/components/items/CarItem';
 import LinkIcon from '@mui/icons-material/Link';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Paper from '@mui/material/Paper';
@@ -45,7 +46,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
             case 'Montserrat':
                 return <span className={montserrat.className}>{name}</span>
             default:
-                return <Typography style={{fontSize: ITEM_FONT_SIZE}}>{name}</Typography>
+                return <Typography style={{fontSize: ITEM_FONT_SIZE, textAlign: "center"}}>{name}</Typography>
         }
     }
     const buildPosts = (items, itemOrder, type) => {
@@ -96,6 +97,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
+                                <div></div>
                                 <Stack>
                                     {buildItemHeader(name)}
                                     {isOpen && <Typography variant="caption">{commentary}</Typography>}
@@ -129,10 +131,11 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
-                            <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}} spacing={2}>
-                                
-                                {buildItemHeader(name)}
+                            
+                            <Stack id={listButtonId} direction="row" justifyContent="space-between" alignItems="center" style={{width: "100%"}} spacing={2}>
                                 <LinkIcon />
+                                {buildItemHeader(name)}
+                                <OpenInNewIcon />
         
                             </Stack>
                             
