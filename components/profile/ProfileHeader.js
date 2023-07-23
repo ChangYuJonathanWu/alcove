@@ -43,7 +43,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
 
                         <Typography style={{ textAlign: "center", whiteSpace: "pre-wrap" }} variant="body2">{description}</Typography>
                         {hasSocialLinks && <Divider sx={{ width: "100%", margin: '0.4rem'}}/>}
-                        {hasSocialLinks && <Grid style={{ maxWidth: "180px" }} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
+                        {hasSocialLinks && <Grid style={{ maxWidth: MAX_WIDTH }} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
                             {instagram && <IconGridItem><IconButton id="instagram-bio-link" href={`https://www.instagram.com/${instagram}`} target="_blank">
                                 <InstagramIcon />
                             </IconButton></IconGridItem>}
