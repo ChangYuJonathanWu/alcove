@@ -8,3 +8,4 @@ export const HOME_THEME = {
 }
 export const PROFILE_ITEMS_WIDTH = '400px'
 export const ITEM_FONT_SIZE = '1rem'
+export const CENTER_PROFILE_ITEMS = true

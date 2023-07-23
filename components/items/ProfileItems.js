@@ -26,7 +26,7 @@ import PostToListModal from '../profile/PostToListModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 import { formatUri } from '@/utils/formatters';
-import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE } from '@/utils/themeConfig';
+import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE, CENTER_PROFILE_ITEMS } from '@/utils/themeConfig';
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
@@ -97,10 +97,10 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
-                                <div></div>
-                                <Stack>
+                                {CENTER_PROFILE_ITEMS && <div></div>}
+                                <Stack alignItems="center">
                                     {buildItemHeader(name)}
-                                    {isOpen && <Typography variant="caption">{commentary}</Typography>}
+                                    {isOpen && <Typography variant="caption" style={{textAlign: 'center'}}>{commentary}</Typography>}
                                 </Stack>
                                 {isOpen ? <ExpandLessIcon /> :  <ExpandMore />}
                             </Stack>
@@ -133,7 +133,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
                             
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" alignItems="center" style={{width: "100%"}} spacing={2}>
-                                <LinkIcon />
+                                {CENTER_PROFILE_ITEMS && <LinkIcon />}
                                 {buildItemHeader(name)}
                                 <OpenInNewIcon />
         
