@@ -100,9 +100,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                                 {CENTER_PROFILE_ITEMS && <div></div>}
                                 <Stack alignItems="center">
                                     {buildItemHeader(name)}
-                                    {isOpen && <Typography variant="caption" style={{textAlign: 'center'}}>{commentary}</Typography>}
+                                    { isOpen && <Typography variant="caption" style={{textAlign: 'center'}}>{commentary}</Typography>}
                                 </Stack>
-                                {isOpen ? <ExpandLessIcon /> :  <ExpandMore />}
+                                {!editMode ? isOpen ? <ExpandLessIcon /> :  <ExpandMore /> : <div></div>}
                             </Stack>
                             {editMode && <EditIcon data-cy="edit-item-icon" style={{paddingLeft: '0.5rem'}} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
