@@ -40,13 +40,13 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
 
-    const buildItemHeader = (name) => {
+    const buildItemHeader = (name, bold) => {
         const item_font = "default"
         switch (item_font) {
             case 'Montserrat':
                 return <span className={montserrat.className}>{name}</span>
             default:
-                return <Typography style={{fontSize: ITEM_FONT_SIZE, textAlign: "center"}}>{name}</Typography>
+                return <Typography style={{fontSize: ITEM_FONT_SIZE, textAlign: "center", fontWeight: bold ? 800 : 400}}>{name}</Typography>
         }
     }
     const buildPosts = (items, itemOrder, type) => {
@@ -97,10 +97,10 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
-                                {CENTER_PROFILE_ITEMS && <div style={{width: '2rem'}}></div>}
-                                <Stack alignItems="center">
-                                    {buildItemHeader(name)}
-                                    { isOpen && <Typography variant="caption" style={{textAlign: 'center'}}>{commentary}</Typography>}
+                                {CENTER_PROFILE_ITEMS  && !isOpen && <div style={{width: '2rem'}}></div>}
+                                <Stack alignItems="start">
+                                    {buildItemHeader(name, isOpen)}
+                                    { isOpen && <Typography variant="caption" style={{textAlign: "left"}}>{commentary}</Typography>}
                                 </Stack>
                                 {!editMode ? isOpen ? <ExpandLessIcon /> :  <ExpandMore /> : <div></div>}
                             </Stack>
