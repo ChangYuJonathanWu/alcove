@@ -23,7 +23,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     }
 
     return (
-        <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem" }}>
+        <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem"}}>
 
             <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
                 <Divider sx={{ width: "100%", marginBottom: '1rem' }}></Divider>

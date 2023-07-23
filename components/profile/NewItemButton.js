@@ -13,7 +13,7 @@ import { Typography } from '@mui/material';
 
 import { getAuth } from "firebase/auth";
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
-import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH } from '@/utils/themeConfig';
+import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE } from '@/utils/themeConfig';
 
 const PAPER_COLOR =  DEFAULT_PAPER_COLOR
 const MAX_WIDTH =  PROFILE_ITEMS_WIDTH
@@ -28,11 +28,11 @@ export default function NewItemButton({onClick}) {
     }
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-            <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
+            <Paper variant="" sx={{ borderRadius: '1rem', margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <ListItemButton data-cy="new-item-button" id={'new-item-button'} key={'new-item-button'} disableRipple={true} onClick={onClick}>
-                    <Stack direction="row" alignItems="start" spacing={2}>
+                    <Stack style={{width: '100%'}} direction="row" alignItems="center" justifyContent="center" spacing={0}>
                         <AddIcon />
-                        <Typography variant="h3"><em>New Item</em></Typography>
+                        <Typography style={{fontSize: ITEM_FONT_SIZE}}>New Item</Typography>
                     </Stack>
                 </ListItemButton>
             </Paper>

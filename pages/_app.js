@@ -10,9 +10,13 @@ import { useState, useEffect } from 'react'
 import DefaultLoader from '@/components/DefaultLoader';
 import Router from 'next/router';
 import { HOME_THEME } from '@/utils/themeConfig';
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     const start = () => {
       console.log('Initiate loading')
@@ -34,7 +38,7 @@ export default function App({ Component, pageProps }) {
   return (
     <AuthContextProvider>
       <ThemeProvider theme={theme}>
-        <div style={{backgroundColor: HOME_THEME.bgColor}}>
+        <div className={inter.className} style={{backgroundColor: HOME_THEME.bgColor}}>
           {loading ? <DefaultLoader /> : <Component {...pageProps}  />}
         </div>
 
