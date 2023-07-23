@@ -97,7 +97,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                     <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
-                                {CENTER_PROFILE_ITEMS && <div></div>}
+                                {CENTER_PROFILE_ITEMS && <div style={{width: '2rem'}}></div>}
                                 <Stack alignItems="center">
                                     {buildItemHeader(name)}
                                     { isOpen && <Typography variant="caption" style={{textAlign: 'center'}}>{commentary}</Typography>}
