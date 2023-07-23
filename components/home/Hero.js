@@ -21,13 +21,13 @@ export default function Hero({ desktop }) {
   const perspective = "none" // desktop ? "perspective(400px) rotateY(3deg) rotateX(5deg)" : "perspective(400px) rotateY(-3deg) rotateX(3deg)"
 
   const profilesToShow = [
-    "/home/theartist.png",
-    "/home/thefoodie.png",
-    "/home/thegeneralist.png",
-    "/home/theoutdoors.png",
-    "/home/thereader.png",
-    "/home/thehacker.png",
-    "/home/thebaker.png",
+    "/home/web/optimized/theartist_1.png",
+    "/home/web/optimized/thefoodie_1.png",
+    "/home/web/optimized/thegeneralist_1.png",
+    "/home/web/optimized/theoutdoors_1.png",
+    "/home/web/optimized/thereader_1.png",
+    "/home/web/optimized/thehacker_1.png",
+    "/home/web/optimized/thebaker_1.png",
   ]
 
   const importedProfilesToShow = [
