@@ -181,7 +181,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     if (completed) {
         return (
             <>
-                <Fireworks
+                {!hideFireworks && <Fireworks
                     options={{
                         rocketsPoint: {
                             min: 0,
@@ -197,12 +197,12 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                         zIndex: 100
                     }}
                     className={`${hideFireworks ? 'firework-hidden' : 'firework-shown'}`}
-                />
+                />}
 
-                    <span style={{ textAlign: desktop ? "start" : "center", marginBottom: '2rem' }}>
-                        <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
-                        <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
-                    </span>
+                <span style={{ textAlign: desktop ? "start" : "center", marginBottom: '2rem' }}>
+                    <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
+                    <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+                </span>
 
 
             </>
