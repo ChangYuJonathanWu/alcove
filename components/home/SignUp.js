@@ -16,15 +16,15 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     const TAKEN_EMAIL = "This email is already registered."
 
     const handleEnterHandle = (event) => {
-        if(event.key === 'Enter'){
-          onClaimHandle()
+        if (event.key === 'Enter') {
+            onClaimHandle()
         }
-      }
+    }
 
     const handleEnterEmail = (event) => {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             onEmailSubmit()
-          }
+        }
     }
 
     const startValidationInProgress = () => {
@@ -35,7 +35,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     }
 
     const finishValidationInProgress = () => {
-        setSignupState( {
+        setSignupState({
             ...signupState,
             validationInProgress: false
         })
@@ -129,8 +129,8 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             })
 
         const resultBody = await result.json()
-        const { success, errors} = resultBody;
-        if(success) {
+        const { success, errors } = resultBody;
+        if (success) {
             setSignupState({
                 ...signupState,
                 showValidationError: false,
@@ -139,7 +139,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             })
             setTimeout(() => setSignupState({ ...signupState, hideFireworks: true, completed: true, showValidationError: false, }), 6000)
         } else {
-            if(errors.includes("HANDLE_TAKEN")) {
+            if (errors.includes("HANDLE_TAKEN")) {
                 setSignupState({
                     ...signupState,
                     validationErrorText: TAKEN_HANDLE,
@@ -148,7 +148,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                     validationInProgress: false
                 })
                 return
-            } if(errors.includes("EMAIL_TAKEN")) {
+            } if (errors.includes("EMAIL_TAKEN")) {
                 setSignupState({
                     ...signupState,
                     showValidationError: true,
@@ -159,7 +159,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
             }
         }
 
-       
+
     }
 
     const calculateStackAlignment = () => {
@@ -198,10 +198,13 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                     }}
                     className={`${hideFireworks ? 'firework-hidden' : 'firework-shown'}`}
                 />
-                <span style={{ textAlign: desktop ? "start" : "center", margin: "2rem", marginLeft: 0 }}>
-                    <Typography color="white" variant="body2">{`You've claimed your Alcove handle!`}</Typography>
-                    <Typography color="white" variant="body2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
-                </span>
+
+                    <span style={{ textAlign: desktop ? "start" : "center", marginBottom: '2rem' }}>
+                        <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
+                        <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+                    </span>
+
+
             </>
 
         )
@@ -235,7 +238,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                             onChange={processEmail}
                             inputProps={{
                                 autoCapitalize: 'none',
-                              }}
+                            }}
                             id="email-input"
                             style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
                             label="" variant="outlined"
