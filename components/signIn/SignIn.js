@@ -93,7 +93,7 @@ export default function SignIn() {
                 </div>
                 {pageLoading && <DefaultLoader />}
                 {!pageLoading && <Stack alignItems="center" spacing={1}>
-                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 3em 1em', marginTop: '3em' }}>
+                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 2em 1em', marginTop: '3em' }}>
                         <Stack alignItems={"center"} style={{ width: "100%" }}>
                             <Link href="/">
                                 <Navbar />
@@ -141,16 +141,15 @@ export default function SignIn() {
 
                                 </Form>
                             </Formik>
-                            <Link href="/" style={{textDecoration: 'none'}}>
+                            <Link href="/" style={{ textDecoration: 'none' }}>
                                 <Typography variant="body2" style={{ color: 'white', marginTop: '1rem' }}>Sign Up</Typography>
                             </Link>
 
                         </Stack>
+                        <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem' }}>
+                            {loginError ?? ""}
+                        </Typography>
                     </div>
-                    <Typography style={{ color: 'white' }}>
-                        {loginError ?? ""}
-                    </Typography>
-                    {/* {user && <Button onClick={() => signOut(auth)}>Sign Out</Button>} */}
                 </Stack>}
             </main>
         </>
