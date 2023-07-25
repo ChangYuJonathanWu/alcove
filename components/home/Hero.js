@@ -41,14 +41,14 @@ export default function Hero({ desktop }) {
   ]
 
   const containerStyle = desktop ? { height: "100vh", width: '410px' } : { height: "520px", position: 'relative' }
-  const imageShadowStyle = desktop ? { margin: '2rem' } : {}
+  const imageShadowStyle = desktop ? { paddingTop: '1rem' } : {}
 
   const buildCarouselItems = () => {
     if (desktop) {
       return profilesToShow.map((profile) => {
         return (
-          <Stack key={profile} style={containerStyle}>
-            <ImageShadow shadowBlur={20} width={340} style={imageShadowStyle} shadowHover={desktop} src={profile} />
+          <Stack key={profile} alignItems="center" style={containerStyle}>
+            <ImageShadow shadowBlur={'15'} width={340} style={imageShadowStyle} shadowHover={desktop} src={profile} />
           </Stack>)
       })
     } else {
