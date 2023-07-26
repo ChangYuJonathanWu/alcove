@@ -53,6 +53,7 @@ export default function ResetPassword() {
     const [loginError, setLoginError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [pageLoading, setPageLoading] = useState(true)
+    const [createComplete, setCreateComplete] = useState(false)
 
     useEffect(() => {
         router.isReady && setPageLoading(false)
@@ -122,10 +123,11 @@ export default function ResetPassword() {
                         {hasOobCode && <Stack alignItems="center">
                             <Navbar mobile={true} />
                             <Stack alignItems={"center"} style={{ paddingBottom: '1rem' }}>
-                                <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Create a new password`}</Typography>
+                                <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{createComplete? "You've successfully reset your password." : "Create a new password"}</Typography>
+                                {createComplete && <Button variant="contained" onClick={() => router.push('/login')} style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>Login</Button>}
                             </Stack>
 
-                            <Formik
+                            {!createComplete && <Formik
                                 initialValues={{
                                     password: '',
                                     passwordConfirm: ''
@@ -139,8 +141,7 @@ export default function ResetPassword() {
 
                                     try {
                                         const result = await confirmPasswordReset(auth, oobCode, password)
-                                        // if successful firebase response, redirect to login
-                                        router.replace(`/login`)
+                                        setCreateComplete(true)
                                     } catch (error) {
                                         const errorCode = error.code;
                                         const errorMessage = error.message;
@@ -172,7 +173,7 @@ export default function ResetPassword() {
                                 )}
 
 
-                            </Formik>
+                            </Formik>}
                             <Typography style={{ color: 'white', width: '100%', textAlign: "center", paddingTop: '1rem' }}>
                                 {loginError ?? ""}
                             </Typography>
