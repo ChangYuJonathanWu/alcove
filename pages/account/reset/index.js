@@ -52,6 +52,11 @@ export default function ResetPassword() {
 
     const [loginError, setLoginError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [pageLoading, setPageLoading] = useState(true)
+
+    useEffect(() => {
+        router.isReady && setPageLoading(false)
+    }, [router])
 
     const CustomTextField = (props) => (
 
@@ -81,8 +86,8 @@ export default function ResetPassword() {
     const validPassword = (password) => {
         return validatePasswordLength(password) && validatePasswordUpperCase(password) && validatePasswordLowerCase(password) && validatePasswordContainsNumber(password)
     }
-
-    const hasOobCode = !!router.query.oob_code
+    const oobCode = router.query.oobCode
+    const hasOobCode = !!oobCode
 
     return (
         <>
@@ -101,6 +106,7 @@ export default function ResetPassword() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
+            {pageLoading && <DefaultLoader />}
             <main style={{ minHeight: '100vh', width: "100%" }}>
                 <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
                     <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
@@ -109,7 +115,8 @@ export default function ResetPassword() {
 
                 <Stack alignItems="center" spacing={1}>
                     <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', maxWidth: "350px", borderWidth: '0px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 1em 1em', marginTop: '3em' }}>
-                        {!hasOobCode && <Stack>
+                        {!hasOobCode && <Stack alignItems="center">
+                            <Navbar mobile={true} />
                             <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Please check your email for a link to reset your password.`}</Typography>
                         </Stack>}
                         {hasOobCode && <Stack alignItems="center">
@@ -131,7 +138,7 @@ export default function ResetPassword() {
                                     setLoading(true)
 
                                     try {
-                                        const result = await confirmPasswordReset(auth, router.query.oob_code, password)
+                                        const result = await confirmPasswordReset(auth, oobCode, password)
                                         // if successful firebase response, redirect to login
                                         router.replace(`/login`)
                                     } catch (error) {
