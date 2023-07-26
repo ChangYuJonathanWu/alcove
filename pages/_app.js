@@ -22,11 +22,9 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     const start = () => {
-      console.log('Initiate loading')
       setLoading(true)
     }
     const end = () => {
-      console.log('End loading')
       setLoading(false)
     }
     Router.events.on('routeChangeStart', start);

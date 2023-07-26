@@ -88,15 +88,15 @@ export default function SignIn() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
+            <PageTransition>
+                <main style={{ minHeight: '100vh', width: "100%" }}>
+                    <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
+                        <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
 
-            <main style={{ minHeight: '100vh', width: "100%" }}>
-                <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
-                    <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
+                    </div>
+                    {pageLoading && <DefaultLoader />}
+                    {!pageLoading &&
 
-                </div>
-                {pageLoading && <DefaultLoader />}
-                {!pageLoading &&
-                    <PageTransition>
 
 
                         <Stack alignItems="center" spacing={1}>
@@ -163,8 +163,9 @@ export default function SignIn() {
                                 </Link>
                             </div>
                         </Stack>
-                    </PageTransition>}
-            </main>
+                    }
+                </main>
+            </PageTransition>
         </>
     )
 }

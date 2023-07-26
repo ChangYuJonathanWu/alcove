@@ -70,10 +70,10 @@ export default function ForgotPassword() {
 
 
             <main style={{ minHeight: '100vh', width: "100%" }}>
-                <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
+                {/* <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
                     <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
 
-                </div>
+                </div> */}
                 <PageTransition>
                     <Stack alignItems="center" spacing={1}>
 
@@ -108,7 +108,7 @@ export default function ForgotPassword() {
                                 >
                                     <Form>
                                         <Stack alignItems="center" spacing={1} >
-                                            <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
+                                            <Field as={CustomTextField} id="email" name="email" type="email" required={true} placeholder="Email" />
                                             <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Please wait..." : "Send Reset Link"}</Button>
                                         </Stack>
 
