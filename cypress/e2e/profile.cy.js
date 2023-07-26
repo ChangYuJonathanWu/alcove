@@ -3,13 +3,13 @@ const PERCY_WIDTHS = [768, 1920]
 describe('Profile', () => {
     it('Loads my profile', () => {
         cy.visit('http://localhost:3000/jonathanwu')
-        cy.contains('jonathan wu', { timeout: 10000}).should('exist')
+        cy.contains('Jonathan Wu', { timeout: 10000}).should('exist')
         cy.contains('Edit Profile').should('not.exist')
         cy.percySnapshot('Profile', { widths: PERCY_WIDTHS });
     })
     it('Loads my profile on public view', () => {
         cy.visit('http://localhost:3000/jonathanwu/public')
-        cy.contains('jonathan wu').should('exist')
+        cy.contains('Jonathan Wu').should('exist')
         cy.percySnapshot('Profile (Public)', { widths: PERCY_WIDTHS });
     })
     it('Loads the test profile and renders expected elements', () => {

@@ -12,7 +12,7 @@ import { styled } from '@mui/material';
 
 
 import React, { useState, useEffect } from 'react'
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
 import DefaultLoader from '../DefaultLoader';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
@@ -27,7 +27,7 @@ const theme = {
     buttonTextColor: 'white'
 }
 
-export default function SignIn() {
+export default function ForgotPassword() {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
@@ -35,12 +35,10 @@ export default function SignIn() {
     const router = useRouter();
     const auth = getAuth()
 
-    const email = router.query.email
-    const showOnboardMessage = !!email
-
-    const [loginError, setLoginError] = useState(null)
+    const [message, setMessage] = useState(null)
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [complete, setComplete] = useState(false)
 
     const CustomTextField = (props) => (
 
@@ -98,62 +96,48 @@ export default function SignIn() {
                             <Link href="/">
                                 <Navbar />
                             </Link>
-                            {showOnboardMessage && <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
-
-                            <Formik
+                            {complete && <Stack alignItems="center">
+                                <Typography variant="h3" style={{ color: 'white', marginTop: '1rem', textAlign: "center" }}>Check your email for a password reset link.</Typography>
+                            </Stack>
+                            }
+                            {!complete && <Formik
                                 enableReinitialize={true}
                                 initialValues={{
-                                    email: email ?? "",
-                                    password: '',
+                                    email: "",
                                 }}
 
                                 onSubmit={async (values) => {
                                     setLoading(true)
                                     const { email, password } = values;
                                     try {
-                                        const credential = await signInWithEmailAndPassword(auth, email, password)
-                                        if (credential) {
-                                            setLoginError(null)
-                                            const { uid } = credential.user
-                                            const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
-                                            const fullUserProfile = await result.json()
-                                            const { handle } = fullUserProfile
-                                            router.replace(`/${handle}`)
-
-                                            return
-                                        }
-
+                                        await sendPasswordResetEmail(auth, email)
                                     } catch (error) {
                                         const errorCode = error.code;
                                         const errorMessage = error.message;
-                                        setLoginError("Invalid email/password or account doesn't exist")
                                     };
                                     setLoading(false)
+                                    setComplete(true)
 
                                 }}
                             >
                                 <Form>
                                     <Stack alignItems="center" spacing={1} >
                                         <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
-                                        <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                        <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Logging in..." : "Login"}</Button>
+                                        <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Please wait..." : "Send Reset Link"}</Button>
                                     </Stack>
 
                                 </Form>
-                            </Formik>
-                            <Link href="/" style={{ textDecoration: 'none' }}>
-                                <Typography variant="body2" style={{ color: 'white', marginTop: '1rem' }}>Sign Up</Typography>
-                            </Link>
+                            </Formik>}
+                            {complete ?
+                                <Link href="/login" style={{ textDecoration: 'none' }}>
+                                    <Typography variant="body2" style={{ color: 'white', marginTop: '1rem', textDecoration: "underline" }}>Back to Sign In</Typography>
+                                </Link> :
 
+                                <Link href="/" style={{ textDecoration: 'none' }}>
+                                    <Typography variant="body2" style={{ color: 'white', marginTop: '1rem' }}>Sign Up</Typography>
+                                </Link>
+                            }
                         </Stack>
-                        <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem' }}>
-                            {loginError ?? ""}
-                        </Typography>
-                        <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
-                            <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem', width: "100%", textAlign: "center" }}>
-                                Forgot Password?
-                            </Typography>
-                        </Link>
                     </div>
                 </Stack>}
             </main>
