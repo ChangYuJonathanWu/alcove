@@ -34,8 +34,6 @@ export default function ForgotPassword() {
     const router = useRouter();
     const auth = getAuth()
 
-    const [message, setMessage] = useState(null)
-    const [pageLoading, setPageLoading] = useState(false)
     const [loading, setLoading] = useState(false)
     const [complete, setComplete] = useState(false)
 
@@ -68,9 +66,9 @@ export default function ForgotPassword() {
             </Head>
 
 
+            <PageTransition>
+                <main style={{ minHeight: '100vh', width: "100%" }}>
 
-            <main style={{ minHeight: '100vh', width: "100%" }}>
-                <PageTransition>
                     <Stack alignItems="center" spacing={1}>
                         <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 2em 1em', marginTop: '3em' }}>
                             <Stack alignItems={"center"} style={{ width: "100%" }}>
@@ -122,9 +120,9 @@ export default function ForgotPassword() {
                         </div>
 
                     </Stack>
-                </PageTransition>
-            </main>
 
+                </main>
+            </PageTransition>
         </>
     )
 }
