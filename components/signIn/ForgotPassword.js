@@ -70,13 +70,8 @@ export default function ForgotPassword() {
 
 
             <main style={{ minHeight: '100vh', width: "100%" }}>
-                {/* <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
-                    <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
-
-                </div> */}
                 <PageTransition>
                     <Stack alignItems="center" spacing={1}>
-
                         <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 2em 1em', marginTop: '3em' }}>
                             <Stack alignItems={"center"} style={{ width: "100%" }}>
                                 <Link href="/">
