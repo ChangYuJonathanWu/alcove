@@ -17,6 +17,8 @@ import { useAuthContext } from "@/context/AuthContext";
 import DefaultLoader from '../DefaultLoader';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 import Link from 'next/link';
+import PageTransition from '@/components/PageTransition'
+
 
 
 const theme = {
@@ -86,76 +88,82 @@ export default function SignIn() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
+
             <main style={{ minHeight: '100vh', width: "100%" }}>
                 <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
                     <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
 
                 </div>
                 {pageLoading && <DefaultLoader />}
-                {!pageLoading && <Stack alignItems="center" spacing={1}>
-                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 2em 1em', marginTop: '3em' }}>
-                        <Stack alignItems={"center"} style={{ width: "100%" }}>
-                            <Link href="/">
-                                <Navbar />
-                            </Link>
-                            {showOnboardMessage && <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
+                {!pageLoading &&
+                    <PageTransition>
 
-                            <Formik
-                                enableReinitialize={true}
-                                initialValues={{
-                                    email: email ?? "",
-                                    password: '',
-                                }}
 
-                                onSubmit={async (values) => {
-                                    setLoading(true)
-                                    const { email, password } = values;
-                                    try {
-                                        const credential = await signInWithEmailAndPassword(auth, email, password)
-                                        if (credential) {
-                                            setLoginError(null)
-                                            const { uid } = credential.user
-                                            const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
-                                            const fullUserProfile = await result.json()
-                                            const { handle } = fullUserProfile
-                                            router.replace(`/${handle}`)
+                        <Stack alignItems="center" spacing={1}>
+                            <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 2em 1em', marginTop: '3em' }}>
+                                <Stack alignItems={"center"} style={{ width: "100%" }}>
+                                    <Link href="/">
+                                        <Navbar />
+                                    </Link>
+                                    {showOnboardMessage && <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
 
-                                            return
-                                        }
+                                    <Formik
+                                        enableReinitialize={true}
+                                        initialValues={{
+                                            email: email ?? "",
+                                            password: '',
+                                        }}
 
-                                    } catch (error) {
-                                        const errorCode = error.code;
-                                        const errorMessage = error.message;
-                                        setLoginError("Invalid email/password or account doesn't exist")
-                                    };
-                                    setLoading(false)
+                                        onSubmit={async (values) => {
+                                            setLoading(true)
+                                            const { email, password } = values;
+                                            try {
+                                                const credential = await signInWithEmailAndPassword(auth, email, password)
+                                                if (credential) {
+                                                    setLoginError(null)
+                                                    const { uid } = credential.user
+                                                    const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+                                                    const fullUserProfile = await result.json()
+                                                    const { handle } = fullUserProfile
+                                                    router.replace(`/${handle}`)
 
-                                }}
-                            >
-                                <Form>
-                                    <Stack alignItems="center" spacing={1} >
-                                        <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
-                                        <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                        <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Logging in..." : "Login"}</Button>
-                                    </Stack>
+                                                    return
+                                                }
 
-                                </Form>
-                            </Formik>
-                            <Link href="/" style={{ textDecoration: 'none' }}>
-                                <Typography variant="body2" style={{ color: 'white', marginTop: '1rem' }}>Sign Up</Typography>
-                            </Link>
+                                            } catch (error) {
+                                                const errorCode = error.code;
+                                                const errorMessage = error.message;
+                                                setLoginError("Invalid email/password or account doesn't exist")
+                                            };
+                                            setLoading(false)
 
+                                        }}
+                                    >
+                                        <Form>
+                                            <Stack alignItems="center" spacing={1} >
+                                                <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
+                                                <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
+                                                <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Logging in..." : "Login"}</Button>
+                                            </Stack>
+
+                                        </Form>
+                                    </Formik>
+                                    <Link href="/" style={{ textDecoration: 'none' }}>
+                                        <Typography variant="body2" style={{ color: 'white', marginTop: '1rem' }}>Sign Up</Typography>
+                                    </Link>
+
+                                </Stack>
+                                <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem' }}>
+                                    {loginError ?? ""}
+                                </Typography>
+                                <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
+                                    <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem', width: "100%", textAlign: "center" }}>
+                                        Forgot Password?
+                                    </Typography>
+                                </Link>
+                            </div>
                         </Stack>
-                        <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem' }}>
-                            {loginError ?? ""}
-                        </Typography>
-                        <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
-                            <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem', width: "100%", textAlign: "center" }}>
-                                Forgot Password?
-                            </Typography>
-                        </Link>
-                    </div>
-                </Stack>}
+                    </PageTransition>}
             </main>
         </>
     )

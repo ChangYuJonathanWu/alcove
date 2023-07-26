@@ -9,13 +9,16 @@ import '../styles/custom.css'
 import { useState, useEffect } from 'react'
 import DefaultLoader from '@/components/DefaultLoader';
 import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { HOME_THEME } from '@/utils/themeConfig';
 import { Inter } from 'next/font/google'
+import { AnimatePresence } from 'framer-motion'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
     const start = () => {
@@ -37,13 +40,22 @@ export default function App({ Component, pageProps }) {
   }, [])
   return (
     <AuthContextProvider>
+
       <ThemeProvider theme={theme}>
-        <div className={inter.className} style={{backgroundColor: HOME_THEME.bgColor}}>
-          {loading ? <DefaultLoader /> : <Component {...pageProps}  />}
+
+        <div className={inter.className} style={{ backgroundColor: HOME_THEME.bgColor }}>
+
+          {loading ? <DefaultLoader /> :
+            <AnimatePresence initial={true} mode="wait">
+              <Component key={router.asPath} {...pageProps} />
+            </AnimatePresence>}
+
         </div>
+
 
         <Analytics />
       </ThemeProvider>
+
     </AuthContextProvider>
   )
 }
