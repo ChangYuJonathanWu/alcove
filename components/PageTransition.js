@@ -7,7 +7,7 @@ const Layout = ({ children }) => (
     exit={{ x: 0, opacity: 0 }}
     transition={{
       type: "fade",
-      duration: 0.5
+      duration: 0.2
     }}
   >
     {children}
