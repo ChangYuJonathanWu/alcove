@@ -22,10 +22,7 @@ export default function Navbar({ mobile }) {
     return (
         <Stack alignItems="start" style={{ paddingBottom: mobile ? '1rem' : '3rem' }}>
             <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
-                <Link href="/">
-                    <Image src={Logo} width={mobile ? 200 : 250} height={mobile ? 50 : 80} alt="Alcove logo" />
-                </Link>
-                {/* <h1 className={amita.className} style={{ fontWeight: 700, color: logoColor }} variant="h1">alcove</h1> */}
+                <Image src={Logo} width={mobile ? 200 : 250} height={mobile ? 50 : 80} alt="Alcove logo" />
             </Stack>
         </Stack>
     )
