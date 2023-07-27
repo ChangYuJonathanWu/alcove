@@ -15,9 +15,11 @@ import React, { useState, useEffect } from 'react'
 import { getAuth, confirmPasswordReset } from "firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
 import DefaultLoader from '@/components/DefaultLoader';
+import PageTransition from '@/components/PageTransition'
 
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
+import Link from 'next/link'
 YupPassword(Yup);
 
 
@@ -108,79 +110,80 @@ export default function ResetPassword() {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             {pageLoading && <DefaultLoader />}
-            <main style={{ minHeight: '100vh', width: "100%" }}>
-                <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
-                    <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
+            <PageTransition>
+                <main style={{ minHeight: '100vh', width: "100%" }}>
+                    <Stack alignItems="center" spacing={1}>
+                        <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', maxWidth: "350px", borderWidth: '0px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 1em 1em', marginTop: '3em' }}>
+                            {!hasOobCode && <Stack alignItems="center">
+                                <Link href={"/"}>
+                                    <Navbar mobile={true} />
+                                </Link>
+                                <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Please check your email for a link to reset your password.`}</Typography>
+                            </Stack>}
+                            {hasOobCode && <Stack alignItems="center">
+                                <Link href={"/"}>
+                                    <Navbar mobile={true} />
+                                </Link>
+                                <Stack alignItems={"center"} style={{ paddingBottom: '1rem' }}>
+                                    <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{createComplete ? "You've successfully reset your password." : "Create a new password"}</Typography>
+                                    {createComplete && <Button variant="contained" onClick={() => router.push('/login')} style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>Login</Button>}
+                                </Stack>
 
-                </div>
+                                {!createComplete && <Formik
+                                    initialValues={{
+                                        password: '',
+                                        passwordConfirm: ''
+                                    }}
+                                    onSubmit={async (values) => {
+                                        const { password, passwordConfirm } = values;
+                                        if (password !== passwordConfirm || !validPassword(password)) {
+                                            return
+                                        }
+                                        setLoading(true)
 
-                <Stack alignItems="center" spacing={1}>
-                    <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', maxWidth: "350px", borderWidth: '0px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 1em 1em', marginTop: '3em' }}>
-                        {!hasOobCode && <Stack alignItems="center">
-                            <Navbar mobile={true} />
-                            <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Please check your email for a link to reset your password.`}</Typography>
-                        </Stack>}
-                        {hasOobCode && <Stack alignItems="center">
-                            <Navbar mobile={true} />
-                            <Stack alignItems={"center"} style={{ paddingBottom: '1rem' }}>
-                                <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{createComplete? "You've successfully reset your password." : "Create a new password"}</Typography>
-                                {createComplete && <Button variant="contained" onClick={() => router.push('/login')} style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>Login</Button>}
-                            </Stack>
+                                        try {
+                                            const result = await confirmPasswordReset(auth, oobCode, password)
+                                            setCreateComplete(true)
+                                        } catch (error) {
+                                            const errorCode = error.code;
+                                            const errorMessage = error.message;
+                                            console.error(errorCode, errorMessage)
+                                            Sentry.captureException(error)
+                                            setLoginError("There was a problem creating your password. Please request a new reset link.")
+                                        };
+                                        setLoading(false)
 
-                            {!createComplete && <Formik
-                                initialValues={{
-                                    password: '',
-                                    passwordConfirm: ''
-                                }}
-                                onSubmit={async (values) => {
-                                    const { password, passwordConfirm } = values;
-                                    if (password !== passwordConfirm || !validPassword(password)) {
-                                        return
-                                    }
-                                    setLoading(true)
+                                    }}
+                                >
+                                    {({ values, errors, touched }) => (
+                                        <Form>
+                                            <Stack style={{}} alignItems="center" spacing={1}>
+                                                <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
+                                                <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
+                                                <div>
+                                                    {!validatePasswordLength(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Minimum 8 characters</Typography>}
+                                                    {!validatePasswordContainsNumber(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
+                                                    {!validatePasswordUpperCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
+                                                    {!validatePasswordLowerCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
+                                                    {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
+                                                </div>
 
-                                    try {
-                                        const result = await confirmPasswordReset(auth, oobCode, password)
-                                        setCreateComplete(true)
-                                    } catch (error) {
-                                        const errorCode = error.code;
-                                        const errorMessage = error.message;
-                                        console.error(errorCode, errorMessage)
-                                        Sentry.captureException(error)
-                                        setLoginError("There was a problem creating your password. Please request a new reset link.")
-                                    };
-                                    setLoading(false)
+                                                <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Create"}</Button>
+                                            </Stack>
 
-                                }}
-                            >
-                                {({ values, errors, touched }) => (
-                                    <Form>
-                                        <Stack style={{}} alignItems="center" spacing={1}>
-                                            <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                            <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                            <div>
-                                                {!validatePasswordLength(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Minimum 8 characters</Typography>}
-                                                {!validatePasswordContainsNumber(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
-                                                {!validatePasswordUpperCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
-                                                {!validatePasswordLowerCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
-                                                {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
-                                            </div>
-
-                                            <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Create"}</Button>
-                                        </Stack>
-
-                                    </Form>
-                                )}
+                                        </Form>
+                                    )}
 
 
-                            </Formik>}
-                            <Typography style={{ color: 'white', width: '100%', textAlign: "center", paddingTop: '1rem' }}>
-                                {loginError ?? ""}
-                            </Typography>
-                        </Stack>}
-                    </div>
-                </Stack>
-            </main>
+                                </Formik>}
+                                <Typography style={{ color: 'white', width: '100%', textAlign: "center", paddingTop: '1rem' }}>
+                                    {loginError ?? ""}
+                                </Typography>
+                            </Stack>}
+                        </div>
+                    </Stack>
+                </main>
+            </PageTransition>
         </>
     )
 }

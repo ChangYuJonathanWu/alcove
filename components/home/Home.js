@@ -15,6 +15,7 @@ import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Hero from '@/components/home/Hero'
 import Navbar from '@/components/home/Navbar'
 import { useRouter } from 'next/router';
+import PageTransition from '@/components/PageTransition'
 
 import React, { useState } from 'react'
 
@@ -57,7 +58,7 @@ export default function Home() {
       <Hero desktop={false} />
       <div style={{ padding: "0.5rem" }}></div>
       <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
-    
+
       <Typography variant="subtitle2" style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
     </Stack>
   )
@@ -94,9 +95,11 @@ export default function Home() {
       </Head>
 
       <main>
-        <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
-          {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
-        </Stack>
+        <PageTransition>
+          <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
+            {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
+          </Stack>
+        </PageTransition>
       </main>
     </>
   )
