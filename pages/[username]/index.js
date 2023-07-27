@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
 
 import ErrorPage from 'next/error'
 import Profile from '@/components/profile/Profile'
@@ -19,6 +20,10 @@ import { getPublicProfile } from '@/lib/api/profile'
 
 const TEST_USER = "jHak91janUhqmOakso"
 const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
+
+const DynamicProfile = dynamic(() => import('@/components/profile/Profile'), {
+    loading: () => <ProfileLoader />
+})
 
 const determineHardcodedUser = (username) => {
     switch (username) {
@@ -96,6 +101,8 @@ export const getServerSideProps = async (context) => {
 }
 
 
+
+
 export default function ProfileRoute({ profile, ownerSignedIn }) {
     const router = useRouter()
     const user = profile
@@ -121,7 +128,7 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <Profile user={user} ownerSignedIn={ownerSignedIn} />
+            <DynamicProfile user={user} ownerSignedIn={ownerSignedIn} />
         </>
     )
 }
