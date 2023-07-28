@@ -46,9 +46,6 @@ export const getServerSideProps = async (context) => {
     console.time(userRequestDbTimerName)
     const profile = await getPublicProfile(username)
     console.timeEnd(userRequestDbTimerName)
-    if (profile) {
-        profile["_id"] = null
-    }
     console.timeEnd(userRequestTimerName)
     return {
         props: {

@@ -7,6 +7,7 @@ import TrailItem from '@/components/items/TrailItem';
 import StandardPost from '@/components/items/StandardPost';
 import ShowItem from '@/components/items/ShowItem';
 import CarItem from '@/components/items/CarItem';
+import dynamic from 'next/dynamic';
 
 import LinkIcon from '@mui/icons-material/Link';
 import Divider from '@mui/material/Divider';
@@ -27,6 +28,11 @@ import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 import { formatUri } from '@/utils/formatters';
 import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE, CENTER_PROFILE_ITEMS } from '@/utils/themeConfig';
+import Skeleton from '@mui/material/Skeleton';
+
+const SpotifyItemDynamic = dynamic(() => import('@/components/items/SpotifyItem'), {
+    loading: () => <Skeleton variant="rounded" style={{ width: "100%", height: "3rem"}} />
+})
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
@@ -61,7 +67,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         ItemComponent = StandardPost
                         break;
                     case "spotify":
-                        ItemComponent = SpotifyItem
+                        ItemComponent = SpotifyItemDynamic
                         break;
                     case "restaurant":
                         ItemComponent = RestaurantItem

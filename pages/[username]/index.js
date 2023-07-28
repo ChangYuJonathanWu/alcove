@@ -43,6 +43,10 @@ const determineHardcodedUser = (username) => {
 export const getServerSideProps = async (context) => {
     let loggedInUid = null
     const username = context.params.username
+    context.res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=604800'
+    )
     try {
         const cookies = nookies.get(context)
         const tokenFromCookie = cookies.token
@@ -50,6 +54,7 @@ export const getServerSideProps = async (context) => {
             console.log("Missing token from cookie!")
         }
         if(tokenFromCookie) {
+            console.log('here - so no cache?')
             const token = await firebaseAdmin.auth().verifyIdToken(tokenFromCookie)
             const { uid } = token
             loggedInUid = uid
@@ -89,9 +94,7 @@ export const getServerSideProps = async (context) => {
 
     const profile = await getPublicProfile(username)
     const ownerSignedIn = loggedInUid && (loggedInUid === profile?.uid)
-    if (profile) {
-        profile["_id"] = null
-    }
+
     return {
         props: {
             profile,
