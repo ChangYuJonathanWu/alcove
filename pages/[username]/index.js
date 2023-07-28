@@ -98,7 +98,7 @@ export default function ProfileRoute({ profile }) {
     })
 
     if (router.isFallback) {
-        return <DefaultLoader />
+        return <DefaultLoader/>
     }
     if (!profile) {
         return <ErrorPage statusCode={404} />

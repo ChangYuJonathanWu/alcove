@@ -64,6 +64,8 @@ async function handler(req, res) {
         }
         console.log("Update Query: " + JSON.stringify(updateQuery))
         const result = await updateProfile(updateQuery, uid)
+        res.revalidate('/jonathanwu_test')
+
         if(result) {
             return res.status(200).json({success: true})
         } else {
