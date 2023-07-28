@@ -23,7 +23,7 @@ const TEST_USER = "jHak91janUhqmOakso"
 const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
 
 const DynamicProfile = dynamic(() => import('@/components/profile/Profile'), {
-    loading: () => <ProfileLoader />
+    loading: () => <DefaultLoader />
 })
 
 const determineHardcodedUser = (username) => {
@@ -79,6 +79,7 @@ export default function ProfileRoute({ profile }) {
     const router = useRouter()
     const { user } = useAuthContext()
     const [ownerSignedIn, setOwnerSignedIn] = useState(false)
+    const [ownerCheckComplete, setOwnerCheckComplete] = useState(false)
 
     useEffect(() => {
         if (router.isFallback || !profile) {
@@ -93,11 +94,12 @@ export default function ProfileRoute({ profile }) {
                     setOwnerSignedIn(true)
                 }
             }
+            setOwnerCheckComplete(true)
         }
         checkOwnerSignedIn()
     })
 
-    if (router.isFallback) {
+    if (router.isFallback || !ownerCheckComplete) {
         return <DefaultLoader/>
     }
     if (!profile) {
