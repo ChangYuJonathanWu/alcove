@@ -34,7 +34,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
         <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1.5rem' }}>
 
             <Stack alignItems="center" style={{ width: '100%' }}>
-                <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ position: 'relative', top: '4rem', margin: "1rem", borderColor: PAPER_COLOR, borderWidth: '0.2rem', borderStyle: 'solid' }} src={photo} />
+                <Avatar id={`${handle}-profile-photo`} alt={handle} sx={{ width: 100, height: 100 }} style={{ backgroundColor: PAPER_COLOR, position: 'relative', top: '4rem', margin: "1rem", borderColor: PAPER_COLOR, borderWidth: '0.2rem', borderStyle: 'solid' }} src={photo} />
                 <Paper sx={{ paddingTop: '3.5rem', borderRadius: '1rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, width: '100%' }}>
                     <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem", paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
 
