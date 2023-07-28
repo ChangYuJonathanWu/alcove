@@ -31,14 +31,19 @@ export default function Profile({ user, ownerSignedIn = false }) {
     const [newItemOpen, setNewItemOpen] = useState(false)
     const [themeOpen, setThemeOpen] = useState(false)
     const [reorderItems, setReorderItems] = useState(false)
+    const [profileUser, setProfileUser] = useState(user)
 
     const router = useRouter();
 
-    const triggerReload = () => {
-        router.replace(router.asPath)
+    const triggerReload = async () => {
+        // get public profile
+        const { handle } = profileUser
+        const result = await fetch(`/api/public/profile?handle=${handle}`, { method: "GET" })
+        const profile = await result.json()
+        setProfileUser(profile)
     }
 
-    const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = user
+    const { title, description, handle, photo, background, config, profile = {}, profile_style = {} } = profileUser
     const { items = {}, item_order: itemOrder = [] } = profile
 
     const { item_font } = profile_style
@@ -63,13 +68,13 @@ export default function Profile({ user, ownerSignedIn = false }) {
             </div>
             <Stack style={{ marginBottom: "100px" }}>
                 <div style={{ zIndex: 1 }}>
-                    <EditBioModal open={editBio} setOpen={setEditBio} user={user} triggerReload={triggerReload} />
+                    <EditBioModal open={editBio} setOpen={setEditBio} user={profileUser} triggerReload={triggerReload} />
                     <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload} />
-                    <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={user} triggerReload={triggerReload} />
-                    <ThemingModal open={themeOpen} setOpen={setThemeOpen} user={user} triggerReload={triggerReload} />
+                    <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={profileUser} triggerReload={triggerReload} />
+                    <ThemingModal open={themeOpen} setOpen={setThemeOpen} user={profileUser} triggerReload={triggerReload} />
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
-                    <ProfileHeader user={user} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
-                    <ProfileItems user={user} editMode={ownerSignedIn} triggerReload={triggerReload} />
+                    <ProfileHeader user={profileUser} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
+                    <ProfileItems user={profileUser} editMode={ownerSignedIn} triggerReload={triggerReload} />
                 </div>
 
                 {ownerSignedIn &&

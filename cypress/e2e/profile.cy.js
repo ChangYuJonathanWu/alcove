@@ -1,4 +1,6 @@
 const PERCY_WIDTHS = [768, 1920]
+const NO_SPOTIFY_PROFILE_HANDLE = "239jsdfk9Q2jjsk_no_spotify"
+const PROFILE_HANDLE = "jHak91janUhqmOakso"
 
 describe('Profile', () => {
     it('Loads my profile', () => {
@@ -13,10 +15,10 @@ describe('Profile', () => {
         cy.percySnapshot('Profile (Public)', { widths: PERCY_WIDTHS });
     })
     it('Loads the test profile and renders expected elements', () => {
-        cy.visit('http://localhost:3000/jHak91janUhqmOakso')
+        cy.visit(`http://localhost:3000/${PROFILE_HANDLE}`)
         cy.contains('jonathan wu').should('exist')
-        cy.get("#jonathanwu-profile-photo").should('exist')
-        cy.contains("@jonathanwu").should('exist')
+        cy.get(`#${PROFILE_HANDLE}-profile-photo`).should('exist')
+        cy.contains(`@${PROFILE_HANDLE}`).should('exist')
         cy.contains("my favorites").should('exist')
         cy.contains("Edit Profile").should('exist')
         cy.get("#instagram-bio-link").should('exist')
@@ -32,10 +34,10 @@ describe('Profile', () => {
     })
 
     it('Loads the test no-spotify profile and renders all social links possible', () => {
-        cy.visit('http://localhost:3000/239jsdfk9Q2jjsk_no_spotify')
+        cy.visit(`http://localhost:3000/${NO_SPOTIFY_PROFILE_HANDLE}`)
         cy.contains('jonathan wu').should('exist')
-        cy.get("#jonathanwu-profile-photo").should('exist')
-        cy.contains("@jonathanwu").should('exist')
+        cy.get(`#${NO_SPOTIFY_PROFILE_HANDLE}-profile-photo`).should('exist')
+        cy.contains(`@${NO_SPOTIFY_PROFILE_HANDLE}`).should('exist')
         cy.contains("my favorites").should('exist')
         cy.contains("Edit Profile").should('exist')
         cy.get("#instagram-bio-link").should('exist')
@@ -64,7 +66,7 @@ describe('Profile', () => {
 
     it('Can open a restaurant list and render posts', () => {
         // Open up list
-        cy.visit('http://localhost:3000/jHak91janUhqmOakso')
+        cy.visit(`http://localhost:3000/${PROFILE_HANDLE}`)
         cy.get("#background-photo").should('exist')
         cy.contains("sushi restaurants").click()
         cy.contains("sushi restaurants").should('exist')
@@ -79,7 +81,7 @@ describe('Profile', () => {
     })
     it('Can open song list and render Spotify iFrames', () => {
         // Open up list
-        cy.visit('http://localhost:3000/jHak91janUhqmOakso')
+        cy.visit(`http://localhost:3000/${PROFILE_HANDLE}`)
         cy.contains("songs of all time").click()
         cy.contains("some of them atleast").should('exist')
         cy.percySnapshot('Sushi Restaurants List', { widths: PERCY_WIDTHS, fullPage: true });

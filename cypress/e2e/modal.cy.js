@@ -8,6 +8,7 @@ describe('Modal', () => {
 
 
     it('can render edit list item modal', () => {
+        cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 5)
         cy.get('[data-cy="edit-item-icon"]').first().click()
         cy.get('[data-cy="edit-item-modal"]').should('exist').should('be.visible')
@@ -31,6 +32,7 @@ describe('Modal', () => {
     })
 
     it('can render edit uri item modal', () => {
+        cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 5)
         cy.get('[data-cy="edit-item-icon"]').last().click()
         cy.get('[data-cy="edit-item-modal"]').should('exist').should('be.visible')
@@ -53,6 +55,7 @@ describe('Modal', () => {
     })
 
     it('can render change item order modal', () => {
+        cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="rearrange-items-button"]').should('exist').should('have.text', 'Change Order').click()
 
         cy.get('[data-cy="rearrange-items-modal"]').should('exist').should('be.visible').within(() => {
@@ -125,6 +128,7 @@ describe('Modal', () => {
     })
 
     it('can render new item modal', () => {
+        cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="new-item-button"]').should('exist').should('have.text', 'New Item').click()
         // Should have empty name and subtitle text fields
         cy.get('[data-cy="new-item-modal"]').should('exist').should('be.visible').within(() => {

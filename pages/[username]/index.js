@@ -13,16 +13,18 @@ import test_user from '@/examples/test_profile.json'
 import test_user_no_spotify from '@/examples/test_profile_no_spotify.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
 import { useAuthContext } from "@/context/AuthContext";
-import { firebaseAdmin } from '@/lib/firebase-admin';
 import nookies from 'nookies';
+import { getAuth } from 'firebase/auth'
 
 import { getPublicProfile } from '@/lib/api/profile'
+import DefaultLoader from '@/components/DefaultLoader'
 
 const TEST_USER = "jHak91janUhqmOakso"
 const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
+const TEST_USERS = [TEST_USER, TEST_USER_NO_SPOTIFY]
 
 const DynamicProfile = dynamic(() => import('@/components/profile/Profile'), {
-    loading: () => <ProfileLoader />
+    loading: () => <DefaultLoader />
 })
 
 const determineHardcodedUser = (username) => {
@@ -40,79 +42,76 @@ const determineHardcodedUser = (username) => {
     }
 }
 
-export const getServerSideProps = async (context) => {
-    let loggedInUid = null
-    const username = context.params.username
-    context.res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=604800'
-    )
-    try {
-        const cookies = nookies.get(context)
-        const tokenFromCookie = cookies.token
-        if(!tokenFromCookie) {
-            console.log("Missing token from cookie!")
-        }
-        if(tokenFromCookie) {
-            console.log('here - so no cache?')
-            const token = await firebaseAdmin.auth().verifyIdToken(tokenFromCookie)
-            const { uid } = token
-            loggedInUid = uid
-        }
-        
-    } catch (err) {
-        console.log(err)
-        const { errorInfo } = err
-        if (errorInfo.code === "auth/id-token-expired") {
-            return {
-                redirect: {
-                    permanent: false,
-                    destination: `/a/${username}`,
-                }
-            }
-        } else {
-            return {
-                redirect: {
-                    permanent: false,
-                    destination: `/login`,
-                }
-            }
-        }
+
+export const getStaticPaths = async () => {
+    return {
+        paths: [],
+        fallback: true,
     }
+}
+
+
+export const getStaticProps = async (context) => {
+    const username = context.params.username
 
     const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", TEST_USER, TEST_USER_NO_SPOTIFY]
-    const test_users = [TEST_USER, TEST_USER_NO_SPOTIFY]
+
     if (hardcodedUsers.includes(username)) {
         const hardcodedUser = determineHardcodedUser(username)
         return {
             props: {
                 profile: hardcodedUser,
-                ownerSignedIn: test_users.includes(username) 
             }
         }
     }
 
     const profile = await getPublicProfile(username)
-    const ownerSignedIn = loggedInUid && (loggedInUid === profile?.uid)
 
     return {
         props: {
-            profile,
-            ownerSignedIn
-        }
+            profile
+        },
+        revalidate: 1
     }
 }
 
 
 
-
-export default function ProfileRoute({ profile, ownerSignedIn }) {
+export default function ProfileRoute({ profile }) {
     const router = useRouter()
-    const user = profile
-    if (!user) {
+    const { user } = useAuthContext()
+    const [ownerSignedIn, setOwnerSignedIn] = useState(false)
+    const [ownerCheckComplete, setOwnerCheckComplete] = useState(false)
+
+    useEffect(() => {
+        if (router.isFallback || !profile) {
+            return
+        }
+        // Check if owner is signed in
+        const checkOwnerSignedIn = async () => {
+            const auth = getAuth()
+            if (user) {
+                const { uid } = user
+                if (uid === profile.uid) {
+                    setOwnerSignedIn(true)
+                }
+            }
+            if (TEST_USERS.includes(profile.handle)) {
+                setOwnerSignedIn(true)
+            }
+            setOwnerCheckComplete(true)
+        }
+        checkOwnerSignedIn()
+    })
+
+    if (router.isFallback || !ownerCheckComplete) {
+        return <DefaultLoader/>
+    }
+    if (!profile) {
         return <ErrorPage statusCode={404} />
     }
-    const { title, handle, description, photo } = user
+    const { title, handle, description, photo } = profile
+
 
     return (
         <>
@@ -131,7 +130,7 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <DynamicProfile user={user} ownerSignedIn={ownerSignedIn} />
+            <DynamicProfile user={profile} ownerSignedIn={ownerSignedIn} />
         </>
     )
 }
