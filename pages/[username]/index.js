@@ -21,6 +21,7 @@ import DefaultLoader from '@/components/DefaultLoader'
 
 const TEST_USER = "jHak91janUhqmOakso"
 const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
+const TEST_USERS = [TEST_USER, TEST_USER_NO_SPOTIFY]
 
 const DynamicProfile = dynamic(() => import('@/components/profile/Profile'), {
     loading: () => <DefaultLoader />
@@ -41,6 +42,7 @@ const determineHardcodedUser = (username) => {
     }
 }
 
+
 export const getStaticPaths = async () => {
     return {
         paths: [],
@@ -53,7 +55,7 @@ export const getStaticProps = async (context) => {
     const username = context.params.username
 
     const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", TEST_USER, TEST_USER_NO_SPOTIFY]
-    const test_users = [TEST_USER, TEST_USER_NO_SPOTIFY]
+
     if (hardcodedUsers.includes(username)) {
         const hardcodedUser = determineHardcodedUser(username)
         return {
@@ -93,6 +95,9 @@ export default function ProfileRoute({ profile }) {
                 if (uid === profile.uid) {
                     setOwnerSignedIn(true)
                 }
+            }
+            if (TEST_USERS.includes(profile.handle)) {
+                setOwnerSignedIn(true)
             }
             setOwnerCheckComplete(true)
         }
