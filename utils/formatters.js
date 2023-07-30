@@ -8,6 +8,11 @@ export const stripSpaces = (text) => {
     return spacesRemoved
 }
 
+export const trimSpaces = (text) => {
+    const spacesTrimmed = text ? text.trim() : ""
+    return spacesTrimmed
+}
+
 export const isValidUrl = urlString=> {
     try { 
         return Boolean(new URL(urlString)); 

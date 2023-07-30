@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
+import { Modal, Stack, Box, Button, Typography, TextField, Avatar } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SpotifyItem from '../items/SpotifyItem';
 import { protectedApiCall } from '@/utils/api';
+import Image from 'next/image';
+import { stripSpaces, trimSpaces } from '@/utils/formatters';
 
 export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorder, triggerReload, user }) {
   const [loading, setLoading] = useState(false)
@@ -67,6 +69,30 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     setItemIdToReorder(null)
   }
 
+  const truncateString = (str, num) => {
+    const trimmed = trimSpaces(str)
+    if (trimmed.length <= num) {
+      return trimmed
+    }
+    return trimmed.slice(0, num) + '...'
+  }
+
+  const compactItemView = (item) => {
+    let { title, subtitle, caption, image } = item;
+
+    return (
+      <Stack direction="row" spacing={2}>
+        <Avatar variant="square" style={{height: "5rem", width: "5rem", borderRadius: '1rem'}} src={image}/>
+        <Stack>
+          { title ? <Typography style={{fontWeight: 600}}>{truncateString(title, 30)}</Typography> : <div style={{height: '1.2rem'}}></div>}
+          { subtitle ? <Typography variant="subtitle1">{truncateString(subtitle, 35)}</Typography> : <div style={{height: '1rem'}}></div>}
+          <Typography variant="subtitle2">{truncateString(caption, 40)}</Typography>
+        </Stack>
+      </Stack>
+    )
+
+  }
+
   const buildItems = () => {
     // It seems like it's possible for the list items to be null at some points during changes, so this prevents the component from breaking as the list order is retained in state
     if(!postsToRearrange || !Object.keys(postsToRearrange).length) {
@@ -78,9 +104,9 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       return (
         <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop: padding, paddingBottom: padding }}>
 
-          {postType === "spotify" ? <SpotifyItem noPadding={true} item={postsToRearrange[id]} /> : <b>{postsToRearrange[id]["title"]}</b> }
+          {postType === "spotify" ? <SpotifyItem noPadding={true} item={postsToRearrange[id]} /> : compactItemView(postsToRearrange[id]) }
           <Stack direction="row" spacing={2}>
-            <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
+            <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, padding: '0.5rem',}}>
               <ArrowUpwardIcon />
             </Button>
             <Button onClick={() => onMoveDown(idx)} disabled={idx === order.length - 1} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
