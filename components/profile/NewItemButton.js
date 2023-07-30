@@ -12,8 +12,8 @@ import Collapse from '@mui/material/Collapse';
 import { Typography } from '@mui/material';
 
 import { getAuth } from "firebase/auth";
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE } from '@/utils/themeConfig';
+import { protectedApiCall } from '@/utils/api';
 
 const PAPER_COLOR =  DEFAULT_PAPER_COLOR
 const MAX_WIDTH =  PROFILE_ITEMS_WIDTH
@@ -23,8 +23,7 @@ export default function NewItemButton({onClick}) {
             name: newItemName,
             type: newItemType,
         }
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body)})
+        const result = await protectedApiCall(`/api/profile/items`, 'POST', body)
     }
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>

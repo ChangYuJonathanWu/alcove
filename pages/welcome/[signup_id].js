@@ -17,10 +17,10 @@ import * as Sentry from '@sentry/nextjs'
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
 import DefaultLoader from '@/components/DefaultLoader';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
+import { protectedApiCall } from '@/utils/api';
 YupPassword(Yup);
 
 
@@ -96,8 +96,7 @@ export default function Welcome({ signup }) {
             if (user) {
                 setPageLoading(true)
                 const { uid } = user
-                const token = await refreshFirebaseToken()
-                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+                const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
                 router.replace(`/${handle}`)

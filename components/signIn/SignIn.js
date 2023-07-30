@@ -14,9 +14,9 @@ import { styled } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import DefaultLoader from '../DefaultLoader';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
+import { protectedApiCall } from '@/utils/api';
 
 
 
@@ -34,7 +34,7 @@ export default function SignIn() {
     const textColor = theme.textColor
     const router = useRouter();
     const auth = getAuth()
-    const { user } = auth.currentUser
+    const user  = auth.currentUser
 
     const email = router.query.email
     const showOnboardMessage = !!email
@@ -58,8 +58,7 @@ export default function SignIn() {
             if (user) {
                 setPageLoading(true)
                 const { uid } = user
-                const token = await refreshFirebaseToken()
-                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+                const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
                 router.replace(`/${handle}`)
@@ -121,7 +120,7 @@ export default function SignIn() {
                                                 if (credential) {
                                                     setLoginError(null)
                                                     const { uid } = credential.user
-                                                    const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+                                                    const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                                                     const fullUserProfile = await result.json()
                                                     const { handle } = fullUserProfile
                                                     router.replace(`/${handle}`)
