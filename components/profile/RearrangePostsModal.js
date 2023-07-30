@@ -6,6 +6,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SpotifyItem from '../items/SpotifyItem';
 import { protectedApiCall } from '@/utils/api';
 import Image from 'next/image';
+import { stripSpaces, trimSpaces } from '@/utils/formatters';
 
 export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorder, triggerReload, user }) {
   const [loading, setLoading] = useState(false)
@@ -69,21 +70,22 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
   }
 
   const truncateString = (str, num) => {
-    if (str.length <= num) {
-      return str
+    const trimmed = trimSpaces(str)
+    if (trimmed.length <= num) {
+      return trimmed
     }
-    return str.slice(0, num) + '...'
+    return trimmed.slice(0, num) + '...'
   }
 
   const compactItemView = (item) => {
-    const { title, subtitle, caption, image } = item;
+    let { title, subtitle, caption, image } = item;
 
     return (
       <Stack direction="row" spacing={2}>
         <Avatar variant="square" style={{height: "5rem", width: "5rem", borderRadius: '1rem'}} src={image}/>
         <Stack>
-          <Typography style={{fontWeight: 600}}>{truncateString(title, 30)}</Typography>
-          <Typography variant="subtitle1">{truncateString(subtitle, 35)}</Typography>
+          { title ? <Typography style={{fontWeight: 600}}>{truncateString(title, 30)}</Typography> : <div style={{height: '1.2rem'}}></div>}
+          { subtitle ? <Typography variant="subtitle1">{truncateString(subtitle, 35)}</Typography> : <div style={{height: '1rem'}}></div>}
           <Typography variant="subtitle2">{truncateString(caption, 40)}</Typography>
         </Stack>
       </Stack>
