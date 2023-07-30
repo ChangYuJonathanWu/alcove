@@ -12,10 +12,7 @@ import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import test_user_no_spotify from '@/examples/test_profile_no_spotify.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
-import { useAuthContext } from "@/context/AuthContext";
-import nookies from 'nookies';
 import { getAuth } from 'firebase/auth'
-
 import { getPublicProfile } from '@/lib/api/profile'
 import DefaultLoader from '@/components/DefaultLoader'
 
@@ -79,9 +76,9 @@ export const getStaticProps = async (context) => {
 
 export default function ProfileRoute({ profile }) {
     const router = useRouter()
-    const { user } = useAuthContext()
     const [ownerSignedIn, setOwnerSignedIn] = useState(false)
     const [ownerCheckComplete, setOwnerCheckComplete] = useState(false)
+    const user = getAuth().currentUser
 
     useEffect(() => {
         if (router.isFallback || !profile) {

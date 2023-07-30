@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
-import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
+import { protectedApiCall } from '@/utils/api';
 
 
 // support delete and rename item
@@ -29,8 +28,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
     
     const onItemDelete = async () => {
         setLoading(true)
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/items/${itemId}`, { method: "DELETE" })
+        const result = await protectedApiCall(`/api/profile/items/${itemId}`, 'DELETE')
         setLoading(false)
         setEditItem("")
         setItemId("")
@@ -51,8 +49,7 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
             subtitle: newSubtitle,
             uri: newLink
         }
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/items/${itemId}`, { method: "POST", body: JSON.stringify(body) })
+        const result = await protectedApiCall(`/api/profile/items/${itemId}`, 'POST', JSON.stringify(body))
         setLoading(false)
         if(result.status !== 200) {
             const parsedResult = await result.json()

@@ -6,12 +6,11 @@ import { amita } from '../fonts'
 import Link from 'next/link';
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Navbar from '@/components/home/Navbar'
-import { useAuthContext } from "@/context/AuthContext";
 import { signOut, getAuth } from "firebase/auth";
 import { firebase } from '@/lib/Firebase'
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
 import React, { useState, useEffect } from 'react'
+import { protectedApiCall } from '@/utils/api'
 
 const theme4 = {
     bgColor: '#7C9070',
@@ -23,38 +22,38 @@ const theme4 = {
 
 
 export default function Home() {
-    const { user } = useAuthContext()
     const [profile, setProfile] = useState(null)
     const [description, setDescription] = useState("")
     const [profilePhoto, setProfilePhoto] = useState("")
     const [title, setTitle] = useState("")
     const [newItemName, setNewItemName] = useState("")
     const [newItemType, setNewItemType] = useState("list")
+    const [user, setUser] = useState(null)
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
-            if (user) {
-                const token = await refreshFirebaseToken()
-                const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })
+            const { currentUser } = auth
+            if (currentUser) {
+                const result = protectedApiCall(`/api/profile?uid=${uid}`, "GET")
                 const fullUserProfile = await result.json()
                 const { description = "", title = "", photo, profile } = fullUserProfile
                 setDescription(description)
                 setTitle(title)
                 setProfile(fullUserProfile)
                 setProfilePhoto(photo)
+                setUser(currentUser)
 
             }
         }
         loadUser()
-    }, [user])
+    })
 
     const submitUpdates = async () => {
         const body = {
             description,
             title
         }
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile`, { method: "PUT", body: JSON.stringify(body) })
+        const result = await protectedApiCall(`/api/profile`, "PUT", JSON.stringify(body))
     }
 
     const submitNewItem = async () => {
@@ -62,8 +61,7 @@ export default function Home() {
             name: newItemName,
             type: newItemType,
         }
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/items`, { method: "POST", body: JSON.stringify(body) })
+        const result = await protectedApiCall(`/api/profile/items`, "POST", JSON.stringify(body))
     }
 
     const onUploadProfilePhoto = async (e) => {
@@ -71,16 +69,7 @@ export default function Home() {
         const photo = e.target.files[0]
         const formData = new FormData();
         formData.append('profilePhoto', photo)
-        const token = await refreshFirebaseToken()
-        const result = await fetch('/api/profile/updateProfilePhoto', {
-            method: 'POST',
-            body: formData,    
-        })
-        // const result = await fetch('http://localhost:3001/upload', {
-        //     method: 'POST',
-        //     headers,
-        //     body: formData,    
-        // })
+        const result = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
     }
 
     const auth = getAuth()
@@ -116,11 +105,11 @@ export default function Home() {
                         {user ? `You are logged in as ${user.email}` : "You are not logged in."}
                     </div>
                     <Stack direction="column">
-                    <div>
-                        <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={profilePhoto} />
-                        
-                    </div>
-                    <input type="file" onChange={(e) => onUploadProfilePhoto(e)}/>
+                        <div>
+                            <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={profilePhoto} />
+
+                        </div>
+                        <input type="file" onChange={(e) => onUploadProfilePhoto(e)} />
                     </Stack>
                     {profilePhoto}
 

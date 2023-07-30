@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Home from '@/components/home/Home'
 import Dashboard from '@/components/dashboard/Dashboard'
-import { useAuthContext } from "@/context/AuthContext";
 import Link from 'next/link';
 import { Stack } from '@mui/material';
 

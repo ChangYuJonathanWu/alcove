@@ -13,7 +13,6 @@ import * as Sentry from '@sentry/nextjs'
 
 import React, { useState, useEffect } from 'react'
 import { getAuth, confirmPasswordReset } from "firebase/auth";
-import { useAuthContext } from "@/context/AuthContext";
 import DefaultLoader from '@/components/DefaultLoader';
 import PageTransition from '@/components/PageTransition'
 

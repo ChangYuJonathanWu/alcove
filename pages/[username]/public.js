@@ -9,8 +9,6 @@ import jiwonkang_user from '@/examples/jiwon.json'
 import example_user from '@/examples/example.json'
 import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
-import { useAuthContext } from "@/context/AuthContext";
-import nookies from 'nookies';
 
 import { getPublicProfile } from '@/lib/api/profile'
 
