@@ -28,11 +28,12 @@ export default function Home() {
     const [title, setTitle] = useState("")
     const [newItemName, setNewItemName] = useState("")
     const [newItemType, setNewItemType] = useState("list")
+    const [user, setUser] = useState(null)
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
-            const user = auth.currentUser
-            if (user) {
+            const { currentUser } = auth
+            if (currentUser) {
                 const result = protectedApiCall(`/api/profile?uid=${uid}`, "GET")
                 const fullUserProfile = await result.json()
                 const { description = "", title = "", photo, profile } = fullUserProfile
@@ -40,11 +41,12 @@ export default function Home() {
                 setTitle(title)
                 setProfile(fullUserProfile)
                 setProfilePhoto(photo)
+                setUser(currentUser)
 
             }
         }
         loadUser()
-    }, [user])
+    })
 
     const submitUpdates = async () => {
         const body = {
@@ -103,11 +105,11 @@ export default function Home() {
                         {user ? `You are logged in as ${user.email}` : "You are not logged in."}
                     </div>
                     <Stack direction="column">
-                    <div>
-                        <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={profilePhoto} />
-                        
-                    </div>
-                    <input type="file" onChange={(e) => onUploadProfilePhoto(e)}/>
+                        <div>
+                            <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={profilePhoto} />
+
+                        </div>
+                        <input type="file" onChange={(e) => onUploadProfilePhoto(e)} />
                     </Stack>
                     {profilePhoto}
 
