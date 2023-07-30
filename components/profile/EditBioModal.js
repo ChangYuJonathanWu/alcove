@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
-import { getAuth } from "firebase/auth";
-import { compressImage } from '@/utils/localImageProcessing';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 import { stripSpaces } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 
