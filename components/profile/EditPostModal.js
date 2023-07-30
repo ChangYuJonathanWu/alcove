@@ -57,7 +57,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
     const onPostDelete = async () => {
         setLoading(true)
-        const result = await protectedApiCall('/api/profile/items/${parentId}/post/${postId}', 'DELETE')
+        const result = await protectedApiCall(`/api/profile/items/${parentId}/post/${postId}`, 'DELETE')
         if (result.status !== 200) {
             const parsedResult = await result.json()
             setError(parsedResult.error ?? "Error deleting post. Please try again.")
@@ -86,7 +86,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         if (photoChanged) {
             formData.append("photo_changed", true)
         }
-        const result = await protectedApiCall(`/api/profile/items/${parentId}/post/${postId}`, 'POST', formData)
+        const result = await protectedApiCall(`/api/profile/items/${parentId}/post/${postId}`, 'PUT', formData)
         setLoading(false)
         if (result.status !== 200) {
             const parsedResult = await result.json()
