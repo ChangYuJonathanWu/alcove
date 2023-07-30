@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import { compressImage } from '@/utils/localImageProcessing';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 import { stripSpaces } from '@/utils/formatters';
+import { protectedApiCall } from '@/utils/api';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
@@ -62,8 +63,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                 linkedin: newLinkedin
             }
         }
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile`, { method: "PUT", body: JSON.stringify(body) })
+        const result = await protectedApiCall(`/api/profile`, "PUT", body)
         setLoading(false)
         setOpen(false)
         triggerReload(Date.now())
@@ -94,17 +94,14 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const compressedFile = await compressImage(file)
         const formData = new FormData()
         formData.append('profilePhoto', compressedFile)
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "POST", body: formData })
-        const data = await result.json()
+        const data = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
         setNewProfilePhoto(data.url)
         setLoading(false)
     }
 
     const removeProfilePhoto = async () => {
         setLoading(true)
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/updateProfilePhoto`, { method: "DELETE" })
+        const result = await protectedApiCall(`/api/profile/updateProfilePhoto`, "DELETE")
         setNewProfilePhoto("")
         setLoading(false)
     }
