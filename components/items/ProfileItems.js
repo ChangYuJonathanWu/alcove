@@ -100,7 +100,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         return (
             <div key={itemId}  style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <Paper sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
-                    <ListItemButton id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
+                    <ListItemButton style={{borderRadius: '1rem'}} id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
                                 {CENTER_PROFILE_ITEMS  && !isOpen && <div style={{width: '2rem'}}></div>}
