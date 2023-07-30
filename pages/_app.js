@@ -4,7 +4,6 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../config/theme';
 import createEmotionCache from '../config/createEmotionCache';
 import { Analytics } from '@vercel/analytics/react';
-import { AuthContextProvider } from '@/context/AuthContext';
 import '../styles/custom.css'
 import { useState, useEffect } from 'react'
 import DefaultLoader from '@/components/DefaultLoader';
@@ -37,23 +36,14 @@ export default function App({ Component, pageProps }) {
   //   }
   // }, [])
   return (
-    <AuthContextProvider>
-
-      <ThemeProvider theme={theme}>
-
-        <div className={inter.className} style={{ backgroundColor: HOME_THEME.bgColor }}>
-
-          {loading ? <DefaultLoader /> :
-            <AnimatePresence initial={true} mode="wait">
-              <Component key={router.asPath} {...pageProps} />
-            </AnimatePresence>}
-
-        </div>
-
-
-        <Analytics />
-      </ThemeProvider>
-
-    </AuthContextProvider>
+    <ThemeProvider theme={theme}>
+      <div className={inter.className} style={{ backgroundColor: HOME_THEME.bgColor }}>
+        {loading ? <DefaultLoader /> :
+          <AnimatePresence initial={true} mode="wait">
+            <Component key={router.asPath} {...pageProps} />
+          </AnimatePresence>}
+      </div>
+      <Analytics />
+    </ThemeProvider>
   )
 }

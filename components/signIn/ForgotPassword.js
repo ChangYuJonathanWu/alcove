@@ -13,7 +13,6 @@ import { styled } from '@mui/material';
 
 import React, { useState, useEffect } from 'react'
 import { getAuth, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { useAuthContext } from "@/context/AuthContext";
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'

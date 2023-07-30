@@ -16,7 +16,6 @@ import * as Sentry from '@sentry/nextjs'
 
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-import { useAuthContext } from "@/context/AuthContext";
 import DefaultLoader from '@/components/DefaultLoader';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 
@@ -71,9 +70,10 @@ export default function Welcome({ signup }) {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
-    const { user } = useAuthContext()
-    const router = useRouter();
     const auth = getAuth()
+    const user = auth.currentUser
+    const router = useRouter();
+
 
     const [loginError, setLoginError] = useState(null)
     const [pageLoading, setPageLoading] = useState(true)

@@ -13,7 +13,6 @@ import { styled } from '@mui/material';
 
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { useAuthContext } from "@/context/AuthContext";
 import DefaultLoader from '../DefaultLoader';
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
 import Link from 'next/link';
@@ -33,9 +32,9 @@ export default function SignIn() {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
-    const { user } = useAuthContext()
     const router = useRouter();
     const auth = getAuth()
+    const { user } = auth.currentUser
 
     const email = router.query.email
     const showOnboardMessage = !!email

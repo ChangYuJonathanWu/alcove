@@ -6,7 +6,6 @@ import { amita } from '../fonts'
 import Link from 'next/link';
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import Navbar from '@/components/home/Navbar'
-import { useAuthContext } from "@/context/AuthContext";
 import { signOut, getAuth } from "firebase/auth";
 import { firebase } from '@/lib/Firebase'
 import { refreshFirebaseToken } from '@/lib/api/tokenRefresh'
@@ -23,7 +22,6 @@ const theme4 = {
 
 
 export default function Home() {
-    const { user } = useAuthContext()
     const [profile, setProfile] = useState(null)
     const [description, setDescription] = useState("")
     const [profilePhoto, setProfilePhoto] = useState("")
@@ -33,6 +31,7 @@ export default function Home() {
     useEffect(() => {
         const loadUser = async () => {
             const auth = getAuth()
+            const user = auth.currentUser
             if (user) {
                 const token = await refreshFirebaseToken()
                 const result = await fetch(`/api/profile?uid=${uid}`, { method: "GET" })

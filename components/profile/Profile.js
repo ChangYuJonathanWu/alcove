@@ -8,7 +8,6 @@ import { Button, Typography } from '@mui/material';
 import ProfileHeader from './ProfileHeader';
 import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo';
 
-import { useAuthContext } from "@/context/AuthContext";
 import { signOut, getAuth } from "firebase/auth";
 
 import { montserrat } from '../fonts';
