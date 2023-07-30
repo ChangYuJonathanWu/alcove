@@ -12,9 +12,7 @@ import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
 import test_user_no_spotify from '@/examples/test_profile_no_spotify.json'
 import ProfileLoader from '@/components/profile/ProfileLoader'
-import nookies from 'nookies';
 import { getAuth } from 'firebase/auth'
-
 import { getPublicProfile } from '@/lib/api/profile'
 import DefaultLoader from '@/components/DefaultLoader'
 

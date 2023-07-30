@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { HOME_THEME } from '@/utils/themeConfig';
 import { Inter } from 'next/font/google'
 import { AnimatePresence } from 'framer-motion'
+import { firebase } from '@/lib/Firebase'
 
 const inter = Inter({ subsets: ['latin'] })
 
