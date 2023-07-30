@@ -9,6 +9,5 @@ export const protectedApiCall = async (url, method, body) => {
         },
         body: body
     });
-    const data = await response.json();
-    return data;
+    return response;
 }

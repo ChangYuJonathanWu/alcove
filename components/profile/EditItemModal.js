@@ -51,8 +51,9 @@ export default function EditItemModal({ editItem, setEditItem, triggerReload }) 
         }
         const result = await protectedApiCall(`/api/profile/items/${itemId}`, 'POST', JSON.stringify(body))
         setLoading(false)
-        if(result.error) {
-            setError(result.error)
+        if(result.status !== 200) {
+            const parsedResult = await result.json()
+            setError(parsedResult.error ?? "Could not update item. Please try again later.")
             return
         }
         setEditItem("")

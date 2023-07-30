@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { stripSpaces } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
+import { compressImage } from '@/utils/localImageProcessing';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
@@ -91,7 +92,8 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const compressedFile = await compressImage(file)
         const formData = new FormData()
         formData.append('profilePhoto', compressedFile)
-        const data = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
+        const response = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
+        const data = await response.json()
         setNewProfilePhoto(data.url)
         setLoading(false)
     }

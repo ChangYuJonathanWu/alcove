@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
-import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
+import { protectedApiCall } from '@/utils/api';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -58,8 +57,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
     const onPostDelete = async () => {
         setLoading(true)
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "DELETE" })
+        const result = await protectedApiCall('/api/profile/items/${parentId}/post/${postId}', 'DELETE')
         if (result.status !== 200) {
             const parsedResult = await result.json()
             setError(parsedResult.error ?? "Error deleting post. Please try again.")
@@ -88,8 +86,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         if (photoChanged) {
             formData.append("photo_changed", true)
         }
-        const token = await refreshFirebaseToken()
-        const result = await fetch(`/api/profile/items/${parentId}/post/${postId}`, { method: "PUT", body: formData })
+        const result = await protectedApiCall(`/api/profile/items/${parentId}/post/${postId}`, 'POST', formData)
         setLoading(false)
         if (result.status !== 200) {
             const parsedResult = await result.json()
