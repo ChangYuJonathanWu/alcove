@@ -63,7 +63,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                 linkedin: newLinkedin
             }
         }
-        const result = await protectedApiCall(`/api/profile`, "PUT", body)
+        const result = await protectedApiCall(`/api/profile`, "PUT", JSON.stringify(body))
         setLoading(false)
         setOpen(false)
         triggerReload(Date.now())
