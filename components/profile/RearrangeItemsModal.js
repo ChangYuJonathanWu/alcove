@@ -3,7 +3,7 @@ import { Modal, Stack, Box, Button, Typography, TextField } from '@mui/material'
 import { getAuth } from "firebase/auth";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { protectedApiCall } from '@/utils/api';
 
 
 export default function RearrangeItemsModal({ open, setOpen, triggerReload, user }) {
@@ -48,8 +48,7 @@ export default function RearrangeItemsModal({ open, setOpen, triggerReload, user
     const body = {
         item_order: order
     }
-    const token = await refreshFirebaseToken()
-    const result = await fetch(`/api/profile/items`, { method: "PUT", body: JSON.stringify(body)})
+    const result = await protectedApiCall(`/api/profile/items`, 'PUT', JSON.stringify(body))
     setLoading(false)
     triggerReload(Date.now())
     setOpen(false)

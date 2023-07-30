@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SpotifyItem from '../items/SpotifyItem';
-import { refreshFirebaseToken } from '@/lib/api/tokenRefresh';
+import { protectedApiCall } from '@/utils/api';
 
 export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorder, triggerReload, user }) {
   const [loading, setLoading] = useState(false)
@@ -61,8 +61,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     const body = {
         item_order: order
     }
-    const token = await refreshFirebaseToken()
-    const result = await fetch(`/api/profile/items/${itemIdToReorder}`, { method: "PUT", body: JSON.stringify(body)})
+    const result = await protectedApiCall(`/api/profile/items/${itemIdToReorder}`, 'PUT', JSON.stringify(body))
     setLoading(false)
     triggerReload(Date.now())
     setItemIdToReorder(null)
