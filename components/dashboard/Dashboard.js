@@ -51,7 +51,7 @@ export default function Home() {
             description,
             title
         }
-        const result = await protectedApiCall(`/api/profile`, "PUT", body)
+        const result = await protectedApiCall(`/api/profile`, "PUT", JSON.stringify(body))
     }
 
     const submitNewItem = async () => {
@@ -59,7 +59,7 @@ export default function Home() {
             name: newItemName,
             type: newItemType,
         }
-        const result = await protectedApiCall(`/api/profile/items`, "POST", body)
+        const result = await protectedApiCall(`/api/profile/items`, "POST", JSON.stringify(body))
     }
 
     const onUploadProfilePhoto = async (e) => {

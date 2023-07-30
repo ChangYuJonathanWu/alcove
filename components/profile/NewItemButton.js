@@ -15,23 +15,23 @@ import { getAuth } from "firebase/auth";
 import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE } from '@/utils/themeConfig';
 import { protectedApiCall } from '@/utils/api';
 
-const PAPER_COLOR =  DEFAULT_PAPER_COLOR
-const MAX_WIDTH =  PROFILE_ITEMS_WIDTH
-export default function NewItemButton({onClick}) {
+const PAPER_COLOR = DEFAULT_PAPER_COLOR
+const MAX_WIDTH = PROFILE_ITEMS_WIDTH
+export default function NewItemButton({ onClick }) {
     const submitNewItem = async () => {
         const body = {
             name: newItemName,
             type: newItemType,
         }
-        const result = await protectedApiCall(`/api/profile/items`, 'POST', body)
+        const result = await protectedApiCall(`/api/profile/items`, 'POST', JSON.stringify(body))
     }
     return (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
             <Paper variant="" sx={{ borderRadius: '1rem', margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.5rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH }}>
                 <ListItemButton data-cy="new-item-button" id={'new-item-button'} key={'new-item-button'} disableRipple={true} onClick={onClick}>
-                    <Stack style={{width: '100%'}} direction="row" alignItems="center" justifyContent="center" spacing={0}>
+                    <Stack style={{ width: '100%' }} direction="row" alignItems="center" justifyContent="center" spacing={0}>
                         <AddIcon />
-                        <Typography style={{fontSize: ITEM_FONT_SIZE}}>New Item</Typography>
+                        <Typography style={{ fontSize: ITEM_FONT_SIZE }}>New Item</Typography>
                     </Stack>
                 </ListItemButton>
             </Paper>

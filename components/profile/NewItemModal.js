@@ -38,7 +38,7 @@ export default function NewItemModal({ open, setOpen, triggerReload }) {
             type: itemType,
             uri: linkAddress,
         }
-        const result = await protectedApiCall(`/api/profile/items`, 'POST', body)
+        const result = await protectedApiCall(`/api/profile/items`, 'POST', JSON.stringify(body))
         setLoading(false)
         setOpen(false)
         clearInputs()
