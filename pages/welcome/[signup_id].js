@@ -12,7 +12,9 @@ import { redirect } from 'next/navigation';
 import { styled } from '@mui/material';
 import { getSignup } from '@/lib/api/signup';
 import * as Sentry from '@sentry/nextjs'
+import { useAuthState } from 'react-firebase-hooks/auth';
 
+const auth = getAuth()
 
 import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
@@ -36,8 +38,12 @@ const theme = {
 export const getServerSideProps = async (context) => {
     const signupId = context.params.signup_id
     console.log(signupId)
-    const signup = await getSignup(signupId)
-    if (!signup || signup.complete) {
+    console.log("Getting signup")
+    let signup;
+    if(signupId){
+        signup = await getSignup(signupId)
+    }
+    if (!signupId || !signup || signup.complete) {
         return {
             redirect: {
                 destination: '/login',
@@ -70,10 +76,8 @@ export default function Welcome({ signup }) {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
-    const auth = getAuth()
-    const user = auth.currentUser
     const router = useRouter();
-
+    const [user, authLoading, authError] = useAuthState(auth)
 
     const [loginError, setLoginError] = useState(null)
     const [pageLoading, setPageLoading] = useState(true)
@@ -93,6 +97,7 @@ export default function Welcome({ signup }) {
 
     useEffect(() => {
         const loadUser = async () => {
+            if (authLoading) return
             if (user) {
                 setPageLoading(true)
                 const { uid } = user
@@ -105,7 +110,7 @@ export default function Welcome({ signup }) {
             setPageLoading(false)
         }
         loadUser()
-    }, [user, router])
+    }, [user, router, authLoading])
 
     const validatePasswordLength = (password) => {
         return password.length >= 8

@@ -18,6 +18,9 @@ import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
 import { protectedApiCall } from '@/utils/api';
 
+import { useAuthState } from 'react-firebase-hooks/auth';
+const auth = getAuth()
+
 
 
 const theme = {
@@ -32,9 +35,8 @@ export default function SignIn() {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
+    const [user, authLoading, authError] = useAuthState(auth)
     const router = useRouter();
-    const auth = getAuth()
-    const user  = auth.currentUser
 
     const email = router.query.email
     const showOnboardMessage = !!email
@@ -55,6 +57,7 @@ export default function SignIn() {
 
     useEffect(() => {
         const loadUser = async () => {
+            if (authLoading) return
             if (user) {
                 setPageLoading(true)
                 const { uid } = user
@@ -67,7 +70,7 @@ export default function SignIn() {
             setPageLoading(false)
         }
         loadUser()
-    }, [user, router])
+    }, [user, router, authLoading])
 
     return (
         <>
