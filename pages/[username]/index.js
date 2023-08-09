@@ -15,10 +15,13 @@ import ProfileLoader from '@/components/profile/ProfileLoader'
 import { getAuth } from 'firebase/auth'
 import { getPublicProfile } from '@/lib/api/profile'
 import DefaultLoader from '@/components/DefaultLoader'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 const TEST_USER = "jHak91janUhqmOakso"
 const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
 const TEST_USERS = [TEST_USER, TEST_USER_NO_SPOTIFY]
+
+const auth = getAuth()
 
 const DynamicProfile = dynamic(() => import('@/components/profile/Profile'), {
     loading: () => <DefaultLoader />
@@ -78,7 +81,7 @@ export default function ProfileRoute({ profile }) {
     const router = useRouter()
     const [ownerSignedIn, setOwnerSignedIn] = useState(false)
     const [ownerCheckComplete, setOwnerCheckComplete] = useState(false)
-    const user = getAuth().currentUser
+    const [ user, authLoading, authError ] = useAuthState(auth)
 
     useEffect(() => {
         if (router.isFallback || !profile) {
@@ -86,7 +89,6 @@ export default function ProfileRoute({ profile }) {
         }
         // Check if owner is signed in
         const checkOwnerSignedIn = async () => {
-            const auth = getAuth()
             if (user) {
                 const { uid } = user
                 if (uid === profile.uid) {
@@ -99,7 +101,7 @@ export default function ProfileRoute({ profile }) {
             setOwnerCheckComplete(true)
         }
         checkOwnerSignedIn()
-    })
+    }, [user, profile, router.isFallback])
 
     if (router.isFallback || !ownerCheckComplete) {
         return <DefaultLoader/>
