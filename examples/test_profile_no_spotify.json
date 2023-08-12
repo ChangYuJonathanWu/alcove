@@ -27,7 +27,8 @@
             "l4",
             "l3",
             "l5",
-            "uri1"
+            "uri1",
+            "l1"
         ],
         "items": {
             "uri1": {
@@ -307,6 +308,36 @@
                 }
 
             },
+            "l1": {
+                "id": "l1",
+                "type": "list",
+                "content": {
+                    "name": "social media embeds",
+                    "commentary": "instagram and others",
+                    "item_order": [
+                        "i1",
+                        "i2",
+                        "i3"
+                    ],
+                    "items": {
+                        "i1": {
+                            "id": "i1",
+                            "type": "instagram",
+                            "uri": "https://www.instagram.com/p/CmMbBAsBrVU/?img_index=1"
+                        },
+                        "i2": {
+                            "id": "i2",
+                            "type": "instagram",
+                            "uri": "https://www.instagram.com/p/CUbHfhpswxt/"
+                        },
+                        "i3": {
+                            "id": "i3",
+                            "type": "instagram",
+                            "uri": "https://www.instagram.com/p/CmMbBAsBrVU/"
+                        }
+                    }
+                }
+            },
             "l2": {
                 "id": "l2",
                 "type": "list",
@@ -369,63 +400,6 @@
                             "location": "Hengchun, Taiwan",
                             "commentary": "",
                             "uri": ""
-                        }
-                    }
-                }
-
-            },
-            "l1": {
-                "id": "l1",
-                "type": "list",
-                "content": {
-                    "name": "songs of all time",
-                    "commentary": "some of them atleast",
-                    "type": "spotify",
-                    "item_order": [
-                        "i2",
-                        "i6",
-                        "i1",
-                        "i4",
-    
-                        "i5"
-                    ],
-                    "items": {
-                        "i1": {
-                            "id": "i1",
-                            "type": "spotify",
-                            "spotifyType": "track",
-                            "spotifyId": "5XijWLBY0vwl5MPUpQA2Ha"
-                        },
-                        "i2": {
-                            "id": "i2",
-                            "type": "spotify",
-                            "spotifyId": "1EXMjx4nCIvYTaY5CZMUSl",
-                            "spotifyType": "track"
-                        },
-                        "i3": {
-                            "id": "i3",
-                            "type": "spotify",
-                            "spotifyId": "487OPlneJNni3NWC8SYqhW",
-                            "spotifyType": "track"
-                        },
-                        "i4": {
-                            "id": "i4",
-                            "type": "spotify",
-                            "spotifyId": "2M9ro2krNb7nr7HSprkEgo",
-                            "spotifyType": "track"
-                        },
-                        "i5": {
-                            "id": "i5",
-                            "type": "spotify",
-                            "spotifyId": "5NdxiycRi3nP2v7RJoAJIT",
-                            "spotifyType": "track"
-                        },
-                        "i6": {
-                            "id": "i6",
-                            "type": "spotify",
-                            "uri": "https://open.spotify.com/embed/track/2x8aFYMNPezraBxfjxnQEP?utm_source=generator",
-                            "spotifyId": "2x8aFYMNPezraBxfjxnQEP",
-                            "spotifyType": "track"
                         }
                     }
                 }
