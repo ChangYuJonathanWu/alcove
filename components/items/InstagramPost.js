@@ -16,8 +16,8 @@ export default function InstagramPost({ item, editMode = false, triggerReload })
     }
 
     return (
-        <Stack direction="row" alignItems="center" style={{padding: "0rem 0.5rem 0rem 0.5rem"}}>
-            <InstagramEmbed url={uri} width="100%" />
+        <Stack direction="row" alignItems="center" style={{ padding: "0rem 0.5rem 0rem 0.5rem" }}>
+            <InstagramEmbed url={uri} width="100%" debug={true} />
             {editMode && <DeleteIcon onClick={async () => await onDeleteIgPost()} color={deleteRunning ? "action" : "black"} />}
         </Stack>
     )
