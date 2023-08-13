@@ -127,7 +127,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const onInstagramUriChange = (e) => {
         const uri = e.target.value
         setInstagramUri(uri)
-        const regex = /\bhttps:\/\/www\.instagram\.com\/p\//
+        // Validate instagram URI for post or reel with www optional
+        const regex = /\bhttps:\/\/(www\.)?instagram\.com\/(p|reel)\/([a-zA-Z0-9_-]*)\//
         const valid = regex.test(uri)
         setValidInstagramUri(valid)
     }
