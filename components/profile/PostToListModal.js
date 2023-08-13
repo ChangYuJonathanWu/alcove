@@ -13,6 +13,10 @@ import * as Sentry from '@sentry/react';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 
+const INSTAGRAM = "instagram"
+const SPOTIFY = "spotify"
+const STANDARD = "standard"
+
 // support delete and rename item
 export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
     const bottomRef = useRef(null)
@@ -32,9 +36,11 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
     const [loading, setLoading] = useState(false)
     const [uri, setUri] = useState("")
     const [spotifyUri, setSpotifyUri] = useState("")
+    const [instagramUri, setInstagramUri] = useState("")
     const [postPhoto, setPostPhoto] = useState(null)
     const [postType, setPostType] = useState('standard')
     const [validSpotifyUri, setValidSpotifyUri] = useState(false)
+    const [validInstagramUri, setValidInstagramUri] = useState(false)
     const [error, setError] = useState("")
 
     const clearItems = () => {
@@ -46,6 +52,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setSpotifyUri("")
         setValidSpotifyUri(false)
         setError("")
+        setValidInstagramUri(false)
+        setInstagramUri("")
     }
 
     const onPost = async () => {
@@ -59,7 +67,10 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         formData.append("postType", postType)
         if (postType === 'spotify') {
             formData.append("spotifyUri", spotifyUri)
-        } else {
+        } else if (postType === INSTAGRAM) {
+            formData.append("instagramUri", instagramUri)
+        }
+        else {
             formData.append("photo", postPhoto)
             formData.append("title", title)
             formData.append("subtitle", subtitle)
@@ -113,6 +124,14 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setValidSpotifyUri(valid)
     }
 
+    const onInstagramUriChange = (e) => {
+        const uri = e.target.value
+        setInstagramUri(uri)
+        const regex = /\bhttps:\/\/www\.instagram\.com\/p\//
+        const valid = regex.test(uri)
+        setValidInstagramUri(valid)
+    }
+
     const modalStyle = {
         position: 'absolute',
         top: '50%',
@@ -139,19 +158,26 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                             row
                             name="item-type-radio-buttons-group"
                         >
-                            <FormControlLabel value="standard" control={<Radio />} label="Post" />
-                            <FormControlLabel value="spotify" control={<Radio />} label="Spotify" />
+                            <FormControlLabel value={STANDARD} control={<Radio />} label="Post" />
+                            <FormControlLabel value={SPOTIFY} control={<Radio />} label="Spotify" />
+                            <FormControlLabel value={INSTAGRAM} control={<Radio />} label="Instagram" />
                         </RadioGroup>
                     </FormControl>
-                    {postType === "spotify" && <div style={{ width: "100%" }}>
+                    {postType === INSTAGRAM && <div style={{ width: "100%" }}>
+                        <Stack spacing={2}>
+                            <Typography variant="subtitle2">Share an Instagram post. The post can be from any public profile including your own.</Typography>
+                            <TextField style={{ width: "100%" }} size="small" label="Post Link" value={instagramUri} placeholder='https://www.instagram.com/p/...' onChange={onInstagramUriChange} />
+                            <Typography variant="subtitle2">{`To get the post link, click the Share icon on the post, then Copy Link`}</Typography>
+                        </Stack>
+                    </div>}
+                    {postType === SPOTIFY && <div style={{ width: "100%" }}>
                         <Stack spacing={2}>
                             <Typography variant="subtitle2">You can post a song, album, playlist and more from Spotify</Typography>
                             <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
                             <Typography variant="subtitle2">{`To get the Spotify link, click the three dots on the song or item, click Share, then Copy Link`}</Typography>
                         </Stack>
-
                     </div>}
-                    {postType === "standard" && <div style={{ width: "100%" }}>
+                    {postType === STANDARD && <div style={{ width: "100%" }}>
                         <Stack alignItems="center" spacing={2} >
                             {postPhoto &&
                                 <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={URL.createObjectURL(postPhoto)} style={{ marginRight: "1rem", borderRadius: '5px' }} />
@@ -187,7 +213,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                         <Button disabled={loading}  ref={bottomRef}  onClick={onExit}>Cancel</Button>
-                        <Button disabled={loading || (postType === "spotify" && !validSpotifyUri)} onClick={onPost} variant="contained">Post</Button>
+                        <Button disabled={loading || (postType === SPOTIFY && !validSpotifyUri) || (postType === INSTAGRAM && !validInstagramUri)} onClick={onPost} variant="contained">Post</Button>
                     </Stack>
                 </Stack>
             </Box>

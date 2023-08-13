@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Modal, Stack, Box, Button, Typography, TextField, Avatar } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -7,22 +7,40 @@ import SpotifyItem from '../items/SpotifyItem';
 import { protectedApiCall } from '@/utils/api';
 import Image from 'next/image';
 import { stripSpaces, trimSpaces } from '@/utils/formatters';
+import CompactItemView from './RearrangePosts/CompactItemView';
+import InstagramPost from '../items/InstagramPost';
 
 export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorder, triggerReload, user }) {
   const [loading, setLoading] = useState(false)
   const [order, setOrder] = useState(null)
   const [postsToRearrange, setPostsToRearrange] = useState({})
+  const postComponents = useMemo(() => {
+    const postMap = {}
+    Object.keys(postsToRearrange).map((id) => {
+      const post = postsToRearrange[id]
+      const { type } = post
+      if (type === "spotify") {
+        postMap[id] = <SpotifyItem noPadding={true} item={post} />
+      } else if (type === "instagram") {
+        postMap[id] = <div id={id}><InstagramPost item={post} /></div>
+      } else {
+        postMap[id] = <CompactItemView item={post} />
+      }
+    })
+
+    return postMap
+  }, [postsToRearrange])
 
   useEffect(() => {
-    if(itemIdToReorder) {
-        const { profile } = user;
-        const { items = {} } = profile
-        // This is confusing because there's another object `items` inside `items`
-        const item = items[itemIdToReorder]
-        const { content } = item
-        const { item_order } = content
-        setPostsToRearrange(content["items"])
-        setOrder(item_order)
+    if (itemIdToReorder) {
+      const { profile } = user;
+      const { items = {} } = profile
+      // This is confusing because there's another object `items` inside `items`
+      const item = items[itemIdToReorder]
+      const { content } = item
+      const { item_order } = content
+      setPostsToRearrange(content["items"])
+      setOrder(item_order)
     }
 
   }, [itemIdToReorder, user])
@@ -39,7 +57,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
   }
 
   const onMoveDown = (idx) => {
-    if(idx >= order.length - 1){
+    if (idx >= order.length - 1) {
       return
     }
     const newOrder = order.slice()
@@ -49,7 +67,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
   }
 
   const onMoveUp = (idx) => {
-    if(idx === 0){
+    if (idx === 0) {
       return
     }
     const newOrder = order.slice()
@@ -61,7 +79,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
   const onUpdate = async () => {
     setLoading(true)
     const body = {
-        item_order: order
+      item_order: order
     }
     const result = await protectedApiCall(`/api/profile/items/${itemIdToReorder}`, 'PUT', JSON.stringify(body))
     setLoading(false)
@@ -69,33 +87,10 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     setItemIdToReorder(null)
   }
 
-  const truncateString = (str, num) => {
-    const trimmed = trimSpaces(str)
-    if (trimmed.length <= num) {
-      return trimmed
-    }
-    return trimmed.slice(0, num) + '...'
-  }
-
-  const compactItemView = (item) => {
-    let { title, subtitle, caption, image } = item;
-
-    return (
-      <Stack direction="row" spacing={2}>
-        <Avatar variant="square" style={{height: "5rem", width: "5rem", borderRadius: '1rem'}} src={image}/>
-        <Stack>
-          { title ? <Typography style={{fontWeight: 600}}>{truncateString(title, 30)}</Typography> : <div style={{height: '1.2rem'}}></div>}
-          { subtitle ? <Typography variant="subtitle1">{truncateString(subtitle, 35)}</Typography> : <div style={{height: '1rem'}}></div>}
-          <Typography variant="subtitle2">{truncateString(caption, 40)}</Typography>
-        </Stack>
-      </Stack>
-    )
-
-  }
 
   const buildItems = () => {
     // It seems like it's possible for the list items to be null at some points during changes, so this prevents the component from breaking as the list order is retained in state
-    if(!postsToRearrange || !Object.keys(postsToRearrange).length) {
+    if (!postsToRearrange || !Object.keys(postsToRearrange).length) {
       return
     }
     const itemList = order.map((id, idx) => {
@@ -104,12 +99,12 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       return (
         <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop: padding, paddingBottom: padding }}>
 
-          {postType === "spotify" ? <SpotifyItem noPadding={true} item={postsToRearrange[id]} /> : compactItemView(postsToRearrange[id]) }
+          {postComponents[id]}
           <Stack direction="row" spacing={2}>
-            <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, padding: '0.5rem',}}>
+            <Button onClick={() => onMoveUp(idx)} disabled={idx === 0} style={{ minWidth: 0, minHeight: 0, margin: 0, padding: '0.5rem', }}>
               <ArrowUpwardIcon />
             </Button>
-            <Button onClick={() => onMoveDown(idx)} disabled={idx === order.length - 1} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0}}>
+            <Button onClick={() => onMoveDown(idx)} disabled={idx === order.length - 1} style={{ minWidth: 0, minHeight: 0, margin: 0, paddingTop: 0, paddingBottom: 0 }}>
               <ArrowDownwardIcon />
             </Button>
           </Stack>

@@ -22,6 +22,14 @@ export const isValidUrl = urlString=> {
     }
 }
 
+export const truncateString = (str, num) => {
+    const trimmed = trimSpaces(str)
+    if (trimmed.length <= num) {
+      return trimmed
+    }
+    return trimmed.slice(0, num) + '...'
+  }
+
 export const isValidUrlWithoutProtocol = urlString => {
     return isValidUrl("https://" + urlString) || isValidUrl(urlString)
 }

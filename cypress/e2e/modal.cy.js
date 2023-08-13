@@ -9,7 +9,7 @@ describe('Modal', () => {
 
     it('can render edit list item modal', () => {
         cy.contains("Edit Profile").should('exist')
-        cy.get('[data-cy="edit-item-icon"]').should('have.length', 5)
+        cy.get('[data-cy="edit-item-icon"]').should('have.length', 6)
         cy.get('[data-cy="edit-item-icon"]').first().click()
         cy.get('[data-cy="edit-item-modal"]').should('exist').should('be.visible')
         cy.percySnapshot('Edit List Item Modal', { widths: PERCY_WIDTHS, fullPage: true });
@@ -33,7 +33,7 @@ describe('Modal', () => {
 
     it('can render edit uri item modal', () => {
         cy.contains("Edit Profile").should('exist')
-        cy.get('[data-cy="edit-item-icon"]').should('have.length', 5)
+        cy.get('[data-cy="edit-item-icon"]').should('have.length', 6)
         cy.get('[data-cy="edit-item-icon"]').last().click()
         cy.get('[data-cy="edit-item-modal"]').should('exist').should('be.visible')
         cy.percySnapshot('Edit URI Item Modal', { widths: PERCY_WIDTHS, fullPage: true });
@@ -64,7 +64,7 @@ describe('Modal', () => {
             cy.get('[data-cy="rearrange-items-modal--update"]').should('exist').should('have.text', 'Update')
             cy.get('[data-cy="rearrange-items-modal--error"]').should('not.exist')
             cy.get('[data-cy="rearrange-items-modal--list"]').should('exist').within(() => {
-                cy.get('[data-cy="rearrange-items-modal--list-item"]').should('have.length', 5)
+                cy.get('[data-cy="rearrange-items-modal--list-item"]').should('have.length', 6)
                 cy.get('[data-cy="rearrange-items-modal--list-item"]').first().should('have.text', 'sushi restaurants')
                 cy.get('[data-cy="rearrange-items-modal--list-item"]').eq(1).should('have.text', 'hiking trails')
                 cy.get('[data-cy="rearrange-items-modal--list-item"]').eq(2).should('have.text', 'old but charming cars')

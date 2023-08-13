@@ -48,6 +48,28 @@ async function handler(req, res) {
                     }
                     const result = await addPostToList(postBody)
                     return res.status(200).json({ success: true })
+                } else if (postType === "instagram") {
+                    let { instagramUri = [""] } = fields
+                    instagramUri = instagramUri[0];
+                    console.info("Adding Instagram post to list", instagramUri)
+
+                    // extract post ID from instagram URI with regex
+                    const regex = /\bhttps:\/\/www\.instagram\.com\/p\/([a-zA-Z0-9_-]*)\//
+
+                    const valid = regex.test(instagramUri)
+                    if (!valid) {
+                        return res.status(400).json({ error: "Invalid Instagram link" })
+                    }
+                    const postId = instagramUri.match(regex)[1]
+                    const finalInstagramUri = `https://www.instagram.com/p/${postId}/`
+                    const postBody = {
+                        listId: itemId,
+                        postType,
+                        instagramUri: finalInstagramUri,
+                        uid
+                    }
+                    const result = await addPostToList(postBody)
+                    return res.status(200).json({ success: true })
                 }
 
                 else {
