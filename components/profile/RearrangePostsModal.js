@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect, useMemo } from 'react'
 import { Modal, Stack, Box, Button, Typography, TextField, Avatar } from '@mui/material';
 import { getAuth } from "firebase/auth";
