@@ -52,14 +52,14 @@ async function handler(req, res) {
                     let { instagramUri = [""] } = fields
                     instagramUri = instagramUri[0];
                     console.info("Adding Instagram post to list", instagramUri)
-                    // Verify instagram URI is valid
-                    let regex = /\bhttps:\/\/www\.instagram\.com\/p\/([a-zA-Z0-9_-]*)\//
+
+                    // extract post ID from instagram URI with regex
+                    const regex = /\bhttps:\/\/www\.instagram\.com\/p\/([a-zA-Z0-9_-]*)\//
+
                     const valid = regex.test(instagramUri)
                     if (!valid) {
                         return res.status(400).json({ error: "Invalid Instagram link" })
                     }
-                    // extract post ID from instagram URI with regex
-                    regex = /\bhttps:\/\/www\.instagram\.com\/p\/([a-zA-Z0-9_-]*)\//
                     const postId = instagramUri.match(regex)[1]
                     const finalInstagramUri = `https://www.instagram.com/p/${postId}/`
                     const postBody = {

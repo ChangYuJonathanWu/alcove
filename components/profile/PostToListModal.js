@@ -52,6 +52,8 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
         setSpotifyUri("")
         setValidSpotifyUri(false)
         setError("")
+        setValidInstagramUri(false)
+        setInstagramUri("")
     }
 
     const onPost = async () => {
