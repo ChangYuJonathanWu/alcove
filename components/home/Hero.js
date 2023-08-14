@@ -14,6 +14,7 @@ import TheHacker from '@/components/home/static/thehacker_rounded.png'
 import TheOutdoors from '@/components/home/static/theoutdoors_rounded.png'
 import TheGeneralist from '@/components/home/static/thegeneralist_rounded.png'
 import TheReader from '@/components/home/static/thereader_rounded.png'
+import TheTraveller from '@/components/home/static/thetraveller_rounded.png'
 import Avatar from '@mui/material';
 
 
@@ -22,9 +23,10 @@ export default function Hero({ desktop }) {
 
   const profilesToShow = [
     "/home/web/optimized/theartist_1.png",
-    "/home/web/optimized/thefoodie_1.png",
-    "/home/web/optimized/thegeneralist_1.png",
     "/home/web/optimized/theoutdoors_1.png",
+    "/home/web/optimized/thetraveller_1.jpg",
+    "/home/web/optimized/thegeneralist_1.png",
+    "/home/web/optimized/thefoodie_1.png",
     "/home/web/optimized/thereader_1.png",
     "/home/web/optimized/thehacker_1.png",
     "/home/web/optimized/thebaker_1.png",
@@ -32,9 +34,10 @@ export default function Hero({ desktop }) {
 
   const importedProfilesToShow = [
     TheArtist,
-    TheFoodie,
-    TheGeneralist,
     TheOutdoors,
+    TheTraveller,
+    TheGeneralist,
+    TheFoodie,
     TheReader,
     TheHacker,
     TheBaker,
