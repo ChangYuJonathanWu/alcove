@@ -1,88 +1,95 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
 import { Button, Divider, Stack, TextField, Typography, Avatar } from '@mui/material'
-import { amita } from '../fonts'
 import Link from 'next/link';
-import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
-import Navbar from '@/components/home/Navbar'
 import { signOut, getAuth } from "firebase/auth";
 import { firebase } from '@/lib/Firebase'
 
 import React, { useState, useEffect } from 'react'
 import { protectedApiCall } from '@/utils/api'
-
-const theme4 = {
-    bgColor: '#7C9070',
-    logoColor: "white",
-    textColor: "white",
-    buttonColor: '#F97B22',
-    buttonTextColor: 'white'
-}
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
-export default function Home() {
-    const [profile, setProfile] = useState(null)
-    const [description, setDescription] = useState("")
-    const [profilePhoto, setProfilePhoto] = useState("")
-    const [title, setTitle] = useState("")
-    const [newItemName, setNewItemName] = useState("")
-    const [newItemType, setNewItemType] = useState("list")
-    const [user, setUser] = useState(null)
-    useEffect(() => {
-        const loadUser = async () => {
-            const auth = getAuth()
-            const { currentUser } = auth
-            if (currentUser) {
-                const result = protectedApiCall(`/api/profile?uid=${uid}`, "GET")
-                const fullUserProfile = await result.json()
-                const { description = "", title = "", photo, profile } = fullUserProfile
-                setDescription(description)
-                setTitle(title)
-                setProfile(fullUserProfile)
-                setProfilePhoto(photo)
-                setUser(currentUser)
-
-            }
-        }
-        loadUser()
-    })
-
-    const submitUpdates = async () => {
-        const body = {
-            description,
-            title
-        }
-        const result = await protectedApiCall(`/api/profile`, "PUT", JSON.stringify(body))
-    }
-
-    const submitNewItem = async () => {
-        const body = {
-            name: newItemName,
-            type: newItemType,
-        }
-        const result = await protectedApiCall(`/api/profile/items`, "POST", JSON.stringify(body))
-    }
-
-    const onUploadProfilePhoto = async (e) => {
-        console.log("Uploading photo...")
-        const photo = e.target.files[0]
-        const formData = new FormData();
-        formData.append('profilePhoto', photo)
-        const result = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
-    }
-
+export default function Dashboard() {
+    // get all signups
     const auth = getAuth()
-    const theme = theme4;
-    const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
-    const backgroundColor = theme.bgColor
-    const logoColor = theme.logoColor
-    const textColor = theme.textColor
+    const [signups, setSignups] = useState([])
+    const [user, authLoading, authError] = useAuthState(auth)
+    const [trigger, setTrigger] = useState(false)
+    useEffect(() => {
+        const loadSignups = async () => {
+            const result = await protectedApiCall('/api/admin/user_management', "GET")
+            const signups = await result.json()
+            setSignups(signups.results)
+        }
+        if (user) {
+            loadSignups()
+        }
+
+    }, [user, trigger])
+
+    const onOnboardAttempt = async (signupId, attempt) => {
+        const result = await protectedApiCall(`/api/admin/user_management/attempt_onboard`, "POST", JSON.stringify({ signupId }))
+        setTrigger(!trigger)
+    }
+    const onComplete = async (signupId) => {
+        const result = await protectedApiCall(`/api/admin/user_management/complete`, "POST", JSON.stringify({ signupId }))
+        setTrigger(!trigger)
+    }
+    const onDelete = async (signupId) => {
+        const result = await protectedApiCall(`/api/admin/user_management/complete`, "POST", JSON.stringify({ signupId, deleteSignup: true }))
+        setTrigger(!trigger)
+    }
+
+    const buildSignups = () => {
+        const completedSignups = signups.filter((signup) => signup.complete).reverse()
+        const incompleteSignups = signups.filter((signup) => !signup.complete).reverse()
+        return (
+
+            <>
+                <Typography variant="h3">Incomplete Signups</Typography>
+                <Stack>
+                    {incompleteSignups.map((signup) => {
+                        const { email, _id, handle, attempts = 0 } = signup
+
+                        return (
+                            <Stack key={_id} direction="row" alignItems="center" spacing={2}>
+                                <Typography>{_id} - {email} - {handle}</Typography>
+                                <Button disabled={attempts !== 0} onClick={() => onOnboardAttempt(_id)}>Onboard</Button>
+                                <Button disabled={attempts !== 1} onClick={async () => { }}>Follow Up</Button>
+                                <Button disabled={attempts !== 2} onClick={async () => { }}>Final</Button>
+                                <Typography> | </Typography>
+                                <Button>Complete</Button>
+                                <Button onClick={() => onDelete(_id)} style={{ color: 'red' }}>Delete</Button>
+                                <Typography>{handle}</Typography>
+                            </Stack>
+                        )
+                    }
+                    )}
+                </Stack>
+                <Typography variant="h3">Completed Signups</Typography>
+                <Stack style={{ marginTop: '1rem' }}>
+                    {completedSignups.map((signup) => {
+                        const { email, _id, handle } = signup
+                        return (
+                            <Stack key={_id} direction="row" alignItems="center" spacing={2}>
+                                <Typography>{email} - {handle}</Typography>
+                            </Stack>
+                        )
+                    }
+                    )}
+                </Stack>
+
+            </>
+        )
+
+
+
+    }
 
     return (
         <>
             <Head>
-                <title>Alcove: Sign Up</title>
+                <title>Alcove: User Management</title>
                 <meta name="description" content="Your link-in-bio to share everything you love." />
                 <meta property="og:title" content="Alcove: Share what you love" />
                 <meta
@@ -97,42 +104,12 @@ export default function Home() {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
 
-            <main style={{ backgroundColor, minHeight: '100vh', width: "100%" }}>
-                <Navbar />
-                <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
-                    <h1>Dashboard</h1>
-                    <div>
-                        {user ? `You are logged in as ${user.email}` : "You are not logged in."}
-                    </div>
-                    <Stack direction="column">
-                        <div>
-                            <Avatar alt={"profile-photo"} sx={{ width: 100, height: 100 }} style={{ margin: "1rem" }} src={profilePhoto} />
-
-                        </div>
-                        <input type="file" onChange={(e) => onUploadProfilePhoto(e)} />
-                    </Stack>
-                    {profilePhoto}
-
-                    <div>
-                        {`@${profile?.handle}`}
-                    </div>
-                    Title
-                    <TextField value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
-                    Description
-                    <TextField value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
-
-                    <button onClick={submitUpdates}>Submit</button>
-                    <div>
-
-                    </div>
-                    Name
-                    <TextField value={newItemName} onChange={(e) => setNewItemName(e.currentTarget.value)} />
-                    Type (list, link)
-                    <button onClick={submitNewItem}>Add Item</button>
-                    <div>
-                        {user ? <button onClick={(() => signOut(auth))}>Log Out</button> : null}
-                    </div>
+            <main>
+                <Stack>
+                    <Button variant={"contained"}>Send Test Onboarding</Button>
+                    {buildSignups()}
                 </Stack>
+
             </main>
         </>
     )
