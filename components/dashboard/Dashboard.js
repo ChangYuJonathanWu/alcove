@@ -15,6 +15,7 @@ export default function Dashboard() {
     const [signups, setSignups] = useState([])
     const [user, authLoading, authError] = useAuthState(auth)
     const [trigger, setTrigger] = useState(false)
+    const [ status, setStatus ]   = useState(null)
     useEffect(() => {
         const loadSignups = async () => {
             const result = await protectedApiCall('/api/admin/user_management', "GET")
@@ -28,7 +29,7 @@ export default function Dashboard() {
     }, [user, trigger])
 
     const onOnboardAttempt = async (signupId, attempt) => {
-        const result = await protectedApiCall(`/api/admin/user_management/attempt_onboard`, "POST", JSON.stringify({ signupId }))
+        const result = await protectedApiCall(`/api/admin/user_management/attempt_onboard`, "POST", JSON.stringify({ signupId, attemptNumber: attempt }))
         setTrigger(!trigger)
     }
     const onComplete = async (signupId) => {
@@ -38,6 +39,16 @@ export default function Dashboard() {
     const onDelete = async (signupId) => {
         const result = await protectedApiCall(`/api/admin/user_management/complete`, "POST", JSON.stringify({ signupId, deleteSignup: true }))
         setTrigger(!trigger)
+    }
+
+    const onTestOnboardingEmail = async () => {
+        setStatus(null)
+        const result = await protectedApiCall(`/api/admin/user_management/attempt_onboard`, "POST", JSON.stringify({test: true}))
+        if(result.status !== 200) {
+            setStatus("Error sending test onboarding email, status: " + result.status)
+        } else {
+            setStatus("Test onboarding email sent")
+        }
     }
 
     const buildSignups = () => {
@@ -54,11 +65,11 @@ export default function Dashboard() {
                         return (
                             <Stack key={_id} direction="row" alignItems="center" spacing={2}>
                                 <Typography>{_id} - {email} - {handle}</Typography>
-                                <Button disabled={attempts !== 0} onClick={() => onOnboardAttempt(_id)}>Onboard</Button>
+                                <Button disabled={attempts !== 0} onClick={() => onOnboardAttempt(_id, attempts)}>Onboard</Button>
                                 <Button disabled={attempts !== 1} onClick={async () => { }}>Follow Up</Button>
                                 <Button disabled={attempts !== 2} onClick={async () => { }}>Final</Button>
                                 <Typography> | </Typography>
-                                <Button>Complete</Button>
+                                <Button onClick={() => onComplete(_id)}>Complete</Button>
                                 <Button onClick={() => onDelete(_id)} style={{ color: 'red' }}>Delete</Button>
                                 <Typography>{handle}</Typography>
                             </Stack>
@@ -72,7 +83,8 @@ export default function Dashboard() {
                         const { email, _id, handle } = signup
                         return (
                             <Stack key={_id} direction="row" alignItems="center" spacing={2}>
-                                <Typography>{email} - {handle}</Typography>
+                                <Typography>{email}</Typography>
+                                <a href={`https://www.alcove.place/${handle}`} target="_blank">{handle}</a>
                             </Stack>
                         )
                     }
@@ -106,7 +118,8 @@ export default function Dashboard() {
 
             <main>
                 <Stack>
-                    <Button variant={"contained"}>Send Test Onboarding</Button>
+                    {status && <Typography color="red">{status}</Typography>}
+                    <Button onClick={onTestOnboardingEmail} variant={"contained"}>Send Test Onboarding</Button>
                     {buildSignups()}
                 </Stack>
 

@@ -1,7 +1,7 @@
 
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { getAllSignups, attemptOnboard, deleteSignupPermanently } from '@/lib/api/userManagement'
+import { getAllSignups, markComplete, deleteSignupPermanently } from '@/lib/api/userManagement'
 import { withAuth } from '@/lib/api/withAuth';
 
 const ADMIN_UID = process.env.ADMIN_UID
@@ -20,7 +20,7 @@ async function handler(req, res) {
             const deleteResult = await deleteSignupPermanently(signupId)
         }
         else {
-            const signupResult = await attemptOnboard(signupId)
+            const signupResult = await markComplete(signupId)
         }
 
         return res.status(200).json({ success: true })
