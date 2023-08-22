@@ -367,7 +367,7 @@ const buildOnboardingEmail = (signupId) => {
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
                                     <td class="logo" style="text-align: center;">
-                                    <img alt="Alcove logo" width="200" height="50" title="Alcove Logo" src="https://www.alcove.place/alcove-logo-dark.png" />
+                                    <img alt="Alcove logo" width="200" height="60" title="Alcove Logo" src="https://www.alcove.place/alcove-logo-dark.png" />
                                     </td>
                                 </tr>
                             </table>
@@ -395,7 +395,7 @@ const buildOnboardingEmail = (signupId) => {
                                         <div class="heading-section" style="text-align: center; padding: 0 30px;">
     
                                             <h3>Follow the link below to finish creating your account.</h3>
-                                            <a href="https:www.alcove.place/welcome/${signupId}">alcove.place/welcome</a>
+                                            <a href="https://www.alcove.place/welcome/${signupId}">alcove.place/welcome</a>
                                             <br />
                                             <br />
                                             <p>You'll be one of the first to build your Alcove and join an invitation-only
@@ -406,6 +406,8 @@ const buildOnboardingEmail = (signupId) => {
                                             <br />
                                             Jonathan@Alcove<br />
                                             <a href="https://www.alcove.place/jonathanwu">alcove.place/jonathanwu</a>
+                                            <br/>
+                                            <br/>
                                         </div>
                                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
     
