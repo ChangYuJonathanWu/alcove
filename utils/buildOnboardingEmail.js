@@ -367,7 +367,7 @@ const buildOnboardingEmail = (signupId) => {
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
                                     <td class="logo" style="text-align: center;">
-                                        <img width="200" src="https://www.alcove.place/alcove-logo-dark.svg" />
+                                    <img alt="Alcove logo" width="200" height="50" title="Alcove Logo" src="https://www.alcove.place/alcove-logo-dark.png" />
                                     </td>
                                 </tr>
                             </table>
@@ -380,7 +380,7 @@ const buildOnboardingEmail = (signupId) => {
                                     <td>
                                         <div class="text" style="padding: 0 3em; text-align: center;">
                                             <h2>Congrats, you're in!</h2>
-                                            <img width="250" src="https://www.alcove.place/email-explore.svg"/>
+                                            <img alt="start exploring alcove" style="display:block" width="250" height="180" title="Start exploring Alcove" src="https://www.alcove.place/email-explore.png"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -395,7 +395,7 @@ const buildOnboardingEmail = (signupId) => {
                                         <div class="heading-section" style="text-align: center; padding: 0 30px;">
     
                                             <h3>Follow the link below to finish creating your account.</h3>
-                                            <a href="https:www.alcove.place/${signupId}">alcove.place/welcome</a>
+                                            <a href="https:www.alcove.place/welcome/${signupId}">alcove.place/welcome</a>
                                             <br />
                                             <br />
                                             <p>You'll be one of the first to build your Alcove and join an invitation-only
