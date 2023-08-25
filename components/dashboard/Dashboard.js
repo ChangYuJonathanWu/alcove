@@ -28,9 +28,9 @@ export default function Dashboard() {
 
     }, [user, trigger])
 
-    const onOnboardAttempt = async (signupId, attempt, email, handle) => {
+    const onOnboardAttempt = async (signupId, attempt, email, handle, increment=true) => {
         setStatus(null)
-        const result = await protectedApiCall(`/api/admin/user_management/attempt_onboard`, "POST", JSON.stringify({ email, handle, signupId, attemptNumber: attempt }))
+        const result = await protectedApiCall(`/api/admin/user_management/attempt_onboard`, "POST", JSON.stringify({ email, handle, signupId, attemptNumber: attempt, increment }))
         if(result.status !== 200) {
             setStatus("Error sending onboarding email, status: " + result.status)
         } else {
@@ -64,16 +64,16 @@ export default function Dashboard() {
 
             <>
                 <Typography variant="h3">Incomplete Signups</Typography>
-                <Stack>
+                <Stack spacing={1}>
                     {incompleteSignups.map((signup) => {
                         const { email, _id, handle, attempts = 0 } = signup
 
                         return (
                             <Stack key={_id} direction="row" alignItems="center" spacing={2}>
                                 <Typography>{_id} - {email} - {handle}</Typography>
-                                <Button disabled={attempts !== 0} onClick={() => onOnboardAttempt(_id, attempts, email, handle)}>Onboard</Button>
-                                <Button disabled={attempts !== 1} onClick={() => onOnboardAttempt(_id, attempts, email, handle)}>Follow Up</Button>
-                                <Button disabled={attempts !== 2} onClick={() => onOnboardAttempt(_id, attempts, email, handle)}>Final</Button>
+                                <Button style={{backgroundColor: attempts === 0 ? "white" : "gray"}} onClick={() => onOnboardAttempt(_id, attempts, email, handle, attempts === 0)}>Onboard</Button>
+                                <Button style={{backgroundColor: attempts === 1 ? "white" : "gray"}}onClick={() => onOnboardAttempt(_id, attempts, email, handle, attempts === 1)}>Follow Up</Button>
+                                <Button style={{backgroundColor: attempts === 2 ? "white" : "gray"}} onClick={() => onOnboardAttempt(_id, attempts, email, handle, attempts === 2)}>Final</Button>
                                 <Typography> | </Typography>
                                 <Button onClick={() => onComplete(_id)}>Complete</Button>
                                 <Button onClick={() => onDelete(_id)} style={{ color: 'red' }}>Delete</Button>
