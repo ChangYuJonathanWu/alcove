@@ -84,11 +84,17 @@ export default function ProfileRoute({ profile }) {
     const [ user, authLoading, authError ] = useAuthState(auth)
 
     useEffect(() => {
-        if (router.isFallback || !profile) {
+        if (router.isFallback) {
+            return
+        }
+        if(!profile) {
+            setOwnerCheckComplete(true)
+            setOwnerSignedIn(false)
             return
         }
         // Check if owner is signed in
         const checkOwnerSignedIn = async () => {
+            console.log("Running owner check")
             if (user) {
                 const { uid } = user
                 if (uid === profile.uid) {
