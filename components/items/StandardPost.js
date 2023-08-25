@@ -24,7 +24,7 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
 
     return (
         <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem", marginTop: '0rem' }}>
-            <div style={{padding: '1rem', backgroundColor: 'white', border: '1px #e9e9e9 solid', borderRadius: '1rem', width: '100%'}}>
+            <div style={{padding: '1rem', backgroundColor: '#f8f8f8', border: '1px #e9e9e9 solid', borderRadius: '1rem', width: '100%'}}>
                 <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
                     {/* <Divider sx={{ width: "100%", marginBottom: '1rem' }}></Divider> */}
                     <Typography variant="h4" style={{ fontSize: '1rem', marginBottom: image && !subtitle ? '0.5rem' : 0 }}>
