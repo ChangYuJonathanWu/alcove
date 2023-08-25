@@ -23,31 +23,32 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     }
 
     return (
-        <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem"}}>
+        <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem", marginTop: '0rem' }}>
+            <div style={{padding: '1rem', backgroundColor: '#f0f0f0', borderRadius: '1rem'}}>
+                <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
+                    {/* <Divider sx={{ width: "100%", marginBottom: '1rem' }}></Divider> */}
+                    <Typography variant="h4" style={{ fontSize: '1rem', marginBottom: image && !subtitle ? '0.5rem' : 0 }}>
+                        {isValidUrl(uri) ?
+                            <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
+                                <Stack direction="row" spacing={1} alignItems={"center"}>
+                                    <b>{title}</b>
+                                    <OpenInNewIcon style={{ width: "1rem" }} />
+                                </Stack>
+                            </Link>
+                            : title}
+                    </Typography>
 
-            <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
-                <Divider sx={{ width: "100%", marginBottom: '1rem' }}></Divider>
-                <Typography variant="h4">
-                    {isValidUrl(uri) ?
-                        <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
-                            <Stack direction="row" spacing={1} alignItems={"center"}>
-                                <b>{title}</b>
-                                <OpenInNewIcon style={{ width: "1rem" }} />
-                            </Stack>
-                        </Link>
-                        : <b>{title}</b>}
-                </Typography>
-
-                {subtitle && <Typography variant="subtitle2" fontSize="0.7rem" style={{marginBottom: '0.2rem'}}>{`${subtitle}`}</Typography>}
-                {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{borderRadius: '5px'}} />}
-                <Stack direction="row" style={{ width: "100%", marginTop: '0.8rem' }} alignContent="space-between" justifyContent="space-between">
-                    <Stack>
-                        {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
+                    {subtitle && <Typography variant="subtitle2" fontSize="0.7rem" style={{ marginBottom: '0.2rem' }}>{`${subtitle}`}</Typography>}
+                    {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ borderRadius: '0.5rem' }} />}
+                    <Stack direction="row" style={{ width: "100%", marginTop: '0.8rem' }} alignContent="space-between" justifyContent="space-between">
+                        <Stack>
+                            {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
+                        </Stack>
+                        {editMode && <EditNoteIcon onClick={onEditClick} />}
                     </Stack>
-                    {editMode && <EditNoteIcon onClick={onEditClick} />}
-                </Stack>
 
-            </Stack >
+                </Stack >
+            </div>
         </ListItem >
     )
 }
