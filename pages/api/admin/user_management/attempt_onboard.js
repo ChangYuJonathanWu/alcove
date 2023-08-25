@@ -14,9 +14,12 @@ async function handler(req, res) {
 
     if (method === "POST") {
         const { body } = req;
-        const { signupId, attemptNumber, email, handle, test=false } = JSON.parse(body)
+        const { signupId, attemptNumber, email, handle, test=false, increment=true } = JSON.parse(body)
         // increment attempt field on signup document 
-        const signupResult = await attemptOnboard(signupId, attemptNumber, email, handle, test)
+        const signupResult = await attemptOnboard(signupId, attemptNumber, email, handle, test, increment)
+        if(!signupResult){
+            return res.status(400).json({error: "Error sending onboarding email"})
+        }
         return res.status(200).json({ success: true })
     }
 
