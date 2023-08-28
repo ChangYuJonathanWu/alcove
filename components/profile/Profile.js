@@ -58,6 +58,8 @@ export default function Profile({ user, ownerSignedIn = false }) {
         router.replace('/login')
     }
 
+    const canRearrangeItems = itemOrder.length > 1
+
     //TODO: Error handling on network request, validation
     return (
         <main>
@@ -79,7 +81,7 @@ export default function Profile({ user, ownerSignedIn = false }) {
                 {ownerSignedIn &&
                     <Stack style={{ zIndex: 1 }}>
                         <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
-                        <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />
+                        { canRearrangeItems && <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} /> }
                         <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
                         <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
                         <LogoutButton onClick={logoutUser} />

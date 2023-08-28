@@ -90,7 +90,7 @@ async function handler(req, res) {
                             const imageFile = photo[0]
                             const imagePath = imageFile.path
                             let compressedImage
-                            compressedImage = await resizeImage(imagePath, 1000, 1000)
+                            compressedImage = await resizeImage(imagePath, 650, 1000)
                             console.log("Image resized")
                             const fileName = uuidv4()
                             const destinationPath = `public/content/${fileName}`

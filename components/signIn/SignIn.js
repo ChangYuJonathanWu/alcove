@@ -91,10 +91,6 @@ export default function SignIn() {
             </Head>
             <PageTransition>
                 <main style={{ minHeight: '100vh', width: "100%" }}>
-                    <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
-                        <Image priority={true} fill={true} src='/nyc3.jpg' objectFit='cover' id="background-photo" alt="background wallpaper" />
-
-                    </div>
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
 
