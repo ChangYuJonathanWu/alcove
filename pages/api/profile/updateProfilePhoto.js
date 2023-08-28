@@ -77,7 +77,7 @@ async function handler(req, res) {
             const imagePath = imageFile.path;
             let compressedImage
             try {
-                compressedImage = await resizeImage(imagePath, 600, 600)
+                compressedImage = await resizeImage(imagePath, 300, 300)
             } catch (e) {
                 console.error(e)
                 Sentry.captureException(e)
