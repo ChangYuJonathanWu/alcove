@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { compressImage } from '@/utils/localImageProcessing';
+import * as Sentry from '@sentry/react';
 
 export default function StandardPostForm({ onExit }) {
     const [listId, setListId] = useState("")
@@ -38,7 +40,7 @@ export default function StandardPostForm({ onExit }) {
                 {postPhoto && <div>
                     <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
                 </div>}
-                <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
+                {!postPhoto && <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
                     <Stack justifyContent="center" alignItems="center" style={{ width: "100%", height: '8rem', border: "2px dashed", borderRadius: '1rem' }}>
                         <input
                             accept="image/*"
@@ -49,7 +51,7 @@ export default function StandardPostForm({ onExit }) {
                         />
                         <label htmlFor="post-photo-upload">
                             <Stack alignItems="center" spacing={4}>
-                                <AddPhotoAlternateIcon/>
+                                <AddPhotoAlternateIcon />
                                 Add Photo
                             </Stack>
 
@@ -58,6 +60,7 @@ export default function StandardPostForm({ onExit }) {
 
                     </Stack>
                 </Button>
+                }
 
 
                 <TextField style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
