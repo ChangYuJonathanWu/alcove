@@ -58,6 +58,17 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
     };
     //TODO: Validate input; set character limits
     //TODO: Allow setting new Link instead of having to delete and recreate
+
+    const PostTypeButton = ({ name, icon, disabled = false }) => {
+        return (
+            < Stack direction="row" spacing={2} alignItems="start" style={{ width: '100%' }}>
+                {icon}
+                <Typography variant="button" style={{ textTransform: 'none', color: disabled ? 'grey' : 'black' }}>
+                    {name}
+                </Typography>
+            </Stack>
+        )
+    }
     return (
         <Modal open={!!listIdToPostTo}>
             <Box style={modalStyle}>
@@ -71,40 +82,19 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         value={postType}
                         exclusive
                         onChange={handleChange}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', borderRadius: '1rem' }}
                     >
-                        <ToggleButton value="standard" aria-label="list">
-                            <Stack direction="row" spacing={2} alignItems="start" style={{ width: '100%' }}>
-                                <ArticleIcon style={{width: 20, color: 'orange'}}/>
-                                <Typography variant="button">
-                                    Post
-                                </Typography>
-                            </Stack>
-
+                        <ToggleButton value="standard" aria-label="Standard post">
+                            <PostTypeButton name="Post" icon={<ArticleIcon style={{ width: 20, color: 'orange' }} />} />
                         </ToggleButton>
-                        <ToggleButton value="instagram" aria-label="module">
-                            <Stack direction="row" spacing={2} alignItems="start" style={{ width: '100%' }}>
-                                <Image src="/social_icons/instagram-color-64.png" width={20} height={20} alt="Instagram logo" />
-                                <Typography variant="button">
-                                    Instagram
-                                </Typography>
-                            </Stack>
+                        <ToggleButton value="instagram" aria-label="Instagram post">
+                            <PostTypeButton name="Instagram" icon={<Image src="/social_icons/instagram-color-64.png" width={20} height={20} alt="Instagram logo" />} />
                         </ToggleButton>
-                        <ToggleButton value="spotify" aria-label="quilt">
-                            <Stack direction="row" spacing={2} alignItems="start" style={{ width: '100%' }}>
-                                <Image src="/social_icons/spotify-logo.png" width={20} height={20} alt="Spotify logo" />
-                                <Typography variant="button">
-                                    Spotify
-                                </Typography>
-                            </Stack>
+                        <ToggleButton value="spotify" aria-label="Spotify post">
+                            <PostTypeButton name="Spotify" icon={<Image src="/social_icons/spotify-logo.png" width={20} height={20} alt="Spotify logo" />} />
                         </ToggleButton>
                         <ToggleButton disabled={true} value="youtube" aria-label="quilt">
-                            <Stack direction="row" spacing={2} alignItems="start" style={{ width: '100%' }}>
-                                <YouTubeIcon />
-                                <Typography variant="button">
-                                    YouTube (coming soon)
-                                </Typography>
-                            </Stack>
+                            <PostTypeButton disabled={true} name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'grey' }} />} />
                         </ToggleButton>
                     </ToggleButtonGroup>
                     <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
