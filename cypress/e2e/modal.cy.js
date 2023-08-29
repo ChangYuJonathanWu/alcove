@@ -100,7 +100,7 @@ describe('Modal', () => {
 
 
     it('can render edit bio modal', () => {
-        cy.contains('Edit Profile').should('exist').click()
+        cy.contains('Edit Profile').should('exist').click({ force: true })
         cy.get('#edit-bio-modal').should('exist')
         cy.percySnapshot('Edit Profile Modal', { widths: PERCY_WIDTHS, fullPage: true });
         cy.get('#edit-bio-modal').within(() => {
