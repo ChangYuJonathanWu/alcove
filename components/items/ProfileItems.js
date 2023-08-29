@@ -25,6 +25,7 @@ import { Typography } from '@mui/material';
 import EditItemModal from '../profile/EditItemModal';
 import EditListItemsButtonRow from './EditListPostButtonRow';
 import PostToListModal from '../profile/PostToListModal';
+import NewPostModal from '../profile/NewPost/NewPostModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
 import { formatUri } from '@/utils/formatters';
@@ -193,7 +194,8 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         <div>
             <RearrangePostsModal itemIdToReorder={itemIdToReorder} setItemIdToReorder={setItemIdToReorder} user={user} triggerReload={triggerReload} />
             <EditItemModal editItem={editItem} setEditItem={setEditItem} triggerReload={triggerReload} />
-            <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} />
+            {/* <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} /> */}
+            <NewPostModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} />
             <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload} />
             {buildProfileItems()}
         </div>
