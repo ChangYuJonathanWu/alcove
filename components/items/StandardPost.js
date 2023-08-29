@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import { Button, Typography, Link, Divider } from '@mui/material';
+import { Button, Typography, Link, Divider, Skeleton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -17,16 +17,20 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     const { id, parentId, uri, title, image, subtitle, caption } = item
     const captionToUse = caption ? `${caption}` : ""
 
+    const [photoLoaded, setPhotoLoaded] = useState(false)
+
     const onEditClick = (e) => {
         e.preventDefault()
         setPostToEdit(item)
     }
 
+    const PHOTO_SKELETON_HEIGHT = '12rem'
+    const IMAGE_BORDER_RADIUS = '0.5rem'
+
     return (
         <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem", marginTop: '0rem' }}>
-            <div style={{padding: '1rem', backgroundColor: '#fafafa', border: '1px #ebebeb solid', borderRadius: '1rem', width: '100%'}}>
+            <div style={{ padding: '1rem', backgroundColor: '#fafafa', border: '1px #ebebeb solid', borderRadius: '1rem', width: '100%' }}>
                 <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
-                    {/* <Divider sx={{ width: "100%", marginBottom: '1rem' }}></Divider> */}
                     <Typography variant="h4" style={{ fontSize: '1rem', marginBottom: image && !subtitle ? '0.5rem' : 0 }}>
                         {isValidUrl(uri) ?
                             <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
@@ -39,7 +43,12 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                     </Typography>
 
                     {subtitle && <Typography variant="subtitle2" fontSize="0.7rem" style={{ marginBottom: '0.2rem' }}>{`${subtitle}`}</Typography>}
-                    {image && <Avatar variant="square" sx={{ width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ borderRadius: '0.5rem' }} />}
+                    {image &&
+                        <div style={{width: '100%'}}>
+                            {!photoLoaded && <Skeleton variant="rectangular" height={PHOTO_SKELETON_HEIGHT} style={{borderRadius: IMAGE_BORDER_RADIUS}}/>}
+                            <Avatar variant="square" imgProps={{ onLoad: () => setPhotoLoaded(true) }} sx={{ display: photoLoaded ? 'block' : 'none', width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ borderRadius: IMAGE_BORDER_RADIUS}} />
+                        </div>
+                    }
                     <Stack direction="row" style={{ width: "100%", marginTop: '0.8rem' }} alignContent="space-between" justifyContent="space-between">
                         <Stack>
                             {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
