@@ -34,7 +34,7 @@ export default function StandardPostForm({ onExit }) {
             <Stack alignItems="center" spacing={2} >
 
                 {postPhoto &&
-                    <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={URL.createObjectURL(postPhoto)} style={{ marginRight: "1rem", borderRadius: '5px' }} />
+                    <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={URL.createObjectURL(postPhoto)} style={{ borderRadius: '0.5rem' }} />
                 }
 
                 {postPhoto && <div>
