@@ -17,7 +17,7 @@ describe('Profile', () => {
     it('Loads the test profile and renders expected elements', () => {
         cy.visit(`http://localhost:3000/${PROFILE_HANDLE}`)
         cy.contains('jonathan wu').should('exist')
-        cy.get(`#${PROFILE_HANDLE}-profile-photo`).should('exist')
+        cy.get(`#${PROFILE_HANDLE}-profile-photo`).should('exist').wait(4000)
         cy.contains(`@${PROFILE_HANDLE}`).should('exist')
         cy.contains("my favorites").should('exist')
         cy.contains("Edit Profile").should('exist')
@@ -36,7 +36,7 @@ describe('Profile', () => {
     it('Loads the test no-spotify profile and renders all social links possible', () => {
         cy.visit(`http://localhost:3000/${NO_SPOTIFY_PROFILE_HANDLE}`)
         cy.contains('jonathan wu').should('exist')
-        cy.get(`#${NO_SPOTIFY_PROFILE_HANDLE}-profile-photo`).should('exist')
+        cy.get(`#${NO_SPOTIFY_PROFILE_HANDLE}-profile-photo`).should('exist').wait(4000)
         cy.contains(`@${NO_SPOTIFY_PROFILE_HANDLE}`).should('exist')
         cy.contains("my favorites").should('exist')
         cy.contains("Edit Profile").should('exist')

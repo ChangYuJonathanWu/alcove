@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
 
-import ProfileHeader from './ProfileHeader';
+import ProfileHeader from './ProfileHeader/ProfileHeader';
 import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo';
 
 import { signOut, getAuth } from "firebase/auth";
