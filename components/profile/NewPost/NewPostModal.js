@@ -7,6 +7,8 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Image from 'next/image';
 
+// Post Forms
+import StandardPostForm from './StandardPostForm'
 // Post Icons
 import ArticleIcon from '@mui/icons-material/Article';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -14,10 +16,6 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 
 // support delete and rename item
 export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
-    const bottomRef = useRef(null)
-    const scrollToBottom = () => {
-        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500)
-    }
 
     useEffect(() => {
         if (listIdToPostTo) {
@@ -27,15 +25,18 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
 
     const handleChange = (event, nextView) => {
         setPostType(nextView);
+        setView(nextView)
     };
     const [listId, setListId] = useState("")
     const [loading, setLoading] = useState(false)
     const [postType, setPostType] = useState(null)
+    const [view, setView] = useState("type-selection")
     const [error, setError] = useState("")
 
     const clearItems = () => {
         setError("")
         setListIdToPostTo(null)
+        setPostType(null)
     }
 
 
@@ -73,11 +74,12 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
         <Modal open={!!listIdToPostTo}>
             <Box style={modalStyle}>
                 <Stack alignItems="center" justifyContent="space-between" spacing={2} style={{ width: '100%' }} >
-                    <Stack style={{ width: '100%' }} direction="row" alignItems="center" justifyContent={"space-between"}>
+                    <Stack style={{ width: '100%' }} direction="row" alignItems="end" justifyContent={"space-between"}>
                         <Typography variant="h3">New Post</Typography>
-                        <CloseIcon onClick={onExit} />
+                        <CloseIcon style={{ width: '2rem' }} onClick={onExit} />
                     </Stack>
-                    <ToggleButtonGroup
+                    {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} setListId={setListId} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
+                    {!postType && <ToggleButtonGroup
                         orientation="vertical"
                         value={postType}
                         exclusive
@@ -96,12 +98,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         <ToggleButton disabled={true} value="youtube" aria-label="quilt">
                             <PostTypeButton disabled={true} name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'grey' }} />} />
                         </ToggleButton>
-                    </ToggleButtonGroup>
-                    <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
-
-                        {/* <Button disabled={loading}  ref={bottomRef}  onClick={onExit}>Cancel</Button>
-                        <Button disabled={loading || (postType === SPOTIFY && !validSpotifyUri) || (postType === INSTAGRAM && !validInstagramUri)} onClick={onPost} variant="contained">Post</Button> */}
-                    </Stack>
+                    </ToggleButtonGroup>}
                 </Stack>
             </Box>
         </Modal>
