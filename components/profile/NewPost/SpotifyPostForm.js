@@ -68,7 +68,7 @@ export default function SpotifyPostForm({ onExit, listId, clearItems, triggerRel
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                     <Button disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
+                    <Button disabled={loading || !validSpotifyUri} onClick={onPost} variant="contained">Post</Button>
                 </Stack>
             </Stack>
         </div >

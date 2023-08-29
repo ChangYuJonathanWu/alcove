@@ -69,7 +69,7 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                     <Button disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
+                    <Button disabled={loading || !validInstagramUri} onClick={onPost} variant="contained">Post</Button>
                 </Stack>
             </Stack>
         </div >

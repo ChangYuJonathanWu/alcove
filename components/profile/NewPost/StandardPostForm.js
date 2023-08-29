@@ -72,6 +72,8 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
         clearItems()
         triggerReload(Date.now())
     }
+
+    const hasContent = title || subtitle || caption || uri || postPhoto
     return (
         <div style={{ width: "100%" }}>
             <Stack alignItems="center" spacing={2} >
@@ -113,7 +115,7 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                     <Button disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
+                    <Button disabled={loading || !hasContent} onClick={onPost} variant="contained">Post</Button>
                 </Stack>
             </Stack>
         </div >
