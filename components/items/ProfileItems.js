@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import ProfileHeader from '@/components/profile/ProfileHeader';
+import ProfileHeader from '@/components/profile/ProfileHeader/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
 import RestaurantItem from '@/components/items/RestaurantItem';
 import TrailItem from '@/components/items/TrailItem';
