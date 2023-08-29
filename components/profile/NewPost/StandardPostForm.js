@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 export default function StandardPostForm({ onExit }) {
     const [listId, setListId] = useState("")
@@ -29,15 +30,16 @@ export default function StandardPostForm({ onExit }) {
     return (
         <div style={{ width: "100%" }}>
             <Stack alignItems="center" spacing={2} >
-                <TextField style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
+
                 {postPhoto &&
                     <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={URL.createObjectURL(postPhoto)} style={{ marginRight: "1rem", borderRadius: '5px' }} />
                 }
-                <Stack direction="row" spacing={4} >
-                    {postPhoto && <div>
-                        <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
-                    </div>}
-                    <div style={{ width: "100%" }}>
+
+                {postPhoto && <div>
+                    <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
+                </div>}
+                <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
+                    <Stack justifyContent="center" alignItems="center" style={{ width: "100%", height: '8rem', border: "2px dashed", borderRadius: '1rem' }}>
                         <input
                             accept="image/*"
                             style={{ display: 'none' }}
@@ -46,15 +48,19 @@ export default function StandardPostForm({ onExit }) {
                             onChange={updatePostPhoto}
                         />
                         <label htmlFor="post-photo-upload">
-                            <Button disabled={loading} style={{ margin: 0, padding: 0 }} component="span">
-                                {postPhoto ? "Change " : "Add Photo"}
-                            </Button>
+                            <Stack alignItems="center" spacing={4}>
+                                <AddPhotoAlternateIcon/>
+                                Add Photo
+                            </Stack>
+
+
                         </label>
 
-                    </div>
-                </Stack>
+                    </Stack>
+                </Button>
 
 
+                <TextField style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
                 <TextField style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />
                 <TextField style={{ width: "100%" }} size="small" multiline rows={3} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
                 <TextField onClick={scrollToBottom} style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(formatUri(e.currentTarget.value))} />
@@ -65,6 +71,6 @@ export default function StandardPostForm({ onExit }) {
                     <Button disabled={loading} variant="contained">Post</Button>
                 </Stack>
             </Stack>
-        </div>
+        </div >
     )
 }
