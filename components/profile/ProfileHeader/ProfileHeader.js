@@ -39,7 +39,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
         <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1.5rem' }}>
 
             <Stack alignItems="center" style={{ width: '100%' }}>
-                <ProfilePhotoLoader uri={photo} id={handle} />
+                <ProfilePhotoLoader uri={photo} handle={handle} />
                 <Paper sx={{ paddingTop: '3.5rem', borderRadius: '1rem', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, width: '100%' }}>
                     <Stack alignItems="center" style={{ paddingBottom: hasSocialLinks ? "0.5rem" : "1rem", paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
 
