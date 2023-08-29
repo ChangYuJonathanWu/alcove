@@ -104,7 +104,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         <ToggleButton onClick={() => setPostType(null)} style={{ width: '100%' }}>
                             {getPostTypeButton({ value: postType, standalone: true })}
                         </ToggleButton>}
-                    {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} setListId={setListId} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
+                    {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {!postType && <ToggleButtonGroup
                         orientation="vertical"
                         value={postType}

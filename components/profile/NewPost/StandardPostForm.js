@@ -3,9 +3,10 @@ import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/m
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
+import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
+import { protectedApiCall } from '@/utils/api';
 
-export default function StandardPostForm({ onExit }) {
-    const [listId, setListId] = useState("")
+export default function StandardPostForm({ onExit, listId, clearItems, triggerReload }) {
     const [title, setTitle] = useState("")
     const [subtitle, setSubtitle] = useState("")
     const [caption, setCaption] = useState("")
@@ -28,6 +29,48 @@ export default function StandardPostForm({ onExit }) {
             Sentry.captureException(e)
         }
 
+    }
+
+    const clearPostItems = () => {
+        setTitle("")
+        setSubtitle("")
+        setCaption("")
+        setUri("")
+        setPostPhoto(null)
+    }
+
+    const onPost = async () => {
+        setError("")
+        if(uri && !isValidUrlWithoutProtocol(uri)) {
+            setError("Please enter a valid link")
+            return
+        }
+        setLoading(true)
+        const formData = new FormData()
+        formData.append("postType", "standard")
+        formData.append("photo", postPhoto)
+        formData.append("title", title)
+        formData.append("subtitle", subtitle)
+        formData.append("caption", caption)
+        formData.append("uri", uri)
+        
+        const result = await protectedApiCall(`/api/profile/items/${listId}/post`, 'POST', formData)
+        setLoading(false)
+        if (result.status !== 200) {
+            console.error("Error posting. Try again. Status: " + result.status)
+            try {
+                const parsedResult = await result.json()
+                setError(parsedResult.error ?? "Error posting. Try again")
+            } catch (e) {
+                setError("Error posting. Try again")
+                Sentry.captureException(e)
+            }
+            return
+        }
+        // TODO: If request failed, dont clear everything here
+        clearPostItems()
+        clearItems()
+        triggerReload(Date.now())
     }
     return (
         <div style={{ width: "100%" }}>
@@ -71,7 +114,7 @@ export default function StandardPostForm({ onExit }) {
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
                     <Button disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button disabled={loading} variant="contained">Post</Button>
+                    <Button disabled={loading} onClick={onPost} variant="contained">Post</Button>
                 </Stack>
             </Stack>
         </div >
