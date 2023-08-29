@@ -6,12 +6,12 @@ import * as Sentry from '@sentry/react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Image from 'next/image';
-
+import InstagramIcon from '@/components/profile/static/instagram-color-64.png';
+import SpotifyIcon from '@/components/profile/static/spotify-logo.png';
 // Post Forms
 import StandardPostForm from './StandardPostForm'
 // Post Icons
 import ArticleIcon from '@mui/icons-material/Article';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InstagramPostForm from './InstagramPostForm';
@@ -84,9 +84,9 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
             case "standard":
                 return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange' }} />} disabled={disabled} standalone={standalone} />
             case "instagram":
-                return <PostTypeButton name="Instagram" icon={<Image src="/social_icons/instagram-color-64.png" width={20} height={20} alt="Instagram logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Instagram" icon={<Image priority={true} src={InstagramIcon} width={20} height={20} alt="Instagram logo" />} disabled={disabled} standalone={standalone} />
             case "spotify":
-                return <PostTypeButton name="Spotify" icon={<Image src="/social_icons/spotify-logo.png" width={20} height={20} alt="Spotify logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Spotify" icon={<Image priority={true} src={SpotifyIcon} width={20} height={20} alt="Spotify logo" />} disabled={disabled} standalone={standalone} />
             case "youtube":
                 return <PostTypeButton name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
             default:
