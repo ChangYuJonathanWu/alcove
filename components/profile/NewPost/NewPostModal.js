@@ -14,6 +14,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import InstagramPostForm from './InstagramPostForm';
 
 // support delete and rename item
 export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -65,13 +66,13 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
         return (
             < Stack direction="row" spacing={2} alignItems="start" justifyContent="space-between" style={{ width: '100%' }}>
                 <Stack direction="row" spacing={2}>
-                {icon}
-                <Typography variant="button" style={{ textTransform: 'none', color: disabled ? 'grey' : 'black' }}>
-                    {name}
-                </Typography>
+                    {icon}
+                    <Typography variant="button" style={{ textTransform: 'none', color: disabled ? 'grey' : 'black' }}>
+                        {name}
+                    </Typography>
                 </Stack>
 
-                {standalone && <ChevronRightIcon style={{color: 'black'}} />}
+                {standalone && <ChevronRightIcon style={{ color: 'black' }} />}
             </Stack>
         )
     }
@@ -79,13 +80,13 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
     const getPostTypeButton = ({ value, disabled = false, standalone = false }) => {
         switch (value) {
             case "standard":
-                return <PostTypeButton name="Post" icon={<ArticleIcon style={{ width: 20, color: 'orange' }} />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange' }} />} disabled={disabled} standalone={standalone} />
             case "instagram":
                 return <PostTypeButton name="Instagram" icon={<Image src="/social_icons/instagram-color-64.png" width={20} height={20} alt="Instagram logo" />} disabled={disabled} standalone={standalone} />
             case "spotify":
                 return <PostTypeButton name="Spotify" icon={<Image src="/social_icons/spotify-logo.png" width={20} height={20} alt="Spotify logo" />} disabled={disabled} standalone={standalone} />
             case "youtube":
-                return <PostTypeButton name="YouTube" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
             default:
                 return <div></div>
         }
@@ -105,6 +106,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                             {getPostTypeButton({ value: postType, standalone: true })}
                         </ToggleButton>}
                     {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
+                    {postType === "instagram" && <InstagramPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {!postType && <ToggleButtonGroup
                         orientation="vertical"
                         value={postType}
