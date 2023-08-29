@@ -32,18 +32,10 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
 
     const onPost = async () => {
         setError("")
-        if (uri && !isValidUrlWithoutProtocol(uri)) {
-            setError("Please enter a valid link")
-            return
-        }
         setLoading(true)
         const formData = new FormData()
-        formData.append("postType", "standard")
-        formData.append("photo", postPhoto)
-        formData.append("title", title)
-        formData.append("subtitle", subtitle)
-        formData.append("caption", caption)
-        formData.append("uri", uri)
+        formData.append("postType", "instagram")
+        formData.append("instagramUri", instagramUri)
 
         const result = await protectedApiCall(`/api/profile/items/${listId}/post`, 'POST', formData)
         setLoading(false)
@@ -59,10 +51,11 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
             return
         }
         // TODO: If request failed, dont clear everything here
-        clearPostItems()
+
         clearItems()
         triggerReload(Date.now())
     }
+
     return (
         <div style={{ width: "100%" }}>
             <Stack alignItems="center" spacing={2} >
