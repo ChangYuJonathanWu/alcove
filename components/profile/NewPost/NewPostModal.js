@@ -58,7 +58,8 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
         borderRadius: '1rem',
         padding: '1.5rem',
         maxHeight: '80vh',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        paddingBottom: '3rem'
     };
     //TODO: Validate input; set character limits
     //TODO: Allow setting new Link instead of having to delete and recreate
