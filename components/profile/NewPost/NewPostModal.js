@@ -84,9 +84,9 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
             case "standard":
                 return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange' }} />} disabled={disabled} standalone={standalone} />
             case "instagram":
-                return <PostTypeButton name="Instagram" icon={<Image priority={true} src={InstagramIcon} width={20} height={20} alt="Instagram logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Instagram" icon={<Image unoptimized priority={true} src={InstagramIcon} width={20} height={20} alt="Instagram logo" />} disabled={disabled} standalone={standalone} />
             case "spotify":
-                return <PostTypeButton name="Spotify" icon={<Image priority={true} src={SpotifyIcon} width={20} height={20} alt="Spotify logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Spotify" icon={<Image unoptimized priority={true} src={SpotifyIcon} width={20} height={20} alt="Spotify logo" />} disabled={disabled} standalone={standalone} />
             case "youtube":
                 return <PostTypeButton name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
             default:
