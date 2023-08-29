@@ -15,6 +15,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InstagramPostForm from './InstagramPostForm';
+import SpotifyPostForm from './SpotifyPostForm';
 
 // support delete and rename item
 export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -107,6 +108,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         </ToggleButton>}
                     {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {postType === "instagram" && <InstagramPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
+                    {postType === "spotify" && <SpotifyPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {!postType && <ToggleButtonGroup
                         orientation="vertical"
                         value={postType}
