@@ -66,8 +66,8 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
 
     const PostTypeButton = ({ name, icon, disabled = false, standalone = false }) => {
         return (
-            < Stack direction="row" spacing={2} alignItems="start" justifyContent="space-between" style={{ width: '100%' }}>
-                <Stack direction="row" spacing={2}>
+            < Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" style={{ width: '100%' }}>
+                <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
                     {icon}
                     <Typography variant="button" style={{ textTransform: 'none', color: disabled ? 'grey' : 'black' }}>
                         {name}
@@ -82,11 +82,11 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
     const getPostTypeButton = ({ value, disabled = false, standalone = false }) => {
         switch (value) {
             case "standard":
-                return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange' }} />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange', paddingBottom: '1px' }} />} disabled={disabled} standalone={standalone} />
             case "instagram":
-                return <PostTypeButton name="Instagram" icon={<Image unoptimized priority={true} src={InstagramIcon} width={20} height={20} alt="Instagram logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Instagram" icon={<Image unoptimized priority={true} src={InstagramIcon} width={20} height={20} alt="Instagram logo" style={{paddingBottom: '1px'}}/>} disabled={disabled} standalone={standalone} />
             case "spotify":
-                return <PostTypeButton name="Spotify" icon={<Image unoptimized priority={true} src={SpotifyIcon} width={20} height={20} alt="Spotify logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Spotify" icon={<Image unoptimized priority={true} src={SpotifyIcon} width={20} height={20} alt="Spotify logo" style={{paddingBottom: '2px'}}/>} disabled={disabled} standalone={standalone} />
             case "youtube":
                 return <PostTypeButton name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
             default:
