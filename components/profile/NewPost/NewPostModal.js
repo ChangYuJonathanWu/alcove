@@ -95,16 +95,16 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
     }
 
     return (
-        <Modal open={!!listIdToPostTo}>
+        <Modal open={!!listIdToPostTo} data-cy="new-post-selection-modal">
             <Box style={modalStyle}>
                 <Stack alignItems="center" justifyContent="space-between" spacing={2} style={{ width: '100%' }} >
-                    <Stack style={{ width: '100%' }} direction="row" alignItems="end" justifyContent={"space-between"}>
+                    <Stack data-cy="new-post-selection-modal--header" style={{ width: '100%' }} direction="row" alignItems="end" justifyContent={"space-between"}>
                         <Typography variant="h3">New Post</Typography>
-                        <CloseIcon style={{ width: '2rem' }} onClick={onExit} />
+                        <CloseIcon data-cy="new-post-selection-modal--close-button" style={{ width: '2rem' }} onClick={onExit} />
                     </Stack>
 
                     {postType &&
-                        <ToggleButton value={postType} onClick={() => setPostType(null)} style={{ width: '100%' }}>
+                        <ToggleButton value={postType} onClick={() => setPostType(null)} style={{ width: '100%' }} data-cy="new-post-selection-modal--indicator-toggle">
                             {getPostTypeButton({ value: postType, standalone: true })}
                         </ToggleButton>}
                     {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
@@ -117,16 +117,16 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         onChange={handleChange}
                         style={{ width: '100%', borderRadius: '1rem' }}
                     >
-                        <ToggleButton value="standard" aria-label="Standard post">
+                        <ToggleButton value="standard" aria-label="Standard post" data-cy="new-post-type-standard" >
                             {getPostTypeButton({ value: "standard" })}
                         </ToggleButton>
-                        <ToggleButton value="instagram" aria-label="Instagram post">
+                        <ToggleButton value="instagram" aria-label="Instagram post" data-cy="new-post-type-instagram">
                             {getPostTypeButton({ value: "instagram" })}
                         </ToggleButton>
-                        <ToggleButton value="spotify" aria-label="Spotify post">
+                        <ToggleButton value="spotify" aria-label="Spotify post" data-cy="new-post-type-spotify">
                             {getPostTypeButton({ value: "spotify" })}
                         </ToggleButton>
-                        <ToggleButton disabled={true} value="youtube" aria-label="quilt">
+                        <ToggleButton data-cy="new-post-type-youtube" disabled={true} value="youtube" aria-label="quilt">
                             {getPostTypeButton({ value: "youtube", disabled: true })}
                         </ToggleButton>
                     </ToggleButtonGroup>}

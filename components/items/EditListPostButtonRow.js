@@ -15,7 +15,7 @@ export default function EditListPostButtonRow({ rearrangeEnabled = true, onNewIt
                     Reorder
                 </Stack>
             </Button>}
-            <Button style={buttonStyle} onClick={onNewItemClick}>
+            <Button style={buttonStyle} onClick={onNewItemClick} data-cy="new-post-button">
                 <Stack direction="row" alignContent="center">
                     <AddIcon />
                     New Post

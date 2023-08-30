@@ -56,19 +56,19 @@ export default function SpotifyPostForm({ onExit, listId, clearItems, triggerRel
     }
 
     return (
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%" }} data-cy="spotify-post-form">
             <Stack alignItems="center" spacing={2} >
                 <Stack spacing={2}>
                     <Typography variant="subtitle2" style={{ color: 'grey' }}>You can post a song, album, playlist and more from Spotify</Typography>
-                    <TextField style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
+                    <TextField data-cy="spotify-post-form--link-field" style={{ width: "100%" }} size="small" label="Spotify Link" value={spotifyUri} placeholder='https://open.spotify.com/track...' onChange={onSpotifyUriChange} />
                     <Typography variant="subtitle2" style={{ color: 'grey' }}>{`To get the Spotify link, click the three dots on the song or item, click Share, then Copy Link`}</Typography>
                 </Stack>
 
                 {error && <span>{error}</span>}
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
-                    <Button disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button disabled={loading || !validSpotifyUri} onClick={onPost} variant="contained">Post</Button>
+                    <Button data-cy="spotify-post-form--cancel-button" disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
+                    <Button data-cy="spotify-post-form--submit-button" disabled={loading || !validSpotifyUri} onClick={onPost} variant="contained">Post</Button>
                 </Stack>
             </Stack>
         </div >
