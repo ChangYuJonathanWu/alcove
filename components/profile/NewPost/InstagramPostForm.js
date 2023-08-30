@@ -57,19 +57,19 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
     }
 
     return (
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%" }} data-cy="instagram-post-form">
             <Stack alignItems="center" spacing={2} >
                 <Stack spacing={2}>
                     <Typography variant="subtitle2" style={{color: 'grey'}}>Share an Instagram post. The post can be from any public profile including your own.</Typography>
-                    <TextField style={{ width: "100%" }} size="small" label="Instagram Post Link" value={instagramUri} placeholder='https://www.instagram.com/p/...' onChange={onInstagramUriChange} />
+                    <TextField data-cy="instagram-post-form--link-field" style={{ width: "100%" }} size="small" label="Instagram Post Link" value={instagramUri} placeholder='https://www.instagram.com/p/...' onChange={onInstagramUriChange} />
                     <Typography variant="subtitle2"  style={{color: 'grey'}}>{`To get the post link, click the Share icon on the post, then Copy Link`}</Typography>
                 </Stack>
 
                 {error && <span>{error}</span>}
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 
-                    <Button disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button disabled={loading || !validInstagramUri} onClick={onPost} variant="contained">Post</Button>
+                    <Button data-cy="instagram-post-form--cancel-button" disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
+                    <Button data-cy="instagram-post-form--submit-button" disabled={loading || !validInstagramUri} onClick={onPost} variant="contained">Post</Button>
                 </Stack>
             </Stack>
         </div >
