@@ -61,6 +61,11 @@ export default function Profile({ user, ownerSignedIn = false }) {
 
     const canRearrangeItems = itemOrder.length > 1
 
+    const clickHandlers = {
+        onLogout: logoutUser,
+        onThemeChange: () => setThemeOpen(true),
+    }
+
     //TODO: Error handling on network request, validation
     return (
         <main>
@@ -72,7 +77,7 @@ export default function Profile({ user, ownerSignedIn = false }) {
             </div>
             <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", zIndex: 100 }}>
                 <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto' }} >
-                    {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle}/>}
+                    {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers}/>}
                 </div>
 
             </div>

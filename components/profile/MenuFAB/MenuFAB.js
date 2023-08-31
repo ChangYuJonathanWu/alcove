@@ -12,24 +12,45 @@ import TryIcon from '@mui/icons-material/Try';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 
-const actions = [
-  { icon: <LogoutIcon />, name: 'Logout' },
-  { icon: <TryIcon />, name: 'Feedback' },
-  { icon: <PaletteIcon />, name: 'Theme' },
-  { icon: <PublicIcon />, name: 'View as Public' },
-];
 
-export default function MenuFAB({ handle, profilePhotoUri }) {
+
+export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const {
+    onLogout, onThemeChange
+  } = clickHandlers
+
+  const onViewAsPublic = () => {
+    window.open(`${handle}/public/`, '_blank')
+  }
+
+
+  const actions = [
+    { icon: <LogoutIcon />, name: 'Logout', onClick: onLogout },
+    // { icon: <TryIcon />, name: 'Feedback' },
+    { icon: <PaletteIcon />, name: 'Theme', onClick: onThemeChange },
+    { icon: <PublicIcon />, name: 'View as Public', onClick: onViewAsPublic },
+  ];
+
+  const onSpeedDialClick = (callback) => {
+    return (
+      () => {
+        setOpen(false)
+        callback()
+      }
+    )
+
+  }
 
   const FabStyling = {
     bgcolor: "orange",
     // position: 'absolute',
     // bottom: 0,
     // right: 0,
-    
+
     padding: 0,
     width: '3.5rem',
     height: '3.5rem',
@@ -55,12 +76,13 @@ export default function MenuFAB({ handle, profilePhotoUri }) {
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
-          icon={<Avatar style={{width: '3.2rem', height: '3.2rem'}} src={profilePhotoUri} />}
+          icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
           FabProps={
-            { sx: FabStyling,
+            {
+              sx: FabStyling,
             }
           }
         >
@@ -70,7 +92,8 @@ export default function MenuFAB({ handle, profilePhotoUri }) {
               icon={action.icon}
               tooltipTitle={action.name}
               tooltipOpen
-              onClick={handleClose}
+              onClick={onSpeedDialClick(action.onClick)}
+
             />
           ))}
         </SpeedDial>
