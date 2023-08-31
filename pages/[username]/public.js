@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
 
 import ErrorPage from 'next/error'
 import Profile from '@/components/profile/Profile'
@@ -9,8 +10,22 @@ import jiwonkang_user from '@/examples/jiwon.json'
 import example_user from '@/examples/example.json'
 import dan_user from '@/examples/dan.json'
 import test_user from '@/examples/test_profile.json'
-
+import test_user_no_spotify from '@/examples/test_profile_no_spotify.json'
+import ProfileLoader from '@/components/profile/ProfileLoader'
+import { getAuth } from 'firebase/auth'
 import { getPublicProfile } from '@/lib/api/profile'
+import DefaultLoader from '@/components/DefaultLoader'
+import { useAuthState } from 'react-firebase-hooks/auth'
+
+const TEST_USER = "jHak91janUhqmOakso"
+const TEST_USER_NO_SPOTIFY = "239jsdfk9Q2jjsk_no_spotify"
+const TEST_USERS = [TEST_USER, TEST_USER_NO_SPOTIFY]
+
+const auth = getAuth()
+
+const DynamicProfile = dynamic(() => import('@/components/profile/Profile'), {
+    loading: () => <DefaultLoader />
+})
 
 const determineHardcodedUser = (username) => {
     switch (username) {
@@ -18,49 +33,61 @@ const determineHardcodedUser = (username) => {
             return jonathan_user
         case "gracehopper":
             return example_user
-        case "jHak91janUhqmOakso":
+        case TEST_USER:
             return test_user
+        case TEST_USER_NO_SPOTIFY:
+            return test_user_no_spotify
         default:
             return example_user
     }
 }
 
-export const getServerSideProps = async (context) => {
+
+export const getStaticPaths = async () => {
+    return {
+        paths: [],
+        fallback: true,
+    }
+}
+
+
+export const getStaticProps = async (context) => {
     const username = context.params.username
-    const userRequestTimerName = `getServerSideProps: ${username}`
-    const userRequestDbTimerName = `getServerSideProps: getPublicProfile: ${username}`
-    console.time(userRequestTimerName)
-    const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", "jHak91janUhqmOakso"]
+
+    const hardcodedUsers = ["jonathanwu_hardcoded", "gracehopper", TEST_USER, TEST_USER_NO_SPOTIFY]
+
     if (hardcodedUsers.includes(username)) {
         const hardcodedUser = determineHardcodedUser(username)
         return {
             props: {
                 profile: hardcodedUser,
-                ownerSignedIn: false
             }
         }
     }
 
-    console.time(userRequestDbTimerName)
     const profile = await getPublicProfile(username)
-    console.timeEnd(userRequestDbTimerName)
-    console.timeEnd(userRequestTimerName)
+
     return {
         props: {
-            profile,
-            ownerSignedIn: false
-        }
+            profile
+        },
+        revalidate: 1
     }
 }
 
 
-export default function ProfileRoute({ profile, ownerSignedIn }) {
+
+export default function ProfileRoute({ profile }) {
     const router = useRouter()
-    const user = profile
-    if (!user) {
+
+    if (router.isFallback ) {
+        return <DefaultLoader/>
+    }
+    if (!profile) {
         return <ErrorPage statusCode={404} />
     }
-    const { title, handle, description, photo } = user
+    const { title, handle, description, photo } = profile
+
 
     return (
         <>
@@ -79,7 +106,7 @@ export default function ProfileRoute({ profile, ownerSignedIn }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <Profile user={user} ownerSignedIn={ownerSignedIn} />
+            <DynamicProfile user={profile} ownerSignedIn={false} />
         </>
     )
 }
