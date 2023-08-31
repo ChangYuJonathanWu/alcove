@@ -23,6 +23,17 @@ const theme = createTheme({
 
         }
     },
+    components:{
+        MuiSpeedDialAction: {
+            styleOverrides: {
+                staticTooltipLabel: {
+                    maxWidth: 'none',
+                    whiteSpace: 'nowrap',
+                    
+                }
+            }
+        }
+    }
 });
 
 
