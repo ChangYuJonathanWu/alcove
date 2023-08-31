@@ -80,16 +80,6 @@ export const getStaticProps = async (context) => {
 export default function ProfileRoute({ profile }) {
     const router = useRouter()
 
-    useEffect(() => {
-        if (router.isFallback) {
-            return
-        }
-        if(!profile) {
-            return
-        }
-
-    }, [profile, router.isFallback])
-
     if (router.isFallback ) {
         return <DefaultLoader/>
     }
