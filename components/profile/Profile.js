@@ -72,7 +72,7 @@ export default function Profile({ user, ownerSignedIn = false }) {
             </div>
             <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", zIndex: 100 }}>
                 <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto' }} >
-                    <MenuFAB key="menu-fab" />
+                    {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle}/>}
                 </div>
 
             </div>
