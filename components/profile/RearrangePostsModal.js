@@ -22,7 +22,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       if (type === "spotify") {
         postMap[id] = <SpotifyItem noPadding={true} item={post} />
       } else if (type === "instagram") {
-        postMap[id] = <div id={id}><InstagramPost item={post} /></div>
+        postMap[id] = <div id={id}><InstagramPost item={post} miniMode={true} /></div>
       } else {
         postMap[id] = <CompactItemView item={post} />
       }
