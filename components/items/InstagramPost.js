@@ -22,7 +22,7 @@ export default function InstagramPost({ item, editMode = false, triggerReload, m
     // Show a gradient in minimode
     const containerStyle = miniMode ? {
         position: 'relative', width: '100%', height: MINI_MODE_HEIGHT
-    } : { margin: "1rem", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    } : { margin: "0rem 1rem 1rem 1rem", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
     const igFrameStyle = miniMode ? {
         height: MINI_MODE_HEIGHT
     } : {
