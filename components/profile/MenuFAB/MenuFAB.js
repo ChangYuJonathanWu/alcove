@@ -10,14 +10,16 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import PublicIcon from '@mui/icons-material/Public';
 import TryIcon from '@mui/icons-material/Try';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-
-
+import Skeleton from '@mui/material/Skeleton';
 
 
 export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const toggleOpen = () => setOpen(!open);
+
+  const [profilePhotoLoaded, setProfilePhotoLoaded] = React.useState(false)
 
   const {
     onLogout, onThemeChange
@@ -46,32 +48,42 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   }
 
   const FabStyling = {
-    bgcolor: "orange",
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0,
-
+    bgcolor: "primary",
     padding: 0,
     width: '3.5rem',
     height: '3.5rem',
-    maxWidth: 'none'
-
+    maxWidth: 'none',
+    color: 'none'
   }
+
+  const SpeedDialIcon =  () => {
+    // Show skeleton while photo loading
+    
+    const photoReady = profilePhotoLoaded || !profilePhotoUri
+    return (
+      <>
+        {!photoReady && <Skeleton variant="circular" width='3.2rem' height='3.2rem' style={{backgroundColor: 'white'}} />}
+        <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }} style={{ display: photoReady ? 'block' : 'none', width: '3.2rem', height: '3.2rem', touchAction: 'none'  }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>
+      </>
+    )
+  }
+
   return (
     <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto', zIndex: 100 }}>
-      <Backdrop open={open} data-cy="menu-fab--backdrop"/>
+      <Backdrop open={open} onClick={handleClose} onTouchStart={handleClose} data-cy="menu-fab--backdrop"/>
       <Box sx={{ height: 330, transform: 'translateZ(0px)', flexGrow: 1 }}>
         <SpeedDial
           data-cy="menu-fab--speeddial"
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
-          icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>}
+          icon={SpeedDialIcon()}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
           FabProps={
-            {
+            { 
               sx: FabStyling,
+              color: 'primary'
             }
           }
         >
@@ -83,7 +95,6 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
               tooltipTitle={action.name}
               tooltipOpen
               onClick={onSpeedDialClick(action.onClick)}
-
             />
           ))}
         </SpeedDial>
