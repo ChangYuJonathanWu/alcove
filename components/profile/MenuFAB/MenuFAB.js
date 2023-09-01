@@ -76,16 +76,24 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={SpeedDialIcon()}
-          onBlur={(e) => e.preventDefault()}
-          onMouseLeave={(e) => e.preventDefault()}
-          onMouseEnter={(e) => e.preventDefault()}
-          onFocus={(e)=> e.preventDefault()}
+          onBlur={(e) => e.stopPropagation()}
+          onMouseLeave={(e) => e.stopPropagation()}
+          onMouseEnter={(e) => {(e) => {
+            e.stopPropagation()
+          }}}
+          onFocus={(e)=> e.stopPropagation()}
           // onClose={handleClose}
           // onOpen={handleOpen}
           onClick={toggleOpen}
           open={open}
           FabProps={
             {
+              onBlur: (e) => e.stopPropagation(),
+              onMouseLeave: (e) => e.stopPropagation(),
+              onMouseEnter: (e) => {(e) => {
+                e.stopPropagation()
+              }},
+              onFocus: (e)=> e.stopPropagation(),
               sx: FabStyling,
             }
           }
