@@ -76,10 +76,10 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={SpeedDialIcon()}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          // onClick={toggleOpen}
-          // open={open}
+          // onClose={handleClose}
+          // onOpen={handleOpen}
+          onClick={toggleOpen}
+          open={open}
           FabProps={
             {
               sx: FabStyling,
