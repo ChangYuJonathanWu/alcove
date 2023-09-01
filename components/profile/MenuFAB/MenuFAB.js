@@ -62,7 +62,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
     return (
       <>
         {!photoReady && <Skeleton variant="circular" width='3.2rem' height='3.2rem' style={{backgroundColor: 'white'}} />}
-        <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }} style={{ display: photoReady ? 'block' : 'none', width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>
+        <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }} style={{ display: photoReady ? 'block' : 'none', width: '3.2rem', height: '3.2rem', touchAction: 'none'  }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>
       </>
     )
   }
@@ -76,24 +76,11 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={SpeedDialIcon()}
-          onBlur={(e) => e.stopPropagation()}
-          onMouseLeave={(e) => e.stopPropagation()}
-          onMouseEnter={(e) => {(e) => {
-            e.stopPropagation()
-          }}}
-          onFocus={(e)=> e.stopPropagation()}
-          // onClose={handleClose}
-          // onOpen={handleOpen}
-          onClick={toggleOpen}
+          onClose={handleClose}
+          onOpen={handleOpen}
           open={open}
           FabProps={
-            {
-              onBlur: (e) => e.stopPropagation(),
-              onMouseLeave: (e) => e.stopPropagation(),
-              onMouseEnter: (e) => {(e) => {
-                e.stopPropagation()
-              }},
-              onFocus: (e)=> e.stopPropagation(),
+            { 
               sx: FabStyling,
             }
           }
