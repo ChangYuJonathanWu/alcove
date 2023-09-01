@@ -108,7 +108,7 @@ export default function ProfileRoute({ profile }) {
         checkOwnerSignedIn()
     }, [user, profile, router.isFallback])
 
-    if (router.isFallback || !ownerCheckComplete) {
+    if (router.isFallback) {
         return <DefaultLoader/>
     }
     if (!profile) {
@@ -134,7 +134,8 @@ export default function ProfileRoute({ profile }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <DynamicProfile user={profile} ownerSignedIn={ownerSignedIn} />
+            {ownerCheckComplete ? <DynamicProfile user={profile} ownerSignedIn={ownerSignedIn} /> : <DefaultLoader/>}
+            
         </>
     )
 }
