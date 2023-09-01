@@ -75,12 +75,11 @@ export default function Profile({ user, ownerSignedIn = false }) {
                 {backgroundType == "image" && <Image priority={true} fill={true} src={backgroundUrl} objectFit='cover' id="background-photo" alt="background wallpaper" />}
 
             </div>
-            <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", zIndex: 100 }}>
-                <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto' }} >
-                    {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers}/>}
-                </div>
 
+            <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto', zIndex: 100 }} >
+                {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers} />}
             </div>
+
 
             <Stack style={{ marginBottom: "8.5rem" }}>
 

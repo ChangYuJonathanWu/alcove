@@ -77,7 +77,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
         >
           {actions.map((action, idx) => (
             <SpeedDialAction
-              data-cy={`menu-fab--option`}
+              data-cy={`enu-fab--option`}
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
