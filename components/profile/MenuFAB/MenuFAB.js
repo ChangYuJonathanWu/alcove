@@ -76,6 +76,10 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={SpeedDialIcon()}
+          onBlur={(e) => e.preventDefault()}
+          onMouseLeave={(e) => e.preventDefault()}
+          onMouseEnter={(e) => e.preventDefault()}
+          onFocus={(e)=> e.preventDefault()}
           // onClose={handleClose}
           // onOpen={handleOpen}
           onClick={toggleOpen}
