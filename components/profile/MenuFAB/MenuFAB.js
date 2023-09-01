@@ -48,11 +48,12 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   }
 
   const FabStyling = {
-    bgcolor: "orange",
+    bgcolor: "none",
     padding: 0,
     width: '3.5rem',
     height: '3.5rem',
-    maxWidth: 'none'
+    maxWidth: 'none',
+    color: 'none'
   }
 
   const SpeedDialIcon =  () => {
@@ -82,6 +83,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           FabProps={
             { 
               sx: FabStyling,
+              color: 'none'
             }
           }
         >
