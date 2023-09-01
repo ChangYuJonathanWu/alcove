@@ -18,6 +18,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const toggleOpen = () => setOpen(!open);
 
   const {
     onLogout, onThemeChange
@@ -47,10 +48,6 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
 
   const FabStyling = {
     bgcolor: "orange",
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0,
-
     padding: 0,
     width: '3.5rem',
     height: '3.5rem',
@@ -68,6 +65,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>}
           onClose={handleClose}
           onOpen={handleOpen}
+          onClick={toggleOpen}
           open={open}
           FabProps={
             {
