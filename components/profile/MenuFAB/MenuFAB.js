@@ -12,8 +12,6 @@ import TryIcon from '@mui/icons-material/Try';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 
-
-
 export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -54,6 +52,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
     maxWidth: 'none'
 
   }
+
   return (
     <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto', zIndex: 100 }}>
       <Backdrop open={open} data-cy="menu-fab--backdrop"/>
@@ -63,10 +62,10 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>}
-          // onClose={handleClose}
-          // onOpen={handleOpen}
-          onClick={toggleOpen}
-          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          // onClick={toggleOpen}
+          // open={open}
           FabProps={
             {
               sx: FabStyling,
