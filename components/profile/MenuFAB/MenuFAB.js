@@ -10,6 +10,7 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import PublicIcon from '@mui/icons-material/Public';
 import TryIcon from '@mui/icons-material/Try';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Skeleton from '@mui/material/Skeleton';
 
 
 export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
@@ -17,6 +18,8 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const toggleOpen = () => setOpen(!open);
+
+  const [profilePhotoLoaded, setProfilePhotoLoaded] = React.useState(false)
 
   const {
     onLogout, onThemeChange
@@ -50,7 +53,18 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
     width: '3.5rem',
     height: '3.5rem',
     maxWidth: 'none'
+  }
 
+  const SpeedDialIcon =  () => {
+    // Show skeleton while photo loading
+    
+    const photoReady = profilePhotoLoaded || !profilePhotoUri
+    return (
+      <>
+        {!photoReady && <Skeleton variant="circular" width='3.2rem' height='3.2rem' style={{backgroundColor: 'white'}} />}
+        <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }} style={{ display: photoReady ? 'block' : 'none', width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>
+      </>
+    )
   }
 
   return (
@@ -61,7 +75,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           data-cy="menu-fab--speeddial"
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
-          icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>}
+          icon={SpeedDialIcon()}
           onClose={handleClose}
           onOpen={handleOpen}
           // onClick={toggleOpen}
@@ -80,7 +94,6 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
               tooltipTitle={action.name}
               tooltipOpen
               onClick={onSpeedDialClick(action.onClick)}
-
             />
           ))}
         </SpeedDial>
