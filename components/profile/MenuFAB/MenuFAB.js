@@ -57,26 +57,15 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
     maxWidth: 'none'
 
   }
-  const SpeedDialFabIcon = (
-    <>
-      {/* <Typography variant="subtitle2" style={{textTransform: 'none'}}>
-        {handle}
-      </Typography> */}
-
-      <Avatar style={{}} src={profilePhotoUri} />
-    </>
-
-  )
   return (
     <>
-      <Backdrop open={open} />
-
+      <Backdrop open={open} data-cy="menu-fab--backdrop"/>
       <Box sx={{ height: 330, transform: 'translateZ(0px)', flexGrow: 1 }}>
-
         <SpeedDial
-          ariaLabel="SpeedDial tooltip example"
+          data-cy="menu-fab--speeddial"
+          ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
-          icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} />}
+          icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
@@ -88,6 +77,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
         >
           {actions.map((action, idx) => (
             <SpeedDialAction
+              data-cy={`menu-fab--option`}
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
