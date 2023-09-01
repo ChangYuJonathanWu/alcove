@@ -76,9 +76,8 @@ export default function Profile({ user, ownerSignedIn = false }) {
 
             </div>
 
-            <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto', zIndex: 100 }} >
-                {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers} />}
-            </div>
+            {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers} />}
+
 
 
             <Stack style={{ marginBottom: "8.5rem" }}>

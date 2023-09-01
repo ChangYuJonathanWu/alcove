@@ -58,7 +58,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
 
   }
   return (
-    <>
+    <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto', zIndex: 100 }}>
       <Backdrop open={open} data-cy="menu-fab--backdrop"/>
       <Box sx={{ height: 330, transform: 'translateZ(0px)', flexGrow: 1 }}>
         <SpeedDial
@@ -77,7 +77,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
         >
           {actions.map((action, idx) => (
             <SpeedDialAction
-              data-cy={`enu-fab--option`}
+              data-cy={`menu-fab--option`}
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
@@ -88,6 +88,6 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ))}
         </SpeedDial>
       </Box>
-    </>
+    </div>
   );
 }

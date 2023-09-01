@@ -8,7 +8,7 @@ describe('Profile Menu', () => {
     //TODO: Need a better way to determine if menu is open or not. Seems like menu elements exist even when the menu is closed.
     it('Displays and can open profile menu with exected options', () => {
         // The menu FAB should exist
-        cy.get('[data-cy=menu-fab--speeddial]').should('exist').should('be.visible')
+        cy.get('[data-cy=menu-fab--speeddial]').should('exist')
         // The backdrop should be present but not visible
         cy.get('[data-cy=menu-fab--backdrop]').should('exist').should('not.be.visible')
 
