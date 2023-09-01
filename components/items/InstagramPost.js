@@ -14,11 +14,11 @@ export default function InstagramPost({ item, editMode = false, triggerReload })
         setDeleteRunning(false)
         triggerReload(Date.now())
     }
-    const standardStyle = { margin: "0rem 1rem 1rem 1rem", padding: "1rem", paddingBottom: ".5rem", backgroundColor: '#fafafa', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
-    const editModeStyle = { margin: "0rem 1rem 1rem 1rem", padding: '1rem', paddingBottom: '1rem', backgroundColor: '#fafafa', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    const standardStyle = { margin: "1rem", backgroundColor: '#fafafa', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    const editModeStyle = { margin: "0rem 1rem 1rem 1rem", paddingBottom: '1rem', backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
     return (
         <Stack direction="column" alignItems="center" style={editMode ? editModeStyle : standardStyle}>
-            <InstagramEmbed url={uri} width="100%"/>
+            <iframe src={`${uri}embed`} width="100%" height="500"  frameBorder="0" scrolling="no" allowtransparency="true" style={{borderRadius: editMode ? "1rem 1rem 0rem 0rem" :'1rem'}}></iframe>
             {editMode && <DeleteIcon onClick={async () => await onDeleteIgPost()} color={deleteRunning ? "action" : "black"} />}
         </Stack>
     )

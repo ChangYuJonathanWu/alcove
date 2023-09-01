@@ -76,7 +76,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         ItemComponent = SpotifyItemDynamic
                         break;
                     case "instagram":
-                        ItemComponent = InstagramItemDynamic
+                        ItemComponent = InstagramPost
                         break;
                     case "restaurant":
                         ItemComponent = RestaurantItem
