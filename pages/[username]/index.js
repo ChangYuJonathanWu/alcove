@@ -108,7 +108,7 @@ export default function ProfileRoute({ profile }) {
         checkOwnerSignedIn()
     }, [user, profile, router.isFallback])
 
-    if (router.isFallback || !ownerCheckComplete) {
+    if (router.isFallback) {
         return <DefaultLoader/>
     }
     if (!profile) {
@@ -120,8 +120,8 @@ export default function ProfileRoute({ profile }) {
     return (
         <>
             <Head>
-                <title>{`${title} (@${handle}) - alcove`}</title>
-                <meta name="description" content={description} />
+                <title>{`${title} (@${handle}) - Alcove`}</title>
+                <meta name="description" content={description ?? `See @${handle}'s profile on Alcove`} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta property="og:title" content={`${title} - @${handle} - Alcove`} />
                 <meta
@@ -134,7 +134,8 @@ export default function ProfileRoute({ profile }) {
                 />
                 <link rel="icon" href="/favicon.svg" />
             </Head>
-            <DynamicProfile user={profile} ownerSignedIn={ownerSignedIn} />
+            {ownerCheckComplete ? <DynamicProfile user={profile} ownerSignedIn={ownerSignedIn} /> : <DefaultLoader/>}
+            
         </>
     )
 }
