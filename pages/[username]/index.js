@@ -94,7 +94,6 @@ export default function ProfileRoute({ profile }) {
         }
         // Check if owner is signed in
         const checkOwnerSignedIn = async () => {
-            console.log("Running owner check")
             if (user) {
                 const { uid } = user
                 if (uid === profile.uid) {

@@ -22,6 +22,7 @@ import ThemingButton from './ThemingButton';
 import ViewAsPublicButton from './ViewAsPublicButton';
 import ThemingModal from './ThemingModal';
 import LogoutButton from './LogoutButton';
+import MenuFAB from './MenuFAB/MenuFAB';
 
 
 export default function Profile({ user, ownerSignedIn = false }) {
@@ -60,14 +61,27 @@ export default function Profile({ user, ownerSignedIn = false }) {
 
     const canRearrangeItems = itemOrder.length > 1
 
+    const clickHandlers = {
+        onLogout: logoutUser,
+        onThemeChange: () => setThemeOpen(true),
+    }
+
     //TODO: Error handling on network request, validation
     return (
         <main>
+
             <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
 
                 {backgroundType == "image" && <Image priority={true} fill={true} src={backgroundUrl} objectFit='cover' id="background-photo" alt="background wallpaper" />}
+
             </div>
-            <Stack style={{ marginBottom: "100px" }}>
+
+            {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers} />}
+
+
+
+            <Stack style={{ marginBottom: "8.5rem" }}>
+
                 <div style={{ zIndex: 1 }}>
                     <EditBioModal open={editBio} setOpen={setEditBio} user={profileUser} triggerReload={triggerReload} />
                     <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} triggerReload={triggerReload} />
@@ -81,11 +95,13 @@ export default function Profile({ user, ownerSignedIn = false }) {
                 {ownerSignedIn &&
                     <Stack style={{ zIndex: 1 }}>
                         <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
-                        { canRearrangeItems && <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} /> }
-                        <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} />
-                        <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" />
-                        <LogoutButton onClick={logoutUser} />
+                        {canRearrangeItems && <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />}
+                        {/* <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} /> */}
+                        {/* <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" /> */}
+                        {/* <LogoutButton onClick={logoutUser} /> */}
+
                     </Stack>}
+
                 <div style={{ zIndex: 1 }}>
                     {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
                 </div>
