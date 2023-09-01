@@ -48,7 +48,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   }
 
   const FabStyling = {
-    bgcolor: "none",
+    bgcolor: "primary",
     padding: 0,
     width: '3.5rem',
     height: '3.5rem',
@@ -83,7 +83,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           FabProps={
             { 
               sx: FabStyling,
-              color: 'none'
+              color: 'primary'
             }
           }
         >
