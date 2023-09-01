@@ -63,8 +63,8 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           ariaLabel="Open menu button"
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={<Avatar style={{ width: '3.2rem', height: '3.2rem' }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>}
-          onClose={handleClose}
-          onOpen={handleOpen}
+          // onClose={handleClose}
+          // onOpen={handleOpen}
           onClick={toggleOpen}
           open={open}
           FabProps={
