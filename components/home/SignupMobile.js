@@ -176,7 +176,7 @@ export default function SignUpMobile({ signupState, setSignupState }) {
     }
 
 
-    const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', color: 'white' }} variant="subtitle2">{validationErrorText}</Typography>
+    const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', textAlign: "center" }} variant="subtitle2">{validationErrorText}</Typography>
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
     const TextFieldDefaultInputProps =
@@ -193,9 +193,11 @@ export default function SignUpMobile({ signupState, setSignupState }) {
         '& .MuiOutlinedInput-root': {
             '&:hover fieldset': {
                 borderColor: theme.primary,
+                borderWidth: '2px',
             },
             '&.Mui-focused fieldset': {
                 borderColor: theme.primary,
+                borderWidth: '2px',
             },
             '&.Mui-disabled fieldset': {
                 borderColor: theme.primary + "50",
@@ -206,7 +208,7 @@ export default function SignUpMobile({ signupState, setSignupState }) {
 
     const CheckmarkAdornment = <InputAdornment position="end" ><CheckCircleIcon style={{ color: theme.primary }} /></InputAdornment>
     return (
-        <Stack direction={"column"} spacing={1.5} style={{ margin: "1.5rem 0.5rem 3rem 0.5rem", width: "100%" }} >
+        <Stack direction={"column"} spacing={1.5} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%" }} >
 
             <TextField
                 InputProps={{
