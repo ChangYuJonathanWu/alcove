@@ -52,7 +52,7 @@ export default function Home() {
   }
 
   const mobileLayout = (
-    <Stack alignItems="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
+    <Stack alignItems="center" style={{ padding: '1rem 2rem 1rem 2rem', zIndex: '100' }} >
       <Navbar mobile={isTabletOrMobile} />
       <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
       <SignUpMobile signupState={signupState} setSignupState={setSignupState} />
@@ -95,8 +95,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main>
+      <main >
+
         <PageTransition>
+          <div style={{position: 'absolute', zIndex: -1, backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,1) 100%) , url(/alcove-background.svg)', top: '-30%', left: '-50%', backgroundSize: '80px', height: '55%', width: "200%", backgroundRepeat: 'repeat', transform: 'rotate(-20deg)'}}></div>
           {/* {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)} */}
           {mobileLayout}
 

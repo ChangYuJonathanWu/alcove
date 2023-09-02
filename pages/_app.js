@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }) {
   // }, [])
   return (
     <ThemeProvider theme={theme}>
-      <div className={inter.className} style={{ backgroundColor: HOME_THEME.bgColor }}>
+      <div className={inter.className} style={{ }}>
         {loading ? <DefaultLoader /> :
           <AnimatePresence initial={true} mode="wait">
             <Component key={router.asPath} {...pageProps} />
