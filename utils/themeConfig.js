@@ -11,7 +11,8 @@ export const HOME_THEME = {
     logoColor: "black",
     textColor: "black",
     buttonColor: '#F97B22',
-    buttonTextColor: 'white'
+    buttonTextColor: 'white',
+    primary: "#F97B22",
 }
 export const PROFILE_ITEMS_WIDTH = '400px'
 export const ITEM_FONT_SIZE = '1rem'

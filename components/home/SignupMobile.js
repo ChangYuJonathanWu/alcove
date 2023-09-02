@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Collapse, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { Fireworks } from '@fireworks-js/react'
 import { HOME_THEME } from '@/utils/themeConfig';
@@ -178,84 +179,79 @@ export default function SignUpMobile({ signupState, setSignupState }) {
     const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', color: 'white' }} variant="subtitle2">{validationErrorText}</Typography>
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
-    if (completed) {
-        return (
-            <>
-                {!hideFireworks && <Fireworks
-                    options={{
-                        rocketsPoint: {
-                            min: 0,
-                            max: 100
-                        },
-                    }}
-                    style={{
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        position: 'fixed',
-                        zIndex: 100
-                    }}
-                    className={`${hideFireworks ? 'firework-hidden' : 'firework-shown'}`}
-                />}
-
-                <span style={{ textAlign: "center", marginBottom: '2rem' }}>
-                    <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
-                    <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
-                </span>
-
-
-            </>
-
-        )
+    const TextFieldDefaultInputProps =
+    {
+        borderRadius: BORDER_RADIUS,
+        borderWidth: '1px',
+        height: '3rem',
+        "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+        }
     }
-    return (
 
-        <Stack direction={"column"} spacing={1.5} style={{ margin: "1.5rem 0rem 3rem 0rem" }}>
-            <Stack>
+    const TextFieldDefaultStyling = {
+        '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+                borderColor: theme.primary,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.primary,
+            },
+            '&.Mui-disabled fieldset': {
+                borderColor: theme.primary + "50",
+                backgroundColor: theme.primary + "20",
+            },
+        }
+    }
+
+    const CheckmarkAdornment = <InputAdornment position="end" ><CheckCircleIcon style={{ color: theme.primary }} /></InputAdornment>
+    return (
+        <Stack direction={"column"} spacing={1.5} style={{ margin: "1.5rem 0.5rem 3rem 0.5rem", width: "100%" }} >
+
+            <TextField
+                InputProps={{
+                    sx: TextFieldDefaultInputProps,
+                    startAdornment: <InputAdornment sx={{ marginRight: '0.12rem', marginTop: showEmailInput ? '0.1rem' : 0 }} position="start">{showEmailInput ? "@" : "alcove.place/"}</InputAdornment>,
+                    endAdornment: showEmailInput ?  CheckmarkAdornment : <div></div>
+                }}
+                value={handle}
+                disabled={showEmailInput}
+                onChange={processHandle}
+                id="handle-input"
+                style={{ width: "100%" }}
+                label="" variant="outlined"
+                placeholder="yourname"
+                onKeyPress={handleEnterHandle}
+                sx={TextFieldDefaultStyling}
+            />
+            <Collapse in={showEmailInput} orientation={"vertical"} style={{ width: "100%" }}>
                 <TextField
                     InputProps={{
-                        sx: {
-                            borderRadius: BORDER_RADIUS,
-                            height: '3rem'
-                        },
-                        startAdornment: <InputAdornment sx={{ marginRight: '0.12rem' }} position="start">alcove.place/</InputAdornment>,
+                        sx: TextFieldDefaultInputProps,
+                        endAdornment: completed ? CheckmarkAdornment : <div></div>
                     }}
-                    value={handle}
-                    disabled={showEmailInput}
-                    onChange={processHandle}
-                    id="handle-input"
-                    style={{ backgroundColor: 'white', borderRadius: BORDER_RADIUS }}
+                    value={email}
+                    onChange={processEmail}
+                    inputProps={{
+                        autoCapitalize: 'none',
+                    }}
+                    style={{ width: "100%" }}
+                    sx={TextFieldDefaultStyling}
+                    id="email-input"
                     label="" variant="outlined"
-                    placeholder="yourname"
-                    onKeyPress={handleEnterHandle}
-                    sx={{
-                        // "& .MuiOutlinedInput-notchedOutline": {
-                        //     border: 'none',
-                        // }
-                    }} />
-                <Collapse in={showEmailInput} orientation={"vertical"}>
-                    <TextField
-                        value={email}
-                        onChange={processEmail}
-                        inputProps={{
-                            autoCapitalize: 'none',
-                        }}
-                        id="email-input"
-                        style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
-                        label="" variant="outlined"
-                        placeholder="Enter your email"
-                        onKeyDown={handleEnterEmail}
-                        sx={{
-                            "& .MuiOutlinedInput-notchedOutline": {
-                                border: 'none',
-                            }
-                        }} />
-                </Collapse>
+                    placeholder="Enter your email"
+                    disabled={validationInProgress || completed}
+                    onKeyDown={handleEnterEmail} />
+            </Collapse>
 
-            </Stack>
             {showValidationError && handleValidationErrorText}
-            <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>
+            {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>}
+            {completed &&
+                <span style={{ textAlign: "center", marginTop: '1.5rem' }}>
+                    <Typography variant="subtitle2" style={{ color: theme.primary }}>{`You've claimed your Alcove handle!`}</Typography>
+                    <Typography variant="subtitle2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+                </span>}
+
         </Stack>
 
     )
