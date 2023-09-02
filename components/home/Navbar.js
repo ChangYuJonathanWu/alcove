@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
-import Logo from '@/components/home/static/alcove-logo.svg'
-import { Stack } from '@mui/material'
+import Logo from '@/components/home/static/alcove-logo-dark.png'
+import { AppBar, Stack, Button, Box } from '@mui/material'
 import { amita } from '../fonts'
 import Link from 'next/link'
 
@@ -20,10 +20,11 @@ export default function Navbar({ mobile }) {
     const logoColor = theme.logoColor
     const textColor = theme.textColor
     return (
-        <Stack alignItems="start" style={{ paddingBottom: mobile ? '1rem' : '3rem' }}>
-            <Stack id="home-logo" direction="row" spacing={0.5} alignItems="center" style={{ padding: "1rem", marginTop: "0.5rem" }}>
-                <Image src={Logo} width={mobile ? 200 : 250} height={mobile ? 50 : 80} alt="Alcove logo" />
-            </Stack>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%" >
+            <Image src={Logo}  height={mobile ? 35 : 50} alt="Alcove logo" />
+            <Button variant="contained" style={{textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem'}}>
+                Log in
+            </Button>
         </Stack>
     )
 }

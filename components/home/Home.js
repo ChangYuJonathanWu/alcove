@@ -20,6 +20,7 @@ import PageTransition from '@/components/PageTransition'
 import React, { useState } from 'react'
 
 import { HOME_THEME } from '@/utils/themeConfig';
+import SignUpMobile from './SignupMobile';
 
 export default function Home() {
   const isTabletOrMobile = useBetterMediaQuery('(max-width: 930px)')
@@ -29,7 +30,6 @@ export default function Home() {
   const minQueriesComplete = isTabletOrMobile || isLarge || isReallyLarge
 
   const theme = HOME_THEME
-  const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
   const backgroundColor = theme.bgColor
   const logoColor = theme.logoColor
   const textColor = theme.textColor
@@ -52,28 +52,29 @@ export default function Home() {
   }
 
   const mobileLayout = (
-    <Stack alignItems="center">
+    <Stack alignItems="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
       <Navbar mobile={isTabletOrMobile} />
       <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
+      <SignUpMobile signupState={signupState} setSignupState={setSignupState} />
       <Hero desktop={false} />
       <div style={{ padding: "0.5rem" }}></div>
-      <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
+
 
       <Typography variant="subtitle2" style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
     </Stack>
   )
 
-  const desktopLayout = (
-    <Stack style={{ marginTop: "0rem" }} direction="row" spacing={4} alignItems="start" justifyContent="start">
-      <Hero desktop={true} />
-      <Stack style={{ marginTop: "2rem" }} spacing={3}>
-        <Navbar mobile={isTabletOrMobile} />
-        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isReallyLarge ? "3rem" : "2.5rem"} />
-        <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
-        <Typography style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
-      </Stack>
-    </Stack>
-  )
+  // const desktopLayout = (
+  //   <Stack style={{ marginTop: "0rem" }} direction="row" spacing={4} alignItems="start" justifyContent="start">
+  //     <Hero desktop={true} />
+  //     <Stack style={{ marginTop: "2rem" }} spacing={3}>
+  //       <Navbar mobile={isTabletOrMobile} />
+  //       <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isReallyLarge ? "3rem" : "2.5rem"} />
+  //       <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
+  //       <Typography style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
+  //     </Stack>
+  //   </Stack>
+  // )
 
 
   return (
@@ -96,9 +97,9 @@ export default function Home() {
 
       <main>
         <PageTransition>
-          <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
-            {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
-          </Stack>
+          {/* {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)} */}
+          {mobileLayout}
+
         </PageTransition>
       </main>
     </>

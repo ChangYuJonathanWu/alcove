@@ -4,16 +4,21 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { Fireworks } from '@fireworks-js/react'
+import { HOME_THEME } from '@/utils/themeConfig';
 
 
-export default function SignUp({ signupState, setSignupState, claimButtonStyle, desktop = false }) {
+export default function SignUpMobile({ signupState, setSignupState }) {
     const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
-    const buttonStyle = desktop ? {} : { width: "100%", marginTop: '1rem', marginBottom: '2rem' }
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
     const TAKEN_HANDLE = "Sorry, this handle is already taken."
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
+
+    const BORDER_RADIUS = '0.5rem'
+
+    const theme = HOME_THEME
+    const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, width: "100%", textTransform: 'none', borderRadius: BORDER_RADIUS, padding: "0.65rem" }
 
     const handleEnterHandle = (event) => {
         if (event.key === 'Enter') {
@@ -163,19 +168,14 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
     }
 
     const calculateStackAlignment = () => {
-        if (!desktop) {
-            return "center"
-        }
         if (showEmailInput) {
             return "end"
         }
         return "start"
     }
 
-    const stackAlignment = showEmailInput && desktop ? "end" : "start"
 
     const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', color: 'white' }} variant="subtitle2">{validationErrorText}</Typography>
-    const collapseStyle = desktop ? {} : { width: "100%" }
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
     if (completed) {
@@ -199,7 +199,7 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
                     className={`${hideFireworks ? 'firework-hidden' : 'firework-shown'}`}
                 />}
 
-                <span style={{ textAlign: desktop ? "start" : "center", marginBottom: '2rem' }}>
+                <span style={{ textAlign: "center", marginBottom: '2rem' }}>
                     <Typography color="white" variant="body1">{`You've claimed your Alcove handle!`}</Typography>
                     <Typography color="white" variant="body1"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
                 </span>
@@ -210,54 +210,53 @@ export default function SignUp({ signupState, setSignupState, claimButtonStyle, 
         )
     }
     return (
-        <Stack style={{marginTop: '1.5rem'}}>
-            <Stack direction={desktop ? "row" : "column"} spacing={1} alignItems={calculateStackAlignment()}>
-                <Stack>
-                    <TextField
-                        InputProps={{
-                            sx: {
-                                borderRadius: '0.8rem',
-                                height: '3rem'
-                            },
-                            startAdornment: <InputAdornment sx={{marginRight: '0.12rem' }} position="start">alcove.place/</InputAdornment>,
-                        }}
-                        value={handle}
-                        disabled={showEmailInput}
-                        onChange={processHandle}
-                        id="handle-input"
-                        style={{ backgroundColor: 'white', borderRadius: '0.8rem' }}
-                        label="" variant="outlined"
-                        placeholder="yourname"
-                        onKeyPress={handleEnterHandle}
-                        sx={{
-                            // "& .MuiOutlinedInput-notchedOutline": {
-                            //     border: 'none',
-                            // }
-                        }} />
-                    <Collapse in={showEmailInput} orientation={"vertical"} style={collapseStyle}>
-                        <TextField
-                            value={email}
-                            onChange={processEmail}
-                            inputProps={{
-                                autoCapitalize: 'none',
-                            }}
-                            id="email-input"
-                            style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
-                            label="" variant="outlined"
-                            placeholder="Enter your email"
-                            onKeyDown={handleEnterEmail}
-                            sx={{
-                                "& .MuiOutlinedInput-notchedOutline": {
-                                    border: 'none',
-                                }
-                            }} />
-                    </Collapse>
 
-                </Stack>
-                {!desktop && showValidationError && handleValidationErrorText}
-                <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} style={buttonStyle} variant="contained">{ctaButtonText}</Button>
+        <Stack direction={"column"} spacing={1.5} style={{ margin: "1.5rem 0rem 3rem 0rem" }}>
+            <Stack>
+                <TextField
+                    InputProps={{
+                        sx: {
+                            borderRadius: BORDER_RADIUS,
+                            height: '3rem'
+                        },
+                        startAdornment: <InputAdornment sx={{ marginRight: '0.12rem' }} position="start">alcove.place/</InputAdornment>,
+                    }}
+                    value={handle}
+                    disabled={showEmailInput}
+                    onChange={processHandle}
+                    id="handle-input"
+                    style={{ backgroundColor: 'white', borderRadius: BORDER_RADIUS }}
+                    label="" variant="outlined"
+                    placeholder="yourname"
+                    onKeyPress={handleEnterHandle}
+                    sx={{
+                        // "& .MuiOutlinedInput-notchedOutline": {
+                        //     border: 'none',
+                        // }
+                    }} />
+                <Collapse in={showEmailInput} orientation={"vertical"}>
+                    <TextField
+                        value={email}
+                        onChange={processEmail}
+                        inputProps={{
+                            autoCapitalize: 'none',
+                        }}
+                        id="email-input"
+                        style={{ backgroundColor: 'white', borderRadius: '15px', marginTop: "1rem", width: "100%" }}
+                        label="" variant="outlined"
+                        placeholder="Enter your email"
+                        onKeyDown={handleEnterEmail}
+                        sx={{
+                            "& .MuiOutlinedInput-notchedOutline": {
+                                border: 'none',
+                            }
+                        }} />
+                </Collapse>
+
             </Stack>
-            {desktop && showValidationError && handleValidationErrorText}
+            {showValidationError && handleValidationErrorText}
+            <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>
         </Stack>
+
     )
 }
