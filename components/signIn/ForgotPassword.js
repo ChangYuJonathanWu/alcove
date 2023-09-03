@@ -15,7 +15,7 @@ import React, { useState, useEffect } from 'react'
 import { getAuth, signOut, sendPasswordResetEmail } from "firebase/auth";
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
-import { AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
+import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
 import { HOME_THEME } from '@/utils/themeConfig';
 
 export default function ForgotPasswordNew() {
@@ -49,7 +49,7 @@ export default function ForgotPasswordNew() {
 
             <PageTransition>
                 <main className="background-home">
-                    <Stack alignItems="center" spacing={8} style={{ padding: '1rem 3rem 1rem 3rem' }}>
+                    <AlcoveStack alignItems="center">
                         <Navbar hideLogin />
                         <Stack>
                             <Typography variant="h1" style={{ textAlign: 'center', fontWeight: '500' }}>Password Reset</Typography>
@@ -99,7 +99,7 @@ export default function ForgotPasswordNew() {
                             }
                         </Stack>
 
-                    </Stack>
+                    </AlcoveStack>
 
                 </main>
             </PageTransition>
