@@ -15,11 +15,11 @@
   content: "";
   position: absolute;
   z-index: -1;
-  background-image: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,1) 40%) , url(/alcove-background.svg);
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,1) 35%) , url(/alcove-background.svg);
   top: 50%;
   left: 50%;
   background-size: 85px;
-  height: 200%;
+  height: 141%;
   width: 200%;
   background-repeat: repeat;
   transform: translate(-50%, -50%) rotate(-20deg);

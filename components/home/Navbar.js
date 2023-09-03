@@ -30,8 +30,8 @@ export default function Navbar({ hideLogin = false }) {
 
     return (
         <Stack direction="row" alignItems="center" justifyContent={hideLogin ? "center" : "space-between"} width="100%" >
-            <Link href="/">
-            <Image src={Logo} height={35} alt="Alcove logo" />
+            <Link href="/" >
+                <Image src={Logo} height={35} alt="Alcove logo" onClick={() => router.push('/login')} />
             </Link>
 
             {!hideLogin && <Button onClick={onLogin} variant="contained" style={{ textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem' }}>
