@@ -1,12 +1,35 @@
 .firework-hidden {
-    opacity: 0;
-    transition: all 1000ms linear 3s; 
-  }
-  
+  opacity: 0;
+  transition: all 1000ms linear 3s;
+}
+
 .firework-shown {
-    opacity: 1;
+  opacity: 1;
 }
 
 .Paper {
   z-index: 10;
+}
+
+.background-home::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,1) 32%) , url(/alcove-background.svg);
+  top: 50%;
+  left: 50%;
+  background-size: 85px;
+  height: 141%;
+  width: 200%;
+  background-repeat: repeat;
+  transform: translate(-50%, -50%) rotate(-20deg);
+}
+
+.background-home {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index:0;
+  display: inline-block;
+  overflow:hidden; /* hide the overflow here not on the pseudo element */
 }

@@ -95,10 +95,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main >
+      <main className='background-home'>
 
         <PageTransition>
-          <div style={{position: 'absolute', zIndex: -1, backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,1) 100%) , url(/alcove-background.svg)', top: '-30%', left: '-50%', backgroundSize: '80px', height: '55%', width: "200%", backgroundRepeat: 'repeat', transform: 'rotate(-20deg)'}}></div>
+          {/* <div style={{position: 'absolute', zIndex: -1, backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,1) 100%) , url(/alcove-background.svg)', top: '-30%', left: '-50%', backgroundSize: '80px', height: '55%', width: "200%", backgroundRepeat: 'repeat', transform: 'rotate(-20deg)'}}></div> */}
           {/* {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)} */}
           {mobileLayout}
 
