@@ -92,7 +92,7 @@ export default function SignIn() {
                                 <Typography variant="h1" style={{ textAlign: showOnboardMessage ? "center" : 'left', fontWeight: '500' }}>{`${showOnboardMessage ? "Welcome!" : "Hey there!"} 👋`}</Typography>
                                 <Typography variant="subtitle2" style={{ textAlign: 'left' }}>{`${showOnboardMessage ? "Sign in with the password you just created" : `Sign in to your Alcove`}`}</Typography>
                             </Stack>
-                            <Stack style={{ width: "100%" }} alignItems="center">
+                            <Stack style={{ width: "100%" }} spacing={1.5} alignItems="center">
                                 <Formik
                                     enableReinitialize={true}
                                     initialValues={{
@@ -135,7 +135,7 @@ export default function SignIn() {
                                     </Form>
                                 </Formik>
                                 <Link href="/" style={{}}>
-                                    <Typography variant="body2" style={{ color: 'black', marginTop: '1rem' }}>Sign Up</Typography>
+                                    <Typography variant="body2" style={{ color: 'black' }}>Sign Up</Typography>
                                 </Link>
                             </Stack>
 
