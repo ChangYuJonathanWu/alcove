@@ -122,7 +122,7 @@ export default function SignIn() {
                                                     const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                                                     const fullUserProfile = await result.json()
                                                     const { handle } = fullUserProfile
-                                                    router.replace(`/${handle}`)
+                                                    router.push(`/${handle}`)
 
                                                     return
                                                 }

@@ -49,14 +49,14 @@ export default function SignInNew() {
 
     useEffect(() => {
         const loadUser = async () => {
-            if (authLoading) return
+            if (authLoading || !router.isReady) return
             if (user) {
                 setPageLoading(true)
                 const { uid } = user
                 const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
-                router.replace(`/${handle}`)
+                router.replace(`/${handle}` )
                 return
             }
             setPageLoading(false)
@@ -105,16 +105,16 @@ export default function SignInNew() {
                                         const { email, password } = values;
                                         try {
                                             const credential = await signInWithEmailAndPassword(auth, email, password)
-                                            if (credential) {
-                                                setLoginError(null)
-                                                const { uid } = credential.user
-                                                const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
-                                                const fullUserProfile = await result.json()
-                                                const { handle } = fullUserProfile
-                                                router.replace(`/${handle}`)
+                                            // if (credential) {
+                                            //     setLoginError(null)
+                                            //     const { uid } = credential.user
+                                            //     const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
+                                            //     const fullUserProfile = await result.json()
+                                            //     const { handle } = fullUserProfile
+                                            //     router.push(`/${handle}`, { shallow: true } )
 
-                                                return
-                                            }
+                                            //     return
+                                            // }
 
                                         } catch (error) {
                                             const errorCode = error.code;
