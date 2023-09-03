@@ -19,7 +19,19 @@ export default function SignUpMobile({ signupState, setSignupState }) {
     const BORDER_RADIUS = '0.5rem'
 
     const theme = HOME_THEME
-    const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, width: "100%", textTransform: 'none', borderRadius: BORDER_RADIUS, padding: "0.65rem" }
+    const claimButtonStyle = {
+        backgroundColor: theme.buttonColor,
+        color: theme.buttonTextColor,
+        width: "100%",
+        textTransform: 'none',
+        borderRadius: BORDER_RADIUS,
+        padding: "0.65rem",
+        '&:hover': {
+            // Darken the hover color
+            backgroundColor: theme.buttonFocusColor,
+        }
+
+    }
 
     const handleEnterHandle = (event) => {
         if (event.key === 'Enter') {
@@ -214,7 +226,7 @@ export default function SignUpMobile({ signupState, setSignupState }) {
                 InputProps={{
                     sx: TextFieldDefaultInputProps,
                     startAdornment: <InputAdornment sx={{ marginRight: '0.12rem', marginTop: showEmailInput ? '0.1rem' : 0 }} position="start">{showEmailInput ? "@" : "alcove.place/"}</InputAdornment>,
-                    endAdornment: showEmailInput ?  CheckmarkAdornment : <div></div>
+                    endAdornment: showEmailInput ? CheckmarkAdornment : <div></div>
                 }}
                 value={handle}
                 disabled={showEmailInput}

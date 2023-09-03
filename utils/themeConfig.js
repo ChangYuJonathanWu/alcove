@@ -11,6 +11,7 @@ export const HOME_THEME = {
     logoColor: "black",
     textColor: "black",
     buttonColor: '#F97B22',
+    buttonFocusColor: '#d67b3a',
     buttonTextColor: 'white',
     primary: "#F97B22",
 }
