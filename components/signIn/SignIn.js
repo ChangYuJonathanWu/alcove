@@ -144,7 +144,7 @@ export default function SignIn() {
                                 {loginError ?? ""}
                             </Typography>
                             <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
-                                <Typography variant="subtitle2" style={{ color: 'black', marginTop: '1rem', width: "100%", textAlign: "center" }}>
+                                <Typography variant="subtitle2" style={{ color: 'black', width: "100%", textAlign: "center" }}>
                                     Forgot Password?
                                 </Typography>
                             </Link>

@@ -55,7 +55,7 @@ export default function ForgotPasswordNew() {
                             <Typography variant="h1" style={{ textAlign: 'center', fontWeight: '500' }}>Password Reset</Typography>
                             <Typography variant="subtitle2" style={{ textAlign: 'center' }}>{`We'll send you a reset link 🔑`}</Typography>
                         </Stack>
-                        <Stack alignItems={"center"} style={{ width: "100%" }}>
+                        <Stack alignItems={"center"} spacing={1.5} style={{ width: "100%" }}>
                             {complete && <Stack alignItems="center">
                                 <Typography variant="h3" style={{ marginTop: '1rem', textAlign: "center" }}>Check your email for a password reset link.</Typography>
                             </Stack>
@@ -90,11 +90,11 @@ export default function ForgotPasswordNew() {
                             </Formik>}
                             {complete ?
                                 <Link href="/login" style={{ textDecoration: 'none' }}>
-                                    <Typography variant="body2" style={{ color: 'black', marginTop: '1rem' }}>⏎ Back to Sign In </Typography>
+                                    <Typography variant="body2" style={{ color: 'black' }}>⏎ Back to Sign In </Typography>
                                 </Link> :
 
                                 <Link href="/" >
-                                    <Typography variant="body2" style={{ color: 'black', marginTop: '1rem' }}>Sign Up</Typography>
+                                    <Typography variant="body2" style={{ color: 'black' }}>Sign Up</Typography>
                                 </Link>
                             }
                         </Stack>
