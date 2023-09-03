@@ -13,7 +13,7 @@ import { styled } from '@mui/material';
 import { getSignup } from '@/lib/api/signup';
 import * as Sentry from '@sentry/nextjs'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { AlcoveTextField, AlcoveSubmitButton } from '@/components/custom/AlcoveComponents';
+import { AlcoveTextField, AlcoveSubmitButton, AlcoveStack } from '@/components/custom/AlcoveComponents';
 import { HOME_THEME } from '@/utils/themeConfig';
 import PasswordRequirements from '@/components/signIn/PasswordRequirements';
 import {
@@ -24,11 +24,11 @@ import {
 const auth = getAuth()
 
 import React, { useState, useEffect } from 'react'
-import { 
-    getAuth, 
-    signInWithEmailAndPassword, 
-    signOut, 
-    createUserWithEmailAndPassword 
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    createUserWithEmailAndPassword
 } from "firebase/auth";
 import DefaultLoader from '@/components/DefaultLoader';
 
@@ -109,7 +109,7 @@ export default function Welcome({ signup }) {
             <main className="background-home">
                 {pageLoading && <DefaultLoader />}
                 {!pageLoading &&
-                    <Stack alignItems="center" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem' }}>
+                    <AlcoveStack>
                         <Navbar hideLogin />
                         <Stack alignItems={"center"}>
                             <Typography variant="h3" style={{ fontWeight: 600, marginBottom: '0.5em' }}>{`Hey @${handle} - you're in! 👋`}</Typography>
@@ -162,7 +162,7 @@ export default function Welcome({ signup }) {
                                         <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
                                         <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
                                         <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Get Started"}</AlcoveSubmitButton>
-                                        <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm}/>
+                                        <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm} />
                                     </Stack>
 
                                 </Form>
@@ -171,8 +171,7 @@ export default function Welcome({ signup }) {
                         <Typography>
                             {loginError ?? ""}
                         </Typography>
-                    </Stack>
-
+                    </AlcoveStack>
                 }
             </main>
         </>

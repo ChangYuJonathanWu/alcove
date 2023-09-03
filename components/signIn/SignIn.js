@@ -19,7 +19,7 @@ import PageTransition from '@/components/PageTransition'
 import { protectedApiCall } from '@/utils/api';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
+import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
 const auth = getAuth()
 
 
@@ -85,7 +85,7 @@ export default function SignIn() {
                 <main className="background-home">
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
-                        <Stack alignItems="center" justifyContent="space-between" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem' }}>
+                        <AlcoveStack>
                             <Navbar hideLogin />
                             {/* {showOnboardMessage && <Typography variant="h4" style={{ fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>} */}
                             <Stack>
@@ -148,7 +148,7 @@ export default function SignIn() {
                                     Forgot Password?
                                 </Typography>
                             </Link>
-                        </Stack>
+                        </AlcoveStack>
                     }
                 </main>
             </PageTransition>

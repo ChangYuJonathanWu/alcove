@@ -20,7 +20,7 @@ import {
     validPassword
 } from '@/utils/authConfigs';
 import { HOME_THEME } from '@/utils/themeConfig'
-import { AlcoveSubmitButton, AlcoveTextField } from '@/components/custom/AlcoveComponents'
+import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '@/components/custom/AlcoveComponents'
 
 const theme = HOME_THEME
 
@@ -60,7 +60,7 @@ export default function ResetPassword() {
             {pageLoading && <DefaultLoader />}
             <PageTransition>
                 <main className="background-home">
-                    <Stack alignItems="center" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem' }}>
+                    <AlcoveStack>
                         <Navbar hideLogin />
                         {!hasOobCode && <Typography variant="subtitle1" style={{ fontWeight: 400, textAlign: "center" }}>{`Please check your email for a link to reset your password.`}</Typography>}
                         {hasOobCode && <Stack alignItems="center" spacing={7}>
@@ -96,7 +96,7 @@ export default function ResetPassword() {
                                 }}
                             >
                                 {({ values, errors, touched }) => (
-                                    <Form style={{width: '100%'}}>
+                                    <Form style={{ width: '100%' }}>
                                         <Stack style={{}} alignItems="center" spacing={1}>
                                             <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
                                             <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
@@ -110,7 +110,7 @@ export default function ResetPassword() {
                                 {loginError ?? ""}
                             </Typography>
                         </Stack>}
-                    </Stack>
+                    </AlcoveStack>
                 </main>
             </PageTransition>
         </>
