@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ForgotPasswordNew from '@/components/signIn/ForgotPasswordNew'
+import ForgotPassword from '@/components/signIn/ForgotPassword'
 
 export default function Main() {
-  return <ForgotPasswordNew/>
+  return <ForgotPassword/>
 }

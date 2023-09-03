@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PageTransition from '@/components/PageTransition'
-import SignInNew from '@/components/signIn/SignInNew'
+import SignIn from '@/components/signIn/SignIn'
 
 export default function Main() {
-  return <SignInNew />
+  return <SignIn />
 }
