@@ -99,7 +99,7 @@ export default function SignInNew() {
                 <main className="background-home">
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
-                        <Stack alignItems="center" justifyContent="space-between" spacing={5} style={{ padding: '1rem 3rem 1rem 3rem' }}>
+                        <Stack alignItems="center" justifyContent="space-between" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem' }}>
                             <Navbar hideLogin />
                             {showOnboardMessage && <Typography variant="h4" style={{ fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
                             <Stack>
