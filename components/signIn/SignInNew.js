@@ -19,7 +19,7 @@ import PageTransition from '@/components/PageTransition'
 import { protectedApiCall } from '@/utils/api';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { TextFieldDefaultInputProps, TextFieldDefaultStyling } from '@/utils/themeConfig';
+import { AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
 const auth = getAuth()
 
 
@@ -46,20 +46,6 @@ export default function SignInNew() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
 
-    const CustomTextField = (props) => (
-        <TextField variant="outlined"
-            InputProps={{
-                sx: TextFieldDefaultInputProps
-            }}
-            sx={TextFieldDefaultStyling}
-            style={{
-                backgroundColor: 'white',
-                width: "100%"
-            }}
-            {...props} />
-
-
-    );
 
     useEffect(() => {
         const loadUser = async () => {
@@ -106,7 +92,7 @@ export default function SignInNew() {
                                 <Typography variant="h1" style={{ textAlign: showOnboardMessage ? "center" : 'left', fontWeight: '500' }}>{`${showOnboardMessage ? "Welcome!" : "Hey there!"} 👋`}</Typography>
                                 <Typography variant="subtitle2" style={{ textAlign: 'left' }}>{`${showOnboardMessage ? "Sign in with the password you just created" : `Sign in to your Alcove`}`}</Typography>
                             </Stack>
-                            <Stack style={{width: "100%"}} alignItems="center">
+                            <Stack style={{ width: "100%" }} alignItems="center">
                                 <Formik
                                     enableReinitialize={true}
                                     initialValues={{
@@ -141,14 +127,14 @@ export default function SignInNew() {
                                 >
                                     <Form style={{ width: "100%" }}>
                                         <Stack alignItems="center" spacing={1} style={{ width: "100%" }}>
-                                            <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
-                                            <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                            <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Logging in..." : "Login"}</Button>
+                                            <Field as={AlcoveTextField} id="email" name="email" type="email" placeholder="Email" />
+                                            <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
+                                            <AlcoveSubmitButton disabled={loading}>{loading ? "Logging in..." : "Login"}</AlcoveSubmitButton>
                                         </Stack>
 
                                     </Form>
                                 </Formik>
-                                <Link href="/" style={{ }}>
+                                <Link href="/" style={{}}>
                                     <Typography variant="body2" style={{ color: 'black', marginTop: '1rem' }}>Sign Up</Typography>
                                 </Link>
                             </Stack>

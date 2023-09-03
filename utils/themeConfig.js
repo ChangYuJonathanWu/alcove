@@ -33,6 +33,8 @@ export const TextFieldDefaultInputProps =
 
 export const TextFieldDefaultStyling = {
     borderRadius: BORDER_RADIUS,
+    backgroundColor: 'white',
+    width: "100%",
     '& .MuiOutlinedInput-root': {
         '&:hover fieldset': {
             borderColor: HOME_THEME.primary,
