@@ -101,10 +101,10 @@ export default function SignInNew() {
                     {!pageLoading &&
                         <Stack alignItems="center" justifyContent="space-between" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem' }}>
                             <Navbar hideLogin />
-                            {showOnboardMessage && <Typography variant="h4" style={{ fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
+                            {/* {showOnboardMessage && <Typography variant="h4" style={{ fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>} */}
                             <Stack>
-                                <Typography variant="h1" style={{ textAlign: 'left', fontWeight: '500' }}>Hey there! 👋</Typography>
-                                <Typography variant="subtitle2" style={{ textAlign: 'left' }}>Sign in to your Alcove</Typography>
+                                <Typography variant="h1" style={{ textAlign: showOnboardMessage ? "center" : 'left', fontWeight: '500' }}>{`${showOnboardMessage ? "Welcome" : "Hey there!"} 👋`}</Typography>
+                                <Typography variant="subtitle2" style={{ textAlign: 'left' }}>{`${showOnboardMessage ? "Sign in with the password you just created" : `Sign in to your Alcove`}`}</Typography>
                             </Stack>
                             <Stack style={{width: "100%"}} alignItems="center">
                                 <Formik
