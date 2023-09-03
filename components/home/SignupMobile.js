@@ -5,7 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { Fireworks } from '@fireworks-js/react'
-import { HOME_THEME } from '@/utils/themeConfig';
+import { HOME_THEME, TextFieldDefaultInputProps, TextFieldDefaultStyling } from '@/utils/themeConfig';
 
 
 export default function SignUpMobile({ signupState, setSignupState }) {
@@ -190,33 +190,6 @@ export default function SignUpMobile({ signupState, setSignupState }) {
 
     const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', textAlign: "center" }} variant="subtitle2">{validationErrorText}</Typography>
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
-
-    const TextFieldDefaultInputProps =
-    {
-        borderRadius: BORDER_RADIUS,
-        borderWidth: '1px',
-        height: '3rem',
-        "& .MuiInputBase-input.Mui-disabled": {
-            WebkitTextFillColor: "#000000",
-        }
-    }
-
-    const TextFieldDefaultStyling = {
-        '& .MuiOutlinedInput-root': {
-            '&:hover fieldset': {
-                borderColor: theme.primary,
-                borderWidth: '2px',
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: theme.primary,
-                borderWidth: '2px',
-            },
-            '&.Mui-disabled fieldset': {
-                borderColor: theme.primary + "50",
-                backgroundColor: theme.primary + "20",
-            },
-        }
-    }
 
     const CheckmarkAdornment = <InputAdornment position="end" ><CheckCircleIcon style={{ color: theme.primary }} /></InputAdornment>
     return (

@@ -18,3 +18,33 @@ export const HOME_THEME = {
 export const PROFILE_ITEMS_WIDTH = '400px'
 export const ITEM_FONT_SIZE = '1rem'
 export const CENTER_PROFILE_ITEMS = true
+
+const BORDER_RADIUS = '0.5rem'
+
+export const TextFieldDefaultInputProps =
+{
+    borderRadius: BORDER_RADIUS,
+    borderWidth: '1px',
+    height: '3rem',
+    "& .MuiInputBase-input.Mui-disabled": {
+        WebkitTextFillColor: "#000000",
+    }
+}
+
+export const TextFieldDefaultStyling = {
+    borderRadius: BORDER_RADIUS,
+    '& .MuiOutlinedInput-root': {
+        '&:hover fieldset': {
+            borderColor: HOME_THEME.primary,
+            borderWidth: '2px',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: HOME_THEME.primary,
+            borderWidth: '2px',
+        },
+        '&.Mui-disabled fieldset': {
+            borderColor: HOME_THEME.primary + "50",
+            backgroundColor: HOME_THEME.primary + "20",
+        },
+    }
+}

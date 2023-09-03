@@ -18,7 +18,7 @@ const theme = {
 
 
 
-export default function Navbar({ mobile }) {
+export default function Navbar({ hideLogin = false }) {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
@@ -26,14 +26,17 @@ export default function Navbar({ mobile }) {
 
     const onLogin = () => {
         router.replace('/login')
-      }
-    
+    }
+
     return (
-        <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%" >
-            <Image src={Logo}  height={mobile ? 35 : 50} alt="Alcove logo" />
-            <Button onClick={onLogin} variant="contained" style={{textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem'}}>
+        <Stack direction="row" alignItems="center" justifyContent={hideLogin ? "center" : "space-between"} width="100%" >
+            <Link href="/">
+            <Image src={Logo} height={35} alt="Alcove logo" />
+            </Link>
+
+            {!hideLogin && <Button onClick={onLogin} variant="contained" style={{ textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem' }}>
                 Log in
-            </Button>
+            </Button>}
         </Stack>
     )
 }
