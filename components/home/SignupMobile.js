@@ -220,7 +220,7 @@ export default function SignUpMobile({ signupState, setSignupState }) {
 
     const CheckmarkAdornment = <InputAdornment position="end" ><CheckCircleIcon style={{ color: theme.primary }} /></InputAdornment>
     return (
-        <Stack direction={"column"} spacing={1.5} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%" }} >
+        <Stack direction={"column"} spacing={1} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%" }} >
 
             <TextField
                 InputProps={{
@@ -262,7 +262,7 @@ export default function SignUpMobile({ signupState, setSignupState }) {
             {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>}
             {completed &&
                 <span style={{ textAlign: "center", marginTop: '1.5rem' }}>
-                    <Typography variant="subtitle2" style={{ color: theme.primary }}>{`You've claimed your Alcove handle!`}</Typography>
+                    <Typography variant="subtitle2" style={{ color: theme.primary, letterSpacing: 0.3 }}>{`Congrats, you've claimed your Alcove!`}</Typography>
                     <Typography variant="subtitle2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
                 </span>}
 
