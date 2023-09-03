@@ -13,7 +13,7 @@
 
 .background-home::before {
   content: "";
-  position: absolute;
+  position: fixed;
   z-index: -1;
   background-image: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,1) 32%) , url(/alcove-background.svg);
   top: 50%;
