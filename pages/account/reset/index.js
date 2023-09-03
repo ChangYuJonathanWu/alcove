@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import { Stack, TextField, Typography, Button } from '@mui/material'
+import { Stack, TextField, Typography, Button, Link } from '@mui/material'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
@@ -10,44 +10,21 @@ import { redirect } from 'next/navigation';
 import { styled } from '@mui/material';
 import * as Sentry from '@sentry/nextjs'
 
-
 import React, { useState, useEffect } from 'react'
 import { getAuth, confirmPasswordReset } from "firebase/auth";
 import DefaultLoader from '@/components/DefaultLoader';
 import PageTransition from '@/components/PageTransition'
+import PasswordRequirements from '@/components/signIn/PasswordRequirements'
+import {
+    SignupSchema,
+    validPassword
+} from '@/utils/authConfigs';
+import { HOME_THEME } from '@/utils/themeConfig'
+import { AlcoveSubmitButton, AlcoveTextField } from '@/components/custom/AlcoveComponents'
 
-import * as Yup from 'yup';
-import YupPassword from 'yup-password';
-import Link from 'next/link'
-YupPassword(Yup);
-
-
-const theme = {
-    bgColor: '#7C9070',
-    logoColor: "white",
-    textColor: "white",
-    buttonColor: '#F97B22',
-    buttonTextColor: 'white'
-}
-
-
-const SignupSchema = Yup.object().shape({
-    password: Yup.string()
-        .min(6, 'Password must be atleast 6 characters')
-        .max(60, 'Password must be less than 60 characters')
-        .minLowercase(1, 'Password must contain at least 1 lower case letter')
-        .minUppercase(1, 'Password must contain at least 1 upper case letter')
-        .minNumbers(1, 'Password must contain at least 1 number')
-        .required('Required'),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], "Passwords must match")
-        .required('Required')
-});
+const theme = HOME_THEME
 
 export default function ResetPassword() {
-    const backgroundColor = theme.bgColor
-    const logoColor = theme.logoColor
-    const textColor = theme.textColor
     const router = useRouter();
     const auth = getAuth()
 
@@ -60,41 +37,13 @@ export default function ResetPassword() {
         router.isReady && setPageLoading(false)
     }, [router])
 
-    const CustomTextField = (props) => (
-
-        <TextField variant="outlined" size="small" sx={{
-            "& .MuiOutlinedInput-notchedOutline": {
-                border: 'none',
-            }
-        }} style={{ backgroundColor: 'white', borderRadius: '15px', minWidth: '270px', }} type="text" {...props} />
-
-    );
-
-    const validatePasswordLength = (password) => {
-        return password.length >= 8
-    }
-
-    const validatePasswordUpperCase = (password) => {
-        return /[A-Z]/.test(password)
-    }
-    const validatePasswordLowerCase = (password) => {
-        return /[a-z]/.test(password)
-    }
-
-    const validatePasswordContainsNumber = (password) => {
-        return /\d/.test(password)
-    }
-
-    const validPassword = (password) => {
-        return validatePasswordLength(password) && validatePasswordUpperCase(password) && validatePasswordLowerCase(password) && validatePasswordContainsNumber(password)
-    }
     const oobCode = router.query.oobCode
     const hasOobCode = !!oobCode
 
     return (
         <>
             <Head>
-                <title>Alcove: Welcome</title>
+                <title>Alcove: Password Reset</title>
                 <meta name="description" content="Your link-in-bio to share everything you love." />
                 <meta property="og:title" content="Alcove: Share what you love" />
                 <meta
@@ -110,76 +59,57 @@ export default function ResetPassword() {
             </Head>
             {pageLoading && <DefaultLoader />}
             <PageTransition>
-                <main style={{ minHeight: '100vh', width: "100%" }}>
-                    <Stack alignItems="center" spacing={1}>
-                        <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', maxWidth: "350px", borderWidth: '0px', borderColor: 'white', minWidth: '200px', minHeight: '300px', padding: '2em 1em 1em 1em', marginTop: '3em' }}>
-                            {!hasOobCode && <Stack alignItems="center">
-                                <Link href={"/"}>
-                                    <Navbar mobile={true} />
-                                </Link>
-                                <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{`Please check your email for a link to reset your password.`}</Typography>
-                            </Stack>}
-                            {hasOobCode && <Stack alignItems="center">
-                                <Link href={"/"}>
-                                    <Navbar mobile={true} />
-                                </Link>
-                                <Stack alignItems={"center"} style={{ paddingBottom: '1rem' }}>
-                                    <Typography variant="subtitle1" style={{ color: 'white', fontWeight: 400, textAlign: "center" }}>{createComplete ? "You've successfully reset your password." : "Create a new password"}</Typography>
-                                    {createComplete && <Button variant="contained" onClick={() => router.push('/login')} style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>Login</Button>}
-                                </Stack>
+                <main className="background-home">
+                    <Stack alignItems="center" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem' }}>
+                        <Navbar hideLogin />
+                        {!hasOobCode && <Typography variant="subtitle1" style={{ fontWeight: 400, textAlign: "center" }}>{`Please check your email for a link to reset your password.`}</Typography>}
+                        {hasOobCode && <Stack alignItems="center" spacing={7}>
+                            <Stack alignItems={"center"} style={{ paddingBottom: '1rem' }}>
+                                <Typography variant="h1" style={{ fontWeight: 400, textAlign: "center" }}>{createComplete ? "You've successfully reset your password." : "Create a new password 🔑"}</Typography>
+                                {createComplete && <AlcoveSubmitButton variant="contained" onClick={() => router.push('/login')} style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>Login</AlcoveSubmitButton>}
+                            </Stack>
 
-                                {!createComplete && <Formik
-                                    initialValues={{
-                                        password: '',
-                                        passwordConfirm: ''
-                                    }}
-                                    onSubmit={async (values) => {
-                                        const { password, passwordConfirm } = values;
-                                        if (password !== passwordConfirm || !validPassword(password)) {
-                                            return
-                                        }
-                                        setLoading(true)
+                            {!createComplete && <Formik
+                                initialValues={{
+                                    password: '',
+                                    passwordConfirm: ''
+                                }}
+                                onSubmit={async (values) => {
+                                    const { password, passwordConfirm } = values;
+                                    if (password !== passwordConfirm || !validPassword(password)) {
+                                        return
+                                    }
+                                    setLoading(true)
 
-                                        try {
-                                            const result = await confirmPasswordReset(auth, oobCode, password)
-                                            setCreateComplete(true)
-                                        } catch (error) {
-                                            const errorCode = error.code;
-                                            const errorMessage = error.message;
-                                            console.error(errorCode, errorMessage)
-                                            Sentry.captureException(error)
-                                            setLoginError("There was a problem creating your password. Please request a new reset link.")
-                                        };
-                                        setLoading(false)
+                                    try {
+                                        const result = await confirmPasswordReset(auth, oobCode, password)
+                                        setCreateComplete(true)
+                                    } catch (error) {
+                                        const errorCode = error.code;
+                                        const errorMessage = error.message;
+                                        console.error(errorCode, errorMessage)
+                                        Sentry.captureException(error)
+                                        setLoginError("There was a problem creating your password. Please request a new reset link.")
+                                    };
+                                    setLoading(false)
 
-                                    }}
-                                >
-                                    {({ values, errors, touched }) => (
-                                        <Form>
-                                            <Stack style={{}} alignItems="center" spacing={1}>
-                                                <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                                <Field as={CustomTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                                <div>
-                                                    {!validatePasswordLength(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Minimum 8 characters</Typography>}
-                                                    {!validatePasswordContainsNumber(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 number</Typography>}
-                                                    {!validatePasswordUpperCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
-                                                    {!validatePasswordLowerCase(values.password) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
-                                                    {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="body2" style={{ color: 'white', margin: 0 }}> • Passwords must match</Typography>}
-                                                </div>
-
-                                                <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '2em' }}>{loading ? "Please wait..." : "Create"}</Button>
-                                            </Stack>
-
-                                        </Form>
-                                    )}
-
-
-                                </Formik>}
-                                <Typography style={{ color: 'white', width: '100%', textAlign: "center", paddingTop: '1rem' }}>
-                                    {loginError ?? ""}
-                                </Typography>
-                            </Stack>}
-                        </div>
+                                }}
+                            >
+                                {({ values, errors, touched }) => (
+                                    <Form style={{width: '100%'}}>
+                                        <Stack style={{}} alignItems="center" spacing={1}>
+                                            <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
+                                            <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
+                                            <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Create"}</AlcoveSubmitButton>
+                                            <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm} />
+                                        </Stack>
+                                    </Form>
+                                )}
+                            </Formik>}
+                            <Typography style={{ width: '100%', textAlign: "center", paddingTop: '1rem' }}>
+                                {loginError ?? ""}
+                            </Typography>
+                        </Stack>}
                     </Stack>
                 </main>
             </PageTransition>

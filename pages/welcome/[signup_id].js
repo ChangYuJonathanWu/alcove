@@ -15,17 +15,24 @@ import * as Sentry from '@sentry/nextjs'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AlcoveTextField, AlcoveSubmitButton } from '@/components/custom/AlcoveComponents';
 import { HOME_THEME } from '@/utils/themeConfig';
+import PasswordRequirements from '@/components/signIn/PasswordRequirements';
+import {
+    SignupSchema,
+    validPassword
+} from '@/utils/authConfigs';
 
 const auth = getAuth()
 
 import React, { useState, useEffect } from 'react'
-import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    createUserWithEmailAndPassword 
+} from "firebase/auth";
 import DefaultLoader from '@/components/DefaultLoader';
 
-import * as Yup from 'yup';
-import YupPassword from 'yup-password';
 import { protectedApiCall } from '@/utils/api';
-YupPassword(Yup);
 
 
 const theme = HOME_THEME
@@ -53,23 +60,8 @@ export const getServerSideProps = async (context) => {
     }
 }
 
-const SignupSchema = Yup.object().shape({
-    password: Yup.string()
-        .min(6, 'Password must be atleast 6 characters')
-        .max(60, 'Password must be less than 60 characters')
-        .minLowercase(1, 'Password must contain at least 1 lower case letter')
-        .minUppercase(1, 'Password must contain at least 1 upper case letter')
-        .minNumbers(1, 'Password must contain at least 1 number')
-        .required('Required'),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], "Passwords must match")
-        .required('Required')
-});
 
 export default function Welcome({ signup }) {
-    const backgroundColor = theme.bgColor
-    const logoColor = theme.logoColor
-    const textColor = theme.textColor
     const router = useRouter();
     const [user, authLoading, authError] = useAuthState(auth)
 
@@ -96,24 +88,6 @@ export default function Welcome({ signup }) {
         loadUser()
     }, [user, router, authLoading])
 
-    const validatePasswordLength = (password) => {
-        return password.length >= 8
-    }
-
-    const validatePasswordUpperCase = (password) => {
-        return /[A-Z]/.test(password)
-    }
-    const validatePasswordLowerCase = (password) => {
-        return /[a-z]/.test(password)
-    }
-
-    const validatePasswordContainsNumber = (password) => {
-        return /\d/.test(password)
-    }
-
-    const validPassword = (password) => {
-        return validatePasswordLength(password) && validatePasswordUpperCase(password) && validatePasswordLowerCase(password) && validatePasswordContainsNumber(password)
-    }
 
     return (
         <>
@@ -148,7 +122,6 @@ export default function Welcome({ signup }) {
                             }}
                             // validationSchema={SignupSchema}
                             onSubmit={async (values) => {
-                                console.log("Attempting to complete signup")
                                 const { password, passwordConfirm } = values;
                                 if (password !== passwordConfirm || !validPassword(password)) {
                                     return
@@ -188,22 +161,12 @@ export default function Welcome({ signup }) {
                                         <Typography variant="subtitle1" style={{ fontWeight: 700 }}>{`Email: ${email}`}</Typography>
                                         <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
                                         <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-
-
                                         <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Get Started"}</AlcoveSubmitButton>
-                                        <div>
-                                            {!validatePasswordLength(values.password) && <Typography variant="subtitle2" style={{ margin: 0 }}> • Minimum 8 characters</Typography>}
-                                            {!validatePasswordContainsNumber(values.password) && <Typography variant="subtitle2" style={{ margin: 0 }}> • Atleast 1 number</Typography>}
-                                            {!validatePasswordUpperCase(values.password) && <Typography variant="subtitle2" style={{ margin: 0 }}> • Atleast 1 uppercase letter</Typography>}
-                                            {!validatePasswordLowerCase(values.password) && <Typography variant="subtitle2" style={{ margin: 0 }}> • Atleast 1 lowercase letter</Typography>}
-                                            {(values.password !== values.passwordConfirm || values.password.length === 0) && <Typography variant="subtitle2" style={{ margin: 0 }}> • Passwords must match</Typography>}
-                                        </div>
+                                        <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm}/>
                                     </Stack>
 
                                 </Form>
                             )}
-
-
                         </Formik>
                         <Typography>
                             {loginError ?? ""}
