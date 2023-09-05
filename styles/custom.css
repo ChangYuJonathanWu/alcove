@@ -16,10 +16,10 @@
     content: "";
     position: absolute;
     z-index: -1;
-    background-image: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.85) 90%) , url(/alcove-background.svg);
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.85) 90%) , url(/alcove-wallpaper.svg);
     top: 50%;
     left: 50%;
-    background-size: 10%;
+    background-size: 130px;
     height: 141%;
     width: 200%;
     background-repeat: repeat;
@@ -40,10 +40,10 @@
     content: "";
     position: absolute;
     z-index: -1;
-    background-image: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.85) 90%) , url(/alcove-background.svg);
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.85) 90%) , url(/alcove-wallpaper.svg);
     top: 50%;
     left: 50%;
-    background-size: 6%;
+    background-size: 200px;
     height: 141%;
     width: 200%;
     background-repeat: repeat;
