@@ -42,21 +42,24 @@ export default function Home() {
     <Stack alignItems="center" justifyContent="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
       <Navbar mobile={true} />
       <CallToAction mobile={true} />
-      <SignUp signupState={signupState} setSignupState={setSignupState} mobile={true}/>
+      <SignUp signupState={signupState} setSignupState={setSignupState} mobile={true} />
       <Hero desktop={false} />
     </Stack>
   )
 
   const desktopLayout = (
-    <Stack alignItems="center" style={{ padding: '2rem 2.3rem 1rem 2.3rem' }} >
-      <Navbar mobile={false} />
-      <Stack alignItems="center">
-        <CallToAction mobile={mobile} />
-        <SignUp signupState={signupState} setSignupState={setSignupState} mobile={false}/>
-        <Hero desktop={false} />
+    <Stack style={{ width: '100%', paddingBottom: '2rem' }} spacing={1}>
+      <Stack justifyContent="center" style={{ padding: '2rem 2.3rem 1rem 2.3rem' }} >
+        <Navbar mobile={false} />
+        <Stack alignItems="center">
+          <CallToAction mobile={mobile} />
+          <SignUp signupState={signupState} setSignupState={setSignupState} mobile={false} />
+        </Stack>
       </Stack>
-
+      <Hero desktop={true} />
+      <Navbar mobile={false} hideLogin/>
     </Stack>
+
   )
 
 

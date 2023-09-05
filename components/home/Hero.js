@@ -17,21 +17,10 @@ import TheReader from '@/components/home/static/thereader_rounded.png'
 import TheTraveller from '@/components/home/static/thetraveller_rounded.png'
 import Avatar from '@mui/material';
 
+import Marquee from "react-fast-marquee";
+
 
 export default function Hero({ desktop }) {
-  const perspective = "none" // desktop ? "perspective(400px) rotateY(3deg) rotateX(5deg)" : "perspective(400px) rotateY(-3deg) rotateX(3deg)"
-
-  const profilesToShow = [
-    "/home/web/optimized/theartist_1.png",
-    "/home/web/optimized/theoutdoors_1.png",
-    "/home/web/optimized/thetraveller_1.jpg",
-    "/home/web/optimized/thegeneralist_1.png",
-    "/home/web/optimized/thefoodie_1.png",
-    "/home/web/optimized/thereader_1.png",
-    "/home/web/optimized/thehacker_1.png",
-    "/home/web/optimized/thebaker_1.png",
-  ]
-
   const importedProfilesToShow = [
     TheArtist,
     TheOutdoors,
@@ -46,27 +35,28 @@ export default function Hero({ desktop }) {
   const containerStyle = desktop ? { height: "100vh", width: '410px' } : { height: "520px", position: 'relative' }
   const imageShadowStyle = desktop ? { paddingTop: '1rem' } : {}
 
+  if (desktop) {
+    return (
+      <Marquee pauseOnHover={false} gradient={true} >
+        {
+          importedProfilesToShow.map((profile, idx) => {
+            return <Image key={idx} height={500} style={{ margin: '0rem 1rem 1rem 1rem', borderRadius: '1rem' }} alt="Example profile" src={profile} />
+          })
+        }
+      </Marquee>
+    )
+  }
   const buildCarouselItems = () => {
-    if (desktop) {
-      return profilesToShow.map((profile) => {
-        return (
-          <Stack key={profile} alignItems="center" style={containerStyle}>
-            <ImageShadow shadowBlur={'15'} width={340} style={imageShadowStyle} shadowHover={desktop} src={profile} />
-          </Stack>)
-      })
-    } else {
-      return importedProfilesToShow.map((profile, idx) => {
-        return (<div key={`profile-${idx}`} style={containerStyle}>
-          <Image priority={true} style={{ borderRadius: '12px', objectFit: "contain" }} fill={true} src={profile} alt={"Alcove Profile"} />
-        </div>)
+    return importedProfilesToShow.map((profile, idx) => {
+      return (<div key={`profile-${idx}`} style={containerStyle}>
+        <Image priority={true} style={{ borderRadius: '12px', objectFit: "contain" }} fill={true} src={profile} alt={"Alcove Profile"} />
+      </div>)
 
-      })
-    }
-
+    })
   }
 
   return (
-    <div style={{ marginTop: desktop ? "2rem" : "0rem", height: desktop ? '100vh' : "100%", width: desktop ? "auto" : "100%" }}>
+    <div style={{  width: "100%" }}>
       <Carousel axis={desktop ? "vertical" : "horizontal"} swipeable={desktop} stopOnHover={desktop} showArrows={false} infiniteLoop={true} interval={3000} autoPlay={true} showIndicators={false} showStatus={false} showThumbs={false} centerMode={false} dynamicHeight={true} >
         {buildCarouselItems()}
       </Carousel>
