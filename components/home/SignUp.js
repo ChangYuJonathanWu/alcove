@@ -7,6 +7,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Fireworks } from '@fireworks-js/react'
 import { HOME_THEME, TextFieldDefaultInputProps, TextFieldDefaultStyling } from '@/utils/themeConfig';
 
+import { DM_Sans } from 'next/font/google'
+
+const dmSans = DM_Sans({
+    weight: ['400', '500', '700'],
+    subsets: ['latin'],
+})
+
 
 export default function SignUpMobile({ signupState, setSignupState, mobile }) {
     const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
@@ -188,13 +195,13 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
     }
 
 
-    const handleValidationErrorText = <Typography style={{ textAlign: "center" }} variant="subtitle2">{validationErrorText}</Typography>
+    const handleValidationErrorText = <span className={dmSans.className} style={{ textAlign: "center" }} variant="subtitle2">{validationErrorText}</span>
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
     const CheckmarkAdornment = <InputAdornment position="end" ><CheckCircleIcon style={{ color: theme.primary }} /></InputAdornment>
     if (!mobile) {
         return (
-            <Stack alignItems="center" justifyContent="center" style={{marginBottom: '1.5rem'}}>
+            <Stack alignItems="center" justifyContent="center" style={{ marginBottom: '1.5rem' }}>
                 <Stack direction={"row"} alignItems="center" justifyContent="center" spacing={1} style={{ margin: "1.5rem 1rem 0.5rem 1rem", width: "100%" }} >
                     <TextField
                         InputProps={{
@@ -238,10 +245,11 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
                 </Stack>
                 {showValidationError && handleValidationErrorText}
                 {completed &&
-                    <span style={{ textAlign: "center" }}>
-                        <Typography variant="subtitle2" style={{ color: theme.primary, letterSpacing: 0.3 }}>{`Congrats, you've claimed your Alcove!`}</Typography>
-                        <Typography variant="subtitle2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
-                    </span>}
+                    <>
+                        <span className={dmSans.className} style={{ color: theme.primary }}>{`Congrats, you've claimed your Alcove!`}</span>
+                        <span className={dmSans.className} > {`You'll get an email once it's your turn to create your Alcove.`}</span>
+                    </>
+                }
             </Stack>
         )
     }
