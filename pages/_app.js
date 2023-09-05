@@ -14,7 +14,7 @@ import { Inter } from 'next/font/google'
 import { AnimatePresence } from 'framer-motion'
 import { firebase } from '@/lib/Firebase'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], weights: [400,500, 550, 600, 700] })
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false)

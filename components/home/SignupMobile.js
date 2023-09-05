@@ -8,7 +8,7 @@ import { Fireworks } from '@fireworks-js/react'
 import { HOME_THEME, TextFieldDefaultInputProps, TextFieldDefaultStyling } from '@/utils/themeConfig';
 
 
-export default function SignUpMobile({ signupState, setSignupState }) {
+export default function SignUpMobile({ signupState, setSignupState, mobile }) {
     const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
@@ -22,7 +22,7 @@ export default function SignUpMobile({ signupState, setSignupState }) {
     const claimButtonStyle = {
         backgroundColor: theme.buttonColor,
         color: theme.buttonTextColor,
-        width: "100%",
+        width: mobile ? "100%" : '10rem',
         textTransform: 'none',
         borderRadius: BORDER_RADIUS,
         padding: "0.65rem",
@@ -188,10 +188,64 @@ export default function SignUpMobile({ signupState, setSignupState }) {
     }
 
 
-    const handleValidationErrorText = <Typography style={{ marginTop: '0.5rem', textAlign: "center" }} variant="subtitle2">{validationErrorText}</Typography>
+    const handleValidationErrorText = <Typography style={{ textAlign: "center" }} variant="subtitle2">{validationErrorText}</Typography>
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"
 
     const CheckmarkAdornment = <InputAdornment position="end" ><CheckCircleIcon style={{ color: theme.primary }} /></InputAdornment>
+    console.log(handle.length)
+    if (!mobile) {
+        return (
+            <Stack alignItems="center" justifyContent="center" style={{marginBottom: '1.5rem'}}>
+                <Stack direction={"row"} alignItems="center" justifyContent="center" spacing={1} style={{ margin: "1.5rem 1rem 0.5rem 1rem", width: "100%" }} >
+                    <TextField
+                        InputProps={{
+                            sx: TextFieldDefaultInputProps,
+                            startAdornment: <InputAdornment sx={{ marginRight: '0.12rem', marginTop: showEmailInput ? '0.1rem' : 0 }} position="start">{showEmailInput ? "@" : "alcove.place/"}</InputAdornment>,
+                            endAdornment: showEmailInput ? CheckmarkAdornment : <div></div>
+                        }}
+                        value={handle}
+                        disabled={showEmailInput}
+                        onChange={processHandle}
+                        id="handle-input"
+                        style={{ maxWidth: showEmailInput ? `calc(${handle.length}ch + 75px)` : '280px' }}
+                        label="" variant="outlined"
+                        placeholder="yourname"
+                        onKeyPress={handleEnterHandle}
+                        sx={TextFieldDefaultStyling}
+                    />
+                    <Collapse in={showEmailInput} orientation={"horizontal"}>
+                        <TextField
+                            InputProps={{
+                                sx: TextFieldDefaultInputProps,
+                                endAdornment: completed ? CheckmarkAdornment : <div></div>
+                            }}
+                            value={email}
+                            onChange={processEmail}
+                            inputProps={{
+                                autoCapitalize: 'none',
+                            }}
+                            style={{ minWidth: "280px" }}
+                            sx={TextFieldDefaultStyling}
+                            id="email-input"
+                            label="" variant="outlined"
+                            placeholder="Enter your email"
+                            disabled={validationInProgress || completed}
+                            onKeyDown={handleEnterEmail} />
+                    </Collapse>
+
+
+                    {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>}
+
+                </Stack>
+                {showValidationError && handleValidationErrorText}
+                {completed &&
+                    <span style={{ textAlign: "center" }}>
+                        <Typography variant="subtitle2" style={{ color: theme.primary, letterSpacing: 0.3 }}>{`Congrats, you've claimed your Alcove!`}</Typography>
+                        <Typography variant="subtitle2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
+                    </span>}
+            </Stack>
+        )
+    }
     return (
         <Stack direction={"column"} spacing={1} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%" }} >
 

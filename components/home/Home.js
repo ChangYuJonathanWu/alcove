@@ -52,29 +52,25 @@ export default function Home() {
   }
 
   const mobileLayout = (
-    <Stack alignItems="center" style={{ padding: '1rem 2rem 1rem 2rem', zIndex: '100' }} >
+    <Stack alignItems="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
       <Navbar mobile={isTabletOrMobile} />
-      <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
-      <SignUpMobile signupState={signupState} setSignupState={setSignupState} />
+      <CallToAction mobile={true} />
+      <SignUpMobile signupState={signupState} setSignupState={setSignupState} mobile={true}/>
       <Hero desktop={false} />
-      <div style={{ padding: "0.5rem" }}></div>
-
-
-      <Typography variant="subtitle2" style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
     </Stack>
   )
 
-  // const desktopLayout = (
-  //   <Stack style={{ marginTop: "0rem" }} direction="row" spacing={4} alignItems="start" justifyContent="start">
-  //     <Hero desktop={true} />
-  //     <Stack style={{ marginTop: "2rem" }} spacing={3}>
-  //       <Navbar mobile={isTabletOrMobile} />
-  //       <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isReallyLarge ? "3rem" : "2.5rem"} />
-  //       <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
-  //       <Typography style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
-  //     </Stack>
-  //   </Stack>
-  // )
+  const desktopLayout = (
+    <Stack alignItems="center" style={{ padding: '2rem 2.3rem 1rem 2.3rem' }} >
+      <Navbar mobile={isTabletOrMobile} />
+      <Stack alignItems="center">
+        <CallToAction mobile={isTabletOrMobile} />
+        <SignUpMobile signupState={signupState} setSignupState={setSignupState} mobile={false}/>
+        <Hero desktop={false} />
+      </Stack>
+
+    </Stack>
+  )
 
 
   return (
@@ -95,12 +91,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main className='background-home'>
+      <main className={isTabletOrMobile ? 'background-home' : 'background-home-desktop'}>
 
         <PageTransition>
           {/* <div style={{position: 'absolute', zIndex: -1, backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,1) 100%) , url(/alcove-background.svg)', top: '-30%', left: '-50%', backgroundSize: '80px', height: '55%', width: "200%", backgroundRepeat: 'repeat', transform: 'rotate(-20deg)'}}></div> */}
-          {/* {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)} */}
-          {mobileLayout}
+          {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
 
         </PageTransition>
       </main>
