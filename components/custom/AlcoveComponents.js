@@ -15,5 +15,5 @@ export const AlcoveSubmitButton = (props) => (
 )
 
 export const AlcoveStack = (props) => (
-    <Stack {...props} alignItems="center" justifyContent="center" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem', maxWidth: '330px', margin: 'auto' }}/>
+    <Stack {...props} alignItems="center" justifyContent="start" spacing={7} style={{ padding: '1rem 3rem 1rem 3rem', maxWidth: '330px', margin: 'auto', height: '100vh' }}/>
 )
