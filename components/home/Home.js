@@ -49,7 +49,7 @@ export default function Home() {
 
   const desktopLayout = (
     <Stack style={{ width: '100%', paddingBottom: '2rem' }} spacing={0}>
-      <Stack justifyContent="center" style={{ padding: '2rem 2.3rem 1rem 2.3rem' }} >
+      <Stack justifyContent="center" style={{ padding: '2rem 2.3rem 0rem 2.3rem' }} >
         <Navbar mobile={false} />
         <Stack alignItems="center">
           <CallToAction mobile={mobile} />
