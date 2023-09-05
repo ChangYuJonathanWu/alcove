@@ -12,7 +12,7 @@ const desktopFontSize = '3.5rem'
 
 export default function CallToAction({ mobile = false }) {
     const textVariant = "h1"
-    const headlineStyle = { fontSize: mobile ? '2rem' : desktopFontSize, lineHeight: mobile ? '2rem' : desktopFontSize, textAlign: 'center', fontWeight: mobile ? 400 : 500 }
+    const headlineStyle = { fontSize: mobile ? '2rem' : desktopFontSize, lineHeight: mobile ? '2rem' : desktopFontSize, textAlign: 'center', fontWeight: mobile ? 500 : 500 }
     const sub1Style = { fontSize: '1rem', textAlign: 'center', lineHeight: '1.25rem', fontWeight: 500, padding: '0rem 1.5rem 0rem 1.5rem' }
     const sub2Style = { textAlign: 'center', fontSize: '0.9rem' }
     return (
