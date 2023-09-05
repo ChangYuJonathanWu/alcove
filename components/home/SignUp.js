@@ -297,10 +297,10 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
             {showValidationError && handleValidationErrorText}
             {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>}
             {completed &&
-                <span style={{ textAlign: "center", marginTop: '1.5rem' }}>
-                    <Typography variant="subtitle2" style={{ color: theme.primary, letterSpacing: 0.3 }}>{`Congrats, you've claimed your Alcove!`}</Typography>
-                    <Typography variant="subtitle2"> {`You'll get an email once it's your turn to create your Alcove.`}</Typography>
-                </span>}
+                <>
+                    <span className={dmSans.className} style={{ color: theme.primary, textAlign: 'center', marginTop: '1rem' }}>{`Congrats, you've claimed your Alcove!`}</span>
+                    <span className={dmSans.className} style={{ textAlign: 'center' }}> {`You'll get an email once it's your turn to create your Alcove.`}</span>
+                </>}
 
         </Stack>
 
