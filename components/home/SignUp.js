@@ -218,6 +218,7 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
                         placeholder="yourname"
                         onKeyPress={handleEnterHandle}
                         sx={TextFieldDefaultStyling}
+                        data-cy="signup-handle-input"
                     />
                     <Collapse in={showEmailInput} orientation={"horizontal"}>
                         <TextField
@@ -271,6 +272,7 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
                 placeholder="yourname"
                 onKeyPress={handleEnterHandle}
                 sx={TextFieldDefaultStyling}
+                data-cy="signup-handle-input"
             />
             <Collapse in={showEmailInput} orientation={"vertical"} style={{ width: "100%" }}>
                 <TextField

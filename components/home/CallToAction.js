@@ -16,7 +16,7 @@ export default function CallToAction({ mobile = false }) {
     const sub1Style = { fontSize: '1rem', textAlign: 'center', lineHeight: '1.25rem', fontWeight: 500, padding: '0rem 1.5rem 0rem 1.5rem' }
     const sub2Style = { textAlign: 'center', fontSize: '0.9rem' }
     return (
-        <Stack className={dmSans.className} spacing={3} style={{ marginTop: mobile ? '18%' : '4rem', maxWidth: mobile ? "400px" : '750px' }}>
+        <Stack data-cy="cta" className={dmSans.className} spacing={3} style={{ marginTop: mobile ? '18%' : '4rem', maxWidth: mobile ? "400px" : '750px' }}>
             <span variant={textVariant} style={headlineStyle}>Your corner of the internet to share everything you love</span>
             <span style={sub1Style} variant="subtitle2"> The simple link-in-bio for your Instagram and more</span>
             <span variant="body2" style={sub2Style} >{"Join the early-access list and claim your Alcove."}</span>
