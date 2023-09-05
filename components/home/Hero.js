@@ -37,10 +37,10 @@ export default function Hero({ desktop }) {
 
   if (desktop) {
     return (
-      <Marquee pauseOnHover={false} gradient={true} >
+      <Marquee pauseOnHover={false} >
         {
           importedProfilesToShow.map((profile, idx) => {
-            return <Image key={idx} height={500} style={{ margin: '0rem 1rem 1rem 1rem', borderRadius: '1rem' }} alt="Example profile" src={profile} />
+            return <Image key={idx} height={500} style={{ margin: '2.5rem 1rem 8rem 1rem', borderRadius: '1rem', boxShadow: 'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px' }} alt="Example profile" src={profile} />
           })
         }
       </Marquee>
