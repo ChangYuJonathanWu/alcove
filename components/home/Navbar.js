@@ -30,9 +30,9 @@ export default function Navbar({ hideLogin = false, mobile = true }) {
 
     return (
         <Stack direction="row" alignItems="center" justifyContent={hideLogin ? "center" : "space-between"} width="100%" data-cy="navbar">
-            <Link href="/" >
-                <Image data-cy="navbar--logo" src={Logo} height={mobile ? 35 : 43} alt="Alcove logo" onClick={() => router.push('/login')} />
-            </Link>
+
+            <Image data-cy="navbar--logo" src={Logo} height={mobile ? 35 : 43} alt="Alcove logo" onClick={() => router.push('/')} />
+
 
             {!hideLogin && <Button data-cy="login-button" onClick={onLogin} variant="contained" style={{ textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem' }}>
                 Log in
