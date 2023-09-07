@@ -6,6 +6,7 @@ import { AppBar, Stack, Button, Box } from '@mui/material'
 import { amita } from '../fonts'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { USE_GREEN_THEME } from '@/utils/themeConfig'
 
 import React, { useState, useEffect } from 'react'
 
@@ -32,7 +33,7 @@ export default function Navbar({ hideLogin = false, mobile = true }) {
     return (
         <Stack direction="row" alignItems="center" justifyContent={hideLogin ? "center" : "space-between"} width="100%" data-cy="navbar">
 
-            <Image data-cy="navbar--logo" src={Logo} height={mobile ? 35 : 43} alt="Alcove logo" onClick={() => router.push('/')} />
+            <Image data-cy="navbar--logo" src={USE_GREEN_THEME ? LogoLight : Logo} height={mobile ? 40 : 70} alt="Alcove logo" onClick={() => router.push('/')} />
 
 
             {!hideLogin && <Button data-cy="login-button" onClick={onLogin} variant="contained" style={{ textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem' }}>

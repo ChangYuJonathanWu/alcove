@@ -23,16 +23,17 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
 
-    const BORDER_RADIUS = '0.5rem'
+    const BORDER_RADIUS = '1rem'
 
     const theme = HOME_THEME
     const claimButtonStyle = {
         backgroundColor: theme.buttonColor,
+        fontSize: '0.9rem',
         color: theme.buttonTextColor,
         width: mobile ? "100%" : '10rem',
         textTransform: 'none',
         borderRadius: BORDER_RADIUS,
-        padding: "0.65rem",
+        padding: "0.75rem",
         '&:hover': {
             // Darken the hover color
             backgroundColor: theme.buttonFocusColor,
@@ -241,7 +242,7 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
                     </Collapse>
 
 
-                    {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>}
+                    {!completed && <Button className={dmSans.className} id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained"><span className={dmSans.className}>{ctaButtonText}</span></Button>}
 
                 </Stack>
                 {showValidationError && handleValidationErrorText}
@@ -255,7 +256,7 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
         )
     }
     return (
-        <Stack direction={"column"} spacing={1} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%", maxWidth: '400px' }} >
+        <Stack direction={"column"} alignItems="center" spacing={1} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%", maxWidth: '400px' }} >
 
             <TextField
                 InputProps={{
@@ -295,11 +296,11 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
             </Collapse>
 
             {showValidationError && handleValidationErrorText}
-            {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained">{ctaButtonText}</Button>}
+            {!completed && <Button  id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained"><span className={dmSans.className}>{ctaButtonText}</span></Button>}
             {completed &&
                 <>
-                    <span className={dmSans.className} style={{ color: theme.primary, textAlign: 'center', marginTop: '1rem' }}>{`Congrats, you've claimed your Alcove!`}</span>
-                    <span className={dmSans.className} style={{ textAlign: 'center' }}> {`You'll get an email once it's your turn to create your Alcove.`}</span>
+                    <span className={dmSans.className} style={{ color: theme.primary, textAlign: 'center',marginTop: '1rem' }}>{`Congrats, you've claimed your Alcove!`}</span>
+                    <span className={dmSans.className} style={{textAlign: 'center'}}> {`You'll get an email once it's your turn to create your Alcove.`}</span>
                 </>}
 
         </Stack>
