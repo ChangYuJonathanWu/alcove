@@ -14,6 +14,7 @@ export const HOME_THEME = {
     buttonFocusColor: '#d67b3a',
     buttonTextColor: 'white',
     primary: "#F97B22",
+    primaryGreen: "#7C9070",
 }
 export const PROFILE_ITEMS_WIDTH = '400px'
 export const ITEM_FONT_SIZE = '1rem'

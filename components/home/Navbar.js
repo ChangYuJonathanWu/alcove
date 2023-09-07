@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import Logo from '@/components/home/static/alcove-logo-dark.png'
+import LogoLight from '@/components/home/static/alcove-logo.svg'
 import { AppBar, Stack, Button, Box } from '@mui/material'
 import { amita } from '../fonts'
 import Link from 'next/link'

@@ -39,7 +39,7 @@ export default function Home() {
   }
 
   const mobileLayout = (
-    <Stack alignItems="center" justifyContent="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
+    <Stack alignItems="center" justifyContent="center" style={{ padding: '1rem 2rem 1rem 2rem'}} >
       <Navbar mobile={true} />
       <CallToAction mobile={true} />
       <SignUp signupState={signupState} setSignupState={setSignupState} mobile={true} />
@@ -48,8 +48,8 @@ export default function Home() {
   )
 
   const desktopLayout = (
-    <Stack style={{ width: '100%', paddingBottom: '2rem' }} spacing={0}>
-      <Stack justifyContent="center" style={{ padding: '2rem 2.3rem 0rem 2.3rem' }} >
+    <Stack style={{ width: '100%', paddingBottom: '2rem'}} spacing={0}>
+      <Stack justifyContent="center" style={{ padding: '2rem 2.3rem 3rem 2.3rem' }} >
         <Navbar mobile={false} />
         <Stack alignItems="center">
           <CallToAction mobile={mobile} />
@@ -81,7 +81,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main className={'background-home'}>
+      <main className="background-home" >
 
         <PageTransition>
           {minQueriesComplete && (mobile ? mobileLayout : desktopLayout)}
