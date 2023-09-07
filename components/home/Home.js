@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
-import { HOME_THEME } from '@/utils/themeConfig'
 
 
 export default function Home() {
