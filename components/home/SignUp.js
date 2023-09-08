@@ -15,7 +15,7 @@ const dmSans = DM_Sans({
 })
 
 
-export default function SignUpMobile({ signupState, setSignupState, mobile }) {
+export default function SignUp({ signupState, setSignupState, mobile }) {
     const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
@@ -256,7 +256,7 @@ export default function SignUpMobile({ signupState, setSignupState, mobile }) {
         )
     }
     return (
-        <Stack direction={"column"} alignItems="center" spacing={1} style={{ margin: "1.5rem 1rem 3rem 1rem", width: "100%", maxWidth: '400px' }} >
+        <Stack direction={"column"} alignItems="center" spacing={1} style={{ margin: "1.5rem 0rem 3rem 0rem", width: "100%", maxWidth: '400px' }} >
 
             <TextField
                 InputProps={{
