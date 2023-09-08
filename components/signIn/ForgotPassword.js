@@ -16,6 +16,7 @@ import { getAuth, signOut, sendPasswordResetEmail } from "firebase/auth";
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
 import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
+import DefaultHeader from '../DefaultHeader';
 import { HOME_THEME } from '@/utils/themeConfig';
 
 export default function ForgotPasswordNew() {
@@ -31,21 +32,7 @@ export default function ForgotPasswordNew() {
 
     return (
         <>
-            <Head>
-                <title>Alcove: Sign In</title>
-                <meta name="description" content="Your link-in-bio to share everything you love." />
-                <meta property="og:title" content="Alcove: Share what you love" />
-                <meta
-                    property="og:description"
-                    content="Your link-in-bio to share everything you love."
-                />
-                <meta
-                    property="og:image"
-                    content="/social-share.png"
-                />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.svg" />
-            </Head>
+            <DefaultHeader title="Alcove: Reset Password" />
 
             <PageTransition>
                 <main className="background-home">
@@ -93,7 +80,7 @@ export default function ForgotPasswordNew() {
                                     <Typography variant="body2" style={{ color: 'black' }}>⏎ Back to Sign In </Typography>
                                 </Link> :
 
-                                <Link href="/" >
+                                <Link href="/signup" >
                                     <Typography variant="body2" style={{ color: 'black' }}>Sign Up</Typography>
                                 </Link>
                             }

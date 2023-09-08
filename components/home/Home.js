@@ -13,6 +13,7 @@ import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
 import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
 import { USE_GREEN_THEME } from '@/utils/themeConfig'
+import DefaultHeader from '../DefaultHeader'
 
 
 export default function Home() {
@@ -67,6 +68,7 @@ export default function Home() {
 
   return (
     <>
+      <DefaultHeader title="Alcove: Share what you love" />
       <Head>
         <title>Alcove: Sign Up</title>
         <meta name="description" content="Your link-in-bio to share everything you love." />

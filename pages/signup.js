@@ -20,6 +20,7 @@ import { protectedApiCall } from '@/utils/api';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '@/components/custom/AlcoveComponents';
+import DefaultHeader from '@/components/DefaultHeader';
 const auth = getAuth()
 
 export default function Main() {
@@ -29,7 +30,7 @@ export default function Main() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
 
-    const [ signupState, setSignupState ] = useState({
+    const [signupState, setSignupState] = useState({
         handle: "",
         email: "",
         showValidationError: false,
@@ -49,7 +50,7 @@ export default function Main() {
                 const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
-                router.replace(`/${handle}` )
+                router.replace(`/${handle}`)
                 return
             }
             setPageLoading(false)
@@ -59,32 +60,18 @@ export default function Main() {
 
     return (
         <>
-            <Head>
-                <title>Alcove: Sign Up</title>
-                <meta name="description" content="Your link-in-bio to share everything you love." />
-                <meta property="og:title" content="Alcove: Share what you love" />
-                <meta
-                    property="og:description"
-                    content="Your link-in-bio to share everything you love."
-                />
-                <meta
-                    property="og:image"
-                    content="/social-share.png"
-                />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.svg" />
-            </Head>
+            <DefaultHeader title="Alcove: Sign Up" />
             <PageTransition>
                 <main className="background-home">
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
                         <AlcoveStack>
                             <Navbar hideLogin />
-                            <Stack>
+                            <Stack spacing={1}>
                                 <Typography variant="h1" style={{ textAlign: 'center', fontWeight: '600', fontSize: '2.2rem' }}>Sign Up 🖊</Typography>
                                 <Typography variant="subtitle2" style={{ textAlign: 'center' }}>Join the early-access list and claim your Alcove</Typography>
                             </Stack>
-                            <SignUp mobile signupState={signupState} setSignupState={setSignupState}/>
+                            <SignUp mobile signupState={signupState} setSignupState={setSignupState} />
                             <Stack style={{ width: "100%" }} spacing={1.5} alignItems="center">
                                 <Link href="/login" style={{}}>
                                     <Typography variant="body2" style={{ color: 'black' }}>Login</Typography>

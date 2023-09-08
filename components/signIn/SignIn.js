@@ -20,6 +20,7 @@ import { protectedApiCall } from '@/utils/api';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
+import DefaultHeader from '../DefaultHeader';
 const auth = getAuth()
 
 
@@ -56,7 +57,7 @@ export default function SignIn() {
                 const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
-                router.replace(`/${handle}` )
+                router.replace(`/${handle}`)
                 return
             }
             setPageLoading(false)
@@ -66,21 +67,7 @@ export default function SignIn() {
 
     return (
         <>
-            <Head>
-                <title>Alcove: Sign In</title>
-                <meta name="description" content="Your link-in-bio to share everything you love." />
-                <meta property="og:title" content="Alcove: Share what you love" />
-                <meta
-                    property="og:description"
-                    content="Your link-in-bio to share everything you love."
-                />
-                <meta
-                    property="og:image"
-                    content="/social-share.png"
-                />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.svg" />
-            </Head>
+            <DefaultHeader title="Alcove: Sign In" />
             <PageTransition>
                 <main className="background-home">
                     {pageLoading && <DefaultLoader />}
@@ -104,16 +91,6 @@ export default function SignIn() {
                                         const { email, password } = values;
                                         try {
                                             const credential = await signInWithEmailAndPassword(auth, email, password)
-                                            // if (credential) {
-                                            //     setLoginError(null)
-                                            //     const { uid } = credential.user
-                                            //     const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
-                                            //     const fullUserProfile = await result.json()
-                                            //     const { handle } = fullUserProfile
-                                            //     router.push(`/${handle}`, { shallow: true } )
-
-                                            //     return
-                                            // }
 
                                         } catch (error) {
                                             const errorCode = error.code;

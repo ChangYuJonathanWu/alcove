@@ -33,6 +33,7 @@ import {
 import DefaultLoader from '@/components/DefaultLoader';
 
 import { protectedApiCall } from '@/utils/api';
+import DefaultHeader from '@/components/DefaultHeader';
 
 
 const theme = HOME_THEME
@@ -91,21 +92,7 @@ export default function Welcome({ signup }) {
 
     return (
         <>
-            <Head>
-                <title>Alcove: Welcome</title>
-                <meta name="description" content="Your link-in-bio to share everything you love." />
-                <meta property="og:title" content="Alcove: Share what you love" />
-                <meta
-                    property="og:description"
-                    content="Your link-in-bio to share everything you love."
-                />
-                <meta
-                    property="og:image"
-                    content="/social-share.png"
-                />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.svg" />
-            </Head>
+            <DefaultHeader title="Alcove: Welcome" />
             <main className="background-home">
                 {pageLoading && <DefaultLoader />}
                 {!pageLoading &&
