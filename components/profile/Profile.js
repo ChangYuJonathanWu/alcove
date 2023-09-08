@@ -70,7 +70,7 @@ export default function Profile({ user, ownerSignedIn = false }) {
     return (
         <main>
 
-            <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: 'gray', alignItems: "center", zIndex: 0 }}>
+            <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: '#cfcfcf', alignItems: "center", zIndex: 0 }}>
 
                 {backgroundType == "image" && <Image priority={true} fill={true} src={backgroundUrl} objectFit='cover' id="background-photo" alt="background wallpaper" />}
 

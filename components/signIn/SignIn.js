@@ -19,6 +19,7 @@ import PageTransition from '@/components/PageTransition'
 import { protectedApiCall } from '@/utils/api';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/AlcoveComponents';
 const auth = getAuth()
 
 
@@ -45,26 +46,17 @@ export default function SignIn() {
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
 
-    const CustomTextField = (props) => (
-
-        <TextField variant="outlined" size="small" sx={{
-            "& .MuiOutlinedInput-notchedOutline": {
-                border: 'none',
-            }
-        }} style={{ backgroundColor: 'white', borderRadius: '15px', minWidth: '270px', width: '100%' }} type="text" {...props} />
-
-    );
 
     useEffect(() => {
         const loadUser = async () => {
-            if (authLoading) return
+            if (authLoading || !router.isReady) return
             if (user) {
                 setPageLoading(true)
                 const { uid } = user
                 const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
-                router.replace(`/${handle}`)
+                router.replace(`/${handle}` )
                 return
             }
             setPageLoading(false)
@@ -90,76 +82,72 @@ export default function SignIn() {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <PageTransition>
-                <main style={{ minHeight: '100vh', width: "100%" }}>
+                <main className="background-home">
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
+                        <AlcoveStack>
+                            <Navbar hideLogin />
+                            <Stack>
+                                <Typography variant="h1" style={{ textAlign: showOnboardMessage ? "center" : 'left', fontWeight: '500' }}>{`${showOnboardMessage ? "Welcome!" : "Hey there!"} 👋`}</Typography>
+                                <Typography variant="subtitle2" style={{ textAlign: 'left' }}>{`${showOnboardMessage ? "Sign in with the password you just created" : `Sign in to your Alcove`}`}</Typography>
+                            </Stack>
+                            <Stack style={{ width: "100%" }} spacing={1.5} alignItems="center">
+                                <Formik
+                                    enableReinitialize={true}
+                                    initialValues={{
+                                        email: email ?? "",
+                                        password: '',
+                                    }}
 
+                                    onSubmit={async (values) => {
+                                        setLoading(true)
+                                        const { email, password } = values;
+                                        try {
+                                            const credential = await signInWithEmailAndPassword(auth, email, password)
+                                            // if (credential) {
+                                            //     setLoginError(null)
+                                            //     const { uid } = credential.user
+                                            //     const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
+                                            //     const fullUserProfile = await result.json()
+                                            //     const { handle } = fullUserProfile
+                                            //     router.push(`/${handle}`, { shallow: true } )
 
+                                            //     return
+                                            // }
 
-                        <Stack alignItems="center" spacing={1}>
-                            <div style={{ zIndex: 1, backgroundColor, borderStyle: 'solid', borderWidth: '1px', borderColor: 'white', minWidth: '300px', maxWidth: '320px', minHeight: '300px', padding: '2em 1em 2em 1em', marginTop: '3em' }}>
-                                <Stack alignItems={"center"} style={{ width: "100%" }}>
-                                    <Link href="/">
-                                        <Navbar />
-                                    </Link>
-                                    {showOnboardMessage && <Typography variant="h4" style={{ color: 'white', fontWeight: 700, marginBottom: '1em', textAlign: 'center' }}>Welcome! Sign in with the password you just created.</Typography>}
+                                        } catch (error) {
+                                            const errorCode = error.code;
+                                            const errorMessage = error.message;
+                                            setLoginError("Invalid email/password or account doesn't exist")
+                                        };
+                                        setLoading(false)
 
-                                    <Formik
-                                        enableReinitialize={true}
-                                        initialValues={{
-                                            email: email ?? "",
-                                            password: '',
-                                        }}
+                                    }}
+                                >
+                                    <Form style={{ width: "100%" }}>
+                                        <Stack alignItems="center" spacing={1} style={{ width: "100%" }}>
+                                            <Field as={AlcoveTextField} id="email" name="email" type="email" placeholder="Email" />
+                                            <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
+                                            <AlcoveSubmitButton disabled={loading}>{loading ? "Logging in..." : "Login"}</AlcoveSubmitButton>
+                                        </Stack>
 
-                                        onSubmit={async (values) => {
-                                            setLoading(true)
-                                            const { email, password } = values;
-                                            try {
-                                                const credential = await signInWithEmailAndPassword(auth, email, password)
-                                                if (credential) {
-                                                    setLoginError(null)
-                                                    const { uid } = credential.user
-                                                    const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
-                                                    const fullUserProfile = await result.json()
-                                                    const { handle } = fullUserProfile
-                                                    router.replace(`/${handle}`)
-
-                                                    return
-                                                }
-
-                                            } catch (error) {
-                                                const errorCode = error.code;
-                                                const errorMessage = error.message;
-                                                setLoginError("Invalid email/password or account doesn't exist")
-                                            };
-                                            setLoading(false)
-
-                                        }}
-                                    >
-                                        <Form>
-                                            <Stack alignItems="center" spacing={1} >
-                                                <Field as={CustomTextField} id="email" name="email" type="email" placeholder="Email" />
-                                                <Field as={CustomTextField} type="password" id="password" name="password" placeholder="Password" />
-                                                <Button disabled={loading} variant="contained" type="submit" style={{ backgroundColor: '#F97B22', width: "100%", borderRadius: '15px', marginTop: '1em' }}>{loading ? "Logging in..." : "Login"}</Button>
-                                            </Stack>
-
-                                        </Form>
-                                    </Formik>
-                                    <Link href="/" style={{ textDecoration: 'none' }}>
-                                        <Typography variant="body2" style={{ color: 'white', marginTop: '1rem' }}>Sign Up</Typography>
-                                    </Link>
-
-                                </Stack>
-                                <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem' }}>
-                                    {loginError ?? ""}
-                                </Typography>
-                                <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
-                                    <Typography variant="subtitle2" style={{ color: 'white', marginTop: '1rem', width: "100%", textAlign: "center" }}>
-                                        Forgot Password?
-                                    </Typography>
+                                    </Form>
+                                </Formik>
+                                <Link href="/signup" style={{}}>
+                                    <Typography variant="body2" style={{ color: 'black' }}>Sign Up</Typography>
                                 </Link>
-                            </div>
-                        </Stack>
+                            </Stack>
+
+
+                            <Typography variant="subtitle2" style={{ marginTop: '1rem', textAlign: 'center' }}>
+                                {loginError ?? ""}
+                            </Typography>
+                            <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
+                                <Typography variant="subtitle2" style={{ color: 'black', width: "100%", textAlign: "center" }}>
+                                    Forgot Password?
+                                </Typography>
+                            </Link>
+                        </AlcoveStack>
                     }
                 </main>
             </PageTransition>

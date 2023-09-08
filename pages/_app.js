@@ -14,7 +14,7 @@ import { Inter } from 'next/font/google'
 import { AnimatePresence } from 'framer-motion'
 import { firebase } from '@/lib/Firebase'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], weights: [400,500, 550, 600, 700] })
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false)
@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }) {
   // }, [])
   return (
     <ThemeProvider theme={theme}>
-      <div className={inter.className} style={{ backgroundColor: HOME_THEME.bgColor }}>
+      <div className={inter.className} style={{ }}>
         {loading ? <DefaultLoader /> :
           <AnimatePresence initial={true} mode="wait">
             <Component key={router.asPath} {...pageProps} />

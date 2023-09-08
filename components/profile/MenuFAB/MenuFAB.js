@@ -11,6 +11,8 @@ import PublicIcon from '@mui/icons-material/Public';
 import TryIcon from '@mui/icons-material/Try';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Skeleton from '@mui/material/Skeleton';
+import PersonIcon from '@mui/icons-material/Person';
+import { HOME_THEME } from '@/utils/themeConfig';
 
 
 export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
@@ -53,24 +55,32 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
     width: '3.5rem',
     height: '3.5rem',
     maxWidth: 'none',
-    color: 'none'
+    color: HOME_THEME.primary,
+    backgroundColor: HOME_THEME.primary,
+    '&:hover': {
+      backgroundColor: HOME_THEME.primary,
+    }
   }
 
-  const SpeedDialIcon =  () => {
+  const SpeedDialIcon = () => {
     // Show skeleton while photo loading
-    
+
     const photoReady = profilePhotoLoaded || !profilePhotoUri
     return (
       <>
-        {!photoReady && <Skeleton variant="circular" width='3.2rem' height='3.2rem' style={{backgroundColor: 'white'}} />}
-        <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }} style={{ display: photoReady ? 'block' : 'none', width: '3.2rem', height: '3.2rem', touchAction: 'none'  }} src={profilePhotoUri} data-cy="menu-fab--profile-photo"/>
+        {!photoReady && <Skeleton variant="circular" width='3.2rem' height='3.2rem' style={{ backgroundColor: 'white' }} />}
+        <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }} style={{ display: photoReady ? 'block' : 'none', width: '3.2rem', height: '3.2rem', touchAction: 'none' }}
+          src={profilePhotoUri}
+          data-cy="menu-fab--profile-photo">
+          <PersonIcon style={{ width: '3rem', height: '3rem'}} />
+        </Avatar>
       </>
     )
   }
 
   return (
     <div style={{ position: 'fixed', bottom: 0, right: 0, left: 'auto', top: 'auto', zIndex: 100 }}>
-      <Backdrop open={open} onClick={handleClose} onTouchStart={handleClose} data-cy="menu-fab--backdrop"/>
+      <Backdrop open={open} onClick={handleClose} onTouchStart={handleClose} data-cy="menu-fab--backdrop" />
       <Box sx={{ height: 330, transform: 'translateZ(0px)', flexGrow: 1 }}>
         <SpeedDial
           data-cy="menu-fab--speeddial"
@@ -81,9 +91,8 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
           onOpen={handleOpen}
           open={open}
           FabProps={
-            { 
-              sx: FabStyling,
-              color: 'primary'
+            {
+              sx: FabStyling
             }
           }
         >

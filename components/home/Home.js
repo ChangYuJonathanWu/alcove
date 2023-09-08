@@ -1,38 +1,26 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import FoundationIcon from '@mui/icons-material/Foundation';
+import React, { useState } from 'react'
 import { Button, Divider, Stack, TextField, Typography } from '@mui/material'
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import { amita } from '../fonts'
-import Link from 'next/link';
-import SignUp from '@/components/home/SignUp'
-import CallToAction from '@/components/home/CallToAction'
 
-import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
+import CallToAction from '@/components/home/CallToAction'
 import Hero from '@/components/home/Hero'
 import Navbar from '@/components/home/Navbar'
+import SignUp from './SignUp';
+
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
+import useBetterMediaQuery from '@/utils/useBetterMediaQuery'
+import { USE_GREEN_THEME } from '@/utils/themeConfig'
 
-import React, { useState } from 'react'
-
-import { HOME_THEME } from '@/utils/themeConfig';
 
 export default function Home() {
-  const isTabletOrMobile = useBetterMediaQuery('(max-width: 930px)')
-  const isLarge = useBetterMediaQuery('(min-width: 930px)')
-  const isReallyLarge = useBetterMediaQuery('(min-width: 1200px)')
+  const isDesktop = useBetterMediaQuery('(min-width: 750px)')
+  const isMobile = useBetterMediaQuery('(max-width: 750px)')
 
-  const minQueriesComplete = isTabletOrMobile || isLarge || isReallyLarge
-
-  const theme = HOME_THEME
-  const claimButtonStyle = { backgroundColor: theme.buttonColor, color: theme.buttonTextColor, maxWidth: "250px", textTransform: 'none', borderRadius: '15px', padding: '1rem 2rem' }
-  const backgroundColor = theme.bgColor
-  const logoColor = theme.logoColor
-  const textColor = theme.textColor
+  const minQueriesComplete = isDesktop || isMobile
+  const mobile = !isDesktop
 
   const router = useRouter();
 
@@ -52,29 +40,30 @@ export default function Home() {
   }
 
   const mobileLayout = (
-    <Stack alignItems="center">
-      <Navbar mobile={isTabletOrMobile} />
-      <CallToAction textColor={textColor} highlightColor={theme.textColor} mobile={true} />
+    <Stack alignItems="center" justifyContent="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
+      <Navbar mobile={true} />
+      <CallToAction mobile={true} />
+      <SignUp signupState={signupState} setSignupState={setSignupState} mobile={true} />
       <Hero desktop={false} />
-      <div style={{ padding: "0.5rem" }}></div>
-      <SignUp signupState={signupState} setSignupState={setSignupState} claimButtonStyle={claimButtonStyle} />
-
-      <Typography variant="subtitle2" style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
     </Stack>
   )
 
   const desktopLayout = (
-    <Stack style={{ marginTop: "0rem" }} direction="row" spacing={4} alignItems="start" justifyContent="start">
-      <Hero desktop={true} />
-      <Stack style={{ marginTop: "2rem" }} spacing={3}>
-        <Navbar mobile={isTabletOrMobile} />
-        <CallToAction textColor={textColor} highlightColor={theme.textColor} textAlign="start" fontSize={isReallyLarge ? "3rem" : "2.5rem"} />
-        <SignUp signupState={signupState} setSignupState={setSignupState} desktop={!isTabletOrMobile} claimButtonStyle={claimButtonStyle} />
-        <Typography style={{ color: 'white' }}> Already have an account? Login <Link style={{ color: 'white' }} href="/login">here</Link>.</Typography>
+    <Stack style={{ width: '100%', paddingBottom: '2rem' }} spacing={0}>
+      <Stack justifyContent="center" style={{ padding: '2rem 2.3rem 3rem 2.3rem' }} >
+        <Navbar mobile={false} />
+        <Stack alignItems="center">
+          <CallToAction mobile={mobile} />
+          <SignUp signupState={signupState} setSignupState={setSignupState} mobile={false} />
+        </Stack>
       </Stack>
+      <Hero desktop={true} />
+      <Navbar mobile={false} hideLogin />
     </Stack>
+
   )
 
+  const mainStyle = USE_GREEN_THEME ? { backgroundColor: '#7C9070', color: 'white' } : { color: 'black' }
 
   return (
     <>
@@ -94,11 +83,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main>
+      <main className={USE_GREEN_THEME ? "" : "background-home"} style={mainStyle}>
+
         <PageTransition>
-          <Stack alignItems="center" style={{ paddingBottom: '3rem' }}>
-            {minQueriesComplete && (isTabletOrMobile ? mobileLayout : desktopLayout)}
-          </Stack>
+          {minQueriesComplete && (mobile ? mobileLayout : desktopLayout)}
         </PageTransition>
       </main>
     </>

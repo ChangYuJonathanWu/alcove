@@ -2,10 +2,12 @@ const PERCY_WIDTHS = [768, 1920]
 describe('Homepage', () => {
     it('Loads the homepage', () => {
         cy.visit('http://localhost:3000')
-        cy.contains('Showcase your hobbies').should('exist')
-        cy.get('#call-to-action').should('exist')
-        cy.get('#home-logo').should('exist')
-        cy.get('#handle-input').should('exist')
+        cy.contains('Your corner of the internet').should('exist')
+        cy.get('[data-cy="navbar"]').should('exist')
+        cy.get('[data-cy="navbar--logo').should('exist')
+        cy.get('[data-cy="login-button"]').should('exist')
+        cy.get('[data-cy="cta"]').should('exist')
+        cy.get('[data-cy="signup-handle-input').should('exist')
         cy.get('#signup-submit-button').should('exist')
         cy.percySnapshot('Homepage', { widths: PERCY_WIDTHS });
     })

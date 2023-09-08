@@ -1,19 +1,31 @@
 import React from 'react'
 import { Typography, Stack } from '@mui/material'
+import { DM_Sans } from 'next/font/google'
 
-export default function CallToAction({ textColor, highlightColor, fontSize = "2rem", textAlign = "center", mobile = false }) {
+const dmSans = DM_Sans({
+    weight: ['400', '500', '700'],
+    subsets: ['latin'],
+})
+
+const desktopFontSize = '4.5rem'
+
+const mobileHeadline = "Your corner of the internet."
+const desktopHeadline = "Your corner of the internet to share everything you love"
+
+const mobileSub1 = "The personal link-in-bio for your Instagram, TikTok and more to share everything you love and are."
+const desktopSub1 = "The personal link-in-bio for your Instagram, TikTok and more"
+
+
+export default function CallToAction({ mobile = false }) {
     const textVariant = "h1"
-    const regularStyle = { fontSize, color: textColor, textAlign }
-    const highlightStyle = { fontSize, color: highlightColor ?? textColor, textAlign, marginBottom: "1rem" }
-    const subStyle = {color: textColor, textAlign, marginBottom: '1rem'}
+    const headlineStyle = { letterSpacing: '0', fontSize: mobile ? '3.5rem' : desktopFontSize, lineHeight: mobile ? '3.3rem' : desktopFontSize, textAlign: mobile ? 'left' : 'center', fontWeight: mobile ? 600 : 500 }
+    const sub1Style = { fontSize: '1rem', textAlign: mobile? 'left' : 'center', lineHeight: '1.25rem', fontWeight: 500  }
+    const sub2Style = { textAlign: mobile ? 'left' : 'center', fontSize: '0.9rem' }
     return (
-        <Stack>
-            <span id="call-to-action" style={{textAlign: mobile ? "center" : "left", marginBottom: '2rem' }}>
-                <Typography display="inline" variant={textVariant} style={regularStyle} >Showcase your hobbies</Typography>
-                <Typography variant={textVariant} style={regularStyle}>and all the things you love</Typography>
-                <Typography style={{color: textColor, fontSize: mobile ? '1rem' : '1.2rem'}} variant="subtitle1">The simple link in bio for your Instagram and more</Typography>
-            </span>
-            <Typography variant="body2" style={subStyle} >{"Join the early-access list and claim your Alcove."}</Typography>
+        <Stack data-cy="cta" className={dmSans.className} spacing={3} style={{ marginTop: mobile ? '18%' : '6%', maxWidth: mobile ? "400px" : '1000px' }}>
+            <span variant={textVariant} style={headlineStyle}>{ mobile ? mobileHeadline : desktopHeadline}</span>
+            <span style={sub1Style} variant="subtitle2"> { mobile ? mobileSub1 : desktopSub1}</span>
+            <span variant="body2" style={sub2Style} >{"Join the early-access list and claim your Alcove."}</span>
         </Stack>
 
 
