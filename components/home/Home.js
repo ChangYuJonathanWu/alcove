@@ -17,8 +17,8 @@ import DefaultHeader from '../DefaultHeader'
 
 
 export default function Home() {
-  const isDesktop = useBetterMediaQuery('(min-width: 750px)')
-  const isMobile = useBetterMediaQuery('(max-width: 750px)')
+  const isDesktop = useBetterMediaQuery('(min-width: 610px)')
+  const isMobile = useBetterMediaQuery('(max-width: 610px)')
 
   const minQueriesComplete = isDesktop || isMobile
   const mobile = !isDesktop

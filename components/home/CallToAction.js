@@ -8,7 +8,7 @@ const dmSans = DM_Sans({
     subsets: ['latin'],
 })
 
-const desktopFontSize = '5rem'
+
 
 const mobileHeadline = "Your corner of the internet."
 const desktopHeadline = "Your corner of the internet"
@@ -21,12 +21,20 @@ const desktopSub1 = mobileSub1 + " " + mobileSub2
 
 export default function CallToAction({ mobile = false }) {
     const isMini = useBetterMediaQuery('(max-width: 375px)')
+    const isSmall = useBetterMediaQuery('(max-width: 675px)')
+    const isMedium = useBetterMediaQuery('(max-width: 1050px)')
+    const isLarge = useBetterMediaQuery('(max-width: 1300px)')
 
-    const mobileFontSize = isMini ? '3rem' : '3.5rem'
+    const mobileHeadingFontSize = isMini ? '3rem' : '3.5rem'
     const mobileLineHeight = isMini ? '3rem' : '3.3rem'
+
+    const desktopHeadingFontSize = isSmall ? ' 4rem' : isLarge ? '4.5rem' : '5.5rem'
+
+    const sub1FontSize = isLarge ? '1rem' : '1.2rem'
+
     const textVariant = "h1"
-    const headlineStyle = { letterSpacing: '0', fontSize: mobile ? mobileFontSize : desktopFontSize, lineHeight: mobile ? mobileLineHeight : desktopFontSize, textAlign: mobile ? 'left' : 'center', fontWeight: mobile ? 600 : 600 }
-    const sub1Style = { fontSize: '1rem', textAlign: mobile ? 'left' : 'center', lineHeight: '1.25rem', fontWeight: 500 }
+    const headlineStyle = { letterSpacing: '0', fontSize: mobile ? mobileHeadingFontSize : desktopHeadingFontSize, lineHeight: mobile ? mobileLineHeight : desktopHeadingFontSize, textAlign: mobile ? 'left' : 'center', fontWeight: mobile ? 600 : 600 }
+    const sub1Style = { fontSize: sub1FontSize, textAlign: mobile ? 'left' : 'center', lineHeight: '1.25rem', fontWeight: 500 }
     const sub2Style = { textAlign: mobile ? 'left' : 'center', fontSize: isMini ? '0.8rem' : '0.9rem' }
     return (
         <Stack data-cy="cta" className={dmSans.className} spacing={3} style={{ marginTop: mobile ? '18%' : '6%', maxWidth: mobile ? "400px" : '1200px' }}>
