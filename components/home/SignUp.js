@@ -256,7 +256,7 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
         )
     }
     return (
-        <Stack direction={"column"} alignItems="center" spacing={1} style={{ margin: "1.5rem 0rem 3rem 0rem", width: "100%", maxWidth: '400px' }} >
+        <Stack direction={"column"} alignItems="center" spacing={1} style={{ margin: "1.5rem 0rem 0rem 0rem", width: "100%", maxWidth: '400px' }} >
 
             <TextField
                 InputProps={{
