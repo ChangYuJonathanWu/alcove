@@ -41,10 +41,12 @@ export default function Home() {
   }
 
   const mobileLayout = (
-    <Stack alignItems="center" justifyContent="center" style={{ padding: '1rem 2rem 1rem 2rem' }} >
-      <Navbar mobile={true} />
-      <CallToAction mobile={true} />
-      <SignUp signupState={signupState} setSignupState={setSignupState} mobile={true} />
+    <Stack>
+      <Stack alignItems="center" justifyContent="center" style={{ padding: '1rem 2rem 0rem 2rem' }} >
+        <Navbar mobile={true} />
+        <CallToAction mobile={true} />
+        <SignUp signupState={signupState} setSignupState={setSignupState} mobile={true} />
+      </Stack>
       <Hero desktop={false} />
     </Stack>
   )
