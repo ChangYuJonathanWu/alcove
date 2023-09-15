@@ -40,7 +40,7 @@ export default function Hero({ desktop }) {
     <Marquee pauseOnHover={false} >
       {
         importedProfilesToShow.map((profile, idx) => {
-          return <Image priority key={idx} height={500} style={{ margin: `${desktop ? "2.5rem" : "3.5rem"} 1rem 4rem 1rem`, borderRadius: '1rem', boxShadow: desktop ? desktopBoxShadow : mobileBoxShadow }} alt="Example profile" src={profile} />
+          return <img key={idx} style={{ height: 500, margin: `${desktop ? "2.5rem" : "3.5rem"} 1rem 4rem 1rem`, borderRadius: '1rem', boxShadow: desktop ? desktopBoxShadow : mobileBoxShadow }} alt="Example profile" src={profile.src} />
         })
       }
     </Marquee>
