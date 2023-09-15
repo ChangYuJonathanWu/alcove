@@ -61,7 +61,7 @@ export default function Home() {
         </Stack>
       </Stack>
       <Hero desktop={true} />
-      <Navbar mobile={false} hideLogin />
+      <Navbar mobile={false} hideLogin sizeOverride={50} />
     </Stack>
 
   )

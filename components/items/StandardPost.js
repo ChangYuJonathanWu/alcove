@@ -46,10 +46,10 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                     {image &&
                         <div style={{width: '100%'}}>
                             {!photoLoaded && <Skeleton variant="rectangular" height={PHOTO_SKELETON_HEIGHT} style={{borderRadius: IMAGE_BORDER_RADIUS}}/>}
-                            <Avatar variant="square" imgProps={{ onLoad: () => setPhotoLoaded(true) }} sx={{ display: photoLoaded ? 'block' : 'none', width: '100%', height: '100%', margin: 'auto' }} src={image} style={{ borderRadius: IMAGE_BORDER_RADIUS}} />
+                            <Avatar variant="square" imgProps={{ onLoad: () => setPhotoLoaded(true), style: {borderRadius: IMAGE_BORDER_RADIUS} }} sx={{ display: photoLoaded ? 'block' : 'none', width: '100%', height: "100%" }} src={image} />
                         </div>
                     }
-                    <Stack direction="row" style={{ width: "100%", marginTop: '0.8rem' }} alignContent="space-between" justifyContent="space-between">
+                    <Stack direction="row" style={{ width: "100%", marginTop: '0.5rem' }} alignContent="space-between" justifyContent="space-between">
                         <Stack>
                             {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
                         </Stack>
