@@ -53,11 +53,11 @@ export default function LinkItemForm({ onExit, triggerReload }) {
         <div style={{ width: "100%" }} data-cy="link-item-form">
             <Stack alignItems="center" spacing={2} >
                 <TextField data-cy="link-item-form--title-field" style={{ width: "100%" }} size="small" label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
-                <TextField data-cy="link-item-form--subtitle-field" style={{ width: "100%" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
+                <TextField data-cy="link-item-form--uri-field" style={{ width: "100%" }} size="small" label="Link" value={uri} onChange={(e) => setUri(formatUri(e.currentTarget.value))} />
                 {error && <span>{error}</span>}
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
                     <Button data-cy="link-item-form--cancel-button" disabled={loading} onClick={onExit}>Cancel</Button>
-                    <Button data-cy="link-item-form--submit-button" disabled={loading || !hasContent} onClick={onNewItem} variant="contained">Create</Button>
+                    <Button data-cy="link-item-form--submit-button" disabled={loading || !hasContent || !isValidUrlWithoutProtocol(uri)} onClick={onNewItem} variant="contained">Create</Button>
                 </Stack>
             </Stack>
         </div >
