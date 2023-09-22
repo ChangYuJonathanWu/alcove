@@ -83,16 +83,16 @@ export default function NewPostModal({ open, setOpen, triggerReload }) {
     }
 
     return (
-        <Modal open={open} data-cy="new-post-selection-modal">
+        <Modal open={open} data-cy="new-item-selection-modal">
             <Box style={modalStyle}>
                 <Stack alignItems="center" justifyContent="space-between" spacing={2} style={{ width: '100%' }} >
-                    <Stack data-cy="new-post-selection-modal--header" style={{ width: '100%' }} direction="row" alignItems="end" justifyContent={"space-between"}>
-                        <Typography variant="h3">New Item</Typography>
-                        <CloseIcon data-cy="new-post-selection-modal--close-button" style={{ width: '2rem' }} onClick={onExit} />
+                    <Stack data-cy="new-item-selection-modal--header" style={{ width: '100%' }} direction="row" alignItems="end" justifyContent={"space-between"}>
+                        <Typography variant="h3" style={{fontSize: '1.2rem'}}>Add New Item</Typography>
+                        <CloseIcon data-cy="new-item-selection-modal--close-button" style={{ width: '2rem' }} onClick={onExit} />
                     </Stack>
 
                     {itemType &&
-                        <ToggleButton value={itemType} onClick={() => setItemType(null)} style={{ width: '100%' }} data-cy="new-post-selection-modal--indicator-toggle">
+                        <ToggleButton value={itemType} onClick={() => setItemType(null)} style={{ width: '100%' }} data-cy="new-item-selection-modal--indicator-toggle">
                             {getPostTypeButton({ value: itemType, standalone: true })}
                         </ToggleButton>}
                     {itemType === "list" && <ListItemForm onExit={onExit} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
@@ -104,10 +104,10 @@ export default function NewPostModal({ open, setOpen, triggerReload }) {
                         onChange={handleChange}
                         style={{ width: '100%', borderRadius: '1rem' }}
                     >
-                        <ToggleButton value="list" aria-label="New List Item" data-cy="new-post-type-standard" >
+                        <ToggleButton value="list" aria-label="New List Item" data-cy="new-item-type-list" >
                             {getPostTypeButton({ value: "list" })}
                         </ToggleButton>
-                        <ToggleButton value="link" aria-label="New Link Item" data-cy="new-post-type-instagram">
+                        <ToggleButton value="link" aria-label="New Link Item" data-cy="new-item-type-link">
                             {getPostTypeButton({ value: "link" })}
                         </ToggleButton>
                     </ToggleButtonGroup>}

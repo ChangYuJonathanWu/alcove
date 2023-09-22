@@ -7,12 +7,11 @@ import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 
 export default function LinkItemForm({ onExit, triggerReload }) {
-    const [title, setTitle] = useState("")
+    const [name, setName] = useState("")
     const [uri, setUri] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    const bottomRef = useRef(null)
     const updatePostPhoto = async (e) => {
         const photo = e.target.files[0]
         try {
@@ -26,15 +25,19 @@ export default function LinkItemForm({ onExit, triggerReload }) {
     }
 
     const clearInputs = () => {
-        setTitle("")
+        setName("")
         setUri("")
     }
 
     const onNewItem = async () => {
         setError("")
+        if(linkAddress && !isValidUrlWithoutProtocol(linkAddress)) {
+            setError("Please enter a valid link")
+            return
+        }
         setLoading(true)
         const body = {
-            name: title,
+            name: name,
             uri,
             type: "uri",
         }
@@ -45,16 +48,16 @@ export default function LinkItemForm({ onExit, triggerReload }) {
         triggerReload(Date.now())
     }
 
-    const hasContent = !!title
+    const hasContent = !!name
     return (
-        <div style={{ width: "100%" }} data-cy="standard-post-form">
+        <div style={{ width: "100%" }} data-cy="link-item-form">
             <Stack alignItems="center" spacing={2} >
-                <TextField data-cy="standard-post-form--title-field" style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
-                <TextField data-cy="standard-post-form--subtitle-field" style={{ width: "100%" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
+                <TextField data-cy="link-item-form--title-field" style={{ width: "100%" }} size="small" label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+                <TextField data-cy="link-item-form--subtitle-field" style={{ width: "100%" }} size="small" label="Link" value={uri} onChange={(e) => setUri(e.currentTarget.value)} />
                 {error && <span>{error}</span>}
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
-                    <Button data-cy="standard-post-form--cancel-button" disabled={loading} ref={bottomRef} onClick={onExit}>Cancel</Button>
-                    <Button data-cy="standard-post-form--submit-button" disabled={loading || !hasContent} onClick={onNewItem} variant="contained">Create</Button>
+                    <Button data-cy="link-item-form--cancel-button" disabled={loading} onClick={onExit}>Cancel</Button>
+                    <Button data-cy="link-item-form--submit-button" disabled={loading || !hasContent} onClick={onNewItem} variant="contained">Create</Button>
                 </Stack>
             </Stack>
         </div >
