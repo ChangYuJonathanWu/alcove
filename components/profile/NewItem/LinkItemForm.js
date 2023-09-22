@@ -31,7 +31,7 @@ export default function LinkItemForm({ onExit, triggerReload }) {
 
     const onNewItem = async () => {
         setError("")
-        if(linkAddress && !isValidUrlWithoutProtocol(linkAddress)) {
+        if(uri && !isValidUrlWithoutProtocol(uri)) {
             setError("Please enter a valid link")
             return
         }
