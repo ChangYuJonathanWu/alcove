@@ -13,7 +13,7 @@ import { signOut, getAuth } from "firebase/auth";
 import { montserrat } from '../fonts';
 import EditBioModal from './EditBioModal';
 import NewItemButton from './NewItemButton';
-import NewItemModal from './NewItemModal';
+import NewItemModal from './NewItem/NewItemModal';
 import ProfileItems from '../items/ProfileItems';
 import RearrangeItemsButton from './RearrangeItemsButton';
 import RearrangeItemsModal from './RearrangeItemsModal';
