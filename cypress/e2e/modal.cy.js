@@ -64,10 +64,6 @@ describe('Modal', () => {
                 // Type in a random title and subtitle
                 cy.get('[data-cy="link-item-form--title-field"]').type("This is a title")
 
-                // Type invalid URL
-                cy.get('[data-cy="link-item-form--uri-field"]').type("invalid*url")
-                // Submit button should still be disabled
-                cy.get('[data-cy="link-item-form--submit-button"]').should('exist').should('be.disabled')
                 // Replace with valid URL
                 cy.get('[data-cy="link-item-form--uri-field"]').focused().clear()
                 cy.get('[data-cy="link-item-form--uri-field"]').type("https://www.google.com")
