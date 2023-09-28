@@ -6,6 +6,7 @@ import util from 'util'
 import { v4 as uuidv4 } from 'uuid';
 import { resizeImage, uploadImage } from '@/utils/imageProcessing'
 import * as Sentry from '@sentry/nextjs'
+import axios from 'axios';
 
 async function handler(req, res) {
 
@@ -43,9 +44,13 @@ async function handler(req, res) {
                     if (isShortedSpotifyLink(spotifyUri)) {
                         // Retrieve information from shorted link
                         try {
+                            const headers = {
+                                'User-Agent':  'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
+                            }
                             console.log("Attempoting to get full spotify url")
-                            const result = await fetch(spotifyUri, { method: 'GET', redirect: 'follow' })
-                            console.log(result.url)
+                            // const result = await fetch(spotifyUri, { method: 'HEAD', redirect: 'follow' })
+                            const result = await axios.get(spotifyUri, { headers})
+                            console.log(result.request.res.responseUrl)
                             spotifyUri = result.url
                         } catch (e) {
                             console.log("Unable to get full spotify URL - aborting.")
