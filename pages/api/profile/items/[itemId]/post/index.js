@@ -35,6 +35,28 @@ async function handler(req, res) {
                     let { spotifyUri = [""] } = fields
                     spotifyUri = spotifyUri[0];
                     console.info("Adding Spotify post to list", spotifyUri)
+                    const isShortedSpotifyLink = (uri) => {
+                        const regex = /\bspotify\.link\/(.+)/
+                        return regex.test(uri)
+                    }
+        
+                    if (isShortedSpotifyLink(spotifyUri)) {
+                        // Retrieve information from shorted link
+                        try {
+                            const headers = {
+                                'User-Agent':  'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
+                            }
+                            console.log("Attempting to get full spotify URL from shortened link")
+                            const result = await fetch(spotifyUri, { method: 'GET', redirect: 'follow', headers })
+                            spotifyUri = result.url
+                            console.log(spotifyUri)
+                        } catch (e) {
+                            console.log("Unable to get full spotify URL - aborting.")
+                            console.log(e)
+                            return res.status(400).json({ error: "Invalid Spotify link" })
+                        }
+                    }
+
                     const regex = /\bhttps:\/\/open\.spotify\.com\/(track|playlist|artist|show|episode|audiobook)\//
                     const valid = regex.test(spotifyUri)
                     if (!valid) {
