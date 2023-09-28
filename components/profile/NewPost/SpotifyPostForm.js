@@ -16,17 +16,31 @@ export default function SpotifyPostForm({ onExit, listId, clearItems, triggerRel
     const scrollToBottom = () => {
         setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500)
     }
+
+    const isShortedSpotifyLink = (uri) => {
+        const regex = /\bspotify\.link\/(.+)/
+        return regex.test(uri)
+    }
+
+    const isRegularySpotifyLink = (uri) => {
+        const regex = /\bhttps:\/\/open\.spotify\.com\/(track|playlist|artist|show|episode|audiobook)\//
+        return regex.test(uri)
+    }
+
     const onSpotifyUriChange = (e) => {
         const uri = e.target.value
         setSpotifyUri(uri)
-        const regex = /\bhttps:\/\/open\.spotify\.com\/(track|playlist|artist|show|episode|audiobook)\//
-        const valid = regex.test(uri)
+        const valid = isShortedSpotifyLink(uri) || isRegularySpotifyLink(uri)
         setValidSpotifyUri(valid)
     }
 
     const clearPostItems = () => {
         setSpotifyUri("")
         setValidSpotifyUri(false)
+    }
+
+    const retrieveSpotifyInformation = async () => {
+        
     }
 
     const onPost = async () => {

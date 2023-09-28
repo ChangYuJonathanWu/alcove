@@ -11,6 +11,7 @@ export default function SpotifyItem({ item, editMode = false, triggerReload, noP
     const [deleteRunning, setDeleteRunning] = useState(false)
     const { id, spotifyId, spotifyType, parentId } = item
     const uri = `https://open.spotify.com/embed/${spotifyType}/${spotifyId}`
+    
 
     const onDeleteSong = async () => {
         setDeleteRunning(true)
