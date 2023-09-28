@@ -6,7 +6,6 @@ import util from 'util'
 import { v4 as uuidv4 } from 'uuid';
 import { resizeImage, uploadImage } from '@/utils/imageProcessing'
 import * as Sentry from '@sentry/nextjs'
-import axios from 'axios';
 
 async function handler(req, res) {
 
@@ -47,17 +46,17 @@ async function handler(req, res) {
                             const headers = {
                                 'User-Agent':  'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
                             }
-                            console.log("Attempoting to get full spotify url")
-                            // const result = await fetch(spotifyUri, { method: 'HEAD', redirect: 'follow' })
-                            const result = await axios.get(spotifyUri, { headers})
-                            console.log(result.request.res.responseUrl)
+                            console.log("Attempting to get full spotify URL from shortened link")
+                            const result = await fetch(spotifyUri, { method: 'GET', redirect: 'follow', headers })
                             spotifyUri = result.url
+                            console.log(spotifyUri)
                         } catch (e) {
                             console.log("Unable to get full spotify URL - aborting.")
                             console.log(e)
                             return res.status(400).json({ error: "Invalid Spotify link" })
                         }
                     }
+
                     const regex = /\bhttps:\/\/open\.spotify\.com\/(track|playlist|artist|show|episode|audiobook)\//
                     const valid = regex.test(spotifyUri)
                     if (!valid) {
