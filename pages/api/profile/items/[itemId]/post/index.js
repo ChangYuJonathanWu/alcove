@@ -44,7 +44,7 @@ async function handler(req, res) {
                         // Retrieve information from shorted link
                         try {
                             console.log("Attempoting to get full spotify url")
-                            const result = await fetch(spotifyUri, { method: 'HEAD', redirect: 'follow' })
+                            const result = await fetch(spotifyUri, { method: 'GET', redirect: 'follow' })
                             console.log(result.url)
                             spotifyUri = result.url
                         } catch (e) {
