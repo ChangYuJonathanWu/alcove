@@ -5,6 +5,7 @@ import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
+import axios from 'axios';
 
 export default function SpotifyPostForm({ onExit, listId, clearItems, triggerReload }) {
     const [loading, setLoading] = useState(false)
@@ -40,12 +41,44 @@ export default function SpotifyPostForm({ onExit, listId, clearItems, triggerRel
     }
 
     const retrieveSpotifyInformation = async () => {
-        
+
     }
 
     const onPost = async () => {
         setError("")
-        setLoading(true)
+       
+        // setLoading(true)
+
+        // if (isShortedSpotifyLink(spotifyUri)) {
+        //     // Retrieve information from shorted link
+        //     try {
+        //         const result = await fetch(spotifyUri, { method: 'GET',   headers: new Headers({
+        //             'Content-Type': 'application/json; charset=UTF-8',
+        //           })})
+        //         console.log(result.url)
+        //     } catch (e) {
+        //         console.log("HERE")
+        //         console.log(e)
+        //     }
+
+        //     setLoading(false)
+        //     return
+
+        // }
+        // if (isShortedSpotifyLink(spotifyUri)) {
+        //     // Retrieve information from shorted link
+        //     try {
+        //         const result = await axios.get(spotifyUri, { method: 'HEAD'}  )
+        //         console.log(result.url)
+        //     } catch (e) {
+        //         console.log("HERE")
+        //         console.log(e)
+        //     }
+
+        //     setLoading(false)
+        //     return
+
+        // }
         const formData = new FormData()
         formData.append("postType", "spotify")
         formData.append("spotifyUri", spotifyUri)
