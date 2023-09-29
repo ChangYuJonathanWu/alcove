@@ -171,7 +171,6 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                 validationInProgress: false,
                 errors
             })
-            setTimeout(() => setSignupState({ ...signupState, hideFireworks: true, completed: true, showValidationError: false, }), 6000)
         } else {
             if (errors.includes("HANDLE_TAKEN")) {
                 setSignupState({
@@ -260,7 +259,7 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                     <>
                         <span className={dmSans.className} style={{ color: theme.primary }}>{`Congrats, you've claimed your Alcove!`}</span>
                         <span className={dmSans.className} > {SIGNUP_COMPLETED_TEXT}</span>
-                        {ALLOW_DIRECT_SIGNUP && <span className={dmSans.className} style={{ textAlign: 'center', marginTop: '1rem' }}>{DIRECT_SIGNUP_SUBTEXT}</span>}
+                        {ALLOW_DIRECT_SIGNUP && !DELAYED_SIGNUP_FROM_ERROR && <span className={dmSans.className} style={{ textAlign: 'center', marginTop: '1rem' }}>{DIRECT_SIGNUP_SUBTEXT}</span>}
                     </>
                 }
             </Stack>
@@ -312,7 +311,7 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                 <>
                     <span className={dmSans.className} style={{ color: theme.primary, textAlign: 'center', marginTop: '1rem' }}>{`Congrats, you've claimed your Alcove!`}</span>
                     <span className={dmSans.className} style={{ textAlign: 'center' }}> {SIGNUP_COMPLETED_TEXT}</span>
-                    {ALLOW_DIRECT_SIGNUP && <span className={dmSans.className} style={{ textAlign: 'center' }}>{DIRECT_SIGNUP_SUBTEXT}</span>}
+                    {ALLOW_DIRECT_SIGNUP && !DELAYED_SIGNUP_FROM_ERROR && <span className={dmSans.className} style={{ textAlign: 'center' }}>{DIRECT_SIGNUP_SUBTEXT}</span>}
                 </>}
 
         </Stack>
