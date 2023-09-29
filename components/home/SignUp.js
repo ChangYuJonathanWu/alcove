@@ -25,7 +25,7 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
     const WAITLIST_SIGNUP_TEXT = "You'll get an email once it's your turn to create your Alcove."
-    const DIRECT_SIGNUP_TEXT = <div style={{textAlign: 'center'}}><b>{"We've emailed you a link to create your profile."}</b></div>
+    const DIRECT_SIGNUP_TEXT = <div style={{ textAlign: 'center' }}><b>{"We've emailed you a link to create your profile."}</b></div>
     const DIRECT_SIGNUP_SUBTEXT = <span>Don&apos;t see it? Please check your spam folder or contact us <a href="mailto:hello@alcove.place">here</a> for support.</span>
     const SIGNUP_COMPLETED_TEXT = ALLOW_DIRECT_SIGNUP ? DIRECT_SIGNUP_TEXT : WAITLIST_SIGNUP_TEXT
     const BORDER_RADIUS = '1rem'
@@ -255,7 +255,7 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                     <>
                         <span className={dmSans.className} style={{ color: theme.primary }}>{`Congrats, you've claimed your Alcove!`}</span>
                         <span className={dmSans.className} > {SIGNUP_COMPLETED_TEXT}</span>
-                        <span className={dmSans.className} style={{textAlign: 'center', marginTop: '1rem'}}>{DIRECT_SIGNUP_SUBTEXT}</span>
+                        {ALLOW_DIRECT_SIGNUP && <span className={dmSans.className} style={{ textAlign: 'center', marginTop: '1rem' }}>{DIRECT_SIGNUP_SUBTEXT}</span>}
                     </>
                 }
             </Stack>
@@ -302,12 +302,12 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
             </Collapse>
 
             {showValidationError && handleValidationErrorText}
-            {!completed && <Button  id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained"><span className={dmSans.className}>{ctaButtonText}</span></Button>}
+            {!completed && <Button id="signup-submit-button" disabled={validationInProgress} onClick={showEmailInput ? onEmailSubmit : onClaimHandle} sx={claimButtonStyle} variant="contained"><span className={dmSans.className}>{ctaButtonText}</span></Button>}
             {completed &&
                 <>
-                    <span className={dmSans.className} style={{ color: theme.primary, textAlign: 'center',marginTop: '1rem' }}>{`Congrats, you've claimed your Alcove!`}</span>
-                    <span className={dmSans.className} style={{textAlign: 'center'}}> {SIGNUP_COMPLETED_TEXT}</span>
-                    <span className={dmSans.className} style={{textAlign: 'center'}}>{DIRECT_SIGNUP_SUBTEXT}</span>
+                    <span className={dmSans.className} style={{ color: theme.primary, textAlign: 'center', marginTop: '1rem' }}>{`Congrats, you've claimed your Alcove!`}</span>
+                    <span className={dmSans.className} style={{ textAlign: 'center' }}> {SIGNUP_COMPLETED_TEXT}</span>
+                    {ALLOW_DIRECT_SIGNUP && <span className={dmSans.className} style={{ textAlign: 'center' }}>{DIRECT_SIGNUP_SUBTEXT}</span>}
                 </>}
 
         </Stack>
