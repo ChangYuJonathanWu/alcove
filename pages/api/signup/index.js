@@ -2,7 +2,7 @@
 import { availableHandle, availableEmail, createSignup } from '../../../lib/api/signup'
 import { getAllSignups, attemptOnboard } from '@/lib/api/userManagement'
 
-const ALLOW_DIRECT_SIGNUP = true
+const ALLOW_DIRECT_SIGNUP = process.env.NEXT_PUBLIC_ALLOW_DIRECT_SIGNUP === "true"
 
 export default async function handler(req, res) {
 
