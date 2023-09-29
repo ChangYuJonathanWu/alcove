@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         // This is NOT transactional. It's possible for duplicates to exist. This is only acceptable for MVP.
         signupSuccess = await createSignup(email, handle)
         if (!signupSuccess) {
-          createAlert(`Error creating signup (before onboarding)`, `handle: ${handle}, email: ${email}`, "P1")
+          throw new Error("Error creating signup for " + handle + " " + email + "")
         }
         if (ALLOW_DIRECT_SIGNUP && signupSuccess) {
           // Send onboarding email
@@ -47,8 +47,8 @@ export default async function handler(req, res) {
       return res.status(200).json(data);
     } catch (e) {
       console.error(e)
-      createAlert(`Error creating signu (general)`, JSON.stringify(e), "P1")
-      return res.status(200).json({ errors: ["GENERAL_ERROR"] })
+      createAlert(`Error creating signup (general)`, e.message, "P1")
+      return res.status(200).json({ success: true, errors: ["DELAYED"] })
     }
 
   }

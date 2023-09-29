@@ -24,10 +24,12 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
     const TAKEN_HANDLE = "Sorry, this handle is already taken."
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
+
+    const DELAYED_SIGNUP_FROM_ERROR = signupState.errors.includes("DELAYED")
     const WAITLIST_SIGNUP_TEXT = "You'll get an email once it's your turn to create your Alcove."
     const DIRECT_SIGNUP_TEXT = <div style={{ textAlign: 'center' }}><b>{"We've emailed you a link to create your profile."}</b></div>
     const DIRECT_SIGNUP_SUBTEXT = <span>Don&apos;t see it? Please check your spam folder or contact us <a href="mailto:hello@alcove.place">here</a> for support.</span>
-    const SIGNUP_COMPLETED_TEXT = ALLOW_DIRECT_SIGNUP ? DIRECT_SIGNUP_TEXT : WAITLIST_SIGNUP_TEXT
+    const SIGNUP_COMPLETED_TEXT = ALLOW_DIRECT_SIGNUP && !DELAYED_SIGNUP_FROM_ERROR ? DIRECT_SIGNUP_TEXT : WAITLIST_SIGNUP_TEXT
     const BORDER_RADIUS = '1rem'
 
     const theme = HOME_THEME
@@ -166,7 +168,8 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                 ...signupState,
                 showValidationError: false,
                 completed: true,
-                validationInProgress: false
+                validationInProgress: false,
+                errors
             })
             setTimeout(() => setSignupState({ ...signupState, hideFireworks: true, completed: true, showValidationError: false, }), 6000)
         } else {
@@ -176,7 +179,8 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                     validationErrorText: TAKEN_HANDLE,
                     showValidationError: true,
                     showEmailInput: false,
-                    validationInProgress: false
+                    validationInProgress: false,
+                    errors
                 })
                 return
             } if (errors.includes("EMAIL_TAKEN")) {
@@ -184,15 +188,8 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                     ...signupState,
                     showValidationError: true,
                     validationErrorText: TAKEN_EMAIL,
-                    validationInProgress: false
-                })
-                return
-            } if (errors.includes("GENERAL_ERROR")) {
-                setSignupState({
-                    ...signupState,
-                    showValidationError: true,
-                    validationErrorText: "Sorry, something went wrong. Please try again later.",
-                    validationInProgress: false
+                    validationInProgress: false,
+                    errors
                 })
                 return
             }

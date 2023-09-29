@@ -28,6 +28,7 @@ export default function Home() {
   const [signupState, setSignupState] = useState({
     handle: "",
     email: "",
+    errors: [],
     showValidationError: false,
     showEmailInput: false,
     validationErrorText: "",
