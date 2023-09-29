@@ -30,10 +30,19 @@ const IconGridItem = ({ children }) => {
 }
 export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
     const { title, description, handle, photo, social_links, demo = false } = user;
-    const { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
+    let { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
     const hasSocialLinks = instagram || facebook || bereal || snapchat || tiktok || twitter || reddit || linkedin
     const [profilePhotoLoaded, setProfilePhotoLoaded] = useState(false)
 
+    // For all social_links, if they start with @, remove it
+    if (instagram?.startsWith('@')) { instagram = instagram.slice(1) }
+    if (facebook?.startsWith('@')) { facebook = facebook.slice(1) }
+    if (bereal?.startsWith('@')) { bereal = bereal.slice(1) }
+    if (snapchat?.startsWith('@')) { snapchat = snapchat.slice(1) }
+    if (tiktok?.startsWith('@')) { tiktok = tiktok.slice(1) }
+    if (twitter?.startsWith('@')) { twitter = twitter.slice(1) }
+    if (reddit?.startsWith('@')) { reddit = reddit.slice(1) }
+    if (linkedin?.startsWith('@')) { linkedin = linkedin.slice(1) }
 
     return (
         <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1.5rem' }}>
