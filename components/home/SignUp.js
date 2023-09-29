@@ -187,6 +187,14 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
                     validationInProgress: false
                 })
                 return
+            } if (errors.includes("GENERAL_ERROR")) {
+                setSignupState({
+                    ...signupState,
+                    showValidationError: true,
+                    validationErrorText: "Sorry, something went wrong. Please try again later.",
+                    validationInProgress: false
+                })
+                return
             }
         }
 
