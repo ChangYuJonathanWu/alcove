@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       }
 
       const data = {
-        success: signupSuccess,
+        success: !!signupSuccess,
         errors
       }
       return res.status(200).json(data);
