@@ -39,6 +39,10 @@ export default function Dashboard() {
         }
         setTrigger(!trigger)
     }
+
+    const onTestAlert = async () => {
+        const result = await protectedApiCall(`/api/admin/test_alert`, "POST")
+    }
     const onComplete = async (signupId) => {
         const result = await protectedApiCall(`/api/admin/user_management/complete`, "POST", JSON.stringify({ signupId }))
         setTrigger(!trigger)
@@ -169,6 +173,7 @@ export default function Dashboard() {
                     <Stack direction="row" spacing={2} style={{ padding: '1rem' }}>
                         <Button onClick={onTestOnboardingEmail} variant={"contained"}>Send Test Onboarding</Button>
                         <Button onClick={() => setEditMode(!editMode)} variant={"contained"}>Toggle Edit Mode</Button>
+                        <Button onClick={onTestAlert} variant="contained">Send Test Alert</Button>
                     </Stack>
 
                     {buildSignups()}
