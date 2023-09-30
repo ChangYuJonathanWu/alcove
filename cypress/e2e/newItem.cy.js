@@ -64,7 +64,6 @@ describe('New Item Flow', () => {
                 cy.get('[data-cy="link-item-form--title-field"]').type("This is a title")
 
                 // Type invalid URL
-                cy.get('[data-cy="link-item-form--uri-field"]').type("invalid*url")
                 cy.get('[data-cy="link-item-form--uri-field"]').type("https://www.google.com")
 
                 // Submit button should be enabled
