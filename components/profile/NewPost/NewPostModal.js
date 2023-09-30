@@ -16,6 +16,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InstagramPostForm from './InstagramPostForm';
 import SpotifyPostForm from './SpotifyPostForm';
+import YouTubePostForm from './YouTubePostForm';
 
 // support delete and rename item
 export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, triggerReload }) {
@@ -84,11 +85,11 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
             case "standard":
                 return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange', paddingBottom: '1px' }} />} disabled={disabled} standalone={standalone} />
             case "instagram":
-                return <PostTypeButton name="Instagram" icon={<Image placeholder="blur" src={InstagramIcon} width={20} height={20} alt="Instagram logo" style={{paddingBottom: '1px'}}/>} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Instagram" icon={<Image placeholder="blur" src={InstagramIcon} width={20} height={20} alt="Instagram logo" style={{ paddingBottom: '1px' }} />} disabled={disabled} standalone={standalone} />
             case "spotify":
-                return <PostTypeButton name="Spotify" icon={<Image placeholder="blur" src={SpotifyIcon} width={20} height={20} alt="Spotify logo" style={{paddingBottom: '2px'}}/>} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="Spotify" icon={<Image placeholder="blur" src={SpotifyIcon} width={20} height={20} alt="Spotify logo" style={{ paddingBottom: '2px' }} />} disabled={disabled} standalone={standalone} />
             case "youtube":
-                return <PostTypeButton name="YouTube (coming soon)" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="YouTube" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
             default:
                 return <div></div>
         }
@@ -110,6 +111,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                     {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {postType === "instagram" && <InstagramPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {postType === "spotify" && <SpotifyPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
+                    {postType === "youtube" && <YouTubePostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {!postType && <ToggleButtonGroup
                         orientation="vertical"
                         value={postType}
@@ -126,8 +128,8 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         <ToggleButton value="spotify" aria-label="Spotify post" data-cy="new-post-type-spotify">
                             {getPostTypeButton({ value: "spotify" })}
                         </ToggleButton>
-                        <ToggleButton data-cy="new-post-type-youtube" disabled={true} value="youtube" aria-label="quilt">
-                            {getPostTypeButton({ value: "youtube", disabled: true })}
+                        <ToggleButton data-cy="new-post-type-youtube" value="youtube" aria-label="quilt">
+                            {getPostTypeButton({ value: "youtube" })}
                         </ToggleButton>
                     </ToggleButtonGroup>}
                 </Stack>

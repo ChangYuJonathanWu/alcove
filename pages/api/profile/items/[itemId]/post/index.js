@@ -39,12 +39,12 @@ async function handler(req, res) {
                         const regex = /\bspotify\.link\/(.+)/
                         return regex.test(uri)
                     }
-        
+
                     if (isShortedSpotifyLink(spotifyUri)) {
                         // Retrieve information from shorted link
                         try {
                             const headers = {
-                                'User-Agent':  'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
+                                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
                             }
                             console.log("Attempting to get full spotify URL from shortened link")
                             const result = await fetch(spotifyUri, { method: 'GET', redirect: 'follow', headers })
@@ -70,7 +70,29 @@ async function handler(req, res) {
                     }
                     const result = await addPostToList(postBody)
                     return res.status(200).json({ success: true })
-                } else if (postType === "instagram") {
+                } else if (postType === "youtube") {
+                    let { youtubeUri = [""] } = fields
+                    youtubeUri = youtubeUri[0];
+                    console.info("Adding YouTube post to list", youtubeUri)
+                    const regex = /\bhttps:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]*)/
+                    const valid = regex.test(youtubeUri)
+                    if (!valid) {
+                        return res.status(400).json({ error: "Invalid YouTube link" })
+                    }
+                    const postBody = {
+                        listId: itemId,
+                        postType,
+                        youtubeUri,
+                        uid
+                    }
+                    const result = await addPostToList(postBody)
+                    return res.status(200).json({ success: true })
+
+
+                }
+
+
+                else if (postType === "instagram") {
                     let { instagramUri = [""] } = fields
                     instagramUri = instagramUri[0];
                     console.info("Adding Instagram post to list", instagramUri)
