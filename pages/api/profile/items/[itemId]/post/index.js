@@ -71,18 +71,20 @@ async function handler(req, res) {
                     const result = await addPostToList(postBody)
                     return res.status(200).json({ success: true })
                 } else if (postType === "youtube") {
-                    let { youtubeUri = [""] } = fields
-                    youtubeUri = youtubeUri[0];
-                    console.info("Adding YouTube post to list", youtubeUri)
-                    const regex = /\bhttps:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]*)/
-                    const valid = regex.test(youtubeUri)
+                    let { youtubeId = [""] } = fields
+                    youtubeId = youtubeId[0];
+                    console.info("Adding YouTube post to list", youtubeId)
+                    // Check if valid YouTube video id
+                    const regex = /\b([a-zA-Z0-9_-]*)/
+                    const valid = regex.test(youtubeId)
+
                     if (!valid) {
-                        return res.status(400).json({ error: "Invalid YouTube link" })
+                        return res.status(400).json({ error: "Invalid YouTube video ID" })
                     }
                     const postBody = {
                         listId: itemId,
                         postType,
-                        youtubeUri,
+                        youtubeId,
                         uid
                     }
                     const result = await addPostToList(postBody)

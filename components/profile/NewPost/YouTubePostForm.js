@@ -16,12 +16,21 @@ export default function YouTubePostForm({ onExit, listId, clearItems, triggerRel
     const scrollToBottom = () => {
         setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500)
     }
+
+    const isValidYoutubeUri = (uri) => {
+        const regex = /\bhttps:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]*)/
+        return regex.test(uri)
+    }
+
+    const isValidShortenedYoutubeUri = (uri) => {
+        const regex = /\bhttps:\/\/(www\.)?youtu\.be\/([a-zA-Z0-9_-]*)/
+        return regex.test(uri)
+    }
     const onYoutubeUriChange = (e) => {
         const uri = e.target.value
         setYoutubeUri(uri)
         // Validate that the uri is a youtube video
-        const regex = /\bhttps:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]*)/
-        const valid = regex.test(uri)
+        const valid = isValidYoutubeUri(uri) || isValidShortenedYoutubeUri(uri)
         setValidYoutubeUri(valid)
     }
 
@@ -34,8 +43,18 @@ export default function YouTubePostForm({ onExit, listId, clearItems, triggerRel
         setError("")
         setLoading(true)
         const formData = new FormData()
+        let youtubeId
+        if (isValidYoutubeUri(youtubeUri)) {
+            youtubeId = youtubeUri.split("v=")[1]
+        } else if (isValidShortenedYoutubeUri(youtubeUri)) {
+            youtubeId = youtubeUri.split("be/")[1]
+        } else {
+            setError("Please enter a valid YouTube link")
+            return
+        }
+
         formData.append("postType", "youtube")
-        formData.append("youtubeUri", youtubeUri)
+        formData.append("youtubeId", youtubeId)
 
         const result = await protectedApiCall(`/api/profile/items/${listId}/post`, 'POST', formData)
         setLoading(false)

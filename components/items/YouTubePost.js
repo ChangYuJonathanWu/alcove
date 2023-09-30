@@ -26,11 +26,11 @@ export default function YouTubePost({ item, editMode = false, triggerReload, noP
         styleOverride["padding"] = 0
     }
 
-    const containerStyle = { margin: "0rem 1rem 1rem 1rem", height: editMode ? "265px" : "215px", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    const containerStyle = { margin: "0rem 1rem 1rem 1rem", height: editMode ? "275px" : "225px", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
     return (
         <Stack direction="column" alignItems="center" style={containerStyle}>
             <div style={{width: '100%', marginBottom: '0.5rem'}}>
-                <iframe width="100%" height="215" src={`https://www.youtube-nocookie.com/embed/${youtubeId}?si=p-TiVNwRF4oHRI9l`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <iframe style={{borderRadius: '1rem',}} width="100%" height="225" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
 
             {editMode && <DeleteIcon color={deleteRunning ? "action" : "black"} onClick={onDeleteSong} />}
