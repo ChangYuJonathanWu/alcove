@@ -23,6 +23,7 @@
     "config": {},
     "profile": {
         "item_order": [
+            "l1",
             "l7",
             "l4",
             "l3",
@@ -317,13 +318,14 @@
                     "item_order": [
                         "i1",
                         "i2",
-                        "i3"
+                        "i3",
+                        "i4"
                     ],
                     "items": {
                         "i1": {
                             "id": "i1",
                             "type": "instagram",
-                            "uri": "https://www.instagram.com/reel/Cv3EsHlOOSR/?igshid=MzRlODBiNWFlZA=="
+                            "uri": "https://www.instagram.com/reel/Cv3EsHlOOSR/"
                         },
                         "i2": {
                             "id": "i2",
@@ -334,6 +336,11 @@
                             "id": "i3",
                             "type": "instagram",
                             "uri": "https://www.instagram.com/p/CmMbBAsBrVU/"
+                        },
+                        "i4": {
+                            "id": "i4",
+                            "type": "youtube",
+                            "youtubeId": "b1kbLwvqugk"
                         }
                     }
                 }
