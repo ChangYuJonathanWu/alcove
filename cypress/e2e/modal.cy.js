@@ -27,14 +27,14 @@ describe('Modal', () => {
                 cy.get('[data-cy="list-item-form--title-field"]').should('exist')
                 cy.get('[data-cy="list-item-form--subtitle-field"]').should('exist')
                 // Submit button should be disabled
-                cy.get('[data-cy="list-item-form--submit-button"]').should('exist').should('be.disabled')
+                cy.get('[data-cy="list-item-form--submit-button"]').should('exist').focus().should('be.disabled')
 
                 // Type in a random title and subtitle
                 cy.get('[data-cy="list-item-form--title-field"]').type("This is a title")
                 cy.get('[data-cy="list-item-form--subtitle-field"]').type("This is a subtitle")
 
                 // Submit button should be enabled
-                cy.get('[data-cy="list-item-form--submit-button"]').should('exist').should('not.be.disabled')
+                cy.get('[data-cy="list-item-form--submit-button"]').should('exist').focus().should('not.be.disabled')
 
                 // Cancel button should exist
                 cy.get('[data-cy="list-item-form--cancel-button"]').should('exist')
