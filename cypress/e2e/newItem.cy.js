@@ -58,7 +58,7 @@ describe('New Item Flow', () => {
                 cy.get('[data-cy="link-item-form--title-field"]').should('exist')
                 cy.get('[data-cy="link-item-form--uri-field"]').should('exist')
                 // Submit button should be disabled
-                cy.get('[data-cy="link-item-form--submit-button"]').should('exist').should('be.disabled')
+                cy.get('[data-cy="link-item-form--submit-button"]').get('button').should('exist').should('be.disabled')
 
                 // Type in a random title and subtitle
                 cy.get('[data-cy="link-item-form--title-field"]').type("This is a title")
@@ -66,13 +66,13 @@ describe('New Item Flow', () => {
                 // Type invalid URL
                 cy.get('[data-cy="link-item-form--uri-field"]').type("invalid*url")
                 // Submit button should still be disabled
-                cy.get('[data-cy="link-item-form--submit-button"]').should('exist').should('be.disabled')
+                cy.get('[data-cy="link-item-form--submit-button"]').get('button').should('exist').should('be.disabled')
                 // Replace with valid URL
                 cy.get('[data-cy="link-item-form--uri-field"]').focused().clear()
                 cy.get('[data-cy="link-item-form--uri-field"]').type("https://www.google.com")
 
                 // Submit button should be enabled
-                cy.get('[data-cy="link-item-form--submit-button"]').should('exist').should('not.be.disabled')
+                cy.get('[data-cy="link-item-form--submit-button"]').get('button').should('exist').should('not.be.disabled')
 
                 // Cancel button should exist
                 cy.get('[data-cy="link-item-form--cancel-button"]').should('exist')
