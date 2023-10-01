@@ -26,16 +26,18 @@ export default function YouTubePost({ item, editMode = false, triggerReload, noP
         styleOverride["padding"] = 0
     }
 
-    const containerStyle = { margin: "0rem 1rem 1rem 1rem", padding: "1.5rem 1rem 0rem 1rem", minHeight: editMode ? "275px" : "215px", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    const containerStyle = { margin: "0rem 1rem 1rem 1rem", padding: caption ? `1.5rem 1rem ${editMode ? '0.5rem' : '1rem'} 1rem` : "0rem 0rem 0.5rem 0rem", minHeight: editMode ? "255px" : "215px", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
     return (
-        <Stack direction="column" alignItems="center" style={containerStyle}>
-            <div style={{width: '100%', marginBottom: '0.5rem'}}>
-                <iframe style={{borderRadius: '0.5rem',}} width="100%" height="215" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-            </div>
-            <div style={{width: '100%'}}>
-                <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }} >{caption}</Typography>
-            </div>
-            {editMode && <DeleteIcon style={{padding: '0.5rem'}} color={deleteRunning ? "action" : "black"} onClick={onDeleteSong} />}
+        <Stack direction="column" alignItems="center" justifyContent="space-between" style={containerStyle}>
+            <Stack style={{ width: "100%" }} alignItems="center">
+                <div style={{ width: '100%', }}>
+                    <iframe style={{ borderRadius: '0.5rem', }} width="100%" height="215" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                </div>
+                {caption && <div style={{ width: '100%', margin: '0.5rem 0rem 0rem 0rem' }}>
+                    <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }} >{caption}</Typography>
+                </div>}
+            </Stack>
+            {editMode && <DeleteIcon style={{ padding: '0.5rem' }} color={deleteRunning ? "action" : "black"} onClick={onDeleteSong} />}
         </Stack>
     )
 }
