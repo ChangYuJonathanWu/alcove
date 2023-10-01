@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ListItem from '@mui/material/ListItem';
-import { Skeleton, Button } from '@mui/material';
+import { Skeleton, Button, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getAuth } from "firebase/auth";
@@ -10,7 +10,7 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 export default function YouTubePost({ item, editMode = false, triggerReload, noPadding = false }) {
     const [deleteRunning, setDeleteRunning] = useState(false)
-    const { id, youtubeId, parentId } = item
+    const { id, youtubeId, caption, parentId } = item
 
 
     const onDeleteSong = async () => {
@@ -26,14 +26,16 @@ export default function YouTubePost({ item, editMode = false, triggerReload, noP
         styleOverride["padding"] = 0
     }
 
-    const containerStyle = { margin: "0rem 1rem 1rem 1rem", height: editMode ? "275px" : "225px", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    const containerStyle = { margin: "0rem 1rem 1rem 1rem", padding: "1.5rem 1rem 0rem 1rem", minHeight: editMode ? "275px" : "215px", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
     return (
         <Stack direction="column" alignItems="center" style={containerStyle}>
             <div style={{width: '100%', marginBottom: '0.5rem'}}>
-                <iframe style={{borderRadius: '1rem',}} width="100%" height="225" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <iframe style={{borderRadius: '1rem',}} width="100%" height="215" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
-
-            {editMode && <DeleteIcon color={deleteRunning ? "action" : "black"} onClick={onDeleteSong} />}
+            <div style={{width: '100%'}}>
+                <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }} >{caption}</Typography>
+            </div>
+            {editMode && <DeleteIcon style={{padding: '0.5rem'}} color={deleteRunning ? "action" : "black"} onClick={onDeleteSong} />}
         </Stack>
     )
 }

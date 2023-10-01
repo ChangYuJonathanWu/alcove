@@ -9,6 +9,7 @@ import { protectedApiCall } from '@/utils/api';
 export default function YouTubePostForm({ onExit, listId, clearItems, triggerReload }) {
     const [loading, setLoading] = useState(false)
     const [youtubeUri, setYoutubeUri] = useState("")
+    const [caption, setCaption] = useState("")
     const [validYoutubeUri, setValidYoutubeUri] = useState(false)
     const [error, setError] = useState("")
 
@@ -55,6 +56,7 @@ export default function YouTubePostForm({ onExit, listId, clearItems, triggerRel
 
         formData.append("postType", "youtube")
         formData.append("youtubeId", youtubeId)
+        formData.append("caption", caption.trim())
 
         const result = await protectedApiCall(`/api/profile/items/${listId}/post`, 'POST', formData)
         setLoading(false)
@@ -81,6 +83,7 @@ export default function YouTubePostForm({ onExit, listId, clearItems, triggerRel
                 <Stack spacing={2} style={{width: "100%"}} >
                     <Typography variant="subtitle2" style={{color: 'grey'}}>Share a YouTube video.</Typography>
                     <TextField data-cy="youtube-post-form--link-field" style={{ width: "100%" }} size="small" label="YouTube Link" value={youtubeUri} placeholder='https://www.youtube.com/watch...' onChange={onYoutubeUriChange} />
+                    <TextField data-cy="youtube-post-form--caption-field" style={{ width: "100%" }} size="small" label="Caption" multiline rows={3} value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
                     {/* <Typography variant="subtitle2"  style={{color: 'grey'}}>{`To get the post link, click the Share icon on the post, then Copy Link`}</Typography> */}
                 </Stack>
 

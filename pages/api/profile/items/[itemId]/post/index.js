@@ -71,8 +71,9 @@ async function handler(req, res) {
                     const result = await addPostToList(postBody)
                     return res.status(200).json({ success: true })
                 } else if (postType === "youtube") {
-                    let { youtubeId = [""] } = fields
+                    let { youtubeId = [""], caption = [""] } = fields
                     youtubeId = youtubeId[0];
+                    caption = caption[0];
                     console.info("Adding YouTube post to list", youtubeId)
                     // Check if valid YouTube video id
                     const regex = /\b([a-zA-Z0-9_-]*)/
@@ -85,6 +86,7 @@ async function handler(req, res) {
                         listId: itemId,
                         postType,
                         youtubeId,
+                        caption,
                         uid
                     }
                     const result = await addPostToList(postBody)
