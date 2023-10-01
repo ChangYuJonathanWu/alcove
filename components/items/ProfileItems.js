@@ -70,7 +70,12 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const resizeObserver = new ResizeObserver(() => {
             // Scroll to the current open list
             if (listOpen) {
-                scrollTo(refArr.current[itemOrder.indexOf(listOpen)])
+                const index = itemOrder.indexOf(listOpen)
+                if(index === 0) {
+                    return
+                }
+                let indexToScrollTo = index >=1 ? index - 1 : index 
+                scrollTo(refArr.current[indexToScrollTo])
             }
         });
         resizeObserver.observe(divRef.current);
@@ -151,7 +156,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         </Stack>
 
                     </ListItemButton>
-                    <Collapse in={isOpen} timeout={{ enter: 500, exit: 0 }}>
+                    <Collapse in={isOpen} timeout={{ enter: 300, exit: !listOpen ? 300 : 0 }}>
                         <List id={`list-id-${itemId}`} style={{ alignContent: "center", paddingTop: '0.25rem' }}>
                             {buildPosts(items, itemOrder, listType)}
                             {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)} />}
@@ -195,7 +200,6 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
     const toggleSingleList = (listId, ref) => {
         setListOpen(listOpen === listId ? null : listId)
-        // scrollTo(ref)
     }
 
     const buildProfileItems = () => {
