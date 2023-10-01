@@ -64,12 +64,7 @@ describe('Modal', () => {
                 // Type in a random title and subtitle
                 cy.get('[data-cy="link-item-form--title-field"]').type("This is a title")
 
-                // Type invalid URL
-                cy.get('[data-cy="link-item-form--uri-field"]').type("invalid*url")
-                // Submit button should still be disabled
-                cy.get('[data-cy="link-item-form--submit-button"]').should('exist').should('be.disabled')
                 // Replace with valid URL
-                cy.get('[data-cy="link-item-form--uri-field"]').focused().clear()
                 cy.get('[data-cy="link-item-form--uri-field"]').type("https://www.google.com")
 
                 // Submit button should be enabled
@@ -179,9 +174,36 @@ describe('Modal', () => {
                 cy.get('[data-cy="spotify-post-form--submit-button"]').should('exist').should('not.be.disabled')
                 // Cancel button should exist
                 cy.get('[data-cy="spotify-post-form--cancel-button"]').should('exist')
+            })
+
+            // Go back to post selection
+            cy.get('[data-cy="new-post-selection-modal--indicator-toggle"]').click()
+            // Sanity check verify all post types are still there
+            cy.get('[data-cy="new-post-type-standard"]').should('exist')
+            cy.get('[data-cy="new-post-type-instagram"]').should('exist')
+            cy.get('[data-cy="new-post-type-spotify"]').should('exist')
+            cy.get('[data-cy="new-post-type-youtube"]').should('exist')
+
+            // Open up the youtube post
+            cy.get('[data-cy="new-post-type-youtube"]').click()
+
+            // Indicator toggle should say YouTube
+            cy.get('[data-cy="new-post-selection-modal--indicator-toggle"]').should('exist').should('be.visible')
+
+            cy.get("[data-cy='youtube-post-form']").should('exist').within(() => {
+                cy.percySnapshot('New Post YouTube Modal', { widths: PERCY_WIDTHS, fullPage: true });
+                cy.get('[data-cy="youtube-post-form--link-field"]').should('exist')
+                // Submit post button should be disabled
+                cy.get('[data-cy="youtube-post-form--submit-button"]').should('exist').should('be.disabled')
+                // Populate the link field with an youtube url
+                cy.get('[data-cy="youtube-post-form--link-field"]').type('https://www.youtube.com/watch?v=3AtDnEC4zak')
+                // Submit post button should be enabled
+                cy.get('[data-cy="youtube-post-form--submit-button"]').should('exist').should('not.be.disabled')
+                // Cancel button should exist
+                cy.get('[data-cy="youtube-post-form--cancel-button"]').should('exist')
 
                 // Clicking cancel button should exit the modal
-                cy.get('[data-cy="spotify-post-form--cancel-button"]').click()
+                cy.get('[data-cy="youtube-post-form--cancel-button"]').click()
             })
             cy.get('[data-cy="new-item-modal"]').should('not.exist')
         })

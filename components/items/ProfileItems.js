@@ -8,6 +8,7 @@ import StandardPost from '@/components/items/StandardPost';
 import ShowItem from '@/components/items/ShowItem';
 import CarItem from '@/components/items/CarItem';
 import InstagramPost from '@/components/items/InstagramPost';
+import YouTubePost from '@/components/items/YouTubePost';
 import dynamic from 'next/dynamic';
 
 import LinkIcon from '@mui/icons-material/Link';
@@ -77,6 +78,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         break;
                     case "instagram":
                         ItemComponent = InstagramPost
+                        break;
+                    case "youtube":
+                        ItemComponent = YouTubePost
                         break;
                     case "restaurant":
                         ItemComponent = RestaurantItem
