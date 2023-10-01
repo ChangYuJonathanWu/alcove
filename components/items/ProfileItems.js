@@ -42,7 +42,7 @@ const InstagramItemDynamic = dynamic(() => import('@/components/items/InstagramP
 })
 
 const scrollTo = (ref) => {
-    ref.current.scrollIntoView({ behavior: "smooth", top: "300" })
+    ref.current.scrollIntoView({ behavior: "smooth" })
 }
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
@@ -68,14 +68,14 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     useEffect(() => {
         if (!divRef.current) return;
         const resizeObserver = new ResizeObserver(() => {
-          // Scroll to the current open list
+            // Scroll to the current open list
             if (listOpen) {
                 scrollTo(refArr.current[itemOrder.indexOf(listOpen)])
             }
         });
         resizeObserver.observe(divRef.current);
         return () => resizeObserver.disconnect(); // clean up 
-      }, [divRef]);
+    }, [divRef]);
 
     const buildItemHeader = (name, bold) => {
         const item_font = "default"
@@ -151,7 +151,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         </Stack>
 
                     </ListItemButton>
-                    <Collapse in={isOpen} >
+                    <Collapse in={isOpen} timeout={{ enter: 500, exit: 0 }}>
                         <List id={`list-id-${itemId}`} style={{ alignContent: "center", paddingTop: '0.25rem' }}>
                             {buildPosts(items, itemOrder, listType)}
                             {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)} />}
@@ -227,7 +227,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
             <NewPostModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} />
             <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload} />
             <div ref={divRef} >
-            {buildProfileItems()}
+                {buildProfileItems()}
             </div>
 
         </div>
