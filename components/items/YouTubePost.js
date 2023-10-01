@@ -30,7 +30,7 @@ export default function YouTubePost({ item, editMode = false, triggerReload, noP
     return (
         <Stack direction="column" alignItems="center" style={containerStyle}>
             <div style={{width: '100%', marginBottom: '0.5rem'}}>
-                <iframe style={{borderRadius: '1rem',}} width="100%" height="215" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <iframe style={{borderRadius: '0.5rem',}} width="100%" height="215" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
             <div style={{width: '100%'}}>
                 <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }} >{caption}</Typography>
