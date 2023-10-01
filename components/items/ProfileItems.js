@@ -42,12 +42,8 @@ const InstagramItemDynamic = dynamic(() => import('@/components/items/InstagramP
 })
 
 const scrollTo = (ref) => {
-    setTimeout(() => ref.current.scrollIntoView({ behavior: "smooth" }), 400)
+    ref.current.scrollIntoView({ behavior: "smooth", top: "300" })
 }
-
-
-
-
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
@@ -68,6 +64,18 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     refArr.current = itemOrder.map((item, index) => {
         return refArr.current[index] || React.createRef();
     })
+
+    useEffect(() => {
+        if (!divRef.current) return;
+        const resizeObserver = new ResizeObserver(() => {
+          // Scroll to the current open list
+            if (listOpen) {
+                scrollTo(refArr.current[itemOrder.indexOf(listOpen)])
+            }
+        });
+        resizeObserver.observe(divRef.current);
+        return () => resizeObserver.disconnect(); // clean up 
+      }, [divRef]);
 
     const buildItemHeader = (name, bold) => {
         const item_font = "default"
@@ -187,7 +195,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
     const toggleSingleList = (listId, ref) => {
         setListOpen(listOpen === listId ? null : listId)
-        scrollTo(ref)
+        // scrollTo(ref)
     }
 
     const buildProfileItems = () => {
@@ -218,7 +226,10 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
             {/* <PostToListModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} /> */}
             <NewPostModal listIdToPostTo={listIdToPostTo} setListIdToPostTo={setListIdToPostTo} triggerReload={triggerReload} />
             <EditPostModal postToEdit={postToEdit} setPostToEdit={setPostToEdit} triggerReload={triggerReload} />
+            <div ref={divRef} >
             {buildProfileItems()}
+            </div>
+
         </div>
     )
 }
