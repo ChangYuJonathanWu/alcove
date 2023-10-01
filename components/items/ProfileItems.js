@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import ProfileHeader from '@/components/profile/ProfileHeader/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
@@ -41,6 +41,10 @@ const InstagramItemDynamic = dynamic(() => import('@/components/items/InstagramP
     loading: () => <Skeleton variant="rounded" style={{ width: "100%", height: "6rem"}} />
 })
 
+const scrollTo = (ref) => {
+    setTimeout(() => ref.current.scrollIntoView({ behavior: "smooth" }), 400 )
+}
+
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
 export default function ProfileItems({ user, editMode, triggerReload }) {
@@ -49,9 +53,14 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listIdToPostTo, setListIdToPostTo] = useState(null)
     const [postToEdit, setPostToEdit] = useState(null)
     const [itemIdToReorder, setItemIdToReorder] = useState(null)
-
+    
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
+
+    const refArr = useRef([])
+    refArr.current = itemOrder.map((item, index) => {
+        return refArr.current[index] || React.createRef();
+    })
 
     const buildItemHeader = (name, bold) => {
         const item_font = "default"
@@ -103,7 +112,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         )
     }
 
-    const buildListItem = (itemId, content, config = {}) => {
+    const buildListItem = (itemId, content, config = {}, ref) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
         const { background = {}} = config
         const { color: itemHeaderColor = PAPER_COLOR } = background
@@ -111,9 +120,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const listButtonId = `list-button-${itemId}`
 
         return (
-            <div key={itemId}  style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <div key={itemId}  style={{ paddingLeft: '1rem', paddingRight: '1rem' }} ref={ref}>
                 <Paper sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
-                    <ListItemButton style={{borderRadius: '1rem'}} id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
+                    <ListItemButton style={{borderRadius: '1rem'}} id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId, ref) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
                                 {CENTER_PROFILE_ITEMS  && !isOpen && <div style={{width: '2rem'}}></div>}
@@ -141,12 +150,12 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const onEditLink = (e) => {
         e.preventDefault()
     }
-    const buildUriItem = (itemId, content) => {
+    const buildUriItem = (itemId, content, ref) => {
         const { name, uri } = content
         const formattedUri = formatUri(uri)
         const listButtonId = `list-button-${itemId}`
         return (
-            <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} ref={ref}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
@@ -169,23 +178,24 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         )
     }
 
-    const toggleSingleList = (listId) => {
+    const toggleSingleList = (listId, ref) => {
         setListOpen(listOpen === listId ? null : listId)
+        scrollTo(ref)
     }
 
     const buildProfileItems = () => {
         const itemComponents = []
-        itemOrder.forEach(itemId => {
+        itemOrder.forEach((itemId, index) => {
             const item = profileItems[itemId]
             const { type: itemType, content, config } = item
             if (itemType === "list") {
                 itemComponents.push(
-                    buildListItem(itemId, content, config)
+                    buildListItem(itemId, content, config, refArr.current[index])
                 )
             }
             if (itemType === "uri") {
                 itemComponents.push(
-                    buildUriItem(itemId, content)
+                    buildUriItem(itemId, content, refArr.current[index])
                 )
             }
 
