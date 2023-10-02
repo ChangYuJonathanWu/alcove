@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, createRef } from 'react'
 
 import ProfileHeader from '@/components/profile/ProfileHeader/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
@@ -34,17 +34,22 @@ import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE, CENTER_PROFIL
 import Skeleton from '@mui/material/Skeleton';
 
 const SpotifyItemDynamic = dynamic(() => import('@/components/items/SpotifyItem'), {
-    loading: () => <Skeleton variant="rounded" style={{ width: "100%", height: "3rem"}} />
+    loading: () => <Skeleton variant="rounded" style={{ width: "100%", height: "3rem" }} />
 })
 
 const InstagramItemDynamic = dynamic(() => import('@/components/items/InstagramPost'), {
-    loading: () => <Skeleton variant="rounded" style={{ width: "100%", height: "6rem"}} />
+    loading: () => <Skeleton variant="rounded" style={{ width: "100%", height: "6rem" }} />
 })
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
+
+const scrollTo = (ref) => {
+    setTimeout(() => ref.current.scrollIntoView({ behavior: "smooth" }), 300)
+}
+
 export default function ProfileItems({ user, editMode, triggerReload }) {
-    const [listOpen, setListOpen] = useState(null);
+    const [listOpen, setListOpen] = useState({});
     const [editItem, setEditItem] = useState(null);
     const [listIdToPostTo, setListIdToPostTo] = useState(null)
     const [postToEdit, setPostToEdit] = useState(null)
@@ -53,13 +58,27 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
 
+    useEffect(() => {
+        const listOpenStates = {}
+        itemOrder.forEach(itemId => {
+            listOpenStates[itemId] = false
+        })
+        setListOpen(listOpenStates)
+    }, [itemOrder])
+
+    const refArr = useRef([])
+    const divRef = createRef()
+    refArr.current = itemOrder.map((item, index) => {
+        return refArr.current[index] || React.createRef();
+    })
+
     const buildItemHeader = (name, bold) => {
         const item_font = "default"
         switch (item_font) {
             case 'Montserrat':
                 return <span className={montserrat.className}>{name}</span>
             default:
-                return <Typography style={{fontSize: ITEM_FONT_SIZE, textAlign: "center", fontWeight: 400}}>{name}</Typography>
+                return <Typography style={{ fontSize: ITEM_FONT_SIZE, textAlign: "center", fontWeight: 400 }}>{name}</Typography>
         }
     }
     const buildPosts = (items, itemOrder, type) => {
@@ -68,7 +87,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 let ItemComponent
 
                 const item = items[itemId]
-                const { type = "standard"} = item
+                const { type = "standard" } = item
                 switch (type) {
                     case "standard":
                         ItemComponent = StandardPost
@@ -98,32 +117,32 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                         ItemComponent = StandardPost
                 }
 
-                return <ItemComponent key={itemId} item={item} editMode={editMode} setPostToEdit={setPostToEdit} triggerReload={triggerReload}/>
+                return <ItemComponent key={itemId} item={item} editMode={editMode} setPostToEdit={setPostToEdit} triggerReload={triggerReload} />
             }
         )
     }
 
-    const buildListItem = (itemId, content, config = {}) => {
+    const buildListItem = (itemId, content, config = {}, ref) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
-        const { background = {}} = config
+        const { background = {} } = config
         const { color: itemHeaderColor = PAPER_COLOR } = background
-        const isOpen = listOpen === itemId
+        const isOpen = listOpen[itemId]
         const listButtonId = `list-button-${itemId}`
 
         return (
-            <div key={itemId}  style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} ref={ref}>
                 <Paper sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
-                    <ListItemButton style={{borderRadius: '1rem'}} id={listButtonId} key={itemId}  disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
-                        <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem'}} >
-                            <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{width: "100%"}}spacing={2}>
-                                {CENTER_PROFILE_ITEMS  && !isOpen && <div style={{width: '2rem'}}></div>}
+                    <ListItemButton style={{ borderRadius: '1rem' }} id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId, ref) }}>
+                        <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem' }} >
+                            <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{ width: "100%" }} spacing={2}>
+                                {CENTER_PROFILE_ITEMS && !isOpen && <div style={{ width: '2rem' }}></div>}
                                 <Stack alignItems="start">
                                     {buildItemHeader(name, isOpen)}
-                                    { isOpen && <Typography variant="caption" style={{textAlign: "left"}}>{commentary}</Typography>}
+                                    {isOpen && <Typography variant="caption" style={{ textAlign: "left" }}>{commentary}</Typography>}
                                 </Stack>
-                                {!editMode ? isOpen ? <ExpandLessIcon /> :  <ExpandMore /> : <div></div>}
+                                {!editMode ? isOpen ? <ExpandLessIcon /> : <ExpandMore /> : <div></div>}
                             </Stack>
-                            {editMode && <EditIcon data-cy="edit-item-icon" style={{paddingLeft: '0.5rem'}} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+                            {editMode && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
 
                     </ListItemButton>
@@ -150,15 +169,15 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
                     <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
-                            
-                            <Stack id={listButtonId} direction="row" justifyContent="space-between" alignItems="center" style={{width: "100%"}} spacing={2}>
+
+                            <Stack id={listButtonId} direction="row" justifyContent="space-between" alignItems="center" style={{ width: "100%" }} spacing={2}>
                                 {CENTER_PROFILE_ITEMS && <LinkIcon />}
                                 {buildItemHeader(name)}
                                 <OpenInNewIcon />
-        
+
                             </Stack>
-                            
-                            {editMode && <EditIcon data-cy="edit-item-icon" style={{paddingLeft: '0.5rem'}} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+
+                            {editMode && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
 
                         </Stack>
 
@@ -170,17 +189,21 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     }
 
     const toggleSingleList = (listId) => {
-        setListOpen(listOpen === listId ? null : listId)
+        setListOpen({ ...listOpen, [listId]: !listOpen[listId] })
+        // If the list is not open, then scroll to it once it opens
+        if(!listOpen[listId]) {
+            scrollTo(refArr.current[itemOrder.indexOf(listId)])
+        }
     }
 
     const buildProfileItems = () => {
         const itemComponents = []
-        itemOrder.forEach(itemId => {
+        itemOrder.forEach((itemId, index) => {
             const item = profileItems[itemId]
             const { type: itemType, content, config } = item
             if (itemType === "list") {
                 itemComponents.push(
-                    buildListItem(itemId, content, config)
+                    buildListItem(itemId, content, config, refArr.current[index])
                 )
             }
             if (itemType === "uri") {
