@@ -95,7 +95,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
             case "alltrails":
                 return <PostTypeButton name="AllTrails (coming soon)" icon={<Image placeholder="blur" src={AllTrailsIcon} width={20} height={20} alt="AllTrails Logo" />} disabled={disabled} standalone={standalone} />
             case "tiktok":
-                return <PostTypeButton name="TikTok (coming soon)" icon={<Image placeholder="blur" src={TikTokLogo} width={20} height={20} alt="TikTok Logo" />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="TikTok (coming soon)" icon={<Image placeholder="blur" src={TikTokLogo} width={20} height={20} alt="TikTok Logo" style={{borderRadius: '5px'}} />} disabled={disabled} standalone={standalone} />
             default:
                 return <div></div>
         }
@@ -128,6 +128,9 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         <ToggleButton value="standard" aria-label="Standard post" data-cy="new-post-type-standard" >
                             {getPostTypeButton({ value: "standard" })}
                         </ToggleButton>
+                        <ToggleButton data-cy="new-post-type-alltrails" value="alltrails" aria-label="All Trails post" disabled={true}>
+                            {getPostTypeButton({ value: "alltrails", disabled: true })}
+                        </ToggleButton>
                         <ToggleButton value="instagram" aria-label="Instagram post" data-cy="new-post-type-instagram">
                             {getPostTypeButton({ value: "instagram" })}
                         </ToggleButton>
@@ -140,9 +143,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         <ToggleButton data-cy="new-post-type-youtube" value="youtube" aria-label="YouTube post">
                             {getPostTypeButton({ value: "youtube" })}
                         </ToggleButton>
-                        <ToggleButton data-cy="new-post-type-alltrails" value="alltrails" aria-label="All Trails post" disabled={true}>
-                            {getPostTypeButton({ value: "alltrails", disabled: true })}
-                        </ToggleButton>
+
 
                     </ToggleButtonGroup>}
                 </Stack>
