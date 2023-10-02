@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, createRef } from 'react'
 
 import ProfileHeader from '@/components/profile/ProfileHeader/ProfileHeader';
 import SpotifyItem from '@/components/items/SpotifyItem';
@@ -43,6 +43,11 @@ const InstagramItemDynamic = dynamic(() => import('@/components/items/InstagramP
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
+
+const scrollTo = (ref) => {
+    setTimeout(() => ref.current.scrollIntoView({ behavior: "smooth" }), 300)
+}
+
 export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listOpen, setListOpen] = useState({});
     const [editItem, setEditItem] = useState(null);
@@ -60,6 +65,12 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         })
         setListOpen(listOpenStates)
     }, [itemOrder])
+
+    const refArr = useRef([])
+    const divRef = createRef()
+    refArr.current = itemOrder.map((item, index) => {
+        return refArr.current[index] || React.createRef();
+    })
 
     const buildItemHeader = (name, bold) => {
         const item_font = "default"
@@ -111,7 +122,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         )
     }
 
-    const buildListItem = (itemId, content, config = {}) => {
+    const buildListItem = (itemId, content, config = {}, ref) => {
         const { name, type: listType, commentary, items, item_order: itemOrder = [], } = content
         const { background = {} } = config
         const { color: itemHeaderColor = PAPER_COLOR } = background
@@ -119,9 +130,9 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const listButtonId = `list-button-${itemId}`
 
         return (
-            <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+            <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }} ref={ref}>
                 <Paper sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
-                    <ListItemButton style={{ borderRadius: '1rem' }} id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId) }}>
+                    <ListItemButton style={{ borderRadius: '1rem' }} id={listButtonId} key={itemId} disableRipple={true} onClick={() => { toggleSingleList(itemId, ref) }}>
                         <Stack direction="row" justifyContent="space-between" style={{ width: "100%", paddingTop: '0.2rem', paddingBottom: '0.20rem', paddingLeft: '0.25rem' }} >
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" style={{ width: "100%" }} spacing={2}>
                                 {CENTER_PROFILE_ITEMS && !isOpen && <div style={{ width: '2rem' }}></div>}
@@ -179,16 +190,20 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
 
     const toggleSingleList = (listId) => {
         setListOpen({ ...listOpen, [listId]: !listOpen[listId] })
+        // If the list is not open, then scroll to it once it opens
+        if(!listOpen[listId]) {
+            scrollTo(refArr.current[itemOrder.indexOf(listId)])
+        }
     }
 
     const buildProfileItems = () => {
         const itemComponents = []
-        itemOrder.forEach(itemId => {
+        itemOrder.forEach((itemId, index) => {
             const item = profileItems[itemId]
             const { type: itemType, content, config } = item
             if (itemType === "list") {
                 itemComponents.push(
-                    buildListItem(itemId, content, config)
+                    buildListItem(itemId, content, config, refArr.current[index])
                 )
             }
             if (itemType === "uri") {
