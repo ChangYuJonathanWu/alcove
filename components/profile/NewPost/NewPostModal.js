@@ -9,6 +9,7 @@ import Image from 'next/image';
 import InstagramIcon from '@/components/profile/static/instagram-color-64.png';
 import SpotifyIcon from '@/components/profile/static/spotify-logo.png';
 import AllTrailsIcon from '@/components/profile/static/alltrails-logo.png';
+import TikTokLogo from '@/components/profile/static/tiktok-logo.png';
 // Post Forms
 import StandardPostForm from './StandardPostForm'
 // Post Icons
@@ -92,7 +93,9 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
             case "youtube":
                 return <PostTypeButton name="YouTube" icon={<YouTubeIcon style={{ width: 20, color: 'red' }} />} disabled={disabled} standalone={standalone} />
             case "alltrails":
-                return <PostTypeButton name="AllTrails (coming soon)" icon={<Image placeholder="blur" src={AllTrailsIcon} width={20} height={20} alt="AllTrails Logo" />} disabled={disabled} standalone={standalone} />    
+                return <PostTypeButton name="AllTrails (coming soon)" icon={<Image placeholder="blur" src={AllTrailsIcon} width={20} height={20} alt="AllTrails Logo" />} disabled={disabled} standalone={standalone} />
+            case "tiktok":
+                return <PostTypeButton name="TikTok (coming soon)" icon={<Image placeholder="blur" src={TikTokLogo} width={20} height={20} alt="TikTok Logo" style={{borderRadius: '5px'}} />} disabled={disabled} standalone={standalone} />
             default:
                 return <div></div>
         }
@@ -125,18 +128,23 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                         <ToggleButton value="standard" aria-label="Standard post" data-cy="new-post-type-standard" >
                             {getPostTypeButton({ value: "standard" })}
                         </ToggleButton>
+                        <ToggleButton data-cy="new-post-type-alltrails" value="alltrails" aria-label="All Trails post" disabled={true}>
+                            {getPostTypeButton({ value: "alltrails", disabled: true })}
+                        </ToggleButton>
                         <ToggleButton value="instagram" aria-label="Instagram post" data-cy="new-post-type-instagram">
                             {getPostTypeButton({ value: "instagram" })}
                         </ToggleButton>
                         <ToggleButton value="spotify" aria-label="Spotify post" data-cy="new-post-type-spotify">
                             {getPostTypeButton({ value: "spotify" })}
                         </ToggleButton>
+                        <ToggleButton data-cy="new-post-type-tiktok" value="tiktok" aria-label="TikTok post" disabled={true}>
+                            {getPostTypeButton({ value: "tiktok", disabled: true })}
+                        </ToggleButton>
                         <ToggleButton data-cy="new-post-type-youtube" value="youtube" aria-label="YouTube post">
                             {getPostTypeButton({ value: "youtube" })}
                         </ToggleButton>
-                        <ToggleButton data-cy="new-post-type-alltrails" value="alltrails" aria-label="All Trails post" disabled={true}>
-                            {getPostTypeButton({ value: "alltrails", disabled: true })}
-                        </ToggleButton>
+
+
                     </ToggleButtonGroup>}
                 </Stack>
             </Box>
