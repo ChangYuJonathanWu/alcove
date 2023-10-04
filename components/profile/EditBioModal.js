@@ -177,7 +177,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                     <TextField size="small" id="edit-bio-tiktok" style={{ width: "100%" }} label="Tiktok" value={newTiktok} onBlur={() => processHandle(newTiktok, setNewTiktok, "tiktok")} onChange={(e) => setNewTiktok(e.currentTarget.value)} />
                     <TextField onClick={scrollToBottom} size="small" id="edit-bio-twitter" style={{ width: "100%" }} label="Twitter" onBlur={() => processHandle(newTwitter, setNewTwitter, "twitter")} value={newTwitter} onChange={(e) => setNewTwitter(e.currentTarget.value)} />
                     <TextField onClick={scrollToBottom} size="small" id="edit-bio-reddit" style={{ width: "100%" }} label="Reddit" onBlur={() => processHandle(newReddit, setNewReddit, "reddit")} value={newReddit} onChange={(e) => setNewReddit(e.currentTarget.value)} />
-                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-linkedin" style={{ width: "100%" }} label="Linkedin" onBlur={() => processHandle(newLinkedin, setNewLinkedin, "linkedin")} value={newLinkedin} onChange={(e) => setNewLinkedin(e.currentTarget.value)} />
+                    <TextField onClick={scrollToBottom} size="small" id="edit-bio-linkedin" style={{ width: "100%" }} label="LinkedIn" onBlur={() => processHandle(newLinkedin, setNewLinkedin, "linkedin")} value={newLinkedin} onChange={(e) => setNewLinkedin(e.currentTarget.value)} />
 
                     <Stack direction="row" spacing={1}>
                         <Button id="edit-bio-cancel" ref={bottomRef} disabled={loading} onClick={handleClose}>Cancel</Button>
