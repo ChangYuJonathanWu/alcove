@@ -7,15 +7,18 @@ import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp'
 import * as Sentry from '@sentry/nextjs'
 import { resizeImage, uploadImage } from '@/utils/imageProcessing';
+import { firebaseAdmin } from '@/lib/firebase-admin'
+
 
 
 const deleteBackgroundPhoto = async (uid) => {
     const fullProfile = await getFullProfile(uid)
     if (fullProfile?.background?.type === "image") {
-        const bucket = getStorage().bucket();
+        const bucket = firebaseAdmin.storage().bucket();
         const fileName = fullProfile.background.url.split("/").pop()
         const file = bucket.file(`public/profile/images/${fileName}`)
-        await file.delete()
+        console.log("Deleting profile background photo: ", file.name)
+        const result = await file.delete()
     }
 }
 async function handler(req, res) {
