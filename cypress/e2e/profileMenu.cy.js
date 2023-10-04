@@ -13,7 +13,7 @@ describe('Profile Menu', () => {
         cy.get('[data-cy=menu-fab--backdrop]').should('exist').should('not.be.visible')
 
         // Hover over the menu FAB avatar
-        cy.get('[data-cy=menu-fab--profile-photo]').trigger('mouseover')
+        cy.get('[data-cy=menu-fab--profile-photo]').should('be.visible').trigger('mouseover')
 
         //The backdrop should be visible
         cy.get('[data-cy=menu-fab--backdrop]').should('be.visible')

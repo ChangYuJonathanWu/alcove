@@ -71,7 +71,7 @@ export default function Dashboard() {
         return (
 
             <>
-                <Typography variant="h3" style={{ fontWeight: '600' }}>Onboarding Signups</Typography>
+                <Typography variant="h3" style={{ fontWeight: '600' }}>{`Onboarding Signups (${toOnboard.length})`}</Typography>
                 <Stack spacing={1}>
                     {toOnboard.map((signup) => {
                         const { email, _id, handle, attempts = 0 } = signup
@@ -88,7 +88,7 @@ export default function Dashboard() {
                     }
                     )}
                 </Stack>
-                <Typography variant="h3">Follow Up Signups</Typography>
+                <Typography variant="h3">{`Follow Up Signups (${toFollowUp.length})`}</Typography>
                 <Stack spacing={1}>
                     {toFollowUp.map((signup) => {
                         const { email, _id, handle, attempts = 0 } = signup
@@ -128,7 +128,7 @@ export default function Dashboard() {
                     }
                     )}
                 </Stack>
-                <Typography variant="h3">Completed Signups</Typography>
+                <Typography variant="h3">{`Completed Signups (${completedSignups.length})`}</Typography>
                 <Stack style={{ marginTop: '1rem' }}>
                     {completedSignups.map((signup) => {
                         const { email, _id, handle } = signup
@@ -169,11 +169,13 @@ export default function Dashboard() {
 
             <main>
                 <Stack style={{ margin: '1rem' }}>
+                    <Typography variant="h1">{`Total Accounts: ${signups.length}`}</Typography>
                     {status && <Typography color="red">{status}</Typography>}
                     <Stack direction="row" spacing={2} style={{ padding: '1rem' }}>
                         <Button onClick={onTestOnboardingEmail} variant={"contained"}>Send Test Onboarding</Button>
                         <Button onClick={() => setEditMode(!editMode)} variant={"contained"}>Toggle Edit Mode</Button>
                         <Button onClick={onTestAlert} variant="contained">Send Test Alert</Button>
+
                     </Stack>
 
                     {buildSignups()}
