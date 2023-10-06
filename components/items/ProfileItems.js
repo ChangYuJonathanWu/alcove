@@ -54,17 +54,32 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const [listIdToPostTo, setListIdToPostTo] = useState(null)
     const [postToEdit, setPostToEdit] = useState(null)
     const [itemIdToReorder, setItemIdToReorder] = useState(null)
+    const [savedItemOrder, setSavedItemOrder] = useState(null)
 
     const { profile } = user
     const { items: profileItems, item_order: itemOrder = [] } = profile
 
     useEffect(() => {
+        let unchangedItems = true
+        if (itemOrder.length === Object.keys(listOpen).length) {
+            // if every item in itemOrder is in listOpen
+
+            itemOrder.forEach(itemId => {
+                if (!(itemId in listOpen)) {
+                    unchangedItems = false
+                }
+            })
+        } else {
+            unchangedItems = false
+        }
+        if (unchangedItems) return
+
         const listOpenStates = {}
         itemOrder.forEach(itemId => {
             listOpenStates[itemId] = false
         })
         setListOpen(listOpenStates)
-    }, [itemOrder])
+    }, [itemOrder, listOpen])
 
     const refArr = useRef([])
     const divRef = createRef()
@@ -191,7 +206,7 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
     const toggleSingleList = (listId) => {
         setListOpen({ ...listOpen, [listId]: !listOpen[listId] })
         // If the list is not open, then scroll to it once it opens
-        if(!listOpen[listId]) {
+        if (!listOpen[listId]) {
             scrollTo(refArr.current[itemOrder.indexOf(listId)])
         }
     }
