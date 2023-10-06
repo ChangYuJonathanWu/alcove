@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
 import { protectedApiCall } from '@/utils/api';
+import { captureException } from '@sentry/nextjs';
 // support delete and rename item
 export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     useEffect(() => {
@@ -48,6 +49,7 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
                 fileToUse = compressedFile
             } catch (e){
                 console.error(e)
+                captureException(e)
                 fileToUse = file
             }
 
