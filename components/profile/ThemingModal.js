@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
 import { protectedApiCall } from '@/utils/api';
+import { captureException } from '@sentry/nextjs';
 // support delete and rename item
 export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     useEffect(() => {
@@ -20,34 +21,55 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     const [photoUpload, setPhotoUpload] = useState(null)
     const [photoChanged, setPhotoChanged] = useState(false)
     const [photoOperation, setPhotoOperation] = useState('none')
+    const [errorText, setErrorText] = useState("")
 
     const onThemeUpdate = async () => {
-        if(photoOperation === 'none') {
+        setErrorText("")
+        if (photoOperation === 'none') {
             setOpen(false)
             return
         }
-
-        setLoading(true)
-        const formData = new FormData()
-        formData.append("background_image_operation", photoOperation)
-        if(photoOperation === 'new') {
-            formData.append("background_image", photoUpload)
+        try {
+            setLoading(true)
+            const formData = new FormData()
+            formData.append("background_image_operation", photoOperation)
+            if (photoOperation === 'new') {
+                formData.append("background_image", photoUpload)
+            }
+            const result = await protectedApiCall(`/api/profile/theme`, 'POST', formData)
+            setLoading(false)
+            setOpen(false)
+            triggerReload(Date.now())
+        } catch (e) {
+            console.error(e)
+            captureException(e)
+            setLoading(false)
+            setErrorText("Sorry, something went wrong. Please try a different photo.")
         }
-        const result = await protectedApiCall(`/api/profile/theme`, 'POST', formData)
-        setLoading(false)
-        setOpen(false)
-        triggerReload(Date.now())
+
     }
 
-    const updateBackgroundPhoto =  async (e) => {
+    const updateBackgroundPhoto = async (e) => {
         const file = e.target.files[0]
+        e.target.value = ""
+
         if (file) {
-            const compressedFile = await compressImage(file)
-            setPhotoUpload(compressedFile)
+            let fileToUse = file
+            try {
+                const compressedFile = await compressImage(file)
+                fileToUse = compressedFile
+            } catch (e) {
+                console.error("Unable to compress image - skipping compression stage")
+                console.error(e)
+                captureException(e)
+                fileToUse = file
+            }
+
+            setPhotoUpload(fileToUse)
             setPhotoOperation('new')
             setBackground({
                 type: 'photo',
-                url: URL.createObjectURL(compressedFile)
+                url: URL.createObjectURL(fileToUse)
             })
         }
     }
@@ -55,14 +77,24 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     const onThemeReset = async () => {
         setBackground(originalBackground)
         setPhotoOperation('none')
+        setErrorText("")
     }
 
     const onPhotoRemove = async () => {
         setPhotoUpload(null)
+        setErrorText("")
         setPhotoOperation('clear')
         setBackground({
             type: "none",
         })
+    }
+
+    const onClose = () => {
+        setBackground(originalBackground)
+        setPhotoOperation('none')
+        setPhotoUpload(null)
+        setErrorText("")
+        setOpen(false)
     }
 
     const modalStyle = {
@@ -108,11 +140,11 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
 
                         </div>
                     </Stack>
-                
+                    {errorText && <Typography variant="body2" style={{ color: 'red' }}>{errorText}</Typography>}
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                        <Button disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button disabled={loading} onClick={onClose}>Cancel</Button>
                         <Button disabled={loading} onClick={onThemeReset} variant="outlined" color="error">Reset</Button>
-                        <Button disabled={loading || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">Update</Button>
+                        <Button disabled={loading || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>
