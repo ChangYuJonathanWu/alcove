@@ -42,12 +42,20 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     const updateBackgroundPhoto =  async (e) => {
         const file = e.target.files[0]
         if (file) {
-            const compressedFile = await compressImage(file)
-            setPhotoUpload(compressedFile)
+            let fileToUse = file
+            try {
+                const compressedFile = await compressImage(file)
+                fileToUse = compressedFile
+            } catch (e){
+                console.error(e)
+                fileToUse = file
+            }
+
+            setPhotoUpload(fileToUse)
             setPhotoOperation('new')
             setBackground({
                 type: 'photo',
-                url: URL.createObjectURL(compressedFile)
+                url: URL.createObjectURL(fileToUse)
             })
         }
     }
