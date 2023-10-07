@@ -76,7 +76,7 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
         triggerReload(Date.now())
     }
 
-    const hasContent = title || subtitle || caption || uri || postPhoto
+    const hasContent = photoMode ? postPhoto : (title || subtitle || caption || uri || postPhoto)
     return (
         <div style={{ width: "100%" }} data-cy="standard-post-form">
             <Stack alignItems="center" spacing={2} >
