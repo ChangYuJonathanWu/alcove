@@ -16,7 +16,7 @@ import { isValidUrl } from '@/utils/formatters';
 export default function StandardPost({ item, editMode = false, setPostToEdit }) {
     const { id, parentId, uri, title, image, subtitle, caption } = item
     const captionToUse = caption ? `${caption}` : ""
-    const photoOnly = !title && !subtitle && !caption && image
+    const photoOnly = !title && !subtitle && !caption && !uri && image
 
     const [photoLoaded, setPhotoLoaded] = useState(false)
 
@@ -28,35 +28,35 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     const PHOTO_SKELETON_HEIGHT = '12rem'
     const IMAGE_BORDER_RADIUS = '0.5rem'
 
-    const basePostStyle = photoOnly ? {} : { padding: '1rem', backgroundColor: '#fafafa', border: '1px #ebebeb solid', borderRadius: '1rem',  width: '100%' }
+    const basePostStyle = photoOnly ? { backgroundColor: editMode ? '#fafafa' : "transparent", borderRadius: "1rem", paddingBottom: editMode ? "1rem" : 0 } : { padding: '1rem', backgroundColor: '#fafafa', border: '1px #ebebeb solid', borderRadius: '1rem', width: '100%' }
     return (
         <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem", marginTop: '0rem' }}>
-            <div style={basePostStyle }>
+            <div style={basePostStyle}>
                 <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
-                    <Typography variant="h4" style={{ fontSize: '1rem', marginBottom: image && !subtitle ? '0.5rem' : 0 }}>
+                    {(title || uri) && <Typography variant="h4" style={{ fontSize: '1rem', marginBottom: image && !subtitle ? '0.5rem' : 0 }}>
                         {isValidUrl(uri) ?
                             <Link variant="inherit" color="inherit" href={uri} underline="none" target="_blank" rel="noreferrer">
                                 <Stack direction="row" spacing={1} alignItems={"center"}>
-                                    <b>{title}</b>
+                                    <b>{title || uri}</b>
                                     <OpenInNewIcon style={{ width: "1rem" }} />
                                 </Stack>
                             </Link>
                             : title}
-                    </Typography>
+                    </Typography>}
 
                     {subtitle && <Typography variant="subtitle2" fontSize="0.7rem" style={{ marginBottom: '0.2rem' }}>{`${subtitle}`}</Typography>}
                     {image &&
-                        <div style={{width: '100%'}}>
-                            {!photoLoaded && <Skeleton variant="rectangular" height={PHOTO_SKELETON_HEIGHT} style={{borderRadius: IMAGE_BORDER_RADIUS}}/>}
-                            <Avatar variant="square" imgProps={{ onLoad: () => setPhotoLoaded(true), style: {borderRadius: IMAGE_BORDER_RADIUS} }} sx={{ display: photoLoaded ? 'block' : 'none', width: '100%', height: "100%" }} src={image} />
+                        <div style={{ width: '100%' }}>
+                            {!photoLoaded && <Skeleton variant="rectangular" height={PHOTO_SKELETON_HEIGHT} style={{ borderRadius: IMAGE_BORDER_RADIUS }} />}
+                            <Avatar variant="square" imgProps={{ onLoad: () => setPhotoLoaded(true), style: { borderRadius: IMAGE_BORDER_RADIUS } }} sx={{ display: photoLoaded ? 'block' : 'none', width: '100%', height: "100%" }} src={image} />
                         </div>
                     }
-                    <Stack direction="row" style={{ width: "100%", marginTop: '0.5rem' }} alignContent="space-between" justifyContent="space-between">
+                    {(captionToUse || editMode) && <Stack direction="row" style={{ width: "100%", marginTop: '0.5rem' }} alignContent="space-between" justifyContent="space-between">
                         <Stack>
                             {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
                         </Stack>
                         {editMode && <EditNoteIcon onClick={onEditClick} />}
-                    </Stack>
+                    </Stack>}
 
                 </Stack >
             </div>
