@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { stripSpaces, trimSpaces } from '@/utils/formatters';
 import CompactItemView from './RearrangePosts/CompactItemView';
 import InstagramPost from '../items/InstagramPost';
+import YouTubePost from '../items/YouTubePost';
 
 export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorder, triggerReload, user }) {
   const [loading, setLoading] = useState(false)
@@ -21,9 +22,14 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       const { type } = post
       if (type === "spotify") {
         postMap[id] = <SpotifyItem noPadding={true} item={post} />
-      } else if (type === "instagram") {
+      }
+      else if (type === "instagram") {
         postMap[id] = <div id={id}><InstagramPost item={post} miniMode={true} /></div>
-      } else {
+      }
+      else if (type === "youtube") {
+        postMap[id] = <YouTubePost item={post} miniMode={true}/>
+      }
+      else {
         postMap[id] = <CompactItemView item={post} />
       }
     })
@@ -97,7 +103,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       const postType = postsToRearrange[id]["type"]
       const padding = postType === "spotify" ? 0 : "1rem"
       return (
-        <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop: padding, paddingBottom: padding }}>
+        <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop: padding, paddingBottom: padding, borderBottom: '1px lightgray solid' }}>
 
           {postComponents[id]}
           <Stack direction="row" spacing={2}>
@@ -130,7 +136,7 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
       <Box style={modalStyle}>
         <Stack alignItems="center" >
           {buildItems()}
-          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
+          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around" style={{margin: '1rem 0rem 1rem 0rem'}}>
             <Button disabled={loading} onClick={onCancel}>Cancel</Button>
             <Button disabled={loading} onClick={onUpdate} variant="contained">Update</Button>
           </Stack>
