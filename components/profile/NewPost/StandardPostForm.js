@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/react';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 
-export default function StandardPostForm({ onExit, listId, clearItems, triggerReload }) {
+export default function StandardPostForm({ onExit, listId, clearItems, triggerReload, photoMode = false }) {
     const [title, setTitle] = useState("")
     const [subtitle, setSubtitle] = useState("")
     const [caption, setCaption] = useState("")
@@ -44,7 +44,7 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
 
     const onPost = async () => {
         setError("")
-        if(uri && !isValidUrlWithoutProtocol(uri)) {
+        if (uri && !isValidUrlWithoutProtocol(uri)) {
             setError("Please enter a valid link")
             return
         }
@@ -56,7 +56,7 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
         formData.append("subtitle", subtitle)
         formData.append("caption", caption)
         formData.append("uri", uri)
-        
+
         const result = await protectedApiCall(`/api/profile/items/${listId}/post`, 'POST', formData)
         setLoading(false)
         if (result.status !== 200) {
@@ -89,7 +89,7 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
                     <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
                 </div>}
                 {!postPhoto && <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
-                    <Stack data-cy="standard-post-form--image-field" justifyContent="center" alignItems="center" style={{ width: "100%", height: '8rem', border: "2px dashed", borderRadius: '1rem' }}>
+                    <Stack data-cy="standard-post-form--image-field" justifyContent="center" alignItems="center" style={{ width: "100%", height: photoMode ? "12rem" : '8rem', border: "2px dashed", borderRadius: '1rem' }}>
                         <input
                             accept="image/*"
                             style={{ display: 'none' }}
@@ -110,10 +110,10 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
                 </Button>
                 }
 
-                <TextField data-cy="standard-post-form--title-field" style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />
-                <TextField data-cy="standard-post-form--subtitle-field" style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />
-                <TextField data-cy="standard-post-form--caption-field" style={{ width: "100%" }} size="small" multiline rows={3} label="Caption" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
-                <TextField data-cy="standard-post-form--link-field" onClick={scrollToBottom} style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(formatUri(e.currentTarget.value))} />
+                {!photoMode && <TextField data-cy="standard-post-form--title-field" style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />}
+                {!photoMode && <TextField data-cy="standard-post-form--subtitle-field" style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />}
+                <TextField data-cy="standard-post-form--caption-field" style={{ width: "100%" }} size="small" multiline rows={3} label="Caption (optional)" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
+                {!photoMode && <TextField data-cy="standard-post-form--link-field" onClick={scrollToBottom} style={{ width: "100%", paddingBottom: "2rem" }} size="small" label="Link" value={uri} onChange={(e) => setUri(formatUri(e.currentTarget.value))} />}
                 {error && <span>{error}</span>}
                 <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-around">
 

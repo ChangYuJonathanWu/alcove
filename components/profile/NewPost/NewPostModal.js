@@ -10,6 +10,7 @@ import InstagramIcon from '@/components/profile/static/instagram-color-64.png';
 import SpotifyIcon from '@/components/profile/static/spotify-logo.png';
 import AllTrailsIcon from '@/components/profile/static/alltrails-logo.png';
 import TikTokLogo from '@/components/profile/static/tiktok-logo.png';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 // Post Forms
 import StandardPostForm from './StandardPostForm'
 // Post Icons
@@ -86,6 +87,8 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
         switch (value) {
             case "standard":
                 return <PostTypeButton name="Create your own" icon={<ArticleIcon style={{ width: 20, color: 'orange', paddingBottom: '1px' }} />} disabled={disabled} standalone={standalone} />
+            case "photo":
+                return <PostTypeButton name="Photo" icon={<InsertPhotoIcon style={{ width: 20, color: 'blue', paddingBottom: '1px' }} />} disabled={disabled} standalone={standalone} />
             case "instagram":
                 return <PostTypeButton name="Instagram" icon={<Image placeholder="blur" src={InstagramIcon} width={20} height={20} alt="Instagram logo" style={{ paddingBottom: '1px' }} />} disabled={disabled} standalone={standalone} />
             case "spotify":
@@ -95,7 +98,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
             case "alltrails":
                 return <PostTypeButton name="AllTrails (coming soon)" icon={<Image placeholder="blur" src={AllTrailsIcon} width={20} height={20} alt="AllTrails Logo" />} disabled={disabled} standalone={standalone} />
             case "tiktok":
-                return <PostTypeButton name="TikTok (coming soon)" icon={<Image placeholder="blur" src={TikTokLogo} width={20} height={20} alt="TikTok Logo" style={{borderRadius: '5px'}} />} disabled={disabled} standalone={standalone} />
+                return <PostTypeButton name="TikTok (coming soon)" icon={<Image placeholder="blur" src={TikTokLogo} width={20} height={20} alt="TikTok Logo" style={{ borderRadius: '5px' }} />} disabled={disabled} standalone={standalone} />
             default:
                 return <div></div>
         }
@@ -115,6 +118,7 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                             {getPostTypeButton({ value: postType, standalone: true })}
                         </ToggleButton>}
                     {postType === "standard" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
+                    {postType === "photo" && <StandardPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} photoMode={true} triggerReload={triggerReload} />}
                     {postType === "instagram" && <InstagramPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {postType === "spotify" && <SpotifyPostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
                     {postType === "youtube" && <YouTubePostForm onExit={onExit} listId={listId} clearItems={clearItems} setLoading={setLoading} setError={setError} triggerReload={triggerReload} />}
@@ -127,6 +131,9 @@ export default function NewPostModal({ listIdToPostTo, setListIdToPostTo, trigge
                     >
                         <ToggleButton value="standard" aria-label="Standard post" data-cy="new-post-type-standard" >
                             {getPostTypeButton({ value: "standard" })}
+                        </ToggleButton>
+                        <ToggleButton value="photo" aria-label="Photo post" data-cy="new-post-type-photo" >
+                            {getPostTypeButton({ value: "photo" })}
                         </ToggleButton>
                         <ToggleButton data-cy="new-post-type-alltrails" value="alltrails" aria-label="All Trails post" disabled={true}>
                             {getPostTypeButton({ value: "alltrails", disabled: true })}
