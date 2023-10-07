@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { InstagramEmbed } from 'react-social-media-embed';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { protectedApiCall } from '@/utils/api';
@@ -22,19 +21,19 @@ export default function InstagramPost({ item, editMode = false, triggerReload, m
     // Show a gradient in minimode
     const containerStyle = miniMode ? {
         position: 'relative', width: '100%', height: MINI_MODE_HEIGHT
-    } : { margin: "0rem 1rem 1rem 1rem", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px #ebebeb solid' }
+    } : { margin: "0rem 1rem 1rem 1rem", backgroundColor: 'white', borderRadius: '1rem', borderBottom: '1px lightgrey solid', border: '1px lightgrey solid', boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.1)' }
     const igFrameStyle = miniMode ? {
         height: MINI_MODE_HEIGHT
     } : {
         borderRadius: editMode ? "1rem 1rem 0rem 0rem" : '1rem',
-        minHeight: xsmall ? "438px" : small ? '450px' : '480px',
+        minHeight: '520px'
 
     }
     return (
         <Stack direction="column" alignItems="center" style={containerStyle}>
             {/* Add gradient overlay on top */}
             {miniMode && <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: MINI_MODE_HEIGHT, background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)' }}></div>}
-            <iframe src={`${uri}embed`} width="100%" frameBorder="0" scrolling="yes" allowtransparency="true" style={igFrameStyle}></iframe>
+            <iframe src={`${uri}embed/captioned`} width="100%" frameBorder="0" scrolling="yes" allowtransparency="true" style={igFrameStyle}></iframe>
             {editMode && <DeleteIcon style={{ margin: '1rem' }} onClick={async () => await onDeleteIgPost()} color={deleteRunning ? "action" : "black"} />}
         </Stack>
     )
