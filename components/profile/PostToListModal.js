@@ -99,6 +99,7 @@ export default function PostToListModal({ listIdToPostTo, setListIdToPostTo, tri
 
     const updatePostPhoto = async (e) => {
         const photo = e.target.files[0]
+        e.target.value = ""
         try {
             const compressedFile = await compressImage(photo)
             setPostPhoto(compressedFile)

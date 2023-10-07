@@ -21,10 +21,13 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
     }
     const updatePostPhoto = async (e) => {
         const photo = e.target.files[0]
+        e.target.value = ""
         try {
             const compressedFile = await compressImage(photo)
             setPostPhoto(compressedFile)
         } catch (e) {
+            setPostPhoto(photo)
+            console.error("Could not compress post photo - using original.")
             console.error(e)
             Sentry.captureException(e)
         }

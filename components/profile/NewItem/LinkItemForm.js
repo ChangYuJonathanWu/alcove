@@ -12,18 +12,6 @@ export default function LinkItemForm({ onExit, triggerReload }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    const updatePostPhoto = async (e) => {
-        const photo = e.target.files[0]
-        try {
-            const compressedFile = await compressImage(photo)
-            setPostPhoto(compressedFile)
-        } catch (e) {
-            console.error(e)
-            Sentry.captureException(e)
-        }
-
-    }
-
     const clearInputs = () => {
         setName("")
         setUri("")

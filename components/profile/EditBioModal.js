@@ -89,6 +89,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const updateProfilePhoto = async (e) => {
         setLoading(true)
         const file = e.target.files[0]
+        e.target.value = ""
         const compressedFile = await compressImage(file)
         const formData = new FormData()
         formData.append('profilePhoto', compressedFile)
