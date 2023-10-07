@@ -101,9 +101,10 @@ export default function RearrangePostsModal({ itemIdToReorder, setItemIdToReorde
     }
     const itemList = order.map((id, idx) => {
       const postType = postsToRearrange[id]["type"]
-      const padding = postType === "spotify" ? 0 : "1rem"
+      const paddingTop = postType === "spotify" ? "0.8rem" : "1rem"
+      const paddingBottom = postType === "spotify" ? 0 : "1rem"
       return (
-        <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop: padding, paddingBottom: padding, borderBottom: '1px lightgray solid' }}>
+        <Stack key={id} direction="row" alignItems="center" justifyContent="space-between" style={{ width: '100%', paddingTop, paddingBottom, borderBottom: '1px lightgray solid' }}>
 
           {postComponents[id]}
           <Stack direction="row" spacing={2}>
