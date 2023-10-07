@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { InstagramEmbed } from 'react-social-media-embed';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { protectedApiCall } from '@/utils/api';
@@ -27,7 +26,7 @@ export default function InstagramPost({ item, editMode = false, triggerReload, m
         height: MINI_MODE_HEIGHT
     } : {
         borderRadius: editMode ? "1rem 1rem 0rem 0rem" : '1rem',
-        minHeight: '500px'
+        minHeight: '520px'
 
     }
     return (
