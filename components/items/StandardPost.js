@@ -51,11 +51,11 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
                             <Avatar variant="square" imgProps={{ onLoad: () => setPhotoLoaded(true), style: { borderRadius: IMAGE_BORDER_RADIUS } }} sx={{ display: photoLoaded ? 'block' : 'none', width: '100%', height: "100%" }} src={image} />
                         </div>
                     }
-                    {(captionToUse || editMode) && <Stack direction="row" style={{ width: "100%", marginTop: '0.5rem' }} alignContent="space-between" justifyContent="space-between">
-                        <Stack>
-                            {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
-                        </Stack>
-                        {editMode && <EditNoteIcon onClick={onEditClick} />}
+                    {(captionToUse || editMode) && <Stack direction="column" style={{ width: "100%", marginTop: '0.5rem' }} alignContent="space-between" justifyContent="space-between">
+                        {captionToUse && <Typography variant="caption" style={{ whiteSpace: "pre-wrap" }}>{captionToUse}</Typography>}
+                        <Stack direction="row" justifyContent="center" style={{width: '100%', marginTop: '0.5rem'}}>
+                            {editMode && <EditNoteIcon onClick={onEditClick} />}
+                            </Stack>
                     </Stack>}
 
                 </Stack >
