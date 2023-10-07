@@ -16,6 +16,7 @@ import { isValidUrl } from '@/utils/formatters';
 export default function StandardPost({ item, editMode = false, setPostToEdit }) {
     const { id, parentId, uri, title, image, subtitle, caption } = item
     const captionToUse = caption ? `${caption}` : ""
+    const photoOnly = !title && !subtitle && !caption && image
 
     const [photoLoaded, setPhotoLoaded] = useState(false)
 
@@ -27,9 +28,10 @@ export default function StandardPost({ item, editMode = false, setPostToEdit }) 
     const PHOTO_SKELETON_HEIGHT = '12rem'
     const IMAGE_BORDER_RADIUS = '0.5rem'
 
+    const basePostStyle = photoOnly ? {} : { padding: '1rem', backgroundColor: '#fafafa', border: '1px #ebebeb solid', borderRadius: '1rem',  width: '100%' }
     return (
         <ListItem key={id} sx={{ paddingTop: "0rem", paddingBottom: "1rem", marginTop: '0rem' }}>
-            <div style={{ padding: '1rem', backgroundColor: '#fafafa', border: '1px #ebebeb solid', borderRadius: '1rem', width: '100%' }}>
+            <div style={basePostStyle }>
                 <Stack direction="column" alignItems="start" spacing={0} style={{ width: "100%" }}>
                     <Typography variant="h4" style={{ fontSize: '1rem', marginBottom: image && !subtitle ? '0.5rem' : 0 }}>
                         {isValidUrl(uri) ?
