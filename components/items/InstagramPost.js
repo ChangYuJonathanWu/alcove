@@ -27,14 +27,14 @@ export default function InstagramPost({ item, editMode = false, triggerReload, m
         height: MINI_MODE_HEIGHT
     } : {
         borderRadius: editMode ? "1rem 1rem 0rem 0rem" : '1rem',
-        minHeight: xsmall ? "438px" : small ? '450px' : '480px',
+        minHeight: '500px'
 
     }
     return (
         <Stack direction="column" alignItems="center" style={containerStyle}>
             {/* Add gradient overlay on top */}
             {miniMode && <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: MINI_MODE_HEIGHT, background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)' }}></div>}
-            <iframe src={`${uri}embed`} width="100%" frameBorder="0" scrolling="yes" allowtransparency="true" style={igFrameStyle}></iframe>
+            <iframe src={`${uri}embed/captioned`} width="100%" frameBorder="0" scrolling="yes" allowtransparency="true" style={igFrameStyle}></iframe>
             {editMode && <DeleteIcon style={{ margin: '1rem' }} onClick={async () => await onDeleteIgPost()} color={deleteRunning ? "action" : "black"} />}
         </Stack>
     )
