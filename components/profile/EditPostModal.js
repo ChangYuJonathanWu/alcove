@@ -105,6 +105,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
 
     const updatePostPhoto = async (e) => {
         const file = e.target.files[0]
+        e.target.value = ""
         const compressedFile = await compressImage(file)
         setPhotoChanged(true)
         setPhotoUpload(compressedFile)
