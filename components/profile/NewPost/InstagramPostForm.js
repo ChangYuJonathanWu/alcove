@@ -5,6 +5,8 @@ import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
+import InstagramShareIcon from '@/components/profile/static/instagram-share.jpg'
+import Image from 'next/image';
 
 export default function InstagramPostForm({ onExit, listId, clearItems, triggerReload }) {
     const [loading, setLoading] = useState(false)
@@ -60,9 +62,15 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
         <div style={{ width: "100%" }} data-cy="instagram-post-form">
             <Stack alignItems="center" spacing={2} >
                 <Stack spacing={2}>
-                    <Typography variant="subtitle2" style={{color: 'grey'}}>Share an Instagram post. The post can be from any public profile including your own.</Typography>
+                    <Typography variant="subtitle2" style={{ color: 'grey' }}>Share an Instagram post from any <b>public</b> profile including your own.</Typography>
                     <TextField data-cy="instagram-post-form--link-field" style={{ width: "100%" }} size="small" label="Instagram Post Link" value={instagramUri} placeholder='https://www.instagram.com/p/...' onChange={onInstagramUriChange} />
-                    <Typography variant="subtitle2"  style={{color: 'grey'}}>{`To get the post link, click the Share icon on the post, then Copy Link`}</Typography>
+                    <Stack direction="row" alignItems="center">
+                        <Typography variant="subtitle2" style={{ color: 'grey' }}>To get the post link, click </Typography>
+                        <Image src={InstagramShareIcon} style={{ padding: '0px 5px 5px 5px' }} height="16" alt="Instagram Share Icon" />
+                        <Typography variant="subtitle2" style={{ color: 'grey' }}>{` (Share) on the post and then "Copy Link".`}</Typography>
+                    </Stack>
+                    <Typography variant="subtitle2" style={{ color: 'grey' }}>Posts not showing up? Make sure to <a style={{color: 'black'}} href="https://help.instagram.com/252460186989212/?cms_platform=iphone-app&helpref=platform_switcher">enable embedding</a> on Instagram.</Typography>
+
                 </Stack>
 
                 {error && <span>{error}</span>}
