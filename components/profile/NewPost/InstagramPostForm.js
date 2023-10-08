@@ -67,7 +67,7 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
                     </span>
                     <TextField data-cy="instagram-post-form--link-field" style={{ width: "100%" }} size="small" label="Instagram Post Link" value={instagramUri} placeholder='https://www.instagram.com/p/...' onChange={onInstagramUriChange} />
 
-                    <Typography variant="subtitle2" style={{ color: 'grey' }}>Posts not showing up? Make sure to <a style={{color: 'black'}} href="https://help.instagram.com/252460186989212/?cms_platform=iphone-app&helpref=platform_switcher">enable embedding</a> on Instagram.</Typography>
+                    <Typography variant="subtitle2" style={{ color: 'grey' }}>Posts not showing up? Make sure to <a style={{color: 'black'}} target="_blank" href="https://help.instagram.com/252460186989212/?cms_platform=iphone-app&helpref=platform_switcher">turn on embedding</a> on Instagram.</Typography>
 
                 </Stack>
 
