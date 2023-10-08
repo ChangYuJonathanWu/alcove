@@ -5,7 +5,8 @@ import { ClimbingBoxLoader, SquareLoader, PulseLoader } from 'react-spinners';
 import { compressImage } from '@/utils/localImageProcessing';
 
 
-export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, height, disable = false }) {
+export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, onRemove = () => {}, height, disable = false }) {
+    const [photo, setPhoto] = useState(null)
     const [photoError, setPhotoError] = useState("")
     const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
 
@@ -17,9 +18,9 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
         try {
             const photo = e.target.files[0]
             e.target.value = ""
-
             const compressedFile = await compressImage(photo)
             setPhotoConversionInProgress(false)
+            setPhoto(compressedFile)
             onComplete(compressedFile)
 
         } catch (e) {
@@ -38,7 +39,7 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
     const loading = photoConversionInProgress
     return (
         <Stack style={{ width: '100%' }} spacing={2}>
-            <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
+            {<Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
                 <Stack data-cy="standard-post-form--image-field" justifyContent="center" alignItems="center" style={{ width: "100%", height, border: "2px dashed", borderRadius: '1rem' }}>
                     <input
                         accept="image/*"
@@ -53,7 +54,7 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
                         </Stack>
                     </label>
                 </Stack>
-            </Button>
+            </Button>}
             {photoError && <span style={{ textAlign: "center" }}>{photoError}</span>}
         </Stack>
     )
