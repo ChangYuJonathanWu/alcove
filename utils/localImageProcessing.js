@@ -5,6 +5,17 @@ export const compressImage = async (imageFile) => {
         maxSizeMB: 3,
         useWebWorker: true
     }
-    const compressedFile = await imageCompression(imageFile, options);
+    let fileToUse = imageFile
+    if (fileToUse.type === "image/heic" || fileToUse.type === "image/heif") {
+        const heic2any = (await import("heic2any")).default;
+        const blob = await heic2any({
+            blob: fileToUse,
+            multiple: false,
+            toType: "image/jpeg",
+            quality: 1
+        })
+        fileToUse = blob
+    }
+    const compressedFile = await imageCompression(fileToUse, options);
     return compressedFile
 }
