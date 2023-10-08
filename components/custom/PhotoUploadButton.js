@@ -9,16 +9,13 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
     const [photoError, setPhotoError] = useState("")
     const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
 
-    const reset = () => {
-        setPhotoError("")
-        setPhotoConversionInProgress(false)
-    }
 
     const onChange = async (e) => {
         onStart()
+        setPhotoConversionInProgress(true)
+        setPhotoError("")
         const photo = e.target.files[0]
         e.target.value = ""
-        setPhotoConversionInProgress(true)
         let fileToUse = photo
         try {
             const compressedFile = await compressImage(photo)
