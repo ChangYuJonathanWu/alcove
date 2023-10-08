@@ -28,6 +28,7 @@
     "fireworks-js": "^2.10.3",
     "formik": "^2.2.9",
     "framer-motion": "^10.13.1",
+    "heic2any": "^0.0.4",
     "mongodb": "^5.3.0",
     "multiparty": "^4.2.3",
     "next": "^13.4.1",

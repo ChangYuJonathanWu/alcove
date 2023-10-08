@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
+import PhotoUploadButton from '../custom/PhotoUploadButton';
 
 // support delete and rename item
 export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload }) {
@@ -20,6 +21,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setDisplayPhoto("")
         setPhotoUpload(null)
         setPhotoChanged(false)
+        setPhotoConversionInProgress(false)
         setNewLink("")
         setPostId("")
         setPostToEdit(null)
@@ -49,11 +51,13 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     const [photoUpload, setPhotoUpload] = useState(null)
     const [photoChanged, setPhotoChanged] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
     const [postId, setPostId] = useState("")
     const [parentId, setParentId] = useState("")
     const [error, setError] = useState("")
 
     const open = !!postToEdit
+    const canUpdate = newTitle || newSubtitle || newCaption || newLink || photoUpload
 
     const onPostDelete = async () => {
         setLoading(true)
@@ -101,7 +105,16 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setDisplayPhoto("")
         setPhotoUpload(null)
         setPhotoChanged(true)
+        setLoading(false)
     }
+
+    const onPhotoSelectComplete = (photo) => {
+        setPhotoUpload(photo)
+        setPhotoChanged(true)
+        setPhotoConversionInProgress(false)
+        setDisplayPhoto(URL.createObjectURL(photo))
+    }
+
 
     const updatePostPhoto = async (e) => {
         const file = e.target.files[0]
@@ -138,27 +151,13 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
             <Box style={modalStyle}>
                 <Stack alignItems="center" spacing={4} >
                     {hasPhoto &&
-                        <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={photoUpload ? URL.createObjectURL(photoUpload) : displayPhoto} style={{ marginRight: "1rem", borderRadius: '5px' }} />
+                        <Avatar variant="square" sx={{ height: '100%', width: "100%" }} src={photoUpload ? URL.createObjectURL(photoUpload) : displayPhoto} style={{ borderRadius: '5px' }} />
                     }
-                    <Stack direction="row" spacing={4}>
+                    <Stack direction="row" spacing={4} justifyContent="center" style={{width: '100%'}}>
                         {hasPhoto && <div>
                             <Button disabled={loading} onClick={onPhotoRemove} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
-                        <div>
-                            <input
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                id="post-photo-upload"
-                                type="file"
-                                onChange={updatePostPhoto}
-                            />
-                            <label htmlFor="post-photo-upload">
-                                <Button disabled={loading} style={{ margin: 0, padding: 0 }} component="span">
-                                    {hasPhoto ? "Change " : "Add Photo"}
-                                </Button>
-                            </label>
-
-                        </div>
+                        {!hasPhoto && <PhotoUploadButton onStart={() => setPhotoConversionInProgress(true)} onComplete={onPhotoSelectComplete} onError={() => setPhotoConversionInProgress(false)} height="10rem" />}
                     </Stack>
                     <TextField size="small" style={{ width: "100%" }} label="Title" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
                     <TextField size="small" style={{ width: "100%" }} label="Subtitle" value={newSubtitle} onChange={(e) => setNewSubtitle(e.currentTarget.value)} />
@@ -167,8 +166,8 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     {error && <Typography data-cy="edit-item-modal--error" color="error">{error}</Typography>}
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <Button disabled={loading} ref={bottomRef} onClick={() => setPostToEdit(null)}>Cancel</Button>
-                        <Button disabled={loading} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading} onClick={onPostUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
+                        <Button disabled={loading || photoConversionInProgress} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
+                        <Button disabled={loading || photoConversionInProgress || !canUpdate} onClick={onPostUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>

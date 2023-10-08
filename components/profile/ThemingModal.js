@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
+import PhotoUploadButton from '../custom/PhotoUploadButton';
 import { compressImage } from '@/utils/localImageProcessing';
 import { protectedApiCall } from '@/utils/api';
 import { captureException } from '@sentry/nextjs';
-// support delete and rename item
+
 export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     useEffect(() => {
         if (user) {
@@ -19,7 +20,7 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     const [background, setBackground] = useState(null)
     const [originalBackground, setOriginalBackground] = useState(null)
     const [photoUpload, setPhotoUpload] = useState(null)
-    const [photoChanged, setPhotoChanged] = useState(false)
+    const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
     const [photoOperation, setPhotoOperation] = useState('none')
     const [errorText, setErrorText] = useState("")
 
@@ -49,29 +50,22 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
 
     }
 
-    const updateBackgroundPhoto = async (e) => {
-        const file = e.target.files[0]
-        e.target.value = ""
+    const onUpdateBackgroundComplete = (photo) => {
+        setPhotoUpload(photo)
+        setPhotoOperation('new')
+        setPhotoConversionInProgress(false)
+        setBackground({
+            type: 'photo',
+            url: URL.createObjectURL(photo)
+        })
+    }
 
-        if (file) {
-            let fileToUse = file
-            try {
-                const compressedFile = await compressImage(file)
-                fileToUse = compressedFile
-            } catch (e) {
-                console.error("Unable to compress image - skipping compression stage")
-                console.error(e)
-                captureException(e)
-                fileToUse = file
-            }
+    const onUpdateBackgroundStart = () => {
+        setPhotoConversionInProgress(true)
+    }
 
-            setPhotoUpload(fileToUse)
-            setPhotoOperation('new')
-            setBackground({
-                type: 'photo',
-                url: URL.createObjectURL(fileToUse)
-            })
-        }
+    const onUpdateBackgroundError = () => {
+        setPhotoConversionInProgress(false)
     }
 
     const onThemeReset = async () => {
@@ -114,37 +108,23 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     return (
         <Modal open={!!open}>
             <Box style={modalStyle}>
-                <Stack alignItems="center" spacing={4} >
+                <Stack alignItems="center" justifyContent="center" spacing={4} >
                     <b>Background</b>
-                    Landscape images work best
                     {hasPhoto &&
-                        <Avatar variant="square" sx={{ height: '50%', width: "80%" }} src={photoOperation === "new" ? URL.createObjectURL(photoUpload) : background?.url} style={{ marginRight: "1rem", borderRadius: '5px' }} />
+                        <Avatar variant="square" sx={{ height: '50%', width: "100%" }} src={photoOperation === "new" ? URL.createObjectURL(photoUpload) : background?.url} style={{ borderRadius: '5px' }} />
                     }
-                    <Stack direction="row" spacing={4}>
+                    <Stack direction="row" justifyContent="center" spacing={4} style={{width: '100%'}}>
                         {hasPhoto && <div>
-                            <Button disabled={loading} onClick={onPhotoRemove} style={{ margin: 0, padding: 0 }}>Remove</Button>
+                            <Button disabled={loading || photoConversionInProgress} onClick={onPhotoRemove} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
-                        <div>
-                            <input
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                id="post-photo-upload"
-                                type="file"
-                                onChange={updateBackgroundPhoto}
-                            />
-                            <label htmlFor="post-photo-upload">
-                                <Button disabled={loading} style={{ margin: 0, padding: 0 }} component="span">
-                                    {hasPhoto ? "Change " : "Add Photo"}
-                                </Button>
-                            </label>
+                        {!hasPhoto && <PhotoUploadButton onStart={onUpdateBackgroundStart} onComplete={onUpdateBackgroundComplete} onError={onUpdateBackgroundError} height="10rem" disable={loading}/>}
 
-                        </div>
                     </Stack>
                     {errorText && <Typography variant="body2" style={{ color: 'red' }}>{errorText}</Typography>}
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                        <Button disabled={loading} onClick={onClose}>Cancel</Button>
-                        <Button disabled={loading} onClick={onThemeReset} variant="outlined" color="error">Reset</Button>
-                        <Button disabled={loading || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
+                        <Button disabled={loading } onClick={onClose}>Cancel</Button>
+                        <Button disabled={loading || photoConversionInProgress} onClick={onThemeReset} variant="outlined" >Reset</Button>
+                        <Button disabled={loading || photoConversionInProgress || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>

@@ -3,6 +3,7 @@ import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/m
 import { stripSpaces } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 import { compressImage } from '@/utils/localImageProcessing';
+import { PulseLoader } from 'react-spinners';
 
 export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const { title, description, social_links, photo } = user;
@@ -19,11 +20,13 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     const [newReddit, setNewReddit] = useState(reddit)
     const [newLinkedin, setNewLinkedin] = useState(linkedin)
 
+    const [photoMessage, setPhotoMessage] = useState("")
+
     const [loading, setLoading] = useState(false)
 
     const bottomRef = useRef(null)
     const scrollToBottom = () => {
-        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500 )
+        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500)
     }
 
     const userMadeChanges = () => {
@@ -43,7 +46,7 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
     }
 
     const onBioUpdate = async () => {
-        if(!userMadeChanges()) {
+        if (!userMadeChanges()) {
             setOpen(false)
         }
         setLoading(true)
@@ -79,28 +82,42 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         setNewTwitter(twitter)
         setNewReddit(reddit)
         setNewLinkedin(linkedin)
-        
+        setPhotoMessage("")
+
         // Only if profile photo was updated do we trigger a reload on cancel
         newProfilePhoto !== photo && triggerReload(Date.now())
         setOpen(false)
-        
+
     }
 
     const updateProfilePhoto = async (e) => {
         setLoading(true)
+        setPhotoMessage("")
         const file = e.target.files[0]
         e.target.value = ""
-        const compressedFile = await compressImage(file)
+        let fileToUse
+        try {
+            const compressedFile = await compressImage(file)
+            fileToUse = compressedFile
+        } catch (e) {
+            console.error(e)
+            setLoading(false)
+            setPhotoMessage("Sorry, something went wrong. Please try a different photo.")
+            return
+        }
+
         const formData = new FormData()
-        formData.append('profilePhoto', compressedFile)
+        formData.append('profilePhoto', fileToUse)
         const response = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
         const data = await response.json()
         setNewProfilePhoto(data.url)
+        setPhotoMessage("")
         setLoading(false)
     }
 
     const removeProfilePhoto = async () => {
         setLoading(true)
+        setPhotoMessage("")
         const result = await protectedApiCall(`/api/profile/updateProfilePhoto`, "DELETE")
         setNewProfilePhoto("")
         setLoading(false)
@@ -147,8 +164,10 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
 
                 <Stack alignItems="center" spacing={2} >
                     <Avatar id="edit-bio-profile-photo" alt={"profile-photo"} sx={{ width: 100, height: 100 }} src={newProfilePhoto} />
+                    {loading && <PulseLoader color="orange" loading={loading} size={10} />}
+                    {photoMessage && <Typography variant="subtitle2" style={{ textAlign: 'center' }} >{photoMessage}</Typography>}
                     <Stack direction="row" spacing={2}>
-                        {newProfilePhoto && <div>
+                        {newProfilePhoto && !loading && <div>
                             <Button id="edit-bio-remove-profile-photo" disabled={loading} onClick={removeProfilePhoto} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
                         <div>
@@ -159,17 +178,17 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
                                 type="file"
                                 onChange={updateProfilePhoto}
                             />
-                            <label htmlFor="profile-photo-upload">
-                                <Button id="edit-bio-change-profile-photo" disabled={loading} style={{margin:0, padding:0}} component="span">
+                            {!loading && <label htmlFor="profile-photo-upload">
+                                <Button id="edit-bio-change-profile-photo" disabled={loading} style={{ margin: 0, padding: 0 }} component="span">
                                     Change
                                 </Button>
-                            </label>
+                            </label>}
 
                         </div>
                     </Stack>
-                    
+
                     <TextField size="small" id="edit-bio-name" style={{ width: "100%" }} label="Name" value={newTitle} onChange={(e) => setNewTitle(e.currentTarget.value)} />
-                    <TextField size="small" id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150}}multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
+                    <TextField size="small" id="edit-bio-bio" style={{ width: "100%" }} inputProps={{ maxLength: 150 }} multiline rows={3} label="Bio" value={newDescription} onChange={(e) => setNewDescription(e.currentTarget.value)} />
                     <Typography variant="body1">Social Media</Typography>
                     <TextField size="small" id="edit-bio-instagram" style={{ width: "100%" }} label="Instagram" value={newInstagram} onBlur={() => processHandle(newInstagram, setNewInstagram, "instagram")} onChange={(e) => setNewInstagram(e.currentTarget.value)} />
                     <TextField size="small" id="edit-bio-facebook" style={{ width: "100%" }} label="Facebook" value={newFacebook} onBlur={() => processHandle(newFacebook, setNewFacebook, "facebook")} onChange={(e) => setNewFacebook(e.currentTarget.value)} />
