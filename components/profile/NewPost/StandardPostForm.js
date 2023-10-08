@@ -22,31 +22,35 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
     const scrollToBottom = () => {
         setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500)
     }
-    const updatePostPhoto = async (e) => {
-        const photo = e.target.files[0]
-        e.target.value = ""
-        setPhotoError("")
-        setPhotoConversionInProgress(true)
-        try {
-            const compressedFile = await compressImage(photo)
-            setPostPhoto(compressedFile)
 
-        } catch (e) {
-
-            if (photo.type === "image/heic" || photo.type === "image/heif") {
-                setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
-                setPhotoConversionInProgress(false)
-                return
-            }
-            setPostPhoto(photo)
-            console.error("Could not compress post photo - using original.")
-            console.error(e)
-            Sentry.captureException(e)
-
-        }
-        setPhotoConversionInProgress(false)
-
+    const onPhotoSelectComplete = (photo) => {
+        setPostPhoto(photo)
     }
+
+    // const updatePostPhoto = async (e) => {
+    //     const photo = e.target.files[0]
+    //     e.target.value = ""
+    //     setPhotoError("")
+    //     setPhotoConversionInProgress(true)
+    //     try {
+    //         const compressedFile = await compressImage(photo)
+    //         setPostPhoto(compressedFile)
+
+    //     } catch (e) {
+    //         if (photo.type === "image/heic" || photo.type === "image/heif") {
+    //             setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
+    //             setPhotoConversionInProgress(false)
+    //             return
+    //         }
+    //         setPostPhoto(photo)
+    //         console.error("Could not compress post photo - using original.")
+    //         console.error(e)
+    //         Sentry.captureException(e)
+
+    //     }
+    //     setPhotoConversionInProgress(false)
+
+    // }
 
     const clearPostItems = () => {
         setPhotoError("")
@@ -105,7 +109,7 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
                     <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
                 </div>}
                 {!postPhoto &&
-                    <PhotoUploadButton loading={loading || photoConversionInProgress} onPhotoChange={updatePostPhoto} height={photoMode ? "12rem" : "8rem"} />
+                    <PhotoUploadButton loading={loading || photoConversionInProgress} onComplete={onPhotoSelectComplete} height={photoMode ? "12rem" : "8rem"} />
                 }
                 {photoError && <span>{photoError}</span>}
                 {!photoMode && <TextField data-cy="standard-post-form--title-field" style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />}

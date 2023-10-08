@@ -21,7 +21,6 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     const [originalBackground, setOriginalBackground] = useState(null)
     const [photoUpload, setPhotoUpload] = useState(null)
     const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
-    const [photoChanged, setPhotoChanged] = useState(false)
     const [photoOperation, setPhotoOperation] = useState('none')
     const [errorText, setErrorText] = useState("")
 
@@ -51,36 +50,21 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
 
     }
 
-    const updateBackgroundPhoto = async (e) => {
-        const file = e.target.files[0]
-        e.target.value = ""
-        setErrorText("")
+    const onUpdateBackgroundComplete = (photo) => {
+        setPhotoUpload(photo)
+        setPhotoOperation('new')
+        setPhotoConversionInProgress(false)
+        setBackground({
+            type: 'photo',
+            url: URL.createObjectURL(photo)
+        })
+    }
+
+    const onUpdateBackgroundStart = () => {
         setPhotoConversionInProgress(true)
-        if (file) {
-            let fileToUse = file
-            try {
-                const compressedFile = await compressImage(fileToUse)
-                fileToUse = compressedFile
-            } catch (e) {
-                console.error("Unable to compress or convert image - skipping compression stage")
-                console.error(e)
-                captureException(e)
-                fileToUse = file
+    }
 
-                if (file.type === "image/heic" || file.type === "image/heif") {
-                    setErrorText("Sorry, we couldn't use that photo. Please try a different photo.")
-                    setPhotoConversionInProgress(false)
-                    return
-                }
-            }
-
-            setPhotoUpload(fileToUse)
-            setPhotoOperation('new')
-            setBackground({
-                type: 'photo',
-                url: URL.createObjectURL(fileToUse)
-            })
-        }
+    const onUpdateBackgroundError = () => {
         setPhotoConversionInProgress(false)
     }
 
@@ -133,7 +117,7 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
                         {hasPhoto && <div>
                             <Button disabled={loading || photoConversionInProgress} onClick={onPhotoRemove} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
-                        {!hasPhoto && <PhotoUploadButton onPhotoChange={updateBackgroundPhoto} height="10rem" loading={loading || photoConversionInProgress}/>}
+                        {!hasPhoto && <PhotoUploadButton onStart={onUpdateBackgroundStart} onComplete={onUpdateBackgroundComplete} onError={onUpdateBackgroundError} height="10rem" disable={loading}/>}
 
                     </Stack>
                     {errorText && <Typography variant="body2" style={{ color: 'red' }}>{errorText}</Typography>}
