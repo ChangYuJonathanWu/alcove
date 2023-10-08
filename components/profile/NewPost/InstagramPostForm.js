@@ -62,12 +62,11 @@ export default function InstagramPostForm({ onExit, listId, clearItems, triggerR
             <Stack alignItems="center" spacing={2} >
                 <Stack spacing={2}>
                     <Typography variant="subtitle2" style={{ color: 'grey' }}>Share an Instagram post from any <b>public</b> profile including your own.</Typography>
+                    <span >
+                        <Typography variant="subtitle2" style={{ color: 'grey' }}>To get the post link, tap <Image src={InstagramShareIcon} style={{ padding: '0px 3px 3px 3px', verticalAlign: 'middle' }} height="16" alt="Instagram Share Icon" /> {`(Share) on the post and "Copy Link".`}</Typography>
+                    </span>
                     <TextField data-cy="instagram-post-form--link-field" style={{ width: "100%" }} size="small" label="Instagram Post Link" value={instagramUri} placeholder='https://www.instagram.com/p/...' onChange={onInstagramUriChange} />
-                    <Stack direction="row" alignItems="center">
-                        <Typography variant="subtitle2" style={{ color: 'grey' }}>To get the post link, click </Typography>
-                        <Image src={InstagramShareIcon} style={{ padding: '0px 5px 5px 5px' }} height="16" alt="Instagram Share Icon" />
-                        <Typography variant="subtitle2" style={{ color: 'grey' }}>{` (Share) on the post and then "Copy Link".`}</Typography>
-                    </Stack>
+
                     <Typography variant="subtitle2" style={{ color: 'grey' }}>Posts not showing up? Make sure to <a style={{color: 'black'}} href="https://help.instagram.com/252460186989212/?cms_platform=iphone-app&helpref=platform_switcher">enable embedding</a> on Instagram.</Typography>
 
                 </Stack>
