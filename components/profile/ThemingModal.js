@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { compressImage } from '@/utils/localImageProcessing';
 import { protectedApiCall } from '@/utils/api';
 import { captureException } from '@sentry/nextjs';
-// support delete and rename item
+
 export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     useEffect(() => {
         if (user) {
@@ -19,6 +19,7 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
     const [background, setBackground] = useState(null)
     const [originalBackground, setOriginalBackground] = useState(null)
     const [photoUpload, setPhotoUpload] = useState(null)
+    const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
     const [photoChanged, setPhotoChanged] = useState(false)
     const [photoOperation, setPhotoOperation] = useState('none')
     const [errorText, setErrorText] = useState("")
@@ -48,21 +49,40 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
         }
 
     }
-
+    
     const updateBackgroundPhoto = async (e) => {
         const file = e.target.files[0]
         e.target.value = ""
-
+        setErrorText("")
+        setPhotoConversionInProgress(true)
         if (file) {
             let fileToUse = file
             try {
-                const compressedFile = await compressImage(file)
+                // if is heif file
+                if (file.type === "image/heic" || file.type === "image/heif") {
+                    console.log("Converting HEIC to JPEG")
+                    const heic2any = (await import("heic2any")).default;
+                    const blob = await heic2any({
+                        blob: fileToUse,
+                        multiple: false,
+                        toType: "image/jpeg",
+                        quality: 1
+                    })
+                    fileToUse = blob
+                }
+                const compressedFile = await compressImage(fileToUse)
                 fileToUse = compressedFile
             } catch (e) {
-                console.error("Unable to compress image - skipping compression stage")
+                console.error("Unable to compress or convert image - skipping compression stage")
                 console.error(e)
                 captureException(e)
                 fileToUse = file
+                if (file.type === "image/heic" || file.type === "image/heif") {
+                    setErrorText("Sorry, we couldn't use that photo. Please try a different photo.")
+                    setPhotoConversionInProgress(false)
+                    return
+                }
+
             }
 
             setPhotoUpload(fileToUse)
@@ -72,6 +92,7 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
                 url: URL.createObjectURL(fileToUse)
             })
         }
+        setPhotoConversionInProgress(false)
     }
 
     const onThemeReset = async () => {
@@ -142,9 +163,9 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
                     </Stack>
                     {errorText && <Typography variant="body2" style={{ color: 'red' }}>{errorText}</Typography>}
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                        <Button disabled={loading} onClick={onClose}>Cancel</Button>
-                        <Button disabled={loading} onClick={onThemeReset} variant="outlined" color="error">Reset</Button>
-                        <Button disabled={loading || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
+                        <Button disabled={loading || photoConversionInProgress} onClick={onClose}>Cancel</Button>
+                        <Button disabled={loading || photoConversionInProgress} onClick={onThemeReset} variant="outlined" color="error">Reset</Button>
+                        <Button disabled={loading || photoConversionInProgress || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>
