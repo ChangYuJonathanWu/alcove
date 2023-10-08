@@ -21,6 +21,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setDisplayPhoto("")
         setPhotoUpload(null)
         setPhotoChanged(false)
+        setPhotoConversionInProgress(false)
         setNewLink("")
         setPostId("")
         setPostToEdit(null)
@@ -56,6 +57,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
     const [error, setError] = useState("")
 
     const open = !!postToEdit
+    const canUpdate = newTitle || newSubtitle || newCaption || newLink || photoUpload
 
     const onPostDelete = async () => {
         setLoading(true)
@@ -165,7 +167,7 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <Button disabled={loading} ref={bottomRef} onClick={() => setPostToEdit(null)}>Cancel</Button>
                         <Button disabled={loading || photoConversionInProgress} onClick={onPostDelete} variant="outlined" color="error">Delete</Button>
-                        <Button disabled={loading || photoConversionInProgress} onClick={onPostUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
+                        <Button disabled={loading || photoConversionInProgress || !canUpdate} onClick={onPostUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
                 </Stack>
             </Box>
