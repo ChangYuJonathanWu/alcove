@@ -10,7 +10,7 @@ import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
 import { redirect } from 'next/navigation';
 import { styled } from '@mui/material';
-import { getSignup } from '@/lib/api/signup';
+// import { getSignup } from '@/lib/api/signup';
 import * as Sentry from '@sentry/nextjs'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AlcoveTextField, AlcoveSubmitButton, AlcoveStack } from '@/components/custom/AlcoveComponents';
@@ -39,37 +39,41 @@ import DefaultHeader from '@/components/DefaultHeader';
 const theme = HOME_THEME
 
 // getServerSideProps to pull signup from DB
-export const getServerSideProps = async (context) => {
-    const signupId = context.params.signup_id
-    let signup;
-    if (signupId) {
-        signup = await getSignup(signupId)
-    }
-    if (!signupId || !signup || signup.complete) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false,
-            }
-        }
-    }
-    signup['_id'] = signupId
-    return {
-        props: {
-            signup
-        }
-    }
-}
+// export const getServerSideProps = async (context) => {
+//     const signupId = context.params.signup_id
+//     let signup;
+//     if (signupId) {
+//         signup = await getSignup(signupId)
+//     }
+//     if (!signupId || !signup || signup.complete) {
+//         return {
+//             redirect: {
+//                 destination: '/login',
+//                 permanent: false,
+//             }
+//         }
+//     }
+//     signup['_id'] = signupId
+//     return {
+//         props: {
+//             signup
+//         }
+//     }
+// }
 
 
-export default function Welcome({ signup }) {
+export default function Welcome({  }) {
     const router = useRouter();
     const [user, authLoading, authError] = useAuthState(auth)
 
     const [loginError, setLoginError] = useState(null)
     const [pageLoading, setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
-
+    const signup = {
+        email: "test@email.com",
+        handle: "test_handle",
+        _id: "123"
+    }
     const { email, handle, _id } = signup
 
     useEffect(() => {
