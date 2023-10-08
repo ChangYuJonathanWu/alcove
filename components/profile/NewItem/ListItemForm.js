@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { compressImage } from '@/utils/localImageProcessing';
 import * as Sentry from '@sentry/react';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
@@ -11,18 +10,6 @@ export default function ListItemForm({ onExit, triggerReload }) {
     const [caption, setCaption] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
-
-    const updatePostPhoto = async (e) => {
-        const photo = e.target.files[0]
-        try {
-            const compressedFile = await compressImage(photo)
-            setPostPhoto(compressedFile)
-        } catch (e) {
-            console.error(e)
-            Sentry.captureException(e)
-        }
-
-    }
 
     const clearInputs = () => {
         setName("")

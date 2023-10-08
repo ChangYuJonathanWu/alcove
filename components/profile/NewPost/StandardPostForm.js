@@ -77,6 +77,25 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
     }
 
     const hasContent = photoMode ? postPhoto : (title || subtitle || caption || uri || postPhoto)
+    const PhotoUploadButton = <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
+        <Stack data-cy="standard-post-form--image-field" justifyContent="center" alignItems="center" style={{ width: "100%", height: photoMode ? "12rem" : '8rem', border: "2px dashed", borderRadius: '1rem' }}>
+            <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="post-photo-upload"
+                type="file"
+                onChange={updatePostPhoto} />
+            <label htmlFor="post-photo-upload">
+                <Stack alignItems="center" spacing={4}>
+                    <AddPhotoAlternateIcon />
+                    Add Photo
+                </Stack>
+
+
+            </label>
+
+        </Stack>
+    </Button>;
     return (
         <div style={{ width: "100%" }} data-cy="standard-post-form">
             <Stack alignItems="center" spacing={2} >
@@ -88,26 +107,8 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
                 {postPhoto && <div>
                     <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
                 </div>}
-                {!postPhoto && <Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
-                    <Stack data-cy="standard-post-form--image-field" justifyContent="center" alignItems="center" style={{ width: "100%", height: photoMode ? "12rem" : '8rem', border: "2px dashed", borderRadius: '1rem' }}>
-                        <input
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            id="post-photo-upload"
-                            type="file"
-                            onChange={updatePostPhoto}
-                        />
-                        <label htmlFor="post-photo-upload">
-                            <Stack alignItems="center" spacing={4}>
-                                <AddPhotoAlternateIcon />
-                                Add Photo
-                            </Stack>
-
-
-                        </label>
-
-                    </Stack>
-                </Button>
+                {!postPhoto &&
+                    PhotoUploadButton
                 }
 
                 {!photoMode && <TextField data-cy="standard-post-form--title-field" style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />}
