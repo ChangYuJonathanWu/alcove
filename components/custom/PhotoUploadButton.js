@@ -5,7 +5,7 @@ import { ClimbingBoxLoader, SquareLoader, PulseLoader } from 'react-spinners';
 import { compressImage } from '@/utils/localImageProcessing';
 
 
-export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, height, disable=false }) {
+export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, height, disable = false }) {
     const [photoError, setPhotoError] = useState("")
     const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
 
@@ -14,28 +14,24 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
         onStart()
         setPhotoConversionInProgress(true)
         setPhotoError("")
-        const photo = e.target.files[0]
-        e.target.value = ""
-        let fileToUse = photo
         try {
+            const photo = e.target.files[0]
+            e.target.value = ""
+
             const compressedFile = await compressImage(photo)
-            fileToUse = compressedFile
+            setPhotoConversionInProgress(false)
+            onComplete(compressedFile)
 
         } catch (e) {
-            if (photo.type === "image/heic" || photo.type === "image/heif") {
-                setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
-                setPhotoConversionInProgress(false)
-                fileToUse = null
-                return
-            }
-            fileToUse = photo
-            console.error("Could not compress post photo - using original.")
+            setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
+            setPhotoConversionInProgress(false)
+            onError()
             console.error(e)
             Sentry.captureException(e)
+            return
 
         }
-        setPhotoConversionInProgress(false)
-        onComplete(fileToUse)
+
 
     }
 

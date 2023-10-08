@@ -15,7 +15,6 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
     const [uri, setUri] = useState("")
     const [postPhoto, setPostPhoto] = useState(null)
     const [error, setError] = useState("")
-    const [photoError, setPhotoError] = useState("")
     const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
 
     const bottomRef = useRef(null)
@@ -27,33 +26,16 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
         setPostPhoto(photo)
     }
 
-    // const updatePostPhoto = async (e) => {
-    //     const photo = e.target.files[0]
-    //     e.target.value = ""
-    //     setPhotoError("")
-    //     setPhotoConversionInProgress(true)
-    //     try {
-    //         const compressedFile = await compressImage(photo)
-    //         setPostPhoto(compressedFile)
+    const onPhotoSelectStart = () => {
+        setPhotoConversionInProgress(true)
+    }
 
-    //     } catch (e) {
-    //         if (photo.type === "image/heic" || photo.type === "image/heif") {
-    //             setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
-    //             setPhotoConversionInProgress(false)
-    //             return
-    //         }
-    //         setPostPhoto(photo)
-    //         console.error("Could not compress post photo - using original.")
-    //         console.error(e)
-    //         Sentry.captureException(e)
+    const onPhotoSelectError = () => {
+        setPhotoConversionInProgress(false)
+    }
 
-    //     }
-    //     setPhotoConversionInProgress(false)
-
-    // }
 
     const clearPostItems = () => {
-        setPhotoError("")
         setError("")
         setTitle("")
         setSubtitle("")
@@ -64,7 +46,6 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
 
     const onPost = async () => {
         setError("")
-        setPhotoError("")
         if (uri && !isValidUrlWithoutProtocol(uri)) {
             setError("Please enter a valid link")
             return
@@ -109,9 +90,8 @@ export default function StandardPostForm({ onExit, listId, clearItems, triggerRe
                     <Button disabled={loading} onClick={() => setPostPhoto(null)} style={{ margin: 0, padding: 0 }}>Remove</Button>
                 </div>}
                 {!postPhoto &&
-                    <PhotoUploadButton loading={loading || photoConversionInProgress} onComplete={onPhotoSelectComplete} height={photoMode ? "12rem" : "8rem"} />
+                    <PhotoUploadButton disabled={photoConversionInProgress} onStart={onPhotoSelectStart} onComplete={onPhotoSelectComplete} onError={onPhotoSelectError} height={photoMode ? "12rem" : "8rem"} />
                 }
-                {photoError && <span>{photoError}</span>}
                 {!photoMode && <TextField data-cy="standard-post-form--title-field" style={{ width: "100%" }} size="small" label="Title" value={title} onChange={(e) => setTitle(e.currentTarget.value)} />}
                 {!photoMode && <TextField data-cy="standard-post-form--subtitle-field" style={{ width: "100%" }} size="small" label="Subtitle" value={subtitle} onChange={(e) => setSubtitle(e.currentTarget.value)} />}
                 <TextField data-cy="standard-post-form--caption-field" style={{ width: "100%" }} size="small" multiline rows={3} label="Caption (optional)" value={caption} onChange={(e) => setCaption(e.currentTarget.value)} />
