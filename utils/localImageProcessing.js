@@ -7,7 +7,6 @@ export const compressImage = async (imageFile) => {
     }
     let fileToUse = imageFile
     if (fileToUse.type === "image/heic" || fileToUse.type === "image/heif") {
-        console.log("Converting HEIC to JPEG")
         const heic2any = (await import("heic2any")).default;
         const blob = await heic2any({
             blob: fileToUse,

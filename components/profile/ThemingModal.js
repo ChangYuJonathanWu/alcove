@@ -131,14 +131,14 @@ export default function ThemingModal({ open, setOpen, user, triggerReload }) {
                     }
                     <Stack direction="row" justifyContent="center" spacing={4} style={{width: '100%'}}>
                         {hasPhoto && <div>
-                            <Button disabled={loading} onClick={onPhotoRemove} style={{ margin: 0, padding: 0 }}>Remove</Button>
+                            <Button disabled={loading || photoConversionInProgress} onClick={onPhotoRemove} style={{ margin: 0, padding: 0 }}>Remove</Button>
                         </div>}
-                        {!hasPhoto && <PhotoUploadButton onPhotoChange={updateBackgroundPhoto} height="10rem" loading={loading}/>}
+                        {!hasPhoto && <PhotoUploadButton onPhotoChange={updateBackgroundPhoto} height="10rem" loading={loading || photoConversionInProgress}/>}
 
                     </Stack>
                     {errorText && <Typography variant="body2" style={{ color: 'red' }}>{errorText}</Typography>}
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                        <Button disabled={loading || photoConversionInProgress} onClick={onClose}>Cancel</Button>
+                        <Button disabled={loading } onClick={onClose}>Cancel</Button>
                         <Button disabled={loading || photoConversionInProgress} onClick={onThemeReset} variant="outlined" >Reset</Button>
                         <Button disabled={loading || photoConversionInProgress || photoOperation === "none"} onClick={onThemeUpdate} variant="contained">{loading ? "Updating..." : "Update"}</Button>
                     </Stack>
