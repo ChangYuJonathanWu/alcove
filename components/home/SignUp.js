@@ -25,7 +25,7 @@ export default function SignUp({ signupState, setSignupState, mobile }) {
     const INVALID_EMAIL = "Please enter a valid email."
     const TAKEN_EMAIL = "This email is already registered."
 
-    const DELAYED_SIGNUP_FROM_ERROR = signupState.errors.includes("DELAYED")
+    const DELAYED_SIGNUP_FROM_ERROR = signupState?.errors?.includes("DELAYED")
     const WAITLIST_SIGNUP_TEXT = "You'll get an email once it's your turn to create your Alcove."
     const DIRECT_SIGNUP_TEXT = <div style={{ textAlign: 'center' }}><b>{"We've emailed you a link to create your profile."}</b></div>
     const DIRECT_SIGNUP_SUBTEXT = <span>Don&apos;t see it? Please check your spam folder or contact us <a href="mailto:hello@alcove.place">here</a> for support.</span>
