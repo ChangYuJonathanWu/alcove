@@ -1,7 +1,10 @@
 {
   "appId": "place.alcove.app",
-  "appName": "alcove",
+  "appName": "Alcove",
   "webDir": "out",
+  "ios": {
+    "scheme": "Alcove"
+  },
   "server": {
     "androidScheme": "https",
     "url": "http://192.168.4.23:3000",
