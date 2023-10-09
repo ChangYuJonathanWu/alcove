@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import { Button, Divider, Typography } from '@mui/material';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import CabinIcon from '@mui/icons-material/Cabin';
+import { Capacitor } from '@capacitor/core';
 
 
 import Avatar from '@mui/material/Avatar';
@@ -18,12 +19,13 @@ export default function AlcoveProfileLogo() {
     return (
         <Stack direction="row" justifyContent="center" style={{ width: '100%', marginTop: '2rem' }}>
             <Stack alignItems="center" style={{ width: '100%' }}>
-                {/* <Divider sx={{ width: "100%", margin: '0.4rem', backgroundColor: 'white' }} /> */}
-                <Link href="/" style={{ textDecoration: 'none' }}>
-
+                {Capacitor.isNativePlatform() ?
                     <Image src="/alcove-logo.svg" width={80} height={50} alt="Alcove logo" />
-
-                </Link>
+                    :
+                    <Link href="/" style={{ textDecoration: 'none' }}>
+                        <Image src="/alcove-logo.svg" width={80} height={50} alt="Alcove logo" />
+                    </Link>
+                }
             </Stack>
         </Stack>
 
