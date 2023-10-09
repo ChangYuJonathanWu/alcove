@@ -1,13 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  publicRuntimeConfig: {
+    apiOrigin: "https://www.alcove.place",
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'storage.googleapis.com',
-        port: ''      }
+        port: ''
+      }
     ]
   }
 }
