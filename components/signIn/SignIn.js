@@ -34,6 +34,7 @@ const theme = {
 }
 
 export default function SignIn() {
+    console.log("Loading SignIn Page")
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
