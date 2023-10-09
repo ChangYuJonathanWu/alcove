@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "static": "next build && next export",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "ios:open": "cap open ios"
   },
   "dependencies": {
     "@capacitor/android": "^5.4.2",
