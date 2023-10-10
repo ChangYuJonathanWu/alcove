@@ -43,7 +43,7 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
             {<Button disabled={loading} style={{ margin: 0, padding: 0, width: '100%' }} component="span">
                 <Stack data-cy="standard-post-form--image-field" justifyContent="center" alignItems="center" style={{ width: "100%", height, border: "2px dashed", borderRadius: '1rem' }}>
                     <input
-                        accept="image/*"
+                        accept="image/*,.heic,.heif"
                         style={{ display: 'none' }}
                         id="post-photo-upload"
                         type="file"
