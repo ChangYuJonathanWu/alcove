@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { compressImage } from '@/utils/localImageProcessing';
 import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 import PhotoUploadButton from '../custom/PhotoUploadButton';
@@ -115,15 +114,6 @@ export default function EditPostModal({ postToEdit, setPostToEdit, triggerReload
         setDisplayPhoto(URL.createObjectURL(photo))
     }
 
-
-    const updatePostPhoto = async (e) => {
-        const file = e.target.files[0]
-        e.target.value = ""
-        const compressedFile = await compressImage(file)
-        setPhotoChanged(true)
-        setPhotoUpload(compressedFile)
-        setDisplayPhoto(URL.createObjectURL(compressedFile))
-    }
 
     const onExit = () => {
         reset()

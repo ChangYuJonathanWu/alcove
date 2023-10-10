@@ -17,7 +17,6 @@ import NewItemModal from './NewItem/NewItemModal';
 import ProfileItems from '../items/ProfileItems';
 import RearrangeItemsButton from './RearrangeItemsButton';
 import RearrangeItemsModal from './RearrangeItemsModal';
-import PostToListModal from './PostToListModal';
 import ThemingButton from './ThemingButton';
 import ViewAsPublicButton from './ViewAsPublicButton';
 import ThemingModal from './ThemingModal';
