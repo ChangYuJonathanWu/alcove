@@ -96,8 +96,19 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
         const file = e.target.files[0]
         e.target.value = ""
         let fileToUse
+
+        const sendProfilePhotoRequest = async (fileToUse) => {
+            const formData = new FormData()
+            formData.append('profilePhoto', fileToUse)
+            const response = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
+            const data = await response.json()
+            setNewProfilePhoto(data.url)
+            setPhotoMessage("")
+            setLoading(false)
+        }
+
         try {
-            const compressedFile = await compressImage(file)
+            const compressedFile = await compressImage(file, sendProfilePhotoRequest)
             fileToUse = compressedFile
         } catch (e) {
             console.error(e)
@@ -106,13 +117,9 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
             return
         }
 
-        const formData = new FormData()
-        formData.append('profilePhoto', fileToUse)
-        const response = await protectedApiCall(`/api/profile/updateProfilePhoto`, "POST", formData)
-        const data = await response.json()
-        setNewProfilePhoto(data.url)
-        setPhotoMessage("")
-        setLoading(false)
+
+
+
     }
 
     const removeProfilePhoto = async () => {

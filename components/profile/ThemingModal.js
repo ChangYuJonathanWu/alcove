@@ -3,7 +3,6 @@ import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/m
 import { getAuth } from "firebase/auth";
 import DeleteIcon from '@mui/icons-material/Delete';
 import PhotoUploadButton from '../custom/PhotoUploadButton';
-import { compressImage } from '@/utils/localImageProcessing';
 import { protectedApiCall } from '@/utils/api';
 import { captureException } from '@sentry/nextjs';
 

@@ -6,11 +6,22 @@ import { compressImage } from '@/utils/localImageProcessing';
 import { captureException } from '@sentry/nextjs';
 
 
-export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, onRemove = () => {}, height, disable = false }) {
+export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, onRemove = () => { }, height, disable = false }) {
     const [photo, setPhoto] = useState(null)
     const [photoError, setPhotoError] = useState("")
     const [photoConversionInProgress, setPhotoConversionInProgress] = useState(false)
 
+    const onErrorCallback = () => {
+        setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
+        setPhotoConversionInProgress(false)
+        onError()
+    }
+
+    const compressCompleteCallback = async (compressedFile) => {
+        setPhotoConversionInProgress(false)
+        setPhoto(compressedFile)
+        onComplete(compressedFile)
+    }
 
     const onChange = async (e) => {
         onStart()
@@ -19,15 +30,9 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
         try {
             const photo = e.target.files[0]
             e.target.value = ""
-            const compressedFile = await compressImage(photo)
-            setPhotoConversionInProgress(false)
-            setPhoto(compressedFile)
-            onComplete(compressedFile)
-
+            await compressImage(photo, compressCompleteCallback, onErrorCallback)
         } catch (e) {
-            setPhotoError("Sorry, we couldn't use that photo. Please try a different photo.")
-            setPhotoConversionInProgress(false)
-            onError()
+            onErrorCallback()
             console.error(e)
             captureException(e)
             return
