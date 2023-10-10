@@ -17,7 +17,6 @@ export const compressImage = async (imageFile, onCompleteCallback, onErrorCallba
             const actualImageTypes = await filetype(bytes)
     
             let actualImageType;
-    
             if(actualImageTypes.length) {
                 actualImageType = actualImageTypes[0].typename
             } else {

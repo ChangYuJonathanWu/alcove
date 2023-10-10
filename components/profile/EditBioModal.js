@@ -107,13 +107,17 @@ export default function EditBioModal({ open, setOpen, user, triggerReload }) {
             setLoading(false)
         }
 
-        try {
-            const compressedFile = await compressImage(file, sendProfilePhotoRequest)
-            fileToUse = compressedFile
-        } catch (e) {
+        const onProfilePhotoRequestError = () => {
             console.error(e)
             setLoading(false)
             setPhotoMessage("Sorry, something went wrong. Please try a different photo.")
+        }
+
+        try {
+            const compressedFile = await compressImage(file, sendProfilePhotoRequest, onProfilePhotoRequestError)
+            fileToUse = compressedFile
+        } catch (e) {
+            onProfilePhotoRequestError()
             return
         }
 
