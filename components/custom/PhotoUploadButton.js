@@ -3,6 +3,7 @@ import { Stack, Button } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { ClimbingBoxLoader, SquareLoader, PulseLoader } from 'react-spinners';
 import { compressImage } from '@/utils/localImageProcessing';
+import { captureException } from '@sentry/nextjs';
 
 
 export default function PhotoUploadButton({ onStart = () => { }, onComplete = () => { }, onError = () => { }, onRemove = () => {}, height, disable = false }) {
@@ -28,7 +29,7 @@ export default function PhotoUploadButton({ onStart = () => { }, onComplete = ()
             setPhotoConversionInProgress(false)
             onError()
             console.error(e)
-            Sentry.captureException(e)
+            captureException(e)
             return
 
         }
