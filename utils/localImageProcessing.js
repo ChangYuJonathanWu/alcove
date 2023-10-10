@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs';
 import imageCompression from 'browser-image-compression';
 import filetype from 'magic-bytes.js'
 
@@ -22,7 +23,7 @@ export const compressImage = async (imageFile, onCompleteCallback, onErrorCallba
             } else {
                 actualImageType = ""
             }
-            console.log(actualImageType)
+
             if (actualImageType === "heic" || actualImageType === "heif") {
                 const heic2any = (await import("heic2any")).default;
                 const blob = await heic2any({
@@ -38,6 +39,7 @@ export const compressImage = async (imageFile, onCompleteCallback, onErrorCallba
             onCompleteCallback(compressedFile)
         } catch(e) {
             console.error(e)
+            captureException(e)
             onErrorCallback()
         }
     }
