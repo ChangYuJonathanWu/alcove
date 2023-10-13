@@ -33,7 +33,7 @@ const theme = {
     buttonTextColor: 'white'
 }
 
-export default function SignIn() {
+export default function SignIn({ mobileApp = false }) {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
@@ -57,19 +57,20 @@ export default function SignIn() {
                 const result = await protectedApiCall(`/api/profile?uid=${uid}`, 'GET')
                 const fullUserProfile = await result.json()
                 const { handle } = fullUserProfile
-                router.replace(`/${handle}`)
+                const redirect = mobileApp ? `/m/${handle}` : `/${handle}`
+                router.replace(redirect)
                 return
             }
             setPageLoading(false)
         }
         loadUser()
-    }, [user, router, authLoading])
+    }, [user, router, authLoading, mobileApp])
 
     return (
         <>
             <DefaultHeader title="Alcove: Sign In" />
             <PageTransition>
-                <main className="background-home">
+                <main className={mobileApp ? "" : "background-home"}>
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
                         <AlcoveStack>
