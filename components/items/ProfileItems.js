@@ -157,7 +157,7 @@ export default function ProfileItems({ user, editMode, mobileApp = false, trigge
                                 {/* {!editMode ? isOpen ? <ExpandLessIcon /> : <ExpandMore /> : <div></div>} */}
                                 {isOpen ? editMode ? <div> </div> : <ExpandLessIcon /> : <ExpandMore />}
                             </Stack>
-                            {editMode && isOpen && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+                            {editMode && isOpen && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.stopPropagation(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
 
                     </ListItemButton>
