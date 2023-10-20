@@ -47,7 +47,7 @@ const scrollTo = (ref) => {
     setTimeout(() => ref.current.scrollIntoView({ behavior: "smooth" }), 300)
 }
 
-export default function ProfileItems({ user, editMode, triggerReload }) {
+export default function ProfileItems({ user, editMode, mobileApp = false, triggerReload }) {
     const [listOpen, setListOpen] = useState({});
     const [editItem, setEditItem] = useState(null);
     const [listIdToPostTo, setListIdToPostTo] = useState(null)
@@ -178,10 +178,11 @@ export default function ProfileItems({ user, editMode, triggerReload }) {
         const { name, uri } = content
         const formattedUri = formatUri(uri)
         const listButtonId = `list-button-${itemId}`
+        const newUri = mobileApp ? "https://alcove.place/a/launch?uri=" + uri : uri
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>
-                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={formattedUri} target="_blank">
+                    <ListItemButton id={listButtonId} key={itemId} disableRipple={true} href={newUri} target="_blank">
                         <Stack direction="row" style={{ width: "100%", paddingBottom: '0.2rem', paddingTop: '0.2rem' }} justifyContent={"space-between"}>
 
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" alignItems="center" style={{ width: "100%" }} spacing={2}>

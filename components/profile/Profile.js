@@ -24,7 +24,7 @@ import LogoutButton from './LogoutButton';
 import MenuFAB from './MenuFAB/MenuFAB';
 
 
-export default function Profile({ user, ownerSignedIn = false }) {
+export default function Profile({ user, ownerSignedIn = false, mobileApp = false }) {
     const [listOpen, setListOpen] = useState(null);
     const [editBio, setEditBio] = useState(false);
     const [newItemOpen, setNewItemOpen] = useState(false)
@@ -87,22 +87,18 @@ export default function Profile({ user, ownerSignedIn = false }) {
                     <RearrangeItemsModal open={reorderItems} setOpen={setReorderItems} user={profileUser} triggerReload={triggerReload} />
                     <ThemingModal open={themeOpen} setOpen={setThemeOpen} user={profileUser} triggerReload={triggerReload} />
                     {config.demo_mode && <div style={{ height: "2rem" }}></div>}
-                    <ProfileHeader user={profileUser} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} />
-                    <ProfileItems user={profileUser} editMode={ownerSignedIn} triggerReload={triggerReload} />
+                    <ProfileHeader user={profileUser} setEditMode={setEditBio} ownerSignedIn={ownerSignedIn} mobileApp={mobileApp} />
+                    <ProfileItems user={profileUser} editMode={ownerSignedIn} triggerReload={triggerReload} mobileApp={mobileApp} />
                 </div>
 
                 {ownerSignedIn &&
                     <Stack style={{ zIndex: 1 }}>
                         <NewItemButton key="new-item-button" onClick={() => setNewItemOpen(true)} />
                         {canRearrangeItems && <RearrangeItemsButton key="rearrange-items-button" onClick={() => setReorderItems(true)} />}
-                        {/* <ThemingButton key="theming-button" onClick={() => setThemeOpen(true)} /> */}
-                        {/* <ViewAsPublicButton link={`${handle}/public`} key="view-as-public-button" /> */}
-                        {/* <LogoutButton onClick={logoutUser} /> */}
-
                     </Stack>}
 
                 <div style={{ zIndex: 1 }}>
-                    {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
+                    {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo mobileApp={mobileApp} />}
                 </div>
 
 

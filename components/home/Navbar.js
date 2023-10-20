@@ -20,7 +20,7 @@ const theme = {
 
 
 
-export default function Navbar({ hideLogin = false, mobile = true, sizeOverride }) {
+export default function Navbar({ hideLogin = false, mobile = true, sizeOverride, mobileApp = false }) {
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
     const textColor = theme.textColor
@@ -33,7 +33,7 @@ export default function Navbar({ hideLogin = false, mobile = true, sizeOverride 
     return (
         <Stack direction="row" alignItems="center" justifyContent={hideLogin ? "center" : "space-between"} width="100%" data-cy="navbar">
 
-            <Image data-cy="navbar--logo" src={USE_GREEN_THEME ? LogoLight : Logo} height={sizeOverride ? sizeOverride : mobile ? 40 : 70} alt="Alcove logo" onClick={() => router.push('/')} />
+            <Image data-cy="navbar--logo" src={USE_GREEN_THEME ? LogoLight : Logo} height={sizeOverride ? sizeOverride : mobile ? 40 : 70} alt="Alcove logo" onClick={() => !mobileApp && router.push('/')} />
 
 
             {!hideLogin && <Button data-cy="login-button" onClick={onLogin} variant="contained" style={{ textTransform: 'none', backgroundColor: 'black', borderRadius: '0.5rem' }}>

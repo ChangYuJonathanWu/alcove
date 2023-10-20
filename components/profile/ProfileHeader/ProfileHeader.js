@@ -28,7 +28,7 @@ const IconGridItem = ({ children }) => {
 
     )
 }
-export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
+export default function ProfileHeader({ user, setEditMode, ownerSignedIn, mobileApp = false }) {
     const { title, description, handle, photo, social_links, demo = false } = user;
     let { instagram, facebook, bereal, snapchat, tiktok, twitter, reddit, linkedin } = social_links
     const hasSocialLinks = instagram || facebook || bereal || snapchat || tiktok || twitter || reddit || linkedin
@@ -44,6 +44,10 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
     if (reddit?.startsWith('@')) { reddit = reddit.slice(1) }
     if (linkedin?.startsWith('@')) { linkedin = linkedin.slice(1) }
 
+    const buildUrl = (uri) => {
+        return mobileApp ? "https://alcove.place/a/launch?uri=" + uri : uri
+    }
+
     return (
         <Stack direction="row" justifyContent={"center"} style={{ paddingLeft: '1rem', paddingRight: '1rem', marginBottom: '1.5rem' }}>
 
@@ -58,28 +62,28 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn }) {
                         <Typography style={{ width: "100%", textAlign: "center", whiteSpace: "pre-wrap" }} variant="body2">{description}</Typography>
                         {hasSocialLinks && <Divider sx={{ width: "100%", margin: '0.4rem' }} />}
                         {hasSocialLinks && <Grid style={{ maxWidth: MAX_WIDTH }} columns={4} container direction="row" spacing={0} justifyContent="center" alignItems={"center"}>
-                            {instagram && <IconGridItem><IconButton id="instagram-bio-link" href={`https://www.instagram.com/${instagram}`} target="_blank">
+                            {instagram && <IconGridItem><IconButton id="instagram-bio-link" href={buildUrl(`https://www.instagram.com/${instagram}`)} target="_blank">
                                 <InstagramIcon />
                             </IconButton></IconGridItem>}
-                            {tiktok && <IconGridItem><IconButton id="tiktok-bio-link" href={`https://www.tiktok.com/@${tiktok}`} target="_blank">
+                            {tiktok && <IconGridItem><IconButton id="tiktok-bio-link" href={buildUrl(`https://www.tiktok.com/@${tiktok}`)} target="_blank">
                                 <Image priority={true} src="/social_icons/tiktok-icon.svg" width={20} height={20} alt="TikTok logo" />
                             </IconButton></IconGridItem>}
-                            {bereal && <IconGridItem> <IconButton id="bereal-bio-link" href={`https://www.BeRe.al/${bereal}`} target="_blank">
+                            {bereal && <IconGridItem> <IconButton id="bereal-bio-link" href={buildUrl(`https://www.BeRe.al/${bereal}`)} target="_blank">
                                 <Image priority={true} src="/social_icons/bereal-icon.svg" width={20} height={20} alt="BeReal logo" />
                             </IconButton></IconGridItem>}
-                            {snapchat && <IconGridItem><IconButton id="snapchat-bio-link" href={`https://www.snapchat.com/add/${snapchat}`} target="_blank">
+                            {snapchat && <IconGridItem><IconButton id="snapchat-bio-link" href={buildUrl(`https://www.snapchat.com/add/${snapchat}`)} target="_blank">
                                 <Image priority={true} src="/social_icons/snapchat-icon.svg" width={20} height={20} alt="Snapchat logo" />
                             </IconButton></IconGridItem>}
-                            {facebook && <IconGridItem><IconButton id="facebook-bio-link" href={`https://www.facebook.com/${facebook}`} target="_blank">
+                            {facebook && <IconGridItem><IconButton id="facebook-bio-link" href={buildUrl(`https://www.facebook.com/${facebook}`)} target="_blank">
                                 <FacebookIcon />
                             </IconButton></IconGridItem>}
-                            {twitter && <IconGridItem><IconButton id="twitter-bio-link" href={`https://www.twitter.com/${twitter}`} target="_blank">
+                            {twitter && <IconGridItem><IconButton id="twitter-bio-link" href={buildUrl(`https://www.twitter.com/${twitter}`)} target="_blank">
                                 <TwitterIcon />
                             </IconButton></IconGridItem>}
-                            {reddit && <IconGridItem><IconButton id="reddit-bio-link" href={`https://www.reddit.com/user/${reddit}`} target="_blank">
+                            {reddit && <IconGridItem><IconButton id="reddit-bio-link" href={buildUrl(`https://www.reddit.com/user/${reddit}`)} target="_blank">
                                 <RedditIcon />
                             </IconButton></IconGridItem>}
-                            {linkedin && <IconGridItem> <IconButton id="linkedin-bio-link" href={`https://www.linkedin.com/in/${linkedin}`} target="_blank">
+                            {linkedin && <IconGridItem> <IconButton id="linkedin-bio-link" href={buildUrl(`https://www.linkedin.com/in/${linkedin}`)} target="_blank">
                                 <LinkedInIcon />
                             </IconButton></IconGridItem>}
                         </Grid>}
