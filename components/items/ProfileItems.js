@@ -154,9 +154,10 @@ export default function ProfileItems({ user, editMode, mobileApp = false, trigge
                                     {buildItemHeader(name, isOpen)}
                                     {isOpen && <Typography variant="caption" style={{ textAlign: "left" }}>{commentary}</Typography>}
                                 </Stack>
-                                {!editMode ? isOpen ? <ExpandLessIcon /> : <ExpandMore /> : <div></div>}
+                                {/* {!editMode ? isOpen ? <ExpandLessIcon /> : <ExpandMore /> : <div></div>} */}
+                                {isOpen ? editMode ? <div> </div> : <ExpandLessIcon /> : <ExpandMore />}
                             </Stack>
-                            {editMode && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
+                            {editMode && isOpen && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
                         </Stack>
 
                     </ListItemButton>
@@ -188,12 +189,9 @@ export default function ProfileItems({ user, editMode, mobileApp = false, trigge
                             <Stack id={listButtonId} direction="row" justifyContent="space-between" alignItems="center" style={{ width: "100%" }} spacing={2}>
                                 {CENTER_PROFILE_ITEMS && <LinkIcon />}
                                 {buildItemHeader(name)}
-                                <OpenInNewIcon />
+                                {editMode ? <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} /> : <OpenInNewIcon />}
 
                             </Stack>
-
-                            {editMode && <EditIcon data-cy="edit-item-icon" style={{ paddingLeft: '0.5rem' }} onClick={(e) => { e.preventDefault(); setEditItem(profileItems[itemId]) }} />}
-
                         </Stack>
 
                     </ListItemButton>
