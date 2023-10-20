@@ -98,7 +98,7 @@ export default function Profile({ user, ownerSignedIn = false, mobileApp = false
                     </Stack>}
 
                 <div style={{ zIndex: 1 }}>
-                    {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo />}
+                    {(!config.hide_logo && !ownerSignedIn) && <AlcoveProfileLogo mobileApp={mobileApp} />}
                 </div>
 
 

@@ -15,7 +15,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { HOME_THEME } from '@/utils/themeConfig';
 
 
-export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
+export default function MenuFAB({ handle, profilePhotoUri, clickHandlers, mobileApp=false }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -28,7 +28,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers }) {
   } = clickHandlers
 
   const onViewAsPublic = () => {
-    window.open(`${handle}/public/`, '_blank')
+    window.open(`/${handle}/public/`, '_blank')
   }
 
 

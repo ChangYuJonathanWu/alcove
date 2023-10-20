@@ -13,19 +13,18 @@ import Link from 'next/link';
 
 const PAPER_COLOR = 'rgba(255, 255, 255, 0.8)'
 
-export default function AlcoveProfileLogo() {
+export default function AlcoveProfileLogo({ mobileApp = false }) {
+    const logo = <Image src="/alcove-logo.svg" width={80} height={50} alt="Alcove logo" />
 
     return (
         <Stack direction="row" justifyContent="center" style={{ width: '100%', marginTop: '2rem' }}>
             <Stack alignItems="center" style={{ width: '100%' }}>
-                {/* <Divider sx={{ width: "100%", margin: '0.4rem', backgroundColor: 'white' }} /> */}
-                <Link href="/" style={{ textDecoration: 'none' }}>
-
-                    <Image src="/alcove-logo.svg" width={80} height={50} alt="Alcove logo" />
-
-                </Link>
+                {mobileApp ? logo :
+                    <Link href="/" style={{ textDecoration: 'none' }}>
+                        {logo}
+                    </Link>
+                }
             </Stack>
         </Stack>
-
     )
 }

@@ -74,7 +74,7 @@ export default function SignIn({ mobileApp = false }) {
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
                         <AlcoveStack>
-                            <Navbar hideLogin />
+                            <Navbar hideLogin mobileApp={mobileApp}/>
                             <Stack>
                                 <Typography variant="h1" style={{ textAlign: showOnboardMessage ? "center" : 'left', fontWeight: '500' }}>{`${showOnboardMessage ? "Welcome!" : "Hey there!"} 👋`}</Typography>
                                 <Typography variant="subtitle2" style={{ textAlign: 'left' }}>{`${showOnboardMessage ? "Sign in with the password you just created" : `Sign in to your Alcove`}`}</Typography>
