@@ -16,6 +16,7 @@ import Image from 'next/image';
 import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH } from '@/utils/themeConfig';
 import Skeleton from '@mui/material/Skeleton';
 import ProfilePhotoLoader from './ProfilePhotoLoader';
+import { alcoveOpenDomain } from '@/utils/formatters';
 
 const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
@@ -45,7 +46,7 @@ export default function ProfileHeader({ user, setEditMode, ownerSignedIn, mobile
     if (linkedin?.startsWith('@')) { linkedin = linkedin.slice(1) }
 
     const buildUrl = (uri) => {
-        return mobileApp ? "https://alcove.place/a/launch?uri=" + uri : uri
+        return alcoveOpenDomain(uri, mobileApp)
     }
 
     return (

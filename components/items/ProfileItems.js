@@ -28,7 +28,7 @@ import EditListItemsButtonRow from './EditListPostButtonRow';
 import NewPostModal from '../profile/NewPost/NewPostModal';
 import EditPostModal from '../profile/EditPostModal';
 import RearrangePostsModal from '../profile/RearrangePostsModal';
-import { formatUri } from '@/utils/formatters';
+import { alcoveOpenDomain, formatUri } from '@/utils/formatters';
 import { DEFAULT_PAPER_COLOR, PROFILE_ITEMS_WIDTH, ITEM_FONT_SIZE, CENTER_PROFILE_ITEMS } from '@/utils/themeConfig';
 import Skeleton from '@mui/material/Skeleton';
 
@@ -179,7 +179,7 @@ export default function ProfileItems({ user, editMode, mobileApp = false, trigge
         const { name, uri } = content
         const formattedUri = formatUri(uri)
         const listButtonId = `list-button-${itemId}`
-        const newUri = mobileApp ? "https://alcove.place/a/launch?uri=" + uri : uri
+        const newUri = alcoveOpenDomain(uri, mobileApp)
         return (
             <div key={itemId} style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
                 <Paper variant="" sx={{ margin: '1rem', marginLeft: 'auto', marginRight: 'auto', marginTop: 0, marginBottom: '0.7rem', width: '100%', backgroundColor: PAPER_COLOR, maxWidth: MAX_WIDTH, borderRadius: '1rem' }}>

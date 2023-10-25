@@ -33,3 +33,7 @@ export const truncateString = (str, num) => {
 export const isValidUrlWithoutProtocol = urlString => {
     return isValidUrl("https://" + urlString) || isValidUrl(urlString)
 }
+
+export const alcoveOpenDomain = (url, format) => {
+    return format ? "https://alcove.place/a/launch?uri=" + url : url
+}

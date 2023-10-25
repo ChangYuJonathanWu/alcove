@@ -78,7 +78,7 @@ export default function Profile({ user, ownerSignedIn = false, mobileApp = false
                 <div style={{ height: '100%', minHeight: '100vh', width: '100%', position: "fixed", backgroundColor: '#cfcfcf', alignItems: "center", zIndex: 0 }}>
                     {backgroundType == "image" && <Image priority={true} fill={true} src={backgroundUrl} objectFit='cover' id="background-photo" alt="background wallpaper" />}
                 </div>
-                {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers} />}
+                {ownerSignedIn && <MenuFAB key="menu-fab" profilePhotoUri={photo} handle={handle} clickHandlers={clickHandlers} mobileApp={mobileApp}/>}
                 <Stack style={{ marginBottom: "8.5rem" }}>
                     <div style={{ zIndex: 1 }}>
                         <EditBioModal open={editBio} setOpen={setEditBio} user={profileUser} triggerReload={triggerReload} />
