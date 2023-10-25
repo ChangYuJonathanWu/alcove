@@ -13,6 +13,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Skeleton from '@mui/material/Skeleton';
 import PersonIcon from '@mui/icons-material/Person';
 import { HOME_THEME } from '@/utils/themeConfig';
+import { alcoveOpenDomain } from '@/utils/formatters';
 
 
 export default function MenuFAB({ handle, profilePhotoUri, clickHandlers, mobileApp=false }) {
@@ -28,7 +29,7 @@ export default function MenuFAB({ handle, profilePhotoUri, clickHandlers, mobile
   } = clickHandlers
 
   const onViewAsPublic = () => {
-    window.open(`/${handle}/public/`, '_blank')
+    window.open(alcoveOpenDomain(`${window.location.origin}/${handle}/public/`, mobileApp), '_blank')
   }
 
 
