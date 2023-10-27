@@ -35,7 +35,7 @@ export default function ForgotPasswordNew({ mobileApp = false }) {
             <DefaultHeader title="Alcove: Reset Password" />
 
             <PageTransition>
-                <main className="background-home">
+                <main className={mobileApp ? "" : "background-home"}>
                     <AlcoveStack alignItems="center">
                         <Navbar hideLogin mobileApp={mobileApp} />
                         <Stack>

@@ -62,7 +62,7 @@ export default function SignUpComponent({ mobileApp = false }) {
         <>
             <DefaultHeader title="Alcove: Sign Up" />
             <PageTransition>
-                <main className="background-home">
+                <main className={mobileApp ? "" : "background-home"}>
                     {pageLoading && <DefaultLoader />}
                     {!pageLoading &&
                         <AlcoveStack>
