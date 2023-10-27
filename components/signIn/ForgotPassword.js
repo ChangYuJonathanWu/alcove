@@ -19,7 +19,7 @@ import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/Alco
 import DefaultHeader from '../DefaultHeader';
 import { HOME_THEME } from '@/utils/themeConfig';
 
-export default function ForgotPasswordNew() {
+export default function ForgotPasswordNew({ mobileApp = false }) {
     const theme = HOME_THEME
     const backgroundColor = theme.bgColor
     const logoColor = theme.logoColor
@@ -37,7 +37,7 @@ export default function ForgotPasswordNew() {
             <PageTransition>
                 <main className="background-home">
                     <AlcoveStack alignItems="center">
-                        <Navbar hideLogin />
+                        <Navbar hideLogin mobileApp={mobileApp} />
                         <Stack>
                             <Typography variant="h1" style={{ textAlign: 'center', fontWeight: '500' }}>Password Reset</Typography>
                             <Typography variant="subtitle2" style={{ textAlign: 'center' }}>{`We'll send you a reset link 🔑`}</Typography>
@@ -76,11 +76,11 @@ export default function ForgotPasswordNew() {
                                 </Form>
                             </Formik>}
                             {complete ?
-                                <Link href="/login" style={{ textDecoration: 'none' }}>
+                                <Link href={mobileApp ? "/m/login" : "/login"} style={{ textDecoration: 'none' }}>
                                     <Typography variant="body2" style={{ color: 'black' }}>⏎ Back to Sign In </Typography>
                                 </Link> :
 
-                                <Link href="/signup" >
+                                <Link href={mobileApp ? "/m/signup" : "/signup"} >
                                     <Typography variant="body2" style={{ color: 'black' }}>Sign Up</Typography>
                                 </Link>
                             }

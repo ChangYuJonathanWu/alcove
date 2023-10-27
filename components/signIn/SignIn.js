@@ -111,7 +111,7 @@ export default function SignIn({ mobileApp = false }) {
 
                                     </Form>
                                 </Formik>
-                                <Link href="/signup" style={{}}>
+                                <Link href={mobileApp ? "/m/signup" : "/signup"} >
                                     <Typography variant="body2" style={{ color: 'black' }}>Sign Up</Typography>
                                 </Link>
                             </Stack>
@@ -120,7 +120,7 @@ export default function SignIn({ mobileApp = false }) {
                             <Typography variant="subtitle2" style={{ marginTop: '1rem', textAlign: 'center' }}>
                                 {loginError ?? ""}
                             </Typography>
-                            <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
+                            <Link href={mobileApp ? "/m/forgot-password" : "/forgot-password"} style={{ textDecoration: 'none' }}>
                                 <Typography variant="subtitle2" style={{ color: 'black', width: "100%", textAlign: "center" }}>
                                     Forgot Password?
                                 </Typography>

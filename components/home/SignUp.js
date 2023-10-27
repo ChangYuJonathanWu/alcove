@@ -17,7 +17,7 @@ const dmSans = DM_Sans({
 const ALLOW_DIRECT_SIGNUP = process.env.NEXT_PUBLIC_ALLOW_DIRECT_SIGNUP === "true"
 
 
-export default function SignUp({ signupState, setSignupState, mobile }) {
+export default function SignUp({ signupState, setSignupState, mobile, mobileApp=false }) {
     const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
