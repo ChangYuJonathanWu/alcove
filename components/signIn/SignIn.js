@@ -1,16 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import FoundationIcon from '@mui/icons-material/Foundation';
-import { Stack, TextField, Typography, Button } from '@mui/material'
-import { amita } from '../fonts'
+import React, { useState, useEffect } from 'react'
+import { Stack, Typography } from '@mui/material'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
-
-
-import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import DefaultLoader from '../DefaultLoader';
 import Link from 'next/link';

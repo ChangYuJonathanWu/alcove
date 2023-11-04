@@ -209,13 +209,11 @@ describe('Modal', () => {
         })
     })
 
-
-
     it('can render edit list item modal', () => {
         cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 1)
         // Open up the first list
-        cy.contains("sushi restaurants").click()
+        cy.get('[data-cy="list-item"]').first().click()
         // There should be two edit-item-icon 
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 2)
         cy.get('[data-cy="edit-item-icon"]').first().click()
@@ -242,7 +240,9 @@ describe('Modal', () => {
     it('can render edit uri item modal', () => {
         cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 1)
-        cy.get('[data-cy="edit-item-icon"]').last().click()
+        cy.get('[data-cy="uri-item"]').within(() => {
+            cy.get('[data-cy="edit-item-icon"]').should('have.length', 1).click()
+        })
         cy.get('[data-cy="edit-item-modal"]').should('exist').should('be.visible')
         cy.percySnapshot('Edit URI Item Modal', { widths: PERCY_WIDTHS, fullPage: true });
         cy.get('[data-cy="edit-item-modal"]').within(() => {
