@@ -75,10 +75,7 @@ export default function ResetPassword() {
                                     passwordConfirm: ''
                                 }}
                                 onSubmit={async (values) => {
-                                    const { password, passwordConfirm } = values;
-                                    if (password !== passwordConfirm || !validPassword(password)) {
-                                        return
-                                    }
+                                    const { password } = values;
                                     setLoading(true)
 
                                     try {
@@ -99,9 +96,8 @@ export default function ResetPassword() {
                                     <Form style={{ width: '100%' }}>
                                         <Stack style={{}} alignItems="center" spacing={1}>
                                             <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
-                                            <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                            <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Create"}</AlcoveSubmitButton>
                                             <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm} />
+                                            <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Create"}</AlcoveSubmitButton>
                                         </Stack>
                                     </Form>
                                 )}
