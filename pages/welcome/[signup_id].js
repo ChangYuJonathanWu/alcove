@@ -1,39 +1,26 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import FoundationIcon from '@mui/icons-material/Foundation';
 import { Stack, TextField, Typography, Button } from '@mui/material'
-import { amita } from '@/components/fonts'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
 import { redirect } from 'next/navigation';
-import { styled } from '@mui/material';
 import { getSignup } from '@/lib/api/signup';
 import * as Sentry from '@sentry/nextjs'
+import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AlcoveTextField, AlcoveSubmitButton, AlcoveStack } from '@/components/custom/AlcoveComponents';
 import { HOME_THEME } from '@/utils/themeConfig';
 import PasswordRequirements from '@/components/signIn/PasswordRequirements';
 import {
-    SignupSchema,
     validPassword
 } from '@/utils/authConfigs';
 
-const auth = getAuth()
 
 import React, { useState, useEffect } from 'react'
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut,
-    createUserWithEmailAndPassword
-} from "firebase/auth";
 import DefaultLoader from '@/components/DefaultLoader';
 
 import { protectedApiCall } from '@/utils/api';
 import DefaultHeader from '@/components/DefaultHeader';
+const auth = getAuth()
 
 
 const theme = HOME_THEME
@@ -99,20 +86,15 @@ export default function Welcome({ signup }) {
                     <AlcoveStack>
                         <Navbar hideLogin />
                         <Stack alignItems={"center"}>
-                            <Typography variant="h3" style={{ fontWeight: 600, marginBottom: '0.5em' }}>{`Hey @${handle} - you're in! 👋`}</Typography>
+                            <Typography variant="h3" style={{ fontWeight: 600, marginBottom: '0.5em' }}>{`You've claimed alcove.place/${handle}!`}</Typography>
                             <Typography variant="subtitle1" style={{ fontWeight: 400, textAlign: "center" }}>{`Create your Alcove now and join an exclusive group of early-access users.`}</Typography>
                         </Stack>
                         <Formik
                             initialValues={{
                                 password: '',
-                                passwordConfirm: ''
                             }}
-                            // validationSchema={SignupSchema}
                             onSubmit={async (values) => {
-                                const { password, passwordConfirm } = values;
-                                if (password !== passwordConfirm || !validPassword(password)) {
-                                    return
-                                }
+                                const { password } = values;
                                 setLoading(true)
 
                                 try {
@@ -128,7 +110,8 @@ export default function Welcome({ signup }) {
                                         router.replace(`/login?email=${email}`)
                                     } else {
                                         Sentry.captureException(error)
-                                        setLoginError("Could not complete signup - please try again later")
+                                        console.log(error)
+                                        setLoginError(`Could not complete signup: ${error.message}`)
                                     }
 
                                 } catch (error) {
@@ -147,9 +130,9 @@ export default function Welcome({ signup }) {
                                     <Stack style={{ width: "100%" }} alignItems="center" spacing={1}>
                                         <Typography variant="subtitle1" style={{ fontWeight: 700 }}>{`Email: ${email}`}</Typography>
                                         <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
-                                        <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                        <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Get Started"}</AlcoveSubmitButton>
-                                        <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm} />
+                                        <PasswordRequirements password={values.password} />
+                                        <AlcoveSubmitButton disabled={loading || !validPassword(values.password)} >{loading ? "Please wait..." : "Get Started"}</AlcoveSubmitButton>
+
                                     </Stack>
 
                                 </Form>

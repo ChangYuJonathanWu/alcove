@@ -3,6 +3,7 @@ import { Button, Collapse, Stack, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useRouter } from 'next/router';
 
 import { Fireworks } from '@fireworks-js/react'
 import { HOME_THEME, TextFieldDefaultInputProps, TextFieldDefaultStyling } from '@/utils/themeConfig';
@@ -17,7 +18,8 @@ const dmSans = DM_Sans({
 const ALLOW_DIRECT_SIGNUP = process.env.NEXT_PUBLIC_ALLOW_DIRECT_SIGNUP === "true"
 
 
-export default function SignUp({ signupState, setSignupState, mobile, mobileApp=false }) {
+export default function SignUp({ signupState, setSignupState, mobile, mobileApp = false }) {
+    const router = useRouter()
     const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
     const INVALID_HANDLE = "Sorry, this handle isn't available."
     const MISSING_HANDLE = "Please enter a handle."
@@ -162,15 +164,10 @@ export default function SignUp({ signupState, setSignupState, mobile, mobileApp=
             })
 
         const resultBody = await result.json()
-        const { success, errors } = resultBody;
+        const { success, signupId, errors } = resultBody;
         if (success) {
-            setSignupState({
-                ...signupState,
-                showValidationError: false,
-                completed: true,
-                validationInProgress: false,
-                errors
-            })
+            // redirect to welcome page with signupid
+            router.push(`/welcome/${signupId}`)
         } else {
             if (errors.includes("HANDLE_TAKEN")) {
                 setSignupState({
