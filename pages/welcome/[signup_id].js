@@ -80,64 +80,66 @@ export default function Welcome({ signup }) {
     return (
         <>
             <DefaultHeader title="Alcove: Welcome" />
-            <main className="background-home">
+            <main>
                 {pageLoading && <DefaultLoader />}
                 {!pageLoading &&
-                    <AlcoveStack>
+                    <AlcoveStack style={{ maxWidth: '440px' }}>
                         <Navbar hideLogin />
-                        <Stack alignItems={"center"}>
-                            <Typography variant="h3" style={{ fontWeight: 600, marginBottom: '0.5em' }}>{`You've claimed alcove.place/${handle}!`}</Typography>
-                            <Typography variant="subtitle1" style={{ fontWeight: 400, textAlign: "center" }}>{`Create your Alcove now and join an exclusive group of early-access users.`}</Typography>
-                        </Stack>
-                        <Formik
-                            initialValues={{
-                                password: '',
-                            }}
-                            onSubmit={async (values) => {
-                                const { password } = values;
-                                setLoading(true)
+                        <Stack alignItems={"start"} style={{ width: '100%' }}>
+                            <Typography variant="body1" style={{ fontWeight: 400, marginBottom: '0.5em' }}>{`You've claimed`} <b>{`alcove.place/${handle}`}</b></Typography>
+                            <Typography variant="h1" style={{ fontWeight: 600 }}>{`Now, create your Alcove`}</Typography>
+                            {/* <Typography variant="subtitle1">{`You'll be joining an exclusive group of early-access users`}</Typography> */}
+                            <Formik
+                                initialValues={{
+                                    password: '',
+                                    email: email,
+                                }}
+                                onSubmit={async (values) => {
+                                    const { password } = values;
+                                    setLoading(true)
 
-                                try {
-                                    const completeSignupResult = await fetch(`/api/signup/complete`, {
-                                        method: "POST",
-                                        body: JSON.stringify({
-                                            password,
-                                            signupId: _id
+                                    try {
+                                        const completeSignupResult = await fetch(`/api/signup/complete`, {
+                                            method: "POST",
+                                            body: JSON.stringify({
+                                                password,
+                                                signupId: _id
+                                            })
                                         })
-                                    })
-                                    const { success, error } = await completeSignupResult.json()
-                                    if (success) {
-                                        router.replace(`/login?email=${email}`)
-                                    } else {
+                                        const { success, error } = await completeSignupResult.json()
+                                        if (success) {
+                                            router.replace(`/login?email=${email}`)
+                                        } else {
+                                            Sentry.captureException(error)
+                                            console.log(error)
+                                            setLoginError(`Could not complete signup: ${error.message}`)
+                                        }
+
+                                    } catch (error) {
+                                        const errorCode = error.code;
+                                        const errorMessage = error.message;
+                                        console.error(errorCode, errorMessage)
                                         Sentry.captureException(error)
-                                        console.log(error)
-                                        setLoginError(`Could not complete signup: ${error.message}`)
-                                    }
+                                        setLoginError("Could not complete signup - please try again later")
+                                    };
+                                    setLoading(false)
 
-                                } catch (error) {
-                                    const errorCode = error.code;
-                                    const errorMessage = error.message;
-                                    console.error(errorCode, errorMessage)
-                                    Sentry.captureException(error)
-                                    setLoginError("Could not complete signup - please try again later")
-                                };
-                                setLoading(false)
+                                }}
+                            >
+                                {({ values, errors, touched }) => (
+                                    <Form style={{ width: "100%", marginTop: '2rem' }}>
+                                        <Stack style={{ width: "100%" }} alignItems="center" spacing={1}>
+                                            <Field as={AlcoveTextField} disabled={true} type="text" name="email" id="email" />
+                                            <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
+                                            <PasswordRequirements password={values.password} />
+                                            <AlcoveSubmitButton disabled={loading || !validPassword(values.password)} >{loading ? "Please wait..." : "Get Started"}</AlcoveSubmitButton>
 
-                            }}
-                        >
-                            {({ values, errors, touched }) => (
-                                <Form style={{ width: "100%" }}>
-                                    <Stack style={{ width: "100%" }} alignItems="center" spacing={1}>
-                                        <Typography variant="subtitle1" style={{ fontWeight: 700 }}>{`Email: ${email}`}</Typography>
-                                        <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
-                                        <PasswordRequirements password={values.password} />
-                                        <AlcoveSubmitButton disabled={loading || !validPassword(values.password)} >{loading ? "Please wait..." : "Get Started"}</AlcoveSubmitButton>
+                                        </Stack>
 
-                                    </Stack>
-
-                                </Form>
-                            )}
-                        </Formik>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </Stack>
                         <Typography>
                             {loginError ?? ""}
                         </Typography>
