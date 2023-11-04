@@ -1,24 +1,17 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import FoundationIcon from '@mui/icons-material/Foundation';
-import { Stack, TextField, Typography, Button } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import Navbar from '@/components/home/Navbar.js'
-import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
-import { styled } from '@mui/material';
 import SignUp from '@/components/home/SignUp';
 
 import React, { useState, useEffect } from 'react'
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import DefaultLoader from '@/components//DefaultLoader';
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
 import { protectedApiCall } from '@/utils/api';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { AlcoveStack, AlcoveSubmitButton } from '@/components/custom/AlcoveComponents';
+import { AlcoveStack } from '@/components/custom/AlcoveComponents';
 import DefaultHeader from '@/components/DefaultHeader';
 const auth = getAuth()
 
@@ -27,7 +20,6 @@ export default function SignUpComponent({ mobileApp = false }) {
     const router = useRouter();
 
     const [pageLoading, setPageLoading] = useState(true)
-    const [loading, setLoading] = useState(false)
 
     const [signupState, setSignupState] = useState({
         handle: "",

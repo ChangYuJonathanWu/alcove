@@ -1,14 +1,12 @@
-import { Stack, TextField, Typography, Button } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
-import { redirect } from 'next/navigation';
 import { getSignup } from '@/lib/api/signup';
 import * as Sentry from '@sentry/nextjs'
-import { getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AlcoveTextField, AlcoveSubmitButton, AlcoveStack } from '@/components/custom/AlcoveComponents';
-import { HOME_THEME } from '@/utils/themeConfig';
 import PasswordRequirements from '@/components/signIn/PasswordRequirements';
 import {
     validPassword
@@ -22,8 +20,6 @@ import { protectedApiCall } from '@/utils/api';
 import DefaultHeader from '@/components/DefaultHeader';
 const auth = getAuth()
 
-
-const theme = HOME_THEME
 
 // getServerSideProps to pull signup from DB
 export const getServerSideProps = async (context) => {
@@ -88,7 +84,6 @@ export default function Welcome({ signup }) {
                         <Stack alignItems={"start"} style={{ width: '100%' }}>
                             <Typography variant="body1" style={{ fontWeight: 400, marginBottom: '0.5em' }}>{`You've claimed`} <b>{`alcove.place/${handle}`}</b></Typography>
                             <Typography variant="h1" style={{ fontWeight: 600 }}>{`Now, create your Alcove`}</Typography>
-                            {/* <Typography variant="subtitle1">{`You'll be joining an exclusive group of early-access users`}</Typography> */}
                             <Formik
                                 initialValues={{
                                     password: '',
@@ -108,7 +103,8 @@ export default function Welcome({ signup }) {
                                         })
                                         const { success, error } = await completeSignupResult.json()
                                         if (success) {
-                                            router.replace(`/login?email=${email}`)
+                                            // immediately log the user in
+                                            const credential = await signInWithEmailAndPassword(auth, email, password)
                                         } else {
                                             Sentry.captureException(error)
                                             console.log(error)
