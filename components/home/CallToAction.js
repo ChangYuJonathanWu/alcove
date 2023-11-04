@@ -10,11 +10,11 @@ const dmSans = DM_Sans({
 
 
 
-const mobileHeadline = "Your corner of the internet."
-const desktopHeadline = "Your corner of the internet"
+const mobileHeadline = "Your highlight reel."
+const desktopHeadline = "Your highlight reel"
 
-const mobileSub1 = "Share who you are and what you love."
-const mobileSub2 = "All from your Alcove, your personal link-in-bio for Instagram, TikTok and more."
+const mobileSub1 = "From the songs you love to your favorite Instagram posts. Share it all with a simple link-in-bio for Instagram, TikTok and more."
+const mobileSub2 = ""
 
 const desktopSub1 = mobileSub1 + " " + mobileSub2
 

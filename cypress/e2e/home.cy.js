@@ -2,7 +2,7 @@ const PERCY_WIDTHS = [768, 1920]
 describe('Homepage', () => {
     it('Loads the homepage', () => {
         cy.visit('http://localhost:3000')
-        cy.contains('Your corner of the internet').should('exist')
+        cy.contains('Your highlight reel').should('exist')
         cy.get('[data-cy="navbar"]').should('exist')
         cy.get('[data-cy="navbar--logo').should('exist')
         cy.get('[data-cy="login-button"]').should('exist')
@@ -31,4 +31,4 @@ describe('Homepage', () => {
         cy.contains('Create').should('exist')
         cy.percySnapshot('Account reset, with OOB', { widths: PERCY_WIDTHS });
     })
-  })
+})
