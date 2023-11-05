@@ -38,7 +38,7 @@ const PAPER_COLOR = DEFAULT_PAPER_COLOR
 const MAX_WIDTH = PROFILE_ITEMS_WIDTH
 
 const scrollTo = (ref) => {
-    setTimeout(() => ref.current.scrollIntoView({ behavior: "smooth" }), 300)
+    setTimeout(() => ref?.current?.scrollIntoView({ behavior: "smooth" }), 300)
 }
 
 export default function ProfileItems({ user, editMode, mobileApp = false, triggerReload }) {
@@ -152,7 +152,7 @@ export default function ProfileItems({ user, editMode, mobileApp = false, trigge
 
                     </ListItemButton>
                     <Collapse in={isOpen} >
-                        <List id={`list-id-${itemId}`} style={{ alignContent: "center", paddingTop: '0.25rem' }}>
+                        <List data-cy="list-item-contents" id={`list-id-${itemId}`} style={{ alignContent: "center", paddingTop: '0.25rem' }}>
                             {buildPosts(items, itemOrder, listType)}
                             {editMode && <EditListItemsButtonRow rearrangeEnabled={Object.keys(items).length > 1} onReorderClick={() => setItemIdToReorder(itemId)} onNewItemClick={() => setListIdToPostTo(itemId)} />}
                         </List>

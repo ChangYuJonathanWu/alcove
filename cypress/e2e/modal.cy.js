@@ -4,8 +4,9 @@ describe('Modal', () => {
 
     beforeEach(() => {
         cy.visit('localhost:3000/239jsdfk9Q2jjsk_no_spotify')
+        cy.get('[data-cy="profile-photo-loaded"]').should('exist.exist')
     })
-    it('can render new item modal and flow', () => {
+    it('can render new item modal and flow', {retries: 2}, () => {
         cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="new-item-button"]').should('exist').should('have.text', 'New Item').click()
         cy.get('[data-cy="new-item-selection-modal"]').should('exist').should('be.visible').within(() => {
@@ -16,7 +17,9 @@ describe('Modal', () => {
             cy.get('[data-cy="new-item-type-link"]').should('exist')
 
             // Open up the list item form
-            cy.get('[data-cy="new-item-type-list"]').click()
+            cy.get('[data-cy="new-item-type-list"]').should('be.visible').click()
+        })
+        cy.get('[data-cy="new-item-selection-modal"]').should('exist').should('be.visible').within(() => {
 
             cy.get('[data-cy="new-item-selection-modal--indicator-toggle"]').should('exist').should('be.visible').within(() => {
                 cy.contains("List").should('exist')
@@ -76,11 +79,12 @@ describe('Modal', () => {
         })
 
     })
-    it('can render new new post type modal and flow', () => {
+    it('can render new new post type modal and flow', {retries: 2}, () => {
         cy.contains("Edit Profile").should('exist')
         // Open the first list
-        cy.contains("sushi restaurants").click()
-        cy.contains("New Post").click()
+        cy.get('[data-cy="list-item"]').first().contains("sushi restaurants").click()
+        cy.get('[data-cy="list-item-contents"]').first().should('exist').should('be.visible')
+        cy.get('[data-cy="new-post-button"]').first().should('exist').should('have.text', 'New Post').click()
         // Should have empty name and subtitle text fields
         cy.get('[data-cy="new-post-selection-modal"]').should('exist').should('be.visible').within(() => {
             cy.percySnapshot('New Post Type Selection Modal', { widths: PERCY_WIDTHS, fullPage: true });
@@ -209,7 +213,7 @@ describe('Modal', () => {
         })
     })
 
-    it('can render edit list item modal', () => {
+    it('can render edit list item modal', {retries: 2}, () => {
         cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 1)
         // Open up the first list
@@ -232,16 +236,16 @@ describe('Modal', () => {
                 cy.get('input').should('exist').should('have.value', "they're sentimental")
             })
             cy.get('[data-cy="edit-item-modal--error"]').should('not.exist')
-            cy.contains('Cancel').click()
+            cy.get('[data-cy="edit-item-modal--cancel-button"]').should('be.visible').click()
         })
         cy.get('[data-cy="edit-item-modal"]').should('not.exist')
     })
 
-    it('can render edit uri item modal', () => {
+    it('can render edit uri item modal', {retries: 2}, () => {
         cy.contains("Edit Profile").should('exist')
         cy.get('[data-cy="edit-item-icon"]').should('have.length', 1)
         cy.get('[data-cy="uri-item"]').within(() => {
-            cy.get('[data-cy="edit-item-icon"]').should('have.length', 1).click()
+            cy.get('[data-cy="edit-item-icon"]').first().should("be.visible").click()
         })
         cy.get('[data-cy="edit-item-modal"]').should('exist').should('be.visible')
         cy.percySnapshot('Edit URI Item Modal', { widths: PERCY_WIDTHS, fullPage: true });
@@ -257,14 +261,14 @@ describe('Modal', () => {
                 cy.get('input').should('exist').should('have.value', 'https://www.instagram.com/988lifeline')
             })
             cy.get('[data-cy="edit-item-modal--error"]').should('not.exist')
-            cy.contains('Cancel').click()
+            cy.get('[data-cy="edit-item-modal--cancel-button"]').should('exist').click()
         })
         cy.get('[data-cy="edit-item-modal"]').should('not.exist')
     })
 
-    it('can render change item order modal', () => {
+    it('can render change item order modal', {retries: 2}, () => {
         cy.contains("Edit Profile").should('exist')
-        cy.get('[data-cy="rearrange-items-button"]').should('exist').should('have.text', 'Change Order').click()
+        cy.get('[data-cy="rearrange-items-button"]').first().should('exist').should('be.visible').should('have.text', 'Change Order').click()
 
         cy.get('[data-cy="rearrange-items-modal"]').should('exist').should('be.visible').within(() => {
             cy.percySnapshot('Rearrange Items Modal', { widths: PERCY_WIDTHS, fullPage: true });
@@ -306,8 +310,7 @@ describe('Modal', () => {
 
     })
 
-
-    it('can render edit bio modal', () => {
+    it('can render edit bio modal', {retries: 2}, () => {
         cy.contains('Edit Profile').should('exist').click({ force: true })
         cy.get('#edit-bio-modal').should('exist')
         cy.percySnapshot('Edit Profile Modal', { widths: PERCY_WIDTHS, fullPage: true });

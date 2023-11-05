@@ -17,7 +17,6 @@ export default function ProfilePhotoLoader({ uri, handle }) {
     const [profilePhotoLoaded, setProfilePhotoLoaded] = useState(false)
     const photoReady = profilePhotoLoaded || !uri
 
-    const avatarStyle = uri ? { width:PHOTO_DIM_WITH_BORDER, height: PHOTO_DIM_WITH_BORDER } : {}
     return (
         <div style={containerStyle}>
             {!photoReady &&
@@ -25,7 +24,9 @@ export default function ProfilePhotoLoader({ uri, handle }) {
                     <Skeleton variant="circular" width={PHOTO_DIM} height={PHOTO_DIM} />
                 </div>
             }
-            <Avatar imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }}
+            <Avatar 
+                data-cy={photoReady? "profile-photo-loaded" : "profile-photo-loading"}
+                imgProps={{ onLoad: () => setProfilePhotoLoaded(true) }}
                 id={`${handle}-profile-photo`}
                 alt={handle} 
                 sx={{ width:PHOTO_DIM_WITH_BORDER, height: PHOTO_DIM_WITH_BORDER }}
