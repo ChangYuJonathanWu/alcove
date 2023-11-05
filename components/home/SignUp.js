@@ -66,13 +66,6 @@ export default function SignUp({ signupState, setSignupState, mobile}) {
         })
     }
 
-    const finishValidationInProgress = () => {
-        setSignupState({
-            ...signupState,
-            validationInProgress: false
-        })
-    }
-
     const validHandle = () => {
         return true
     }
