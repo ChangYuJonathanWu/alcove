@@ -26,22 +26,19 @@ export default async function handler(req, res) {
 
       console.log("Creating signup for ", handle, email)
       let signupSuccess = false
+      let signupId = null
       if (handleAvailable && validEmail) {
         // This is NOT transactional. It's possible for duplicates to exist. This is only acceptable for MVP.
-        signupSuccess = await createSignup(email, handle)
+        signupId = await createSignup(email, handle)
+        signupSuccess = !!signupId
         if (!signupSuccess) {
           throw new Error("Error creating signup for " + handle + " " + email + "")
-        }
-        if (ALLOW_DIRECT_SIGNUP && signupSuccess) {
-          // Send onboarding email
-          // This needs to be a transaction or atleast throw an alert if this fails to do manual onboarding
-          console.log("Attempting onboard for ", email)
-          const result = await attemptOnboard(signupSuccess.insertedId.toString(), 0, email, handle, false, true)
         }
       }
 
       const data = {
-        success: !!signupSuccess,
+        success: signupSuccess,
+        signupId,
         errors
       }
       return res.status(200).json(data);

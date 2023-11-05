@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import { Button, Collapse, Stack, TextField, Typography } from '@mui/material'
-import InputLabel from '@mui/material/InputLabel';
+import React from 'react'
+import { Button, Collapse, Stack, TextField } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useRouter } from 'next/router';
 
-import { Fireworks } from '@fireworks-js/react'
 import { HOME_THEME, TextFieldDefaultInputProps, TextFieldDefaultStyling } from '@/utils/themeConfig';
 
 import { DM_Sans } from 'next/font/google'
@@ -17,9 +16,9 @@ const dmSans = DM_Sans({
 const ALLOW_DIRECT_SIGNUP = process.env.NEXT_PUBLIC_ALLOW_DIRECT_SIGNUP === "true"
 
 
-export default function SignUp({ signupState, setSignupState, mobile, mobileApp=false }) {
-    const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput, hideFireworks } = signupState
-    const INVALID_HANDLE = "Sorry, this handle isn't available."
+export default function SignUp({ signupState, setSignupState, mobile}) {
+    const router = useRouter()
+    const { validationInProgress, completed, handle, email, showValidationError, validationErrorText, showEmailInput } = signupState
     const MISSING_HANDLE = "Please enter a handle."
     const TAKEN_HANDLE = "Sorry, this handle is already taken."
     const INVALID_EMAIL = "Please enter a valid email."
@@ -64,13 +63,6 @@ export default function SignUp({ signupState, setSignupState, mobile, mobileApp=
         setSignupState({
             ...signupState,
             validationInProgress: true
-        })
-    }
-
-    const finishValidationInProgress = () => {
-        setSignupState({
-            ...signupState,
-            validationInProgress: false
         })
     }
 
@@ -162,15 +154,10 @@ export default function SignUp({ signupState, setSignupState, mobile, mobileApp=
             })
 
         const resultBody = await result.json()
-        const { success, errors } = resultBody;
+        const { success, signupId, errors } = resultBody;
         if (success) {
-            setSignupState({
-                ...signupState,
-                showValidationError: false,
-                completed: true,
-                validationInProgress: false,
-                errors
-            })
+            // redirect to welcome page with signupid
+            router.push(`/welcome/${signupId}`)
         } else {
             if (errors.includes("HANDLE_TAKEN")) {
                 setSignupState({
@@ -196,14 +183,6 @@ export default function SignUp({ signupState, setSignupState, mobile, mobileApp=
 
 
     }
-
-    const calculateStackAlignment = () => {
-        if (showEmailInput) {
-            return "end"
-        }
-        return "start"
-    }
-
 
     const handleValidationErrorText = <span className={dmSans.className} style={{ textAlign: "center" }} variant="subtitle2">{validationErrorText}</span>
     const ctaButtonText = showEmailInput ? "Get Early Access" : "Claim Your Alcove"

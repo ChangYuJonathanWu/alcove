@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Avatar, Modal, Stack, Box, Button, Typography, TextField } from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import React, { useState, useRef } from 'react'
+import { Stack, Button, Typography, TextField } from '@mui/material';
 import * as Sentry from '@sentry/react';
-import { formatUri, isValidUrlWithoutProtocol } from '@/utils/formatters';
 import { protectedApiCall } from '@/utils/api';
 
 export default function YouTubePostForm({ onExit, listId, clearItems, triggerReload }) {
@@ -13,9 +11,6 @@ export default function YouTubePostForm({ onExit, listId, clearItems, triggerRel
     const [error, setError] = useState("")
 
     const bottomRef = useRef(null)
-    const scrollToBottom = () => {
-        setTimeout(() => bottomRef.current.scrollIntoView({ behavior: "smooth" }), 500)
-    }
 
     const isValidYoutubeUri = (uri) => {
         const regex = /\bhttps:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]*)/

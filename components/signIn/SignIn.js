@@ -1,18 +1,9 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import FoundationIcon from '@mui/icons-material/Foundation';
-import { Stack, TextField, Typography, Button } from '@mui/material'
-import { amita } from '../fonts'
+import React, { useState, useEffect } from 'react'
+import { Stack, Typography } from '@mui/material'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
-import { styled } from '@mui/material';
-
-
-import React, { useState, useEffect } from 'react'
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import DefaultLoader from '../DefaultLoader';
 import Link from 'next/link';
 import PageTransition from '@/components/PageTransition'
@@ -23,20 +14,7 @@ import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '../custom/Alco
 import DefaultHeader from '../DefaultHeader';
 const auth = getAuth()
 
-
-
-const theme = {
-    bgColor: '#7C9070',
-    logoColor: "white",
-    textColor: "white",
-    buttonColor: '#F97B22',
-    buttonTextColor: 'white'
-}
-
 export default function SignIn({ mobileApp = false }) {
-    const backgroundColor = theme.bgColor
-    const logoColor = theme.logoColor
-    const textColor = theme.textColor
     const [user, authLoading, authError] = useAuthState(auth)
     const router = useRouter();
 

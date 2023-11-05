@@ -1,13 +1,8 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import AlcoveProfileLogo from '@/components/profile/AlcoveProfileLogo'
-import { Stack, TextField, Typography, Button, Link } from '@mui/material'
+import { Stack, Typography} from '@mui/material'
 import Navbar from '@/components/home/Navbar.js'
 import { Formik, Field, Form } from 'formik';
 import { useRouter } from 'next/router';
-import { redirect } from 'next/navigation';
-import { styled } from '@mui/material';
 import * as Sentry from '@sentry/nextjs'
 
 import React, { useState, useEffect } from 'react'
@@ -15,14 +10,8 @@ import { getAuth, confirmPasswordReset } from "firebase/auth";
 import DefaultLoader from '@/components/DefaultLoader';
 import PageTransition from '@/components/PageTransition'
 import PasswordRequirements from '@/components/signIn/PasswordRequirements'
-import {
-    SignupSchema,
-    validPassword
-} from '@/utils/authConfigs';
-import { HOME_THEME } from '@/utils/themeConfig'
 import { AlcoveStack, AlcoveSubmitButton, AlcoveTextField } from '@/components/custom/AlcoveComponents'
 
-const theme = HOME_THEME
 
 export default function ResetPassword() {
     const router = useRouter();
@@ -75,10 +64,7 @@ export default function ResetPassword() {
                                     passwordConfirm: ''
                                 }}
                                 onSubmit={async (values) => {
-                                    const { password, passwordConfirm } = values;
-                                    if (password !== passwordConfirm || !validPassword(password)) {
-                                        return
-                                    }
+                                    const { password } = values;
                                     setLoading(true)
 
                                     try {
@@ -99,9 +85,8 @@ export default function ResetPassword() {
                                     <Form style={{ width: '100%' }}>
                                         <Stack style={{}} alignItems="center" spacing={1}>
                                             <Field as={AlcoveTextField} type="password" id="password" name="password" placeholder="Password" />
-                                            <Field as={AlcoveTextField} type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password" />
-                                            <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Create"}</AlcoveSubmitButton>
                                             <PasswordRequirements password={values.password} passwordConfirm={values.passwordConfirm} />
+                                            <AlcoveSubmitButton disabled={loading} >{loading ? "Please wait..." : "Create"}</AlcoveSubmitButton>
                                         </Stack>
                                     </Form>
                                 )}
