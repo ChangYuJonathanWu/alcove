@@ -87,7 +87,7 @@ export default function NewPostModal({ open, setOpen, triggerReload }) {
             <Box style={modalStyle}>
                 <Stack alignItems="center" justifyContent="space-between" spacing={2} style={{ width: '100%' }} >
                     <Stack data-cy="new-item-selection-modal--header" style={{ width: '100%' }} direction="row" alignItems="end" justifyContent={"space-between"}>
-                        <Typography variant="h3" style={{fontSize: '1.2rem'}}>Add New Item</Typography>
+                        <Typography variant="h3" style={{fontSize: '1.2rem'}}>New Highlight</Typography>
                         <CloseIcon data-cy="new-item-selection-modal--close-button" style={{ width: '2rem' }} onClick={onExit} />
                     </Stack>
 

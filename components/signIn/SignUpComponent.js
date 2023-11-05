@@ -62,7 +62,7 @@ export default function SignUpComponent({ mobileApp = false }) {
                                 <Typography variant="h1" style={{ fontWeight: '600', fontSize: '2.2rem' }}>Sign Up 🖊</Typography>
                                 <Typography variant="subtitle2" >Join the early-access group and claim your Alcove</Typography>
                                 <SignUp mobile signupState={signupState} setSignupState={setSignupState} mobileApp={mobileApp} />
-                                <Typography variant="subtitle2" style={{ color: 'black', textAlign: "center", width: '100%' }}>Already have an account? <Link href={mobileApp ? "/m/login" : "/login"}>Sign in</Link></Typography>
+                                <Typography variant="subtitle2" style={{ color: 'black', textAlign: "center", width: '100%' }}>Already have an account? <Link style={{color: 'black'}} href={mobileApp ? "/m/login" : "/login"}>Sign in</Link></Typography>
                             </Stack>
 
                         </AlcoveStack>
