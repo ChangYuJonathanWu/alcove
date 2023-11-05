@@ -8,7 +8,7 @@ describe('Modal', () => {
     })
     it('can render new item modal and flow', {retries: 2}, () => {
         cy.contains("Edit Profile").should('exist')
-        cy.get('[data-cy="new-item-button"]').should('exist').should('have.text', 'New Item').click()
+        cy.get('[data-cy="new-item-button"]').should('exist').should('have.text', 'New Highlight').click()
         cy.get('[data-cy="new-item-selection-modal"]').should('exist').should('be.visible').within(() => {
             cy.percySnapshot('New Item Type Selection Modal', { widths: PERCY_WIDTHS, fullPage: true });
             cy.get('[data-cy="new-item-selection-modal--header"]').should('exist')
